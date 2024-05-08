@@ -7,12 +7,12 @@
 import { createSeedClient } from "@snaplet/seed"
 
 const main = async () => {
-	const seed = await createSeedClient()
+	const seed = await createSeedClient({ dryRun: true })
 
 	// Truncate all tables in the database
 	await seed.$resetDatabase()
 
-	await seed.users((x) =>
+	const { users } = await seed.users((x) =>
 		x({ min: 10, max: 25 }, (ctx) => ({
 			raw_user_meta_data: {
 				avatar_url: `https://picsum.photos/200?random=${ctx.index}`,
@@ -20,26 +20,53 @@ const main = async () => {
 		}))
 	)
 
-	await seed.profiles((x) => x({ min: 10, max: 25 }))
+	await seed.profiles((x) => x({ min: 10, max: 25 }), { connect: { users } })
 
-	await seed.clubs((x) => x(5))
+	const { clubs } = await seed.clubs((x) => x(5))
 
-	await seed.members((x) => x({ min: 25, max: 50 }))
+	const { members } = await seed.members(
+		(x) =>
+			x({ min: 25, max: 50 }, (ctx) => ({
+				role: Math.random() < 0.2 ? "ADMIN" : Math.random() < 0.2 ? "MODERATOR" : "MEMBER",
+			})),
+		{ connect: { users, clubs } }
+	)
 
-	await seed.books((x) =>
+	const { books } = await seed.books((x) =>
 		x({ min: 10, max: 25 }, (ctx) => ({
-			olid: `${ctx.index}`,
 			image_width: 200,
 			image_height: 300,
 			image_url: `https://picsum.photos/200/300?random=${ctx.index}`,
+			page_count: Math.floor(Math.random() * 800) + 200,
 		}))
 	)
 
-	await seed.readings((x) => x({ min: 10, max: 25 }))
+	const { readings } = await seed.readings(
+		(x) =>
+			x({ min: 10, max: 25 }, (ctx) => ({
+				current_page: 100 + Math.floor(Math.random() * 100),
+				is_current: Math.random() < 0.9,
+			})),
+		{ connect: { books, clubs } }
+	)
 
-	await seed.intervals((x) => x({ min: 25, max: 75 }))
+	await seed.intervals(
+		(x) =>
+			x({ min: 25, max: 75 }, (ctx) => ({
+				is_completed: Math.random() < 0.3,
+				is_current: Math.random() < 0.7,
+			})),
+		{ connect: { members, readings } }
+	)
 
-	await seed.posts((x) => x({ min: 25, max: 75 }))
+	await seed.posts(
+		(x) =>
+			x({ min: 25, max: 75 }, (ctx) => ({
+				likes: Math.floor(Math.random() * 10),
+				is_spoiler: Math.random() < 0.3,
+			})),
+		{ connect: { users, readings } }
+	)
 
 	console.log("Database seeded successfully!")
 

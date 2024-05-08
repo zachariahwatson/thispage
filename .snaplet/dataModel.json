@@ -342,6 +342,38 @@
           "maxLength": null
         },
         {
+          "id": "public.books.creator_id",
+          "name": "creator_id",
+          "columnName": "creator_id",
+          "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "users",
+          "type": "users",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "booksTousers",
+          "relationFromFields": [
+            "creator_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
           "name": "readings",
           "type": "readings",
           "isRequired": false,
@@ -854,6 +886,38 @@
           "hasDefaultValue": false,
           "isId": false,
           "maxLength": null
+        },
+        {
+          "id": "public.clubs.creator_id",
+          "name": "creator_id",
+          "columnName": "creator_id",
+          "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "users",
+          "type": "users",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "clubsTousers",
+          "relationFromFields": [
+            "creator_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
         },
         {
           "name": "members",
@@ -2033,7 +2097,7 @@
           "id": "public.members.role",
           "name": "role",
           "columnName": "role",
-          "type": "text",
+          "type": "role",
           "isRequired": true,
           "kind": "scalar",
           "isList": false,
@@ -3405,6 +3469,38 @@
           "hasDefaultValue": false,
           "isId": false,
           "maxLength": null
+        },
+        {
+          "id": "public.readings.creator_id",
+          "name": "creator_id",
+          "columnName": "creator_id",
+          "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "users",
+          "type": "users",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "readingsTousers",
+          "relationFromFields": [
+            "creator_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
         },
         {
           "name": "books",
@@ -5697,6 +5793,34 @@
           "hasDefaultValue": false
         },
         {
+          "name": "books",
+          "type": "books",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "booksTousers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "clubs",
+          "type": "clubs",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "clubsTousers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
           "name": "members",
           "type": "members",
           "isRequired": false,
@@ -5716,6 +5840,20 @@
           "isRequired": false,
           "kind": "object",
           "relationName": "profilesTousers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "readings",
+          "type": "readings",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "readingsTousers",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,

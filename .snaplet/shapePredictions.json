@@ -83,20 +83,6 @@
   },
   {
     "schemaName": "public",
-    "tableName": "members",
-    "predictions": [
-      {
-        "input": "public members role",
-        "column": "role",
-        "shape": "ROLE",
-        "confidence": 0.6690664887428284,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      }
-    ]
-  },
-  {
-    "schemaName": "public",
     "tableName": "posts",
     "predictions": [
       {
