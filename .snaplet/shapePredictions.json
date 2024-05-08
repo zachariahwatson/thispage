@@ -1,0 +1,242 @@
+[
+  {
+    "schemaName": "public",
+    "tableName": "books",
+    "predictions": [
+      {
+        "input": "public books authors",
+        "column": "authors",
+        "shape": "BOOK_AUTHOR",
+        "confidence": 0.7,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public books image_url",
+        "column": "image_url",
+        "shape": "IMAGE_URL",
+        "confidence": 0.9436180591583252,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public books open_library_id",
+        "column": "open_library_id",
+        "shape": "UUID",
+        "confidence": 0.7412247657775879,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public books title",
+        "column": "title",
+        "shape": "BOOK_TITLE",
+        "confidence": 0.9033606648445129,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "clubs",
+    "predictions": [
+      {
+        "input": "public clubs description",
+        "column": "description",
+        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
+        "confidence": 0.8045807480812073,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public clubs name",
+        "column": "name",
+        "shape": "SYSTEM_FILE_NAME",
+        "confidence": 0.5210009813308716,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "auth",
+    "tableName": "identities",
+    "predictions": [
+      {
+        "input": "auth identities provider",
+        "column": "provider",
+        "shape": "INTERNET_DOMAIN_NAME",
+        "confidence": 0.9332965016365051,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth identities provider_id",
+        "column": "provider_id",
+        "shape": "UUID",
+        "confidence": 0.9941206574440002,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "members",
+    "predictions": [
+      {
+        "input": "public members role",
+        "column": "role",
+        "shape": "ROLE",
+        "confidence": 0.6690664887428284,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "posts",
+    "predictions": [
+      {
+        "input": "public posts content",
+        "column": "content",
+        "shape": "POST_BODY",
+        "confidence": 0.7877064347267151,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public posts title",
+        "column": "title",
+        "shape": "POST_TITLE",
+        "confidence": 0.8326814770698547,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "profiles",
+    "predictions": [
+      {
+        "input": "public profiles first_name",
+        "column": "first_name",
+        "shape": "PERSON_FIRST_NAME",
+        "confidence": 0.9526280164718628,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profiles last_name",
+        "column": "last_name",
+        "shape": "PERSON_LAST_NAME",
+        "confidence": 0.9607326984405518,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profiles name",
+        "column": "name",
+        "shape": "PERSON_FULL_NAME",
+        "confidence": 0.7098298072814941,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "auth",
+    "tableName": "sessions",
+    "predictions": [
+      {
+        "input": "auth sessions tag",
+        "column": "tag",
+        "shape": "PASSWORD",
+        "confidence": 0.5701985955238342,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth sessions user_agent",
+        "column": "user_agent",
+        "shape": "USER_AGENT",
+        "confidence": 0.9931508302688599,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "auth",
+    "tableName": "users",
+    "predictions": [
+      {
+        "input": "auth users aud",
+        "column": "aud",
+        "shape": "AUTHENTICATION_PROVIDER",
+        "confidence": 0,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth users confirmation_token",
+        "column": "confirmation_token",
+        "shape": "TOKEN",
+        "confidence": 0.9940432906150818,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth users email",
+        "column": "email",
+        "shape": "EMAIL",
+        "confidence": 0.994260311126709,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth users email_change",
+        "column": "email_change",
+        "shape": "EMAIL",
+        "confidence": 0.9721580743789673,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth users email_change_token_new",
+        "column": "email_change_token_new",
+        "shape": "TOKEN",
+        "confidence": 0.9904540777206421,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth users encrypted_password",
+        "column": "encrypted_password",
+        "shape": "PASSWORD",
+        "confidence": 0.9887174367904663,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth users recovery_token",
+        "column": "recovery_token",
+        "shape": "TOKEN",
+        "confidence": 0.9935053586959839,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "auth users role",
+        "column": "role",
+        "shape": "ROLE",
+        "confidence": 0.9707857370376587,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  }
+]
