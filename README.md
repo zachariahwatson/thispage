@@ -28,9 +28,8 @@ still in development - check back soon!
 
 - framework
   - [next.js](https://nextjs.org)
-- database
+- database, auth, and rls
   - [supabase](https://supabase.com/)
-  - [snaplet](https://www.snaplet.dev/)
 - schema validation
   - [zod](https://zod.dev/)
 - styling
@@ -38,3 +37,9 @@ still in development - check back soon!
   - [shadcn/ui](https://ui.shadcn.com/)
 - hosting
   - [vercel](https://vercel.com/)
+- database seeding
+  - [snaplet](https://www.snaplet.dev/)
+
+## entity relationship diagram
+
+![entity relationship diagram for thispage](./erd.png)
