@@ -1,4 +1,5 @@
 export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from "./form"
 export { Label } from "./label"
-export { LoginForm } from "./login-form"
+export { SignUpForm } from "./sign-up-form"
+export { SignInForm } from "./sign-in-form"
 export { Input } from "./input"

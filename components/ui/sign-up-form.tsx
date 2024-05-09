@@ -1,46 +1,55 @@
 "use client"
 
 import { Button, SubmitButton } from "@/components/buttons"
-import { signIn, signUp, signInWithGoogle } from "@/actions/login"
-import { loginFormSchema } from "@/utils/zod"
+import { signUp, signInWithGoogle } from "@/actions/login"
+import { signUpFormSchema } from "@/utils/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { useForm } from "react-hook-form"
+import { FieldValues, FormState, useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 
-export function LoginForm({ message }: { message: string }) {
-	const [submitType, setSubmitType] = useState("signin")
+interface Props {
+	setFormType: Dispatch<SetStateAction<string>>
+	email: string
+	setEmail: Dispatch<SetStateAction<string>>
+	password: string
+	setPassword: Dispatch<SetStateAction<string>>
+}
 
-	const form = useForm<z.infer<typeof loginFormSchema>>({
-		resolver: zodResolver(loginFormSchema),
+export function SignUpForm({ setFormType, email, setEmail, password, setPassword }: Props) {
+	const form = useForm<z.infer<typeof signUpFormSchema>>({
+		resolver: zodResolver(signUpFormSchema),
 		defaultValues: {
 			firstName: "",
 			lastName: "",
-			email: "",
-			password: "",
+			email: email,
+			password: password,
 			confirmPassword: "",
 		},
 	})
 
-	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-		if (submitType === "signup") {
-			await signUp(values)
-		} else {
-			await signIn(values)
-		}
+	const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
+		await signUp(values)
+		form.reset()
+	}
+
+	const handleFormChange = () => {
+		setEmail(form.getValues("email"))
+		setPassword(form.getValues("password"))
+		setFormType("signin")
 	}
 
 	return (
 		<>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex justify-center flex-col">
 					<FormField
 						control={form.control}
 						name="firstName"
 						render={({ field }) => (
-							<FormItem className={submitType === "signup" ? undefined : "hidden"}>
+							<FormItem>
 								<FormLabel>first name</FormLabel>
 								<FormControl>
 									<Input placeholder="optional" {...field} />
@@ -53,7 +62,7 @@ export function LoginForm({ message }: { message: string }) {
 						control={form.control}
 						name="lastName"
 						render={({ field }) => (
-							<FormItem className={submitType === "signup" ? undefined : "hidden"}>
+							<FormItem>
 								<FormLabel>last name</FormLabel>
 								<FormControl>
 									<Input placeholder="optional" {...field} />
@@ -62,7 +71,6 @@ export function LoginForm({ message }: { message: string }) {
 							</FormItem>
 						)}
 					/>
-
 					<FormField
 						control={form.control}
 						name="email"
@@ -89,12 +97,11 @@ export function LoginForm({ message }: { message: string }) {
 							</FormItem>
 						)}
 					/>
-
 					<FormField
 						control={form.control}
 						name="confirmPassword"
 						render={({ field }) => (
-							<FormItem className={submitType === "signup" ? undefined : "hidden"}>
+							<FormItem>
 								<FormLabel>confirm password</FormLabel>
 								<FormControl>
 									<Input type="password" {...field} />
@@ -103,50 +110,10 @@ export function LoginForm({ message }: { message: string }) {
 							</FormItem>
 						)}
 					/>
-
-					{submitType === "signin" ? (
-						<>
-							<SubmitButton
-								name="signin"
-								onClick={() => {
-									setSubmitType("signin")
-								}}
-								pendingText="signing In..."
-								className="w-full"
-							>
-								sign in
-							</SubmitButton>
-							<Button
-								onClick={() => {
-									setSubmitType("signup")
-								}}
-								variant="secondary"
-								className="w-full"
-							>
-								sign up
-							</Button>
-						</>
-					) : (
-						<>
-							<Button
-								onClick={() => {
-									setSubmitType("signin")
-								}}
-								className="w-full"
-							>
-								sign in
-							</Button>
-							<SubmitButton
-								name="signup"
-								onClick={() => setSubmitType("signup")}
-								variant="secondary"
-								pendingText="signing up..."
-								className="w-full"
-							>
-								sign up
-							</SubmitButton>
-						</>
-					)}
+					<Button variant="secondary" onClick={handleFormChange}>
+						sign in
+					</Button>
+					<SubmitButton pendingText="signing up...">sign up</SubmitButton>
 
 					<div className="relative">
 						<div className="absolute inset-0 flex items-center">

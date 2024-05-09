@@ -4,9 +4,9 @@ import { createClient } from "@/utils/supabase/server"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { z } from "zod"
-import { loginFormSchema } from "@/utils/zod"
+import { signInFormSchema } from "@/utils/zod"
 
-export async function signIn(values: z.infer<typeof loginFormSchema>) {
+export async function signIn(values: z.infer<typeof signInFormSchema>) {
 	const origin = headers().get("origin")
 	const email = values.email as string
 	const password = values.password as string
@@ -18,7 +18,7 @@ export async function signIn(values: z.infer<typeof loginFormSchema>) {
 	})
 
 	if (error) {
-		return redirect("/login?message=could not authenticate user")
+		return redirect("/login?message=email or password incorrect&type=error")
 	}
 
 	return redirect(`${origin}`)

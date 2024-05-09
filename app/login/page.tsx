@@ -1,40 +1,53 @@
 "use client"
 
-import Link from "next/link"
-import { LoginForm } from "@/components/ui"
+import { SignInForm, SignUpForm } from "@/components/ui"
 import { toast } from "sonner"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { FieldValues, FormState } from "react-hook-form/dist/types"
+import { useRouter, usePathname } from "next/navigation"
 
-export default function Login({ searchParams }: { searchParams: { message: string } }) {
+interface Props {
+	searchParams: { message?: string; type?: string }
+}
+
+export default function Login({ searchParams }: Props) {
+	const [formType, setFormType] = useState("signin")
+	const [email, setEmail] = useState<string>("")
+	const [password, setPassword] = useState<string>("")
+	const router = useRouter()
+	const path = usePathname()
+
 	useEffect(() => {
 		if (searchParams.message) {
-			toast(`${searchParams.message}`)
+			if (searchParams.type === "error") {
+				toast.error(`${searchParams.message}`)
+			} else {
+				toast(`${searchParams.message}`)
+			}
 		}
+		//reset query
+		router.push(path)
 	}, [searchParams.message || ""])
 
 	return (
 		<div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-			<Link
-				href="/"
-				className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="2"
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-				>
-					<polyline points="15 18 9 12 15 6" />
-				</svg>{" "}
-				Back
-			</Link>
-			<LoginForm message={searchParams.message} />
+			{formType === "signin" ? (
+				<SignInForm
+					setFormType={setFormType}
+					email={email}
+					setEmail={setEmail}
+					password={password}
+					setPassword={setPassword}
+				/>
+			) : (
+				<SignUpForm
+					setFormType={setFormType}
+					email={email}
+					setEmail={setEmail}
+					password={password}
+					setPassword={setPassword}
+				/>
+			)}
 		</div>
 	)
 }

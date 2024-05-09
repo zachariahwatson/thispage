@@ -16,7 +16,7 @@ export async function signInWithGoogle() {
 	})
 
 	if (error) {
-		return redirect("/login?message=could not sign in with Google")
+		return redirect("/login?message=failed to sign in with google&type=error")
 	}
 
 	return redirect(data.url)

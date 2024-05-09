@@ -5,9 +5,9 @@ import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
-import { loginFormSchema } from "@/utils/zod"
+import { signUpFormSchema } from "@/utils/zod"
 
-export async function signUp(values: z.infer<typeof loginFormSchema>) {
+export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	const origin = headers().get("origin")
 	const firstName = values.firstName as string
 	const lastName = values.lastName as string
@@ -27,9 +27,9 @@ export async function signUp(values: z.infer<typeof loginFormSchema>) {
 	})
 
 	if (error) {
-		return redirect("/login?message=could not authenticate user")
+		return redirect("/login?message=could not create user&type=error")
 	}
 
 	revalidatePath("/login")
-	return redirect("/?message=check email to continue sign in process")
+	return redirect("/login?message=check email to continue the sign up process")
 }

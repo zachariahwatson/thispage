@@ -12,7 +12,5 @@ export default async function Index() {
 		return redirect("/login")
 	}
 
-	console.log(user)
-
 	return <>hi {user.user_metadata.name}</>
 }
