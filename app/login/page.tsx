@@ -3,7 +3,6 @@
 import { SignInForm, SignUpForm } from "@/components/ui"
 import { toast } from "sonner"
 import { useEffect, useState } from "react"
-import { FieldValues, FormState } from "react-hook-form/dist/types"
 import { useRouter, usePathname } from "next/navigation"
 
 interface Props {
