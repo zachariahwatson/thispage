@@ -7,7 +7,7 @@
 import { createSeedClient } from "@snaplet/seed"
 
 const main = async () => {
-	const seed = await createSeedClient()
+	const seed = await createSeedClient({ dryRun: true })
 
 	// Truncate all tables in the database
 	await seed.$resetDatabase()
@@ -24,12 +24,16 @@ const main = async () => {
 
 	const { clubs } = await seed.clubs((x) => x(5))
 
-	const { members } = await seed.members(
+	const memberCount = Math.floor(Math.random() * 25) + 25
+
+	const { members } = await seed.members((x) => x(memberCount), { connect: { users, clubs } })
+
+	await seed.member_roles(
 		(x) =>
-			x({ min: 25, max: 50 }, (ctx) => ({
-				role: Math.random() < 0.2 ? "ADMIN" : Math.random() < 0.2 ? "MODERATOR" : "MEMBER",
+			x(memberCount, () => ({
+				role: Math.random() < 0.2 ? (Math.random() < 0.5 ? ["MEMBER", "ADMIN"] : ["MEMBER", "MODERATOR"]) : ["MEMBER"],
 			})),
-		{ connect: { users, clubs } }
+		{ connect: { members } }
 	)
 
 	const { books } = await seed.books((x) =>
@@ -68,7 +72,7 @@ const main = async () => {
 		{ connect: { users, readings } }
 	)
 
-	console.log("Database seeded successfully!")
+	//console.log("Database seeded successfully!")
 
 	process.exit()
 }
