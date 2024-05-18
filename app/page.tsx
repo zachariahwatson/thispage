@@ -1,7 +1,9 @@
 import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
+import { ClubBookSkeleton, ClubBooksSuspense } from "@/components/ui/book"
+import { Suspense } from "react"
 
-export default async function Index() {
+export default async function Page() {
 	const supabase = createClient()
 
 	const {
@@ -12,5 +14,16 @@ export default async function Index() {
 		return redirect("/login")
 	}
 
-	return <>hi {user.user_metadata.name}</>
+	return (
+		<Suspense
+			fallback={
+				<>
+					<ClubBookSkeleton />
+					<ClubBookSkeleton />
+				</>
+			}
+		>
+			<ClubBooksSuspense />
+		</Suspense>
+	)
 }
