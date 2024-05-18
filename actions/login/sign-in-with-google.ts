@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from "@/utils/supabase/server"
+import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 
@@ -19,5 +20,6 @@ export async function signInWithGoogle() {
 		return redirect("/login?message=failed to sign in with google&type=error")
 	}
 
+	revalidatePath(data.url, "layout")
 	return redirect(data.url)
 }

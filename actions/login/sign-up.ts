@@ -30,6 +30,6 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 		return redirect("/login?message=could not create user&type=error")
 	}
 
-	revalidatePath("/login")
+	revalidatePath("/login", "layout")
 	return redirect("/login?message=check email to continue the sign up process")
 }
