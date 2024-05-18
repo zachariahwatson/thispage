@@ -20,29 +20,27 @@ const main = async () => {
 		}))
 	)
 
-	await seed.profiles((x) => x({ min: 10, max: 25 }), { connect: { users } })
+	const { profiles } = await seed.profiles((x) => x({ min: 10, max: 25 }), { connect: { users } })
 
-	const { clubs } = await seed.clubs((x) => x(5))
+	const { clubs } = await seed.clubs((x) => x({ min: 5, max: 10 }))
+
+	await seed.club_invite_codes((x) => x(5), { connect: { clubs } })
 
 	const memberCount = Math.floor(Math.random() * 25) + 25
 
-	const { members } = await seed.members((x) => x(memberCount), { connect: { users, clubs } })
+	const { members } = await seed.members((x) => x(memberCount), { connect: { profiles, clubs } })
 
-	await seed.member_roles(
+	await seed.member_roles((x) => x(memberCount), { connect: { members } })
+
+	const { books } = await seed.books(
 		(x) =>
-			x(memberCount, () => ({
-				role: Math.random() < 0.2 ? (Math.random() < 0.5 ? ["MEMBER", "ADMIN"] : ["MEMBER", "MODERATOR"]) : ["MEMBER"],
+			x({ min: 10, max: 25 }, (ctx) => ({
+				image_width: 200,
+				image_height: 300,
+				image_url: `https://picsum.photos/200/300?random=${ctx.index}`,
+				page_count: Math.floor(Math.random() * 800) + 200,
 			})),
 		{ connect: { members } }
-	)
-
-	const { books } = await seed.books((x) =>
-		x({ min: 10, max: 25 }, (ctx) => ({
-			image_width: 200,
-			image_height: 300,
-			image_url: `https://picsum.photos/200/300?random=${ctx.index}`,
-			page_count: Math.floor(Math.random() * 800) + 200,
-		}))
 	)
 
 	const { readings } = await seed.readings(
@@ -63,13 +61,29 @@ const main = async () => {
 		{ connect: { members, readings } }
 	)
 
-	await seed.posts(
+	const { posts } = await seed.posts(
 		(x) =>
 			x({ min: 25, max: 75 }, (ctx) => ({
 				likes: Math.floor(Math.random() * 10),
 				is_spoiler: Math.random() < 0.3,
 			})),
-		{ connect: { users, readings } }
+		{ connect: { members, readings } }
+	)
+
+	const { comments } = await seed.comments(
+		(x) =>
+			x({ min: 50, max: 150 }, (ctx) => ({
+				likes: Math.floor(Math.random() * 10),
+			})),
+		{ connect: { members, posts } }
+	)
+
+	await seed.comments(
+		(x) =>
+			x({ min: 50, max: 150 }, (ctx) => ({
+				likes: Math.floor(Math.random() * 10),
+			})),
+		{ connect: { members, posts, comments } }
 	)
 
 	//console.log("Database seeded successfully!")
