@@ -1,6 +1,6 @@
 "use client"
 
-import { SignInForm, SignUpForm } from "@/components/ui"
+import { SignInForm, SignUpForm } from "@/components/ui/login"
 import { toast } from "sonner"
 import { useEffect, useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
