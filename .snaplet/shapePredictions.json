@@ -60,6 +60,20 @@
     ]
   },
   {
+    "schemaName": "public",
+    "tableName": "comments",
+    "predictions": [
+      {
+        "input": "public comments content",
+        "column": "content",
+        "shape": "POST_COMMENT",
+        "confidence": 0.8481965661048889,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
     "schemaName": "auth",
     "tableName": "identities",
     "predictions": [
@@ -107,6 +121,14 @@
     "schemaName": "public",
     "tableName": "profiles",
     "predictions": [
+      {
+        "input": "public profiles email",
+        "column": "email",
+        "shape": "EMAIL",
+        "confidence": 0.97197026014328,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
       {
         "input": "public profiles first_name",
         "column": "first_name",

@@ -342,10 +342,10 @@
           "maxLength": null
         },
         {
-          "id": "public.books.creator_id",
-          "name": "creator_id",
-          "columnName": "creator_id",
-          "type": "uuid",
+          "id": "public.books.creator_member_id",
+          "name": "creator_member_id",
+          "columnName": "creator_member_id",
+          "type": "int8",
           "isRequired": true,
           "kind": "scalar",
           "isList": false,
@@ -356,13 +356,13 @@
           "maxLength": null
         },
         {
-          "name": "users",
-          "type": "users",
+          "name": "members",
+          "type": "members",
           "isRequired": true,
           "kind": "object",
-          "relationName": "booksTousers",
+          "relationName": "booksTomembers",
           "relationFromFields": [
-            "creator_id"
+            "creator_member_id"
           ],
           "relationToFields": [
             "id"
@@ -822,6 +822,114 @@
         }
       ]
     },
+    "club_invite_codes": {
+      "id": "public.club_invite_codes",
+      "schemaName": "public",
+      "tableName": "club_invite_codes",
+      "fields": [
+        {
+          "id": "public.club_invite_codes.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "int8",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "\"public\".\"club_invite_codes_id_seq\"",
+            "increment": 1,
+            "start": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "public.club_invite_codes.club_id",
+          "name": "club_id",
+          "columnName": "club_id",
+          "type": "int8",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.club_invite_codes.code",
+          "name": "code",
+          "columnName": "code",
+          "type": "uuid",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.club_invite_codes.expiration_date",
+          "name": "expiration_date",
+          "columnName": "expiration_date",
+          "type": "timestamptz",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.club_invite_codes.created_at",
+          "name": "created_at",
+          "columnName": "created_at",
+          "type": "timestamptz",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "clubs",
+          "type": "clubs",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "club_invite_codesToclubs",
+          "relationFromFields": [
+            "club_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "club_invite_codes_pkey",
+          "fields": [
+            "id"
+          ],
+          "nullNotDistinct": false
+        }
+      ]
+    },
     "clubs": {
       "id": "public.clubs",
       "schemaName": "public",
@@ -888,10 +996,10 @@
           "maxLength": null
         },
         {
-          "id": "public.clubs.creator_id",
-          "name": "creator_id",
-          "columnName": "creator_id",
-          "type": "uuid",
+          "id": "public.clubs.creator_profile_id",
+          "name": "creator_profile_id",
+          "columnName": "creator_profile_id",
+          "type": "int8",
           "isRequired": true,
           "kind": "scalar",
           "isList": false,
@@ -902,18 +1010,64 @@
           "maxLength": null
         },
         {
-          "name": "users",
-          "type": "users",
-          "isRequired": true,
+          "id": "public.clubs.last_edited_by_member_id",
+          "name": "last_edited_by_member_id",
+          "columnName": "last_edited_by_member_id",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "members",
+          "type": "members",
+          "isRequired": false,
           "kind": "object",
-          "relationName": "clubsTousers",
+          "relationName": "clubsTomembers",
           "relationFromFields": [
-            "creator_id"
+            "last_edited_by_member_id"
           ],
           "relationToFields": [
             "id"
           ],
           "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "profiles",
+          "type": "profiles",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "clubsToprofiles",
+          "relationFromFields": [
+            "creator_profile_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "club_invite_codes",
+          "type": "club_invite_codes",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "club_invite_codesToclubs",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
           "isId": false,
           "isGenerated": false,
           "sequence": false,
@@ -951,6 +1105,206 @@
       "uniqueConstraints": [
         {
           "name": "clubs_pkey",
+          "fields": [
+            "id"
+          ],
+          "nullNotDistinct": false
+        }
+      ]
+    },
+    "comments": {
+      "id": "public.comments",
+      "schemaName": "public",
+      "tableName": "comments",
+      "fields": [
+        {
+          "id": "public.comments.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "int8",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "\"public\".\"comments_id_seq\"",
+            "increment": 1,
+            "start": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "public.comments.parent_post_id",
+          "name": "parent_post_id",
+          "columnName": "parent_post_id",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.comments.content",
+          "name": "content",
+          "columnName": "content",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.comments.created_at",
+          "name": "created_at",
+          "columnName": "created_at",
+          "type": "timestamptz",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.comments.updated_at",
+          "name": "updated_at",
+          "columnName": "updated_at",
+          "type": "timestamptz",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.comments.parent_comment_id",
+          "name": "parent_comment_id",
+          "columnName": "parent_comment_id",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.comments.author_member_id",
+          "name": "author_member_id",
+          "columnName": "author_member_id",
+          "type": "int8",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.comments.likes",
+          "name": "likes",
+          "columnName": "likes",
+          "type": "int8",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "comments",
+          "type": "comments",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "commentsTocomments",
+          "relationFromFields": [
+            "parent_comment_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "members",
+          "type": "members",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "commentsTomembers",
+          "relationFromFields": [
+            "author_member_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "posts",
+          "type": "posts",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "commentsToposts",
+          "relationFromFields": [
+            "parent_post_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "comments",
+          "type": "comments",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "commentsTocomments",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "comments_pkey",
           "fields": [
             "id"
           ],
@@ -2083,7 +2437,7 @@
           "id": "public.member_roles.role",
           "name": "role",
           "columnName": "role",
-          "type": "role[]",
+          "type": "role",
           "isRequired": true,
           "kind": "scalar",
           "isList": false,
@@ -2094,11 +2448,43 @@
           "maxLength": null
         },
         {
-          "name": "members",
+          "id": "public.member_roles.last_edited_by_member_id",
+          "name": "last_edited_by_member_id",
+          "columnName": "last_edited_by_member_id",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "members_member_roles_last_edited_by_member_idTomembers",
+          "type": "members",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "member_roles_last_edited_by_member_idTomembers",
+          "relationFromFields": [
+            "last_edited_by_member_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "members_member_roles_member_idTomembers",
           "type": "members",
           "isRequired": true,
           "kind": "object",
-          "relationName": "member_rolesTomembers",
+          "relationName": "member_roles_member_idTomembers",
           "relationFromFields": [
             "member_id"
           ],
@@ -2113,6 +2499,13 @@
         }
       ],
       "uniqueConstraints": [
+        {
+          "name": "member_roles_member_id_key",
+          "fields": [
+            "member_id"
+          ],
+          "nullNotDistinct": false
+        },
         {
           "name": "member_roles_pkey",
           "fields": [
@@ -2160,20 +2553,6 @@
           "maxLength": null
         },
         {
-          "id": "public.members.user_id",
-          "name": "user_id",
-          "columnName": "user_id",
-          "type": "uuid",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
           "id": "public.members.club_id",
           "name": "club_id",
           "columnName": "club_id",
@@ -2216,22 +2595,18 @@
           "maxLength": null
         },
         {
-          "name": "users",
-          "type": "users",
+          "id": "public.members.user_profile_id",
+          "name": "user_profile_id",
+          "columnName": "user_profile_id",
+          "type": "int8",
           "isRequired": true,
-          "kind": "object",
-          "relationName": "membersTousers",
-          "relationFromFields": [
-            "user_id"
-          ],
-          "relationToFields": [
-            "id"
-          ],
+          "kind": "scalar",
           "isList": false,
-          "isId": false,
           "isGenerated": false,
           "sequence": false,
-          "hasDefaultValue": false
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
         },
         {
           "name": "clubs",
@@ -2252,6 +2627,66 @@
           "hasDefaultValue": false
         },
         {
+          "name": "profiles",
+          "type": "profiles",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "membersToprofiles",
+          "relationFromFields": [
+            "user_profile_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "books",
+          "type": "books",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "booksTomembers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "clubs",
+          "type": "clubs",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "clubsTomembers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "comments",
+          "type": "comments",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "commentsTomembers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
           "name": "intervals",
           "type": "intervals",
           "isRequired": false,
@@ -2266,11 +2701,81 @@
           "hasDefaultValue": false
         },
         {
-          "name": "member_roles",
+          "name": "member_roles_member_roles_last_edited_by_member_idTomembers",
           "type": "member_roles",
           "isRequired": false,
           "kind": "object",
-          "relationName": "member_rolesTomembers",
+          "relationName": "member_roles_last_edited_by_member_idTomembers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "member_roles_member_roles_member_idTomembers",
+          "type": "member_roles",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "member_roles_member_idTomembers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "posts_posts_author_member_idTomembers",
+          "type": "posts",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "posts_author_member_idTomembers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "posts_posts_last_edited_by_member_idTomembers",
+          "type": "posts",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "posts_last_edited_by_member_idTomembers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "readings_readings_creator_member_idTomembers",
+          "type": "readings",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "readings_creator_member_idTomembers",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "readings_readings_last_edited_by_member_idTomembers",
+          "type": "readings",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "readings_last_edited_by_member_idTomembers",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,
@@ -3045,20 +3550,6 @@
           "maxLength": null
         },
         {
-          "id": "public.posts.user_id",
-          "name": "user_id",
-          "columnName": "user_id",
-          "type": "int8",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
           "id": "public.posts.reading_id",
           "name": "reading_id",
           "columnName": "reading_id",
@@ -3129,6 +3620,70 @@
           "maxLength": null
         },
         {
+          "id": "public.posts.last_edited_by_member_id",
+          "name": "last_edited_by_member_id",
+          "columnName": "last_edited_by_member_id",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.posts.author_member_id",
+          "name": "author_member_id",
+          "columnName": "author_member_id",
+          "type": "int8",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "members_posts_author_member_idTomembers",
+          "type": "members",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "posts_author_member_idTomembers",
+          "relationFromFields": [
+            "author_member_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "members_posts_last_edited_by_member_idTomembers",
+          "type": "members",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "posts_last_edited_by_member_idTomembers",
+          "relationFromFields": [
+            "last_edited_by_member_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
           "name": "readings",
           "type": "readings",
           "isRequired": true,
@@ -3141,6 +3696,20 @@
             "id"
           ],
           "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "comments",
+          "type": "comments",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "commentsToposts",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
           "isId": false,
           "isGenerated": false,
           "sequence": false,
@@ -3356,7 +3925,21 @@
           "name": "user_id",
           "columnName": "user_id",
           "type": "uuid",
-          "isRequired": false,
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.profiles.email",
+          "name": "email",
+          "columnName": "email",
+          "type": "text",
+          "isRequired": true,
           "kind": "scalar",
           "isList": false,
           "isGenerated": false,
@@ -3368,7 +3951,7 @@
         {
           "name": "users",
           "type": "users",
-          "isRequired": false,
+          "isRequired": true,
           "kind": "object",
           "relationName": "profilesTousers",
           "relationFromFields": [
@@ -3382,9 +3965,44 @@
           "isGenerated": false,
           "sequence": false,
           "hasDefaultValue": false
+        },
+        {
+          "name": "clubs",
+          "type": "clubs",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "clubsToprofiles",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "members",
+          "type": "members",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "membersToprofiles",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
         }
       ],
       "uniqueConstraints": [
+        {
+          "name": "profiles_email_key",
+          "fields": [
+            "email"
+          ],
+          "nullNotDistinct": false
+        },
         {
           "name": "profiles_user_id_key",
           "fields": [
@@ -3565,10 +4183,10 @@
           "maxLength": null
         },
         {
-          "id": "public.readings.creator_id",
-          "name": "creator_id",
-          "columnName": "creator_id",
-          "type": "uuid",
+          "id": "public.readings.creator_member_id",
+          "name": "creator_member_id",
+          "columnName": "creator_member_id",
+          "type": "int8",
           "isRequired": true,
           "kind": "scalar",
           "isList": false,
@@ -3579,22 +4197,18 @@
           "maxLength": null
         },
         {
-          "name": "users",
-          "type": "users",
-          "isRequired": true,
-          "kind": "object",
-          "relationName": "readingsTousers",
-          "relationFromFields": [
-            "creator_id"
-          ],
-          "relationToFields": [
-            "id"
-          ],
+          "id": "public.readings.last_edited_by_member_id",
+          "name": "last_edited_by_member_id",
+          "columnName": "last_edited_by_member_id",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
           "isList": false,
-          "isId": false,
           "isGenerated": false,
           "sequence": false,
-          "hasDefaultValue": false
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
         },
         {
           "name": "books",
@@ -3622,6 +4236,42 @@
           "relationName": "readingsToclubs",
           "relationFromFields": [
             "club_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "members_readings_creator_member_idTomembers",
+          "type": "members",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "readings_creator_member_idTomembers",
+          "relationFromFields": [
+            "creator_member_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "members_readings_last_edited_by_member_idTomembers",
+          "type": "members",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "readings_last_edited_by_member_idTomembers",
+          "relationFromFields": [
+            "last_edited_by_member_id"
           ],
           "relationToFields": [
             "id"
@@ -5887,67 +6537,11 @@
           "hasDefaultValue": false
         },
         {
-          "name": "books",
-          "type": "books",
-          "isRequired": false,
-          "kind": "object",
-          "relationName": "booksTousers",
-          "relationFromFields": [],
-          "relationToFields": [],
-          "isList": true,
-          "isId": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false
-        },
-        {
-          "name": "clubs",
-          "type": "clubs",
-          "isRequired": false,
-          "kind": "object",
-          "relationName": "clubsTousers",
-          "relationFromFields": [],
-          "relationToFields": [],
-          "isList": true,
-          "isId": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false
-        },
-        {
-          "name": "members",
-          "type": "members",
-          "isRequired": false,
-          "kind": "object",
-          "relationName": "membersTousers",
-          "relationFromFields": [],
-          "relationToFields": [],
-          "isList": true,
-          "isId": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false
-        },
-        {
           "name": "profiles",
           "type": "profiles",
           "isRequired": false,
           "kind": "object",
           "relationName": "profilesTousers",
-          "relationFromFields": [],
-          "relationToFields": [],
-          "isList": true,
-          "isId": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false
-        },
-        {
-          "name": "readings",
-          "type": "readings",
-          "isRequired": false,
-          "kind": "object",
-          "relationName": "readingsTousers",
           "relationFromFields": [],
           "relationToFields": [],
           "isList": true,
