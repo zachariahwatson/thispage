@@ -5,6 +5,9 @@ interface Props {
 	clubId: number
 }
 
+/**
+ * gets the specified club's readings. rls ensures that the authenticated user is a member of the club.
+ */
 export async function GET(request: Request, { params }: { params: { clubId: string } }) {
 	try {
 		const supabase = createClient()

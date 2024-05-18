@@ -1,4 +1,3 @@
-//get the user's clubs
 import { createClient } from "@/utils/supabase/server"
 import { ClubType, UnstructuredClubType } from "@/utils/types"
 
@@ -7,6 +6,9 @@ interface MembershipClub {
 	club_id: number
 }
 
+/**
+ * gets the authenticated user's clubs that they are members of.
+ */
 export async function GET() {
 	try {
 		const supabase = createClient()
@@ -59,7 +61,9 @@ export async function GET() {
 	}
 }
 
-//helper function
+/**
+ * gets the authenticated user's club memberships with club ids.
+ */
 async function getUserMembershipClubIds() {
 	const supabase = createClient()
 
@@ -74,7 +78,9 @@ async function getUserMembershipClubIds() {
 	return data
 }
 
-//helper function
+/**
+ * gets the authenticated user's profile id.
+ */
 async function getUserProfileId() {
 	const supabase = createClient()
 
