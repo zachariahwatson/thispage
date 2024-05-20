@@ -1,5 +1,6 @@
 export interface UnstructuredReadingType {
 	id: number
+	club_id: number
 	current_page: number
 	is_current: boolean
 	is_finished: boolean

@@ -1,5 +1,6 @@
 export interface ReadingType {
 	id: number
+	clubId: number
 	currentPage: number
 	isCurrent: boolean
 	isFinished: boolean
