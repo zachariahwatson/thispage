@@ -1,7 +1,6 @@
 import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
-import { ClubBookSkeleton, ClubBooksSuspense } from "@/components/ui/book"
-import { Suspense } from "react"
+import { ClubBooks } from "@/components/ui/book"
 
 export default async function Page() {
 	const supabase = createClient()
@@ -14,16 +13,5 @@ export default async function Page() {
 		return redirect("/login")
 	}
 
-	return (
-		<Suspense
-			fallback={
-				<>
-					<ClubBookSkeleton />
-					<ClubBookSkeleton />
-				</>
-			}
-		>
-			<ClubBooksSuspense />
-		</Suspense>
-	)
+	return <ClubBooks />
 }
