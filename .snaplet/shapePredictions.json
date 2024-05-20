@@ -122,6 +122,14 @@
     "tableName": "profiles",
     "predictions": [
       {
+        "input": "public profiles avatar_url",
+        "column": "avatar_url",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.8755327463150024,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public profiles email",
         "column": "email",
         "shape": "EMAIL",

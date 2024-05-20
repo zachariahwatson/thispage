@@ -3949,6 +3949,20 @@
           "maxLength": null
         },
         {
+          "id": "public.profiles.avatar_url",
+          "name": "avatar_url",
+          "columnName": "avatar_url",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "name": "users",
           "type": "users",
           "isRequired": true,

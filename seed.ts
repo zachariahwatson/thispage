@@ -12,21 +12,27 @@ const main = async () => {
 	// Truncate all tables in the database
 	await seed.$resetDatabase()
 
+	const memberCount = Math.floor(Math.random() * 25) + 25
+
 	const { users } = await seed.users((x) =>
-		x({ min: 10, max: 25 }, (ctx) => ({
+		x(memberCount, (ctx) => ({
 			raw_user_meta_data: {
 				avatar_url: `https://picsum.photos/200?random=${ctx.index}`,
 			},
 		}))
 	)
 
-	const { profiles } = await seed.profiles((x) => x({ min: 10, max: 25 }), { connect: { users } })
+	const { profiles } = await seed.profiles(
+		(x) =>
+			x(memberCount, (ctx) => ({
+				avatar_url: `https://picsum.photos/200?random=${ctx.index}`,
+			})),
+		{ connect: { users } }
+	)
 
-	const { clubs } = await seed.clubs((x) => x({ min: 5, max: 10 }))
+	const { clubs } = await seed.clubs((x) => x({ min: 2, max: 5 }))
 
 	await seed.club_invite_codes((x) => x(5), { connect: { clubs } })
-
-	const memberCount = Math.floor(Math.random() * 25) + 25
 
 	const { members } = await seed.members((x) => x(memberCount), { connect: { profiles, clubs } })
 
