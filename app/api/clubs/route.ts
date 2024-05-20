@@ -57,7 +57,7 @@ export async function GET() {
 
 		return Response.json(structuredData, { status: 200 })
 	} catch (error) {
-		return Response.json({ error: "an error occurred while fetching clubs" }, { status: 500 })
+		return Response.json({ error: "an error occurred while fetching clubs: " + error }, { status: 500 })
 	}
 }
 

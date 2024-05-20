@@ -1,22 +1,25 @@
 import { createClient } from "@/utils/supabase/server"
 import { ReadingType, UnstructuredReadingType } from "@/utils/types"
-
-interface Props {
-	clubId: number
-}
+import { NextRequest } from "next/server"
 
 /**
  * gets the specified club's readings. rls ensures that the authenticated user is a member of the club.
+ * @param {searchParam} current - url query that filters readings based on the is_current value
+ * @param {searchParam} finished - url query that filters readings based on the is_finished value
  */
-export async function GET(request: Request, { params }: { params: { clubId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { clubId: string } }) {
 	try {
 		const supabase = createClient()
+		const searchParams = request.nextUrl.searchParams
+		const current: boolean = searchParams.get("current") === "true"
+		const finished: boolean = searchParams.get("finished") === "true"
 
 		//query
 		const { data, error } = await supabase
 			.from("readings")
 			.select(
 				`id,
+			club_id,
 			current_page,
 			is_current,
 			is_finished,
@@ -35,6 +38,8 @@ export async function GET(request: Request, { params }: { params: { clubId: stri
 			)`
 			)
 			.eq("club_id", params.clubId)
+			.eq("is_current", current)
+			.eq("is_finished", finished)
 
 		if (error) {
 			console.error("error getting club reading: " + error.message + ". " + error.hint)
@@ -47,6 +52,7 @@ export async function GET(request: Request, { params }: { params: { clubId: stri
 			(data as any)?.map((reading: UnstructuredReadingType) => {
 				return {
 					id: reading.id,
+					club_id: reading.club_id,
 					currentPage: reading.current_page,
 					isCurrent: reading.is_current,
 					isFinished: reading.is_finished,
