@@ -3,11 +3,11 @@ import { IntervalType, UnstructuredIntervalType } from "@/utils/types"
 import { NextRequest } from "next/server"
 
 /**
- * gets the specified reading's intervals. rls ensures that the authenticated user is a member of the reading.
+ * gets the specified member's intervals. rls ensures that the authenticated user is a member of the reading.
  * @param {searchParam} current - url query that filters intervals based on the is_current value
  * @param {searchParam} completed - url query that filters intervals based on the is_completed value
  */
-export async function GET(request: NextRequest, { params }: { params: { clubId: string; readingId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { memberId: string } }) {
 	try {
 		const supabase = createClient()
 		const searchParams = request.nextUrl.searchParams
@@ -19,19 +19,13 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			.from("intervals")
 			.select(
 				`id,
-                is_completed,
-                is_current,
-                created_at,
-                members(
-                    profiles(
-                        name,
-                        first_name,
-                        last_name,
-						avatar_url
-                    )
-                )`
+			member_id,
+            reading_id,
+            is_completed,
+            is_current,
+            created_at`
 			)
-			.eq("reading_id", params.readingId)
+			.eq("member_id", params.memberId)
 			.eq("is_current", current)
 			.eq("is_completed", completed)
 
@@ -49,14 +43,6 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 					isCompleted: interval.is_completed,
 					isCurrent: interval.is_current,
 					createdAt: interval.created_at,
-					member: {
-						profile: {
-							name: interval.members.profiles.name,
-							firstName: interval.members.profiles.first_name,
-							lastName: interval.members.profiles.last_name,
-							avatarUrl: interval.members.profiles.avatar_url,
-						},
-					},
 				}
 			}) || []
 		return Response.json(structuredData, { status: 200 })
