@@ -1,5 +1,5 @@
 "use client"
 
-export function Posts() {
+export function PostComments() {
 	return <div>Enter</div>
 }
