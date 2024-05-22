@@ -23,9 +23,10 @@ interface Props {
 	readingData: ReadingType
 	isVertical: boolean
 	userInterval: ReadingType["intervals"][0] | null
+	readingIndex: number
 }
 
-export function ReadingPageLeft({ readingData, isVertical, userInterval }: Props) {
+export function ReadingPageLeft({ readingData, isVertical, userInterval, readingIndex }: Props) {
 	const MotionCard = motion(Card)
 
 	//framer motion responsive animation (turns book page flip into notepad page flip)
@@ -70,7 +71,7 @@ export function ReadingPageLeft({ readingData, isVertical, userInterval }: Props
 					}
 				/>
 			</div>
-			<Card className="absolute bottom-0 w-full rounded-tr-none rounded-tl-none border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-none backdrop-blur-md bg-background/80">
+			<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
 				<CardHeader className="pb-6 pt-4 md:py-4">
 					<CardTitle className="text-xl md:text-2xl">{readingData.book.title}</CardTitle>
 					<CardDescription className="italic">
@@ -86,9 +87,11 @@ export function ReadingPageLeft({ readingData, isVertical, userInterval }: Props
 						})}
 					</CardDescription>
 				</CardHeader>
-				<div className="px-4">
-					<Separator />
-				</div>
+				{userInterval && (
+					<div className="px-4">
+						<Separator />
+					</div>
+				)}
 				<CardContent className="pr-0 pt-6 md:pt-2">
 					{userInterval ? (
 						<>
@@ -174,12 +177,13 @@ export function ReadingPageLeft({ readingData, isVertical, userInterval }: Props
 					)}
 				</CardFooter>
 			</Card>
-			<div className="bg-gradient-to-l from-border to-card py-2 border-y hidden md:block absolute h-full top-0 right-0">
+			<div className="bg-gradient-to-l from-border to-card py-2 hidden md:block absolute h-full top-0 right-0">
 				<Separator orientation="vertical" className="ml-4 bg-foreground/5" />
 			</div>
-			<div className="bg-gradient-to-t from-border to-card px-2 border-x block md:hidden absolute w-full bottom-0 right-0">
+			<div className="bg-gradient-to-t from-border to-card px-2 block md:hidden absolute w-full bottom-0 right-0">
 				<Separator orientation="horizontal" className="mt-4 bg-foreground/5" />
 			</div>
+			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>
 	)
 }

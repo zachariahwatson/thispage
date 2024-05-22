@@ -86,11 +86,11 @@ export function ReadingPosts({ clubId, readingId, clubIndex, userInterval }: Pro
 				{!loading && posts ? (
 					posts.map((post) =>
 						userInterval?.isCompleted ? (
-							<ReadingPost key={post.id} likes={post.likes} id={post.id}>
+							<ReadingPost key={post.id} likes={post.likes} id={post.id} clubId={clubId} readingId={readingId}>
 								{post.title}
 							</ReadingPost>
 						) : (
-							<ReadingPost key={post.id} likes={0} id={-1}>
+							<ReadingPost key={post.id} likes={0} id={-1} clubId={clubId} readingId={readingId}>
 								⚠️spoiler⚠️complete the reading!
 							</ReadingPost>
 						)

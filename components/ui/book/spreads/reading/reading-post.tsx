@@ -2,20 +2,22 @@ import { Badge, Separator, Skeleton } from "@/components/ui"
 import Link from "next/link"
 
 interface Props {
+	clubId: number
+	readingId: number
 	children: React.ReactNode
 	likes: number
 	id: number
 }
 
-export function ReadingPost({ children, likes, id }: Props) {
+export function ReadingPost({ clubId, readingId, children, likes, id }: Props) {
 	return (
 		<>
 			<div className="flex flex-row pr-14 relative">
 				<p className="text-sm truncate ... hover:font-medium transition-all">
-					<Link href={`/comments/${id}`}>{children}</Link>
+					<Link href={`clubs/${clubId}/readings/${readingId}/comments/${id}`}>{children}</Link>
 				</p>
 
-				<Badge variant="outline" className="absolute self-center right-0">
+				<Badge variant="secondary" className="absolute self-center right-0">
 					{likes} 👍
 				</Badge>
 			</div>

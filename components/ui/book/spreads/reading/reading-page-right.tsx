@@ -12,9 +12,10 @@ interface Props {
 	isVertical: boolean
 	clubIndex: number
 	userInterval: ReadingType["intervals"][0] | null
+	readingIndex: number
 }
 
-export function ReadingPageRight({ clubId, readingId, isVertical, clubIndex, userInterval }: Props) {
+export function ReadingPageRight({ clubId, readingId, isVertical, clubIndex, userInterval, readingIndex }: Props) {
 	const MotionCard = motion(Card)
 
 	//fix initial and animate
@@ -81,12 +82,13 @@ export function ReadingPageRight({ clubId, readingId, isVertical, clubIndex, use
 					<IntervalAvatarGroupSkeleton />
 				)}
 			</CardFooter>
-			<div className="bg-gradient-to-r from-border to-card py-2 border-y hidden md:block absolute h-full top-0 left-0">
+			<div className="bg-gradient-to-r from-border to-card py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 bg-foreground/5" />
 			</div>
-			<div className="bg-gradient-to-b from-border to-card px-2 border-x block md:hidden absolute w-full top-0 right-0">
+			<div className="bg-gradient-to-b from-border to-card px-2 block md:hidden absolute w-full top-0 right-0">
 				<Separator orientation="horizontal" className="mb-4 bg-foreground/5" />
 			</div>
+			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>
 	)
 }

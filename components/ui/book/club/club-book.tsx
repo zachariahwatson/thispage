@@ -9,11 +9,14 @@ interface Props {
 
 export function ClubBook({ clubData, clubIndex }: Props) {
 	return (
-		<div id={`club-${clubIndex}-wrapper`} className="max-w-sm md:max-w-4xl w-full space-y-3">
-			<h1 id={`club-${clubIndex}-title`} className="font-bold text-lg md:text-3xl pl-1 truncate ...">
+		<div id={`club-${clubData.id}-wrapper`} className="max-w-sm md:max-w-4xl w-full space-y-3">
+			<h1 id={`club-${clubData.id}-title`} className="font-bold text-lg md:text-3xl pl-1 truncate ...">
 				{clubData.name}
 			</h1>
-			<Card id={`club-${clubIndex}-content`} className="h-[812px] md:h-[624px] p-4 rounded-3xl relative shadow-sm">
+			<Card
+				id={`club-${clubData.id}-content`}
+				className="h-[812px] md:h-[624px] p-4 rounded-3xl relative shadow-sm bg-secondary"
+			>
 				<Spreads clubData={clubData} clubIndex={clubIndex} />
 			</Card>
 		</div>

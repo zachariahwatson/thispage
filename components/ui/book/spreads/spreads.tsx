@@ -53,9 +53,10 @@ export function Spreads({ clubData, clubIndex }: Props) {
 					readingData={reading}
 					clubIndex={clubIndex}
 					isVisible={readingIndex === index}
+					readingIndex={index}
 				/>
 			))}
-			<Button id={`club-${clubIndex}-next-button`} onClick={handleNextPage} className="absolute right-8 bottom-8">
+			<Button id={`club-${clubData.id}-next-button`} onClick={handleNextPage} className="absolute right-8 bottom-8">
 				next
 			</Button>
 		</>

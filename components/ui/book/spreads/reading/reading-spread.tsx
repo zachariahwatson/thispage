@@ -32,9 +32,10 @@ interface Props {
 	readingData: ReadingType
 	clubIndex: number
 	isVisible: boolean
+	readingIndex: number
 }
 
-export function ReadingSpread({ readingData, clubIndex, isVisible }: Props) {
+export function ReadingSpread({ readingData, clubIndex, isVisible, readingIndex }: Props) {
 	const [userInterval, setUserInterval] = useState<ReadingType["intervals"][0] | null>(null)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 
@@ -61,14 +62,23 @@ export function ReadingSpread({ readingData, clubIndex, isVisible }: Props) {
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
-				<div id={`club-${clubIndex}-spread`} className="h-full flex flex-col md:flex-row rounded-lg">
-					<ReadingPageLeft readingData={readingData} isVertical={isVertical} userInterval={userInterval} />
+				<div
+					id={`club-${readingData.clubId}-spread`}
+					className="h-full flex flex-col md:flex-row rounded-lg bg-background"
+				>
+					<ReadingPageLeft
+						readingData={readingData}
+						isVertical={isVertical}
+						userInterval={userInterval}
+						readingIndex={readingIndex}
+					/>
 					<ReadingPageRight
 						clubId={readingData.clubId}
 						readingId={readingData.id}
 						isVertical={isVertical}
 						clubIndex={clubIndex}
 						userInterval={userInterval}
+						readingIndex={readingIndex}
 					/>
 				</div>
 			)}
