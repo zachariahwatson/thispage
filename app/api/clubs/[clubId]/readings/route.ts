@@ -61,7 +61,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			(data as any)?.map((reading: UnstructuredReadingType) => {
 				return {
 					id: reading.id,
-					club_id: reading.club_id,
+					clubId: reading.club_id,
 					currentPage: reading.current_page,
 					isCurrent: reading.is_current,
 					isFinished: reading.is_finished,
