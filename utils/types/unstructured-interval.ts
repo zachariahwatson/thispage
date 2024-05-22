@@ -5,6 +5,7 @@ export interface UnstructuredIntervalType {
 	created_at: string
 	members: {
 		profiles: {
+			id: number
 			name: string
 			first_name: string
 			last_name: string

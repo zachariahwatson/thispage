@@ -5,6 +5,7 @@ export interface IntervalType {
 	createdAt: string
 	member: {
 		profile: {
+			id: number
 			name: string
 			firstName: string
 			lastName: string

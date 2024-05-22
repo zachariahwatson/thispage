@@ -17,4 +17,10 @@ export interface ReadingType {
 		imageWidth: number
 		imageHeight: number
 	}
+	intervals: {
+		id: number
+		isCompleted: boolean
+		isCurrent: boolean
+		createdAt: string
+	}[]
 }

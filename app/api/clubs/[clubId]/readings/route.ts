@@ -3,7 +3,7 @@ import { ReadingType, UnstructuredReadingType } from "@/utils/types"
 import { NextRequest } from "next/server"
 
 /**
- * gets the specified club's readings. rls ensures that the authenticated user is a member of the club.
+ * gets the specified club's readings along with the user's interval. rls ensures that the authenticated user is a member of the club.
  * @param {searchParam} current - url query that filters readings based on the is_current value
  * @param {searchParam} finished - url query that filters readings based on the is_finished value
  */
@@ -13,6 +13,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		const searchParams = request.nextUrl.searchParams
 		const current: boolean = searchParams.get("current") === "true"
 		const finished: boolean = searchParams.get("finished") === "true"
+		const membershipIds: number[] = (await getUserMembershipIds())?.map((item) => item.id) || []
 
 		//query
 		const { data, error } = await supabase
@@ -35,11 +36,19 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 				image_url, 
 				image_width, 
 				image_height
+			),
+			intervals(
+				id,
+				member_id,
+				is_completed,
+				is_current,
+				created_at
 			)`
 			)
 			.eq("club_id", params.clubId)
 			.eq("is_current", current)
 			.eq("is_finished", finished)
+			.in("intervals.member_id", membershipIds)
 
 		if (error) {
 			console.error("error getting club reading: " + error.message + ". " + error.hint)
@@ -69,10 +78,55 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 						imageWidth: reading.books.image_width,
 						imageHeight: reading.books.image_height,
 					},
+					intervals: reading.intervals.map((interval) => {
+						return {
+							id: interval.id,
+							isCompleted: interval.is_completed,
+							isCurrent: interval.is_current,
+							createdAt: interval.created_at,
+						}
+					}),
 				}
 			}) || []
 		return Response.json(structuredData, { status: 200 })
 	} catch (error) {
+		console.error("error getting club reading: " + error)
 		return Response.json({ error: "an error occurred while fetching club readings" }, { status: 500 })
 	}
+}
+
+/**
+ * gets the authenticated user's club memberships.
+ */
+async function getUserMembershipIds() {
+	const supabase = createClient()
+
+	const profileId = await getUserProfileId()
+
+	const { data, error } = await supabase.from("members").select("id").eq("user_profile_id", profileId)
+
+	if (error) {
+		console.error("error getting user membership ids: " + error.message + ". " + error.hint)
+	}
+
+	return data
+}
+
+/**
+ * gets the authenticated user's profile id.
+ */
+async function getUserProfileId() {
+	const supabase = createClient()
+
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	const { data, error } = await supabase.from("profiles").select("id").eq("user_id", user?.id).limit(1).single()
+
+	if (error) {
+		console.error("error getting user profile: " + error.message + ". " + error.hint)
+	}
+
+	return data?.id
 }

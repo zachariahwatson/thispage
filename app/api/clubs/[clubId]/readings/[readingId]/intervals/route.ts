@@ -12,7 +12,6 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		const supabase = createClient()
 		const searchParams = request.nextUrl.searchParams
 		const current: boolean = searchParams.get("current") === "true"
-		const completed: boolean = searchParams.get("completed") === "true"
 
 		//query
 		const { data, error } = await supabase
@@ -24,6 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
                 created_at,
                 members(
                     profiles(
+						id,
                         name,
                         first_name,
                         last_name,
@@ -33,7 +33,6 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			)
 			.eq("reading_id", params.readingId)
 			.eq("is_current", current)
-			.eq("is_completed", completed)
 
 		if (error) {
 			console.error("error getting reading intervals: " + error.message + ". " + error.hint)
@@ -51,6 +50,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 					createdAt: interval.created_at,
 					member: {
 						profile: {
+							id: interval.members.profiles.id,
 							name: interval.members.profiles.name,
 							firstName: interval.members.profiles.first_name,
 							lastName: interval.members.profiles.last_name,

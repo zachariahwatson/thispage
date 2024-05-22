@@ -17,4 +17,10 @@ export interface UnstructuredReadingType {
 		image_width: number
 		image_height: number
 	}
+	intervals: {
+		id: number
+		is_completed: boolean
+		is_current: boolean
+		created_at: string
+	}[]
 }
