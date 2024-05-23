@@ -42,5 +42,16 @@ export {
 	DropdownMenuSubTrigger,
 	DropdownMenuRadioGroup,
 } from "./dropdown-menu"
-
 export { Textarea } from "./textarea"
+export {
+	Sheet,
+	SheetPortal,
+	SheetOverlay,
+	SheetTrigger,
+	SheetClose,
+	SheetContent,
+	SheetHeader,
+	SheetFooter,
+	SheetTitle,
+	SheetDescription,
+} from "./sheet"
