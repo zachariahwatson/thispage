@@ -39,7 +39,3 @@ still in development - check back soon!
   - [vercel](https://vercel.com/)
 - database seeding
   - [snaplet](https://www.snaplet.dev/)
-
-## entity relationship diagram
-
-![entity relationship diagram for thispage](./erd.png)
