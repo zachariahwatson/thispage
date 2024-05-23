@@ -14,7 +14,7 @@ import Link from "next/link"
 export function Nav({ user }: { user: any }) {
 	return (
 		<header className="flex justify-center border-b">
-			<div className="px-8 py-4 flex flex-row items-center w-full justify-between max-w-lg md:max-w-5xl">
+			<div className="px-6 md:px-8 py-4 flex flex-row items-center w-full justify-between max-w-5xl">
 				<div className="flex flex-row space-x-8 items-center ">
 					<Link href="/" className="text-2xl">
 						this<span className="font-bold">page</span>

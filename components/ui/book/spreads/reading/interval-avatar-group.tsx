@@ -36,9 +36,7 @@ export function IntervalAvatarGroup({ intervals, userInterval }: Props) {
 					<Tooltip key={interval.id}>
 						<TooltipTrigger className="cursor-default">
 							<Avatar
-								className={`outline ${
-									interval.isCompleted && userInterval ? "outline-ring outline-3" : "outline-background outline-4"
-								} -outline-offset-1`}
+								className={`${interval.isCompleted && userInterval ? "ring-ring ring-4" : "ring-background ring-4"}`}
 							>
 								<AvatarImage src={interval.member.profile.avatarUrl} />
 								<AvatarFallback>
@@ -62,8 +60,8 @@ export function IntervalAvatarGroup({ intervals, userInterval }: Props) {
 						<DialogTrigger>
 							<Tooltip>
 								<TooltipTrigger>
-									<Avatar className="outline outline-background outline-4 -outline-offset-1">
-										<AvatarFallback className=" bg-secondary">
+									<Avatar className="ring-background ring-4">
+										<AvatarFallback className="bg-secondary">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												fill="none"

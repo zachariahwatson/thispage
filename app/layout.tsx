@@ -24,10 +24,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			<html lang="en" className={GeistSans.className}>
 				<body className="bg-background text-foreground">
 					<Nav user={user} />
-					<main className="min-h-[calc(100vh-120px)] flex flex-col items-center pt-6 p-12 md:pt-12 space-y-8">
+					<main className="min-h-[calc(100vh-120px)] flex flex-col items-center pt-6 p-6 md:p-12 md:pt-12 space-y-8">
 						{children}
 					</main>
-					<footer className="flex justify-center items-center h-12">
+					<footer className="flex justify-center items-center h-12 md:text-sm text-xs">
 						<div>© 2024 ❤️ Zachariah Watson</div>
 					</footer>
 				</body>

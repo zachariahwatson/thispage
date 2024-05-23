@@ -6,12 +6,13 @@ import {
 	AvatarFallback,
 	AvatarImage,
 	Badge,
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
 	Separator,
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
 	Textarea,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
@@ -52,7 +53,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 		!loading &&
 		post && (
 			<div className="flex flex-row justify-center w-full space-x-2">
-				<div className="max-w-2xl w-full space-y-4">
+				<div className="max-w-4xl w-full space-y-4">
 					<div className="space-y-2">
 						<div className="flex flex-row items-center relative">
 							<Button className="absolute top-0 -left-16 rounded-full hidden lg:block" variant="ghost">
@@ -79,23 +80,89 @@ export function Post({ clubId, readingId, postId }: Props) {
 									</AvatarFallback>
 								</Avatar>
 							</div>
-							<div className="flex flex-col">
-								<p>
-									{post.member.profile.name} •{" "}
-									<span className="text-sm">
-										{createdAt?.toLocaleDateString(undefined, {
-											weekday: "long",
-											year: "numeric",
-											month: "long",
-											day: "numeric",
-										})}
-									</span>
-								</p>
-								<p className="text-muted-foreground italic">in {post.reading.club.name}</p>
+							<div className="relative max-w-[calc(100%-56px)] w-full">
+								<div className="flex flex-col pr-10">
+									<p className="text-md">
+										{post.member.profile.name} •{" "}
+										<span className="text-sm">
+											{createdAt?.toLocaleDateString(undefined, {
+												year: "numeric",
+												month: "long",
+												day: "numeric",
+											})}
+										</span>
+									</p>
+									<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
+										{post.reading.book.title} • {post.reading.club.name}zzzzzzzzzzzzz
+									</p>
+								</div>
+								<div className="absolute right-0 top-0">
+									<Sheet>
+										<SheetTrigger className="hover:ring-secondary hover:ring-4 rounded transition-all">
+											<Image
+												className="rounded h-10 md:h-16 w-auto shadow-md"
+												src={post.reading.book.imageUrl}
+												width={post.reading.book.imageWidth}
+												height={post.reading.book.imageHeight}
+												alt={
+													"Cover photo of " +
+													post.reading.book.title +
+													" by " +
+													post.reading.book.authors.map((author, i) => {
+														if (i === post.reading.book.authors.length - 1) {
+															return author
+														} else if (i === post.reading.book.authors.length - 2) {
+															return author + " and "
+														} else {
+															return author + ", "
+														}
+													})
+												}
+											/>
+										</SheetTrigger>
+										<SheetContent className="space-y-4">
+											<SheetHeader className="text-left">
+												<SheetTitle>{post.reading.book.title}</SheetTitle>
+												<SheetDescription className="italic">
+													by{" "}
+													{post.reading.book.authors.map((author, i) => {
+														if (i === post.reading.book.authors.length - 1) {
+															return author
+														} else if (i === post.reading.book.authors.length - 2) {
+															return author + " and "
+														} else {
+															return author + ", "
+														}
+													})}
+												</SheetDescription>
+											</SheetHeader>
+											<Image
+												className="rounded-lg w-full max-h-full shadow-md"
+												src={post.reading.book.imageUrl}
+												width={post.reading.book.imageWidth}
+												height={post.reading.book.imageHeight}
+												alt={
+													"Cover photo of " +
+													post.reading.book.title +
+													" by " +
+													post.reading.book.authors.map((author, i) => {
+														if (i === post.reading.book.authors.length - 1) {
+															return author
+														} else if (i === post.reading.book.authors.length - 2) {
+															return author + " and "
+														} else {
+															return author + ", "
+														}
+													})
+												}
+											/>
+										</SheetContent>
+									</Sheet>
+								</div>
 							</div>
 						</div>
-						<h1 className="text-2xl font-bold">{post.title}</h1>
-						<p>{post.content}</p>
+						<h1 className="text-lg md:text-2xl font-bold">{post.title}</h1>
+						<p className="md:text-md text-sm">{post.content}</p>
 						<Button className="p-0 bg-background hover:bg-background mr-2" variant="secondary">
 							<Badge variant="secondary" className="">
 								{post.likes} 👍
@@ -110,45 +177,6 @@ export function Post({ clubId, readingId, postId }: Props) {
 						<Button className="w-1/4 float-right">comment</Button>
 					</div>
 				</div>
-				<Card className="max-w-48 w-full rounded-lg hidden md:block sticky">
-					<CardHeader className="p-4">
-						<CardTitle className="text-md">{post.reading.book.title}</CardTitle>
-						<CardDescription className="italic">
-							by{" "}
-							{post.reading.book.authors.map((author, i) => {
-								if (i === post.reading.book.authors.length - 1) {
-									return author
-								} else if (i === post.reading.book.authors.length - 2) {
-									return author + " and "
-								} else {
-									return author + ", "
-								}
-							})}
-						</CardDescription>
-					</CardHeader>
-					<CardContent className="p-4 pt-2">
-						<Image
-							className="rounded-lg w-auto md:w-full md:max-h-full shadow-md"
-							src={post.reading.book.imageUrl}
-							width={post.reading.book.imageWidth}
-							height={post.reading.book.imageHeight}
-							alt={
-								"Cover photo of " +
-								post.reading.book.title +
-								" by " +
-								post.reading.book.authors.map((author, i) => {
-									if (i === post.reading.book.authors.length - 1) {
-										return author
-									} else if (i === post.reading.book.authors.length - 2) {
-										return author + " and "
-									} else {
-										return author + ", "
-									}
-								})
-							}
-						/>
-					</CardContent>
-				</Card>
 			</div>
 		)
 	)

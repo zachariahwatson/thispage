@@ -28,9 +28,9 @@ export function IntervalAvatarList({ intervals, userInterval }: Props) {
 							<div key={interval.id} className="h-10 flex flex-row mr-8 mb-4">
 								<Avatar
 									key={interval.id}
-									className={`outline ${
-										interval.isCompleted && userInterval ? "outline-ring outline-3" : "outline-background outline-4"
-									} outline-offset-2`}
+									className={`${
+										interval.isCompleted && userInterval ? "ring-ring ring-4" : "ring-background ring-4"
+									} ring-offset-2`}
 								>
 									<AvatarImage src={interval.member.profile.avatarUrl} />
 									<AvatarFallback>
