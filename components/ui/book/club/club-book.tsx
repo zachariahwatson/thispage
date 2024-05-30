@@ -1,23 +1,22 @@
-import { ClubType } from "@/utils/types"
 import { Card, Skeleton } from "@/components/ui"
 import { Spreads } from "@/components/ui/book"
+import { ClubMembership } from "@/lib/types"
 
 interface Props {
-	clubData: ClubType
-	clubIndex: number
+	clubMembershipData: ClubMembership
 }
 
-export function ClubBook({ clubData, clubIndex }: Props) {
+export function ClubBook({ clubMembershipData }: Props) {
 	return (
-		<div id={`club-${clubData.id}-wrapper`} className="max-w-sm md:max-w-4xl w-full space-y-3">
-			<h1 id={`club-${clubData.id}-title`} className="font-bold text-lg md:text-3xl pl-1 truncate ...">
-				{clubData.name}
+		<div id={`club-${clubMembershipData.club.id}`} className="max-w-sm md:max-w-4xl w-full space-y-3">
+			<h1 id={`club-${clubMembershipData.club.id}-title`} className="font-bold text-lg md:text-3xl pl-1 truncate ...">
+				{clubMembershipData.club.name}
 			</h1>
 			<Card
-				id={`club-${clubData.id}-content`}
+				id={`club-${clubMembershipData.club.id}-content`}
 				className="h-[812px] md:h-[624px] p-4 rounded-3xl relative shadow-sm bg-secondary"
 			>
-				<Spreads clubData={clubData} clubIndex={clubIndex} />
+				<Spreads clubMembershipData={clubMembershipData} />
 			</Card>
 		</div>
 	)

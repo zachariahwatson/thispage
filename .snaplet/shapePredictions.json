@@ -12,10 +12,18 @@
         "confidenceContext": 0
       },
       {
-        "input": "public books image_url",
-        "column": "image_url",
+        "input": "public books cover_image_url",
+        "column": "cover_image_url",
         "shape": "IMAGE_URL",
-        "confidence": 0.9436180591583252,
+        "confidence": 0.9822486639022827,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public books description",
+        "column": "description",
+        "shape": "BOOK_TITLE",
+        "confidence": 0.2061067223548889,
         "context": "GENERAL",
         "confidenceContext": 0
       },
@@ -118,52 +126,6 @@
     ]
   },
   {
-    "schemaName": "public",
-    "tableName": "profiles",
-    "predictions": [
-      {
-        "input": "public profiles avatar_url",
-        "column": "avatar_url",
-        "shape": "INTERNET_AVATAR",
-        "confidence": 0.8755327463150024,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public profiles email",
-        "column": "email",
-        "shape": "EMAIL",
-        "confidence": 0.97197026014328,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public profiles first_name",
-        "column": "first_name",
-        "shape": "PERSON_FIRST_NAME",
-        "confidence": 0.9526280164718628,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public profiles last_name",
-        "column": "last_name",
-        "shape": "PERSON_LAST_NAME",
-        "confidence": 0.9607326984405518,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public profiles name",
-        "column": "name",
-        "shape": "PERSON_FULL_NAME",
-        "confidence": 0.7098298072814941,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      }
-    ]
-  },
-  {
     "schemaName": "auth",
     "tableName": "sessions",
     "predictions": [
@@ -250,6 +212,44 @@
         "column": "role",
         "shape": "ROLE",
         "confidence": 0.9707857370376587,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "users",
+    "predictions": [
+      {
+        "input": "public users avatar_url",
+        "column": "avatar_url",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.9281006455421448,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public users first_name",
+        "column": "first_name",
+        "shape": "PERSON_FIRST_NAME",
+        "confidence": 0.9893118739128113,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public users last_name",
+        "column": "last_name",
+        "shape": "PERSON_LAST_NAME",
+        "confidence": 0.991211473941803,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public users name",
+        "column": "name",
+        "shape": "USERNAME",
+        "confidence": 0.8959667682647705,
         "context": "GENERAL",
         "confidenceContext": 0
       }

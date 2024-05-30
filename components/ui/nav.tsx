@@ -15,11 +15,11 @@ export function Nav({ user }: { user: any }) {
 	return (
 		<header className="flex justify-center border-b">
 			<div className="px-6 md:px-8 py-4 flex flex-row items-center w-full justify-between max-w-5xl">
-				<div className="flex flex-row space-x-8 items-center ">
+				<div className="flex flex-row space-x-4 items-center ">
 					<Link href="/" className="text-2xl">
 						this<span className="font-bold">page</span>
 					</Link>
-					<DropdownMenu>
+					{/* <DropdownMenu>
 						<DropdownMenuTrigger>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ export function Nav({ user }: { user: any }) {
 							<DropdownMenuItem>dark</DropdownMenuItem>
 							<DropdownMenuItem>light</DropdownMenuItem>
 						</DropdownMenuContent>
-					</DropdownMenu>
+					</DropdownMenu> */}
 				</div>
 
 				<DropdownMenu>

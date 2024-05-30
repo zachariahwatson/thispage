@@ -1,98 +1,45 @@
+import { ClubMembership } from "@/lib/types"
 import { createClient } from "@/utils/supabase/server"
-import { ClubType, UnstructuredClubType } from "@/utils/types"
-
-interface MembershipClub {
-	id: number
-	club_id: number
-}
 
 /**
- * gets the authenticated user's clubs that they are members of.
+ * gets the authenticated user's clubs with memberships.
  */
 export async function GET() {
 	try {
 		const supabase = createClient()
 
-		//get the user's club ids as well as membership ids to filter query
-		const membershipClubIds: MembershipClub[] = (await getUserMembershipClubIds()) || []
-		const clubIds = membershipClubIds?.map((item) => item.club_id) || []
-		const membershipIds = membershipClubIds?.map((item) => item.id) || []
+		const {
+			data: { user },
+		} = await supabase.auth.getUser()
 
-		//query
 		const { data, error } = await supabase
-			.from("clubs")
+			.from("members")
 			.select(
-				`id, 
-			name, 
-			description, 
-			members!members_club_id_fkey(
-				favorite, 
-				reading_tab_index, 
-				member_roles!member_roles_member_id_fkey(
+				`
+				id,
+				club:clubs!members_club_id_fkey (
+					id,
+					name,
+					description
+				),
+				is_favorite,
+				...member_roles!member_roles_member_id_fkey(
 					role
 				)
-			)`
+			`
 			)
-			.in("id", clubIds)
-			.in("members.id", membershipIds)
+			.eq("user_id", user?.id || "")
 
 		if (error) {
-			console.error("error getting user clubs: " + error.message + ". " + error.hint)
-			throw new Error(error.message)
+			throw error
 		}
 
-		//structure data for better mutability
-		const structuredData: ClubType[] =
-			//have to do some weird typecasting here
-			(data as any)?.map((club: UnstructuredClubType) => {
-				return {
-					id: club.id,
-					name: club.name,
-					description: club.description,
-					favorite: club.members[0].favorite,
-					readingTabIndex: club.members[0].reading_tab_index,
-					role: club.members[0].member_roles.role,
-				}
-			}) || []
-
-		return Response.json(structuredData, { status: 200 })
+		return Response.json(data as ClubMembership[], { status: 200 })
 	} catch (error) {
-		return Response.json({ error: "an error occurred while fetching clubs: " + error }, { status: 500 })
+		console.error(
+			"\x1b[31m%s\x1b[0m",
+			"\nan error occurred while fetching club memberships:\n" + JSON.stringify(error, null, 2) + "\n"
+		)
+		return Response.json({ error: "an error occurred while fetching club memberships." }, { status: 500 })
 	}
-}
-
-/**
- * gets the authenticated user's club memberships with club ids.
- */
-async function getUserMembershipClubIds() {
-	const supabase = createClient()
-
-	const profileId = await getUserProfileId()
-
-	const { data, error } = await supabase.from("members").select("id, club_id").eq("user_profile_id", profileId)
-
-	if (error) {
-		console.error("error getting user membership ids: " + error.message + ". " + error.hint)
-	}
-
-	return data
-}
-
-/**
- * gets the authenticated user's profile id.
- */
-async function getUserProfileId() {
-	const supabase = createClient()
-
-	const {
-		data: { user },
-	} = await supabase.auth.getUser()
-
-	const { data, error } = await supabase.from("profiles").select("id").eq("user_id", user?.id).limit(1).single()
-
-	if (error) {
-		console.error("error getting user profile: " + error.message + ". " + error.hint)
-	}
-
-	return data?.id
 }

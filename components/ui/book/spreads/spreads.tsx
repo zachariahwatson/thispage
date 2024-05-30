@@ -1,25 +1,27 @@
 "use client"
 
-import { ClubType, ReadingType } from "@/utils/types"
 import { ReadingSpread } from "@/components/ui/book/"
 import { Skeleton } from "@/components/ui/"
 import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/buttons"
+import { Button, NextReading } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
+import { ClubMembership, Reading } from "@/lib/types"
 
 interface Props {
-	clubData: ClubType
-	clubIndex: number
+	clubMembershipData: ClubMembership
 }
 
 /**
  * returns a list of book club reading "spreads". we can't use suspense here as we need the fetch to be called from the client in order to preserve auth cookies. <Suspense> only works with async components and client components can't be async.
  */
-export function Spreads({ clubData, clubIndex }: Props) {
-	const [readingIndex, setReadingIndex] = useState<number>(clubData.readingTabIndex)
+export function Spreads({ clubMembershipData }: Props) {
+	const [readingIndex, setReadingIndex] = useState<number>(
+		// Number(localStorage.getItem(`club-${clubMembershipData.club?.id}-tab-index`))
+		0
+	)
 
 	const fetchReadings = async () => {
-		const url = new URL(`http://127.0.0.1:3000/api/clubs/${clubData.id}/readings`)
+		const url = new URL(`http://localhost:3000/api/clubs/${clubMembershipData.club?.id}/readings`)
 		url.searchParams.append("current", "true")
 		url.searchParams.append("finished", "false")
 		const response = await fetch(url, {
@@ -37,28 +39,24 @@ export function Spreads({ clubData, clubIndex }: Props) {
 		return await response.json()
 	}
 
-	const { data: readings, isLoading: loading } = useQuery<ReadingType[]>(["readings", clubData.id], () =>
+	const { data: readings, isLoading: loading } = useQuery<Reading[]>(["readings", clubMembershipData.club.id], () =>
 		fetchReadings()
 	)
 
-	const handleNextPage = () => {
-		readings && setReadingIndex((readingIndex + 1) % readings.length)
-	}
-
 	return !loading && readings ? (
 		<>
-			{readings.map((reading: ReadingType, index) => (
-				<ReadingSpread
-					key={reading.id}
-					readingData={reading}
-					clubIndex={clubIndex}
-					isVisible={readingIndex === index}
-					readingIndex={index}
-				/>
-			))}
-			<Button id={`club-${clubData.id}-next-button`} onClick={handleNextPage} className="absolute right-8 bottom-8">
-				next
-			</Button>
+			{readings.map(
+				(reading, index) =>
+					reading && (
+						<ReadingSpread key={index} readingData={reading} isVisible={readingIndex === index} readingIndex={index} />
+					)
+			)}
+			<NextReading
+				clubId={clubMembershipData.club.id}
+				readingIndex={readingIndex}
+				setReadingIndex={setReadingIndex}
+				len={readings.length}
+			/>
 		</>
 	) : (
 		<SpreadSkeleton />

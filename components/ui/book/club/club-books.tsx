@@ -1,8 +1,7 @@
 "use client"
 
-import { ClubType } from "@/utils/types"
 import { ClubBook, ClubBookSkeleton } from "@/components/ui/book"
-import { useEffect, useState } from "react"
+import { ClubMembership } from "@/lib/types"
 import { useQuery } from "react-query"
 
 /**
@@ -10,7 +9,7 @@ import { useQuery } from "react-query"
  */
 export function ClubBooks() {
 	const fetchClubs = async () => {
-		const response = await fetch("http://127.0.0.1:3000/api/clubs", {
+		const response = await fetch("http://localhost:3000/api/clubs", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -25,10 +24,10 @@ export function ClubBooks() {
 		return await response.json()
 	}
 
-	const { data: clubs, isLoading: loading } = useQuery<ClubType[]>(["clubs"], () => fetchClubs())
+	const { data: clubMemberships, isLoading: loading } = useQuery<ClubMembership[]>(["clubs"], () => fetchClubs())
 
-	return !loading && clubs ? (
-		clubs?.map((club: ClubType, index) => <ClubBook key={club.id} clubData={club} clubIndex={index} />)
+	return !loading && clubMemberships ? (
+		clubMemberships.map((clubMembership, index) => <ClubBook key={index} clubMembershipData={clubMembership} />)
 	) : (
 		<>
 			<ClubBookSkeleton />

@@ -1,66 +1,65 @@
+import { Interval } from "@/lib/types"
 import { createClient } from "@/utils/supabase/server"
-import { IntervalType, UnstructuredIntervalType } from "@/utils/types"
 import { NextRequest } from "next/server"
 
 /**
  * gets the specified reading's intervals. rls ensures that the authenticated user is a member of the reading.
- * @param {searchParam} current - url query that filters intervals based on the is_current value
- * @param {searchParam} completed - url query that filters intervals based on the is_completed value
  */
 export async function GET(request: NextRequest, { params }: { params: { clubId: string; readingId: string } }) {
 	try {
 		const supabase = createClient()
-		const searchParams = request.nextUrl.searchParams
-		const current: boolean = searchParams.get("current") === "true"
+
+		const {
+			data: { user },
+		} = await supabase.auth.getUser()
 
 		//query
 		const { data, error } = await supabase
 			.from("intervals")
 			.select(
-				`id,
-                is_completed,
-                is_current,
+				`
+				id,
+                goal_page,
                 created_at,
-                members(
-                    profiles(
-						id,
-                        name,
-                        first_name,
-                        last_name,
-						avatar_url
-                    )
-                )`
+                member_interval_progresses (
+					id,
+					is_complete,
+					member:members (
+						id, 
+						user_id,
+						...users (
+							name,
+							first_name,
+							last_name,
+							avatar_url
+						)
+					)
+				)
+				`
 			)
 			.eq("reading_id", params.readingId)
-			.eq("is_current", current)
+			.order("goal_page", { ascending: false })
 
 		if (error) {
-			console.error("error getting reading intervals: " + error.message + ". " + error.hint)
-			throw new Error(error.message)
+			throw error
 		}
 
-		//structure data for better mutability
-		const structuredData: IntervalType[] =
-			//have to do some weird typecasting here
-			(data as any)?.map((interval: UnstructuredIntervalType) => {
-				return {
-					id: interval.id,
-					isCompleted: interval.is_completed,
-					isCurrent: interval.is_current,
-					createdAt: interval.created_at,
-					member: {
-						profile: {
-							id: interval.members.profiles.id,
-							name: interval.members.profiles.name,
-							firstName: interval.members.profiles.first_name,
-							lastName: interval.members.profiles.last_name,
-							avatarUrl: interval.members.profiles.avatar_url,
-						},
-					},
-				}
-			}) || []
-		return Response.json(structuredData, { status: 200 })
+		// Sort member_interval_progresses so that the user's progresses are always first
+		const sortedData = data.map((interval) => {
+			interval.member_interval_progresses.sort((a, b) => {
+				if (a.member?.user_id === user?.id) return -1
+				if (b.member?.user_id === user?.id) return 1
+				return 0
+			})
+			return interval
+		})
+
+		return Response.json(sortedData as Interval[], { status: 200 })
 	} catch (error) {
-		return Response.json({ error: "an error occurred while fetching reading intervals" }, { status: 500 })
+		console.error(
+			"\x1b[31m%s\x1b[0m",
+			"\nan error occurred while fetching reading intervals:\n" + JSON.stringify(error, null, 2) + "\n"
+		)
+		return Response.json({ error: "an error occurred while fetching reading intervals." }, { status: 500 })
 	}
 }

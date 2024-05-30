@@ -14,19 +14,20 @@ import {
 	TooltipTrigger,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
-import { ReadingType } from "@/utils/types"
+import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import { useQuery } from "react-query"
 
 interface Props {
-	readingData: ReadingType
+	interval: Interval
+	readingData: Reading
 	isVertical: boolean
-	userInterval: ReadingType["intervals"][0] | null
 	readingIndex: number
 }
 
-export function ReadingPageLeft({ readingData, isVertical, userInterval, readingIndex }: Props) {
+export function ReadingPageLeft({ interval, readingData, isVertical, readingIndex }: Props) {
 	const MotionCard = motion(Card)
 
 	//framer motion responsive animation (turns book page flip into notepad page flip)
@@ -40,6 +41,28 @@ export function ReadingPageLeft({ readingData, isVertical, userInterval, reading
 				animate: { rotateY: 0, originX: 1, zIndex: 2 },
 		  }
 
+	//fetch the user's progress
+	const fetchUserProgress = async () => {
+		const url = new URL(`http://localhost:3000/api/users/progresses/${(interval && interval?.id) || null}`)
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+
+		if (!response.ok) {
+			const body = await response.json()
+			throw new Error(body.error)
+		}
+
+		return await response.json()
+	}
+
+	const { data: userProgress, isLoading: loading } = useQuery<MemberProgress>(["user progress", interval?.id], () =>
+		fetchUserProgress()
+	)
+
 	return (
 		<MotionCard
 			className="flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-md"
@@ -49,56 +72,67 @@ export function ReadingPageLeft({ readingData, isVertical, userInterval, reading
 			transition={{ type: "tween", duration: 0.15, delay: 0.15, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<div className="flex justify-center px-12 pb-16 pt-8">
+			<div className="flex justify-center px-12 pb-16 pt-8 h-full w-full">
 				<Image
-					className="rounded-lg w-auto md:w-full md:max-h-full shadow-md"
-					src={readingData.book.imageUrl}
-					width={readingData.book.imageWidth}
-					height={readingData.book.imageHeight}
+					className="rounded-lg h-full w-auto"
+					src={readingData?.book?.cover_image_url || ""}
+					width={readingData?.book?.cover_image_width || 0}
+					height={readingData?.book?.cover_image_height || 0}
 					alt={
-						"Cover photo of " +
-						readingData.book.title +
-						" by " +
-						readingData.book.authors.map((author, i) => {
-							if (i === readingData.book.authors.length - 1) {
-								return author
-							} else if (i === readingData.book.authors.length - 2) {
-								return author + " and "
-							} else {
-								return author + ", "
-							}
-						})
+						"Cover photo of " + readingData?.book?.title ||
+						"Unknown" +
+							(readingData?.book?.authors
+								? " by " +
+								  readingData.book.authors
+										.map((author, i) => {
+											if (i === readingData?.book?.authors?.length ? readingData.book.authors?.length - 1 : null) {
+												return author
+											} else if (
+												i === readingData?.book?.authors?.length ? readingData.book.authors?.length - 2 : null
+											) {
+												return author + " and "
+											} else {
+												return author + ", "
+											}
+										})
+										.join("")
+								: null)
 					}
 				/>
 			</div>
+
 			<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
 				<CardHeader className="pb-6 pt-4 md:py-4">
-					<CardTitle className="text-xl md:text-2xl">{readingData.book.title}</CardTitle>
+					<CardTitle className="text-xl md:text-2xl">{readingData?.book?.title}</CardTitle>
 					<CardDescription className="italic">
-						by{" "}
-						{readingData.book.authors.map((author, i) => {
-							if (i === readingData.book.authors.length - 1) {
-								return author
-							} else if (i === readingData.book.authors.length - 2) {
-								return author + " and "
-							} else {
-								return author + ", "
-							}
-						})}
+						{readingData?.book?.authors
+							? " by " +
+							  readingData.book.authors
+									.map((author, i) => {
+										if (i === readingData?.book?.authors?.length ? readingData.book.authors?.length - 1 : null) {
+											return author
+										} else if (i === readingData?.book?.authors?.length ? readingData.book.authors?.length - 2 : null) {
+											return author + " and "
+										} else {
+											return author + ", "
+										}
+									})
+									.join("")
+							: null}
 					</CardDescription>
 				</CardHeader>
-				{userInterval && (
+				{userProgress && (
 					<div className="px-4">
 						<Separator />
 					</div>
 				)}
 				<CardContent className="pr-0 pt-6 md:pt-2">
-					{userInterval ? (
+					{userProgress ? (
 						<>
 							<CardDescription>read to...</CardDescription>
 							<div className="flex flex-row">
 								<p className="font-bold italic">
-									p. <span className="text-6xl md:text-8xl not-italic">{readingData.currentPage}</span>
+									p. <span className="text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
 								</p>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +151,7 @@ export function ReadingPageLeft({ readingData, isVertical, userInterval, reading
 												variant={"ghost"}
 												className="w-14 md:w-16 h-14 md:h-16 p-0 rounded-full text-primary hover:text-primary"
 											>
-												{userInterval?.isCompleted ? (
+												{userProgress?.is_complete ? (
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														viewBox="0 0 24 24"
@@ -149,16 +183,12 @@ export function ReadingPageLeft({ readingData, isVertical, userInterval, reading
 											</Button>
 										</TooltipTrigger>
 										<TooltipContent>
-											<p>{userInterval?.isCompleted ? "un-complete reading" : "complete reading"}</p>
+											<p>{userProgress?.is_complete ? "un-complete reading" : "complete reading"}</p>
 										</TooltipContent>
 									</Tooltip>
 								</div>
 							</div>
-							{readingData.intervalType === "SCHEDULED" ? (
-								<CardDescription className="italic">by August 12, 2024</CardDescription>
-							) : (
-								<CardDescription className="italic">2/5 members have completed</CardDescription>
-							)}
+							<CardDescription className="italic">2/5 members have completed</CardDescription>
 						</>
 					) : (
 						<div className="w-full h-full flex justify-center items-center pt-8 pr-6">
@@ -167,9 +197,9 @@ export function ReadingPageLeft({ readingData, isVertical, userInterval, reading
 					)}
 				</CardContent>
 				<CardFooter>
-					{userInterval ? (
+					{userProgress && interval?.goal_page && readingData?.book?.page_count ? (
 						<Progress
-							value={Math.floor((readingData.currentPage / readingData.book.pageCount) * 100)}
+							value={Math.floor((interval?.goal_page / readingData?.book?.page_count) * 100)}
 							className="h-2 md:h-4"
 						/>
 					) : (

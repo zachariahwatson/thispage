@@ -8,14 +8,13 @@ import {
 	CardTitle,
 	ScrollArea,
 } from "@/components/ui"
-import { IntervalType, ReadingType } from "@/utils/types"
+import { Interval } from "@/lib/types"
 
 interface Props {
-	intervals: IntervalType[]
-	userInterval: ReadingType["intervals"][0] | null
+	progresses: NonNullable<Interval>["member_interval_progresses"]
 }
 
-export function IntervalAvatarList({ intervals, userInterval }: Props) {
+export function IntervalAvatarList({ progresses }: Props) {
 	return (
 		<>
 			<CardHeader>
@@ -24,27 +23,23 @@ export function IntervalAvatarList({ intervals, userInterval }: Props) {
 			<CardContent>
 				<ScrollArea className="h-[684px] border rounded-lg shadow-inner">
 					<div className="grid md:grid-cols-3 p-4">
-						{intervals.map((interval, index) => (
-							<div key={interval.id} className="h-10 flex flex-row mr-8 mb-4">
+						{progresses.map((progress, index) => (
+							<div key={index} className="h-10 flex flex-row mr-8 mb-4">
 								<Avatar
-									key={interval.id}
-									className={`${
-										interval.isCompleted && userInterval ? "ring-ring ring-4" : "ring-background ring-4"
-									} ring-offset-2`}
+									className={`${progress.is_complete ? "ring-ring ring-4" : "ring-background ring-4"} ring-offset-2`}
 								>
-									<AvatarImage src={interval.member.profile.avatarUrl} />
+									<AvatarImage src={progress.member?.avatar_url || ""} />
 									<AvatarFallback>
-										{interval.member.profile.firstName && interval.member.profile.lastName
-											? interval.member.profile.firstName[0] + interval.member.profile.lastName[0]
-											: interval.member.profile.name.split(" ")[0] + interval.member.profile.name.split(" ")[1]}
+										{progress.member?.first_name && progress.member?.last_name
+											? progress.member.first_name[0] + progress.member.last_name[0]
+											: progress.member?.name &&
+											  progress.member?.name?.split(" ")[0] + progress.member?.name?.split(" ")[1]}
 									</AvatarFallback>
 								</Avatar>
 								<p className="ml-4 self-center">
-									{index !== 0
-										? interval.member.profile.firstName && interval.member.profile.lastName
-											? interval.member.profile.firstName + " " + interval.member.profile.lastName
-											: interval.member.profile.name
-										: "you"}
+									{progress.member?.first_name && progress.member?.last_name
+										? progress.member.first_name + " " + progress.member.last_name
+										: progress.member?.name}
 								</p>
 							</div>
 						))}

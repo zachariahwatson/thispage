@@ -1,6 +1,4 @@
 "use client"
-
-import { ReadingType, IntervalType } from "@/utils/types"
 import {
 	Card,
 	CardContent,
@@ -27,57 +25,60 @@ import Image from "next/image"
 import { useQuery } from "react-query"
 import { useMediaQuery } from "@/hooks"
 import { AnimatePresence } from "framer-motion"
+import { Interval, Reading } from "@/lib/types"
 
 interface Props {
-	readingData: ReadingType
-	clubIndex: number
+	readingData: Reading
 	isVisible: boolean
 	readingIndex: number
 }
+import { createClient } from "@/utils/supabase/client"
+import { User } from "@supabase/supabase-js"
 
-export function ReadingSpread({ readingData, clubIndex, isVisible, readingIndex }: Props) {
-	const [userInterval, setUserInterval] = useState<ReadingType["intervals"][0] | null>(null)
+export function ReadingSpread({ readingData, isVisible, readingIndex }: Props) {
+	const [userInterval, setUserInterval] = useState<User>()
 	const isVertical = useMediaQuery("(max-width: 768px)")
 
-	useEffect(() => {
-		const startDate = new Date(readingData.intervalStartDate)
-		const endDate = new Date(startDate)
-		endDate.setDate(startDate.getDate() + readingData.intervalDays)
-
-		const filteredIntervals = readingData.intervals.filter((interval) => {
-			const createdAt = new Date(interval.createdAt)
-			return (
-				interval.isCurrent &&
-				createdAt >= startDate &&
-				(readingData.intervalType !== "SCHEDULED" || createdAt <= endDate)
-			)
+	//fetch the reading's intervals
+	const fetchIntervals = async () => {
+		const url = new URL(`http://localhost:3000/api/clubs/${readingData?.club_id}/readings/${readingData?.id}/intervals`)
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
 		})
 
-		const mostRecentInterval =
-			filteredIntervals.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] || null
+		if (!response.ok) {
+			const body = await response.json()
+			throw new Error(body.error)
+		}
 
-		setUserInterval(mostRecentInterval)
-	}, [])
+		return await response.json()
+	}
+
+	const { data: intervals, isLoading: loading } = useQuery<Interval[]>(
+		["intervals", readingData?.club_id, readingData?.id],
+		() => fetchIntervals()
+	)
 
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
 				<div
-					id={`club-${readingData.clubId}-spread`}
+					id={`club-${readingData?.club_id}-spread`}
 					className="h-full flex flex-col md:flex-row rounded-lg bg-background"
 				>
 					<ReadingPageLeft
+						interval={(intervals && intervals[0]) || null}
 						readingData={readingData}
 						isVertical={isVertical}
-						userInterval={userInterval}
 						readingIndex={readingIndex}
 					/>
 					<ReadingPageRight
-						clubId={readingData.clubId}
-						readingId={readingData.id}
+						interval={(intervals && intervals[0]) || null}
+						loading={loading}
 						isVertical={isVertical}
-						clubIndex={clubIndex}
-						userInterval={userInterval}
 						readingIndex={readingIndex}
 					/>
 				</div>

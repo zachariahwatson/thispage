@@ -1,4 +1,3 @@
-import { IntervalType, ReadingType } from "@/utils/types"
 import {
 	Avatar,
 	AvatarImage,
@@ -13,14 +12,14 @@ import {
 } from "@/components/ui"
 import { Tooltip } from "@/components/ui"
 import { IntervalAvatarList } from "./interval-avatar-list"
+import type { Interval } from "@/lib/types"
 
 interface Props {
-	intervals: IntervalType[]
-	userInterval: ReadingType["intervals"][0] | null
+	progresses: NonNullable<Interval>["member_interval_progresses"]
 }
 
-export function IntervalAvatarGroup({ intervals, userInterval }: Props) {
-	const previewIntervals = intervals.slice(0, 5)
+export function IntervalAvatarGroup({ progresses }: Props) {
+	const previewProgresses = progresses.slice(0, 5)
 	return (
 		<>
 			<Dialog>
@@ -28,34 +27,31 @@ export function IntervalAvatarGroup({ intervals, userInterval }: Props) {
 					<CardTitle className="text-xl">members</CardTitle>
 				</DialogTrigger>
 				<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
-					<IntervalAvatarList intervals={intervals} userInterval={userInterval} />
+					<IntervalAvatarList progresses={progresses} />
 				</DialogContent>
 			</Dialog>
 			<div className="flex flex-row -space-x-1">
-				{previewIntervals.map((interval, index) => (
-					<Tooltip key={interval.id}>
+				{previewProgresses.map((progress, index) => (
+					<Tooltip key={index}>
 						<TooltipTrigger className="cursor-default">
-							<Avatar
-								className={`${interval.isCompleted && userInterval ? "ring-ring ring-4" : "ring-background ring-4"}`}
-							>
-								<AvatarImage src={interval.member.profile.avatarUrl} />
+							<Avatar className={`${progress.is_complete ? "ring-ring ring-4" : "ring-background ring-4"}`}>
+								<AvatarImage src={progress.member?.avatar_url || ""} />
 								<AvatarFallback>
-									{interval.member.profile.firstName && interval.member.profile.lastName
-										? interval.member.profile.firstName[0] + interval.member.profile.lastName[0]
-										: interval.member.profile.name.split(" ")[0] + interval.member.profile.name.split(" ")[1]}
+									{progress.member?.first_name && progress.member?.last_name
+										? progress.member.first_name[0] + progress.member.last_name[0]
+										: progress.member?.name &&
+										  progress.member?.name?.split(" ")[0] + progress.member?.name?.split(" ")[1]}
 								</AvatarFallback>
 							</Avatar>
 						</TooltipTrigger>
 						<TooltipContent>
-							{index !== 0
-								? interval.member.profile.firstName && interval.member.profile.lastName
-									? interval.member.profile.firstName + " " + interval.member.profile.lastName
-									: interval.member.profile.name
-								: "you"}
+							{progress.member?.first_name && progress.member?.last_name
+								? progress.member.first_name + " " + progress.member.last_name
+								: progress.member?.name}
 						</TooltipContent>
 					</Tooltip>
 				))}
-				{intervals.length > previewIntervals.length && (
+				{progresses.length > previewProgresses.length && (
 					<Dialog>
 						<DialogTrigger>
 							<Tooltip>
@@ -83,7 +79,7 @@ export function IntervalAvatarGroup({ intervals, userInterval }: Props) {
 							</Tooltip>
 						</DialogTrigger>
 						<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
-							<IntervalAvatarList intervals={intervals} userInterval={userInterval} />
+							<IntervalAvatarList progresses={progresses} />
 						</DialogContent>
 					</Dialog>
 				)}

@@ -2,20 +2,18 @@
 
 import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { ReadingPosts, IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "@/components/ui/book"
-import { IntervalType, ReadingType } from "@/utils/types"
+import { Interval } from "@/lib/types"
 import { motion } from "framer-motion"
 import { useQuery } from "react-query"
 
 interface Props {
-	clubId: number
-	readingId: number
+	interval: Interval
+	loading: boolean
 	isVertical: boolean
-	clubIndex: number
-	userInterval: ReadingType["intervals"][0] | null
 	readingIndex: number
 }
 
-export function ReadingPageRight({ clubId, readingId, isVertical, clubIndex, userInterval, readingIndex }: Props) {
+export function ReadingPageRight({ interval, loading, isVertical, readingIndex }: Props) {
 	const MotionCard = motion(Card)
 
 	//fix initial and animate
@@ -31,38 +29,6 @@ export function ReadingPageRight({ clubId, readingId, isVertical, clubIndex, use
 				exit: { rotateY: -90, originX: 0, zIndex: 2 },
 		  }
 
-	//fetch other members' intervals
-	const fetchIntervals = async () => {
-		const url = new URL(`http://127.0.0.1:3000/api/clubs/${clubId}/readings/${readingId}/intervals`)
-		url.searchParams.append("current", "true")
-		const response = await fetch(url, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-
-		if (!response.ok) {
-			const body = await response.json()
-			throw new Error(body.error)
-		}
-
-		return await response.json()
-	}
-
-	const { data: intervals, isLoading: intervalLoading } = useQuery<IntervalType[]>(
-		["intervals", clubId, readingId],
-		() => fetchIntervals()
-	)
-
-	// sort intervals with user's interval first
-	const sortedIntervals =
-		intervals?.sort((a, b) => {
-			if (a.id === userInterval?.id) return -1 // user's interval first
-			if (b.id === userInterval?.id) return 1 // user's interval first
-			return 0
-		}) || []
-
 	return (
 		<MotionCard
 			className="flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-md"
@@ -73,11 +39,11 @@ export function ReadingPageRight({ clubId, readingId, isVertical, clubIndex, use
 		>
 			<CardHeader>
 				<CardTitle className="text-xl">discussion</CardTitle>
-				<ReadingPosts clubId={clubId} readingId={readingId} clubIndex={clubIndex} userInterval={userInterval} />
+				{/* <ReadingPosts clubId={clubId} readingId={readingId} redactSpoilers={intervals} /> */}
 			</CardHeader>
 			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2">
-				{intervals && !intervalLoading ? (
-					<IntervalAvatarGroup intervals={sortedIntervals} userInterval={userInterval} />
+				{interval && !loading ? (
+					<IntervalAvatarGroup progresses={interval.member_interval_progresses} />
 				) : (
 					<IntervalAvatarGroupSkeleton />
 				)}

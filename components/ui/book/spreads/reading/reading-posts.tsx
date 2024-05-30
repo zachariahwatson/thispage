@@ -1,6 +1,6 @@
 "use client"
 
-import { ReadingType, IntervalType, ReadingPostType } from "@/utils/types"
+// import { ReadingType, ReadingPostType } from "@/utils/types"
 import {
 	Card,
 	CardContent,
@@ -30,20 +30,19 @@ import { ScrollAreaElement } from "@radix-ui/react-scroll-area"
 import { useQuery } from "react-query"
 
 interface Props {
-	clubId: number
-	readingId: number
-	clubIndex: number
+	clubId: number | null
+	readingId: number | null
 	userInterval: ReadingType["intervals"][0] | null
 }
 
-export function ReadingPosts({ clubId, readingId, clubIndex, userInterval }: Props) {
+export function ReadingPosts({ clubId, readingId, userInterval }: Props) {
 	//gotta make a ref for the scrollarea to apply to the child div inside it - doing this because scrollarea adds a dive in between them with display:table and it messes up the truncation so we have to manually set the width back to what it's supposed to be
 	const scrollAreaRef = useRef<ScrollAreaElement>(null)
 	const [innerWidth, setInnerWidth] = useState<string | number>("auto")
 
 	//fetch reading's posts
 	const fetchPosts = async () => {
-		const url = new URL(`http://127.0.0.1:3000/api/clubs/${clubId}/readings/${readingId}/posts`)
+		const url = new URL(`http://localhost:3000/api/clubs/${clubId}/readings/${readingId}/posts`)
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {
@@ -85,13 +84,14 @@ export function ReadingPosts({ clubId, readingId, clubIndex, userInterval }: Pro
 			<div className="p-4" style={{ width: innerWidth }}>
 				{!loading && posts ? (
 					posts.map((post) =>
-						userInterval?.isCompleted ? (
+						(post.isSpoiler && userInterval?.isCompleted && userInterval?.isCurrent) ||
+						(!post.isSpoiler && userInterval?.isCurrent) ? (
 							<ReadingPost key={post.id} likes={post.likes} id={post.id} clubId={clubId} readingId={readingId}>
 								{post.title}
 							</ReadingPost>
 						) : (
 							<ReadingPost key={post.id} likes={0} id={-1} clubId={clubId} readingId={readingId}>
-								⚠️spoiler⚠️complete the reading!
+								⚠️spoiler⚠️{!userInterval || !userInterval?.isCurrent ? "join" : "complete"} the reading!
 							</ReadingPost>
 						)
 					)

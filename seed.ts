@@ -7,92 +7,95 @@
 import { createSeedClient } from "@snaplet/seed"
 
 const main = async () => {
-	const seed = await createSeedClient({ dryRun: true })
+	const seed = await createSeedClient({ dryRun: true, connect: true })
 
 	// Truncate all tables in the database
-	await seed.$resetDatabase()
+	await seed.$resetDatabase(["!public.club_permissions"])
 
-	const memberCount = Math.floor(Math.random() * 25) + 25
+	await seed.books([
+		{
+			open_library_id: "OL7950145M",
+			title: "Dangerous Visions",
+			description: null,
+			authors: ["Harlan Ellison"],
+			page_count: 592,
+			cover_image_url: "https://covers.openlibrary.org/b/id/477258-M.jpg",
+			cover_image_width: 180,
+			cover_image_height: 268,
+		},
+		{
+			open_library_id: "OL9655772M",
+			title: `Childhood's End`,
+			description: `Childhood's End is a 1953 science fiction novel by British author Arthur C. Clarke. The story follows the peaceful alien invasion of Earth by the mysterious Overlords, whose arrival ends all war, helps form a world government, and turns the planet into a near-utopia. Many questions are asked about the origins and mission of the aliens, but they avoid answering, preferring to remain in their ships, governing through indirect rule. Decades later, the Overlords eventually show themselves, and their impact on human culture leads to a Golden Age. However, the last generation of children on Earth begin to display powerful psychic abilities, heralding their evolution into a group mind, a transcendent form of life. `,
+			authors: ["Arthur C. Clarke"],
+			page_count: 224,
+			cover_image_url: "https://covers.openlibrary.org/b/id/207485-M.jpg",
+			cover_image_width: 180,
+			cover_image_height: 302,
+		},
+		{
+			open_library_id: "OL25440979M",
+			title: "Discourses, Fragments, Handbook",
+			description: null,
+			authors: ["Epictetus"],
+			page_count: 390,
+			cover_image_url: "https://covers.openlibrary.org/b/id/7275050-M.jpg",
+			cover_image_width: 180,
+			cover_image_height: 274,
+		},
+		{
+			open_library_id: "OL24211309M",
+			title: "JEM",
+			description: `The discovery of another habitable world might spell salvation to the three (Food Bloc, Fuel Bloc & People Bloc) bitterly competing power blocs of the war torn & resource-starved 21st century. But when their representatives arrive on Jem, with its three intelligent species, they discover instead the perfect situation into which to export their rivalries. Subtitled, with savage irony, 'The Making of a Utopia', Jem is one of Frederik Pohl's most powerful novels.`,
+			authors: ["Frederik Pohl"],
+			page_count: 314,
+			cover_image_url: "https://covers.openlibrary.org/b/id/6522059-M.jpg",
+			cover_image_width: 180,
+			cover_image_height: 274,
+		},
+		{
+			open_library_id: "OL5725664M",
+			title: "Letters from a Stoic",
+			description: null,
+			authors: ["Seneca the Younger"],
+			page_count: 254,
+			cover_image_url: "https://covers.openlibrary.org/b/id/103759-M.jpg",
+			cover_image_width: 180,
+			cover_image_height: 275,
+		},
+	])
 
-	const { users } = await seed.users((x) =>
-		x(memberCount, (ctx) => ({
-			raw_user_meta_data: {
-				avatar_url: `https://picsum.photos/200?random=${ctx.index}`,
-			},
+	const { clubs } = await seed.clubs((x) =>
+		x(2, {
+			readings: (x) =>
+				x({ min: 2, max: 5 }, (ctx) => ({
+					start_date: Math.random() < 0.5 ? new Date(Date.now() + 5 * 24 * 60 * 60 * 1000) : new Date(Date.now()),
+					join_in_progress: Math.random() < 0.5,
+				})),
+		})
+	)
+
+	await seed.club_invite_codes((x) => x(5))
+
+	const { members } = await seed.members((x) => x({ min: 25, max: 50 }))
+
+	await seed.intervals((x) =>
+		x(10, (ctx) => ({
+			goal_page: Math.floor(Math.random() * 100),
 		}))
 	)
 
-	const { profiles } = await seed.profiles(
-		(x) =>
-			x(memberCount, (ctx) => ({
-				avatar_url: `https://picsum.photos/200?random=${ctx.index}`,
-			})),
-		{ connect: { users } }
+	await seed.member_interval_progresses((x) =>
+		x(members.length, (ctx) => ({
+			is_complete: Math.random() < 0.5,
+		}))
 	)
 
-	const { clubs } = await seed.clubs((x) => x({ min: 2, max: 5 }))
+	await seed.posts((x) => x(25))
 
-	await seed.club_invite_codes((x) => x(5), { connect: { clubs } })
+	await seed.comments((x) => x({ min: 25, max: 50 }))
 
-	const { members } = await seed.members((x) => x(memberCount), { connect: { profiles, clubs } })
-
-	await seed.member_roles((x) => x(memberCount), { connect: { members } })
-
-	const { books } = await seed.books(
-		(x) =>
-			x({ min: 10, max: 25 }, (ctx) => ({
-				image_width: 200,
-				image_height: 300,
-				image_url: `https://picsum.photos/200/300?random=${ctx.index}`,
-				page_count: Math.floor(Math.random() * 800) + 200,
-			})),
-		{ connect: { members } }
-	)
-
-	const { readings } = await seed.readings(
-		(x) =>
-			x({ min: 10, max: 25 }, (ctx) => ({
-				current_page: 100 + Math.floor(Math.random() * 100),
-				is_current: Math.random() < 0.9,
-			})),
-		{ connect: { books, clubs } }
-	)
-
-	await seed.intervals(
-		(x) =>
-			x({ min: 25, max: 75 }, (ctx) => ({
-				is_completed: Math.random() < 0.3,
-				is_current: Math.random() < 0.7,
-			})),
-		{ connect: { members, readings } }
-	)
-
-	const { posts } = await seed.posts(
-		(x) =>
-			x({ min: 25, max: 75 }, (ctx) => ({
-				likes: Math.floor(Math.random() * 10),
-				is_spoiler: Math.random() < 0.3,
-			})),
-		{ connect: { members, readings } }
-	)
-
-	const { comments } = await seed.comments(
-		(x) =>
-			x({ min: 50, max: 150 }, (ctx) => ({
-				likes: Math.floor(Math.random() * 10),
-			})),
-		{ connect: { members, posts } }
-	)
-
-	await seed.comments(
-		(x) =>
-			x({ min: 50, max: 150 }, (ctx) => ({
-				likes: Math.floor(Math.random() * 10),
-			})),
-		{ connect: { members, posts, comments } }
-	)
-
-	//console.log("Database seeded successfully!")
+	await seed.likes((x) => x({ min: 50, max: 100 }))
 
 	process.exit()
 }
