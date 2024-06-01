@@ -28,14 +28,15 @@ import { Button } from "@/components/ui/buttons"
 import Image from "next/image"
 import { ScrollAreaElement } from "@radix-ui/react-scroll-area"
 import { useQuery } from "react-query"
+import type { ReadingPost as ReadingPostType } from "@/lib/types"
 
 interface Props {
 	clubId: number | null
 	readingId: number | null
-	userInterval: ReadingType["intervals"][0] | null
+	redactSpoilers: boolean
 }
 
-export function ReadingPosts({ clubId, readingId, userInterval }: Props) {
+export function ReadingPosts({ clubId, readingId, redactSpoilers }: Props) {
 	//gotta make a ref for the scrollarea to apply to the child div inside it - doing this because scrollarea adds a dive in between them with display:table and it messes up the truncation so we have to manually set the width back to what it's supposed to be
 	const scrollAreaRef = useRef<ScrollAreaElement>(null)
 	const [innerWidth, setInnerWidth] = useState<string | number>("auto")
@@ -80,18 +81,17 @@ export function ReadingPosts({ clubId, readingId, userInterval }: Props) {
 		/**
 		 * @todo - figure out why it's becoming display: table
 		 */
-		<ScrollArea ref={scrollAreaRef} className="border rounded-lg h-[208px] md:h-[418px] shadow-inner">
-			<div className="p-4" style={{ width: innerWidth }}>
+		<ScrollArea ref={scrollAreaRef} className="border rounded-lg h-[200px] md:h-[418px] shadow-shadow shadow-inner">
+			<div className="p-3 md:p-4" style={{ width: innerWidth }}>
 				{!loading && posts ? (
 					posts.map((post) =>
-						(post.isSpoiler && userInterval?.isCompleted && userInterval?.isCurrent) ||
-						(!post.isSpoiler && userInterval?.isCurrent) ? (
-							<ReadingPost key={post.id} likes={post.likes} id={post.id} clubId={clubId} readingId={readingId}>
-								{post.title}
+						redactSpoilers && post.is_spoiler ? (
+							<ReadingPost key={post.id} likes={0} id={-1} clubId={clubId} readingId={readingId}>
+								⚠️spoiler⚠️complete the reading!
 							</ReadingPost>
 						) : (
-							<ReadingPost key={post.id} likes={0} id={-1} clubId={clubId} readingId={readingId}>
-								⚠️spoiler⚠️{!userInterval || !userInterval?.isCurrent ? "join" : "complete"} the reading!
+							<ReadingPost key={post.id} likes={post.likes_count} id={post.id} clubId={clubId} readingId={readingId}>
+								{post.title}
 							</ReadingPost>
 						)
 					)

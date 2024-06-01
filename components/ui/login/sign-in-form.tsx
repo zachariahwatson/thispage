@@ -2,7 +2,7 @@
 
 import { Button, SubmitButton } from "@/components/ui/buttons"
 import { signIn, signInWithGoogle } from "@/actions/login"
-import { signInFormSchema } from "@/utils/zod"
+import { signInFormSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"

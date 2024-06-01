@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server"
-import { IntervalType, ReadingPostType, UnstructuredIntervalType, UnstructuredReadingPostType } from "@/utils/types"
+import type { ReadingPost } from "@/lib/types"
 import { NextRequest } from "next/server"
 
 /**
@@ -15,31 +15,22 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			.select(
 				`id,
                 title,
-                likes,
+                likes_count,
                 is_spoiler,
                 created_at`
 			)
 			.eq("reading_id", params.readingId)
 
 		if (error) {
-			console.error("error getting reading posts: " + error.message + ". " + error.hint)
-			throw new Error(error.message)
+			throw error
 		}
 
-		//structure data for better mutability
-		const structuredData: ReadingPostType[] =
-			//have to do some weird typecasting here
-			(data as any)?.map((post: UnstructuredReadingPostType) => {
-				return {
-					id: post.id,
-					title: post.title,
-					likes: post.likes,
-					isSpoiler: post.is_spoiler,
-					createdAt: post.created_at,
-				}
-			}) || []
-		return Response.json(structuredData, { status: 200 })
+		return Response.json(data as ReadingPost[], { status: 200 })
 	} catch (error) {
-		return Response.json({ error: "an error occurred while fetching reading posts" }, { status: 500 })
+		console.error(
+			"\x1b[31m%s\x1b[0m",
+			"\nan error occurred while fetching the reading's posts:\n" + JSON.stringify(error, null, 2) + "\n"
+		)
+		return Response.json({ error: "an error occurred while fetching the reading's posts." }, { status: 500 })
 	}
 }

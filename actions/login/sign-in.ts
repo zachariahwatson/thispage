@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { z } from "zod"
-import { signInFormSchema } from "@/utils/zod"
+import { signInFormSchema } from "@/lib/zod"
 import { revalidatePath } from "next/cache"
 
 export async function signIn(values: z.infer<typeof signInFormSchema>) {

@@ -2,18 +2,29 @@
 
 import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { ReadingPosts, IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "@/components/ui/book"
-import { Interval } from "@/lib/types"
+import { Interval, MemberProgress } from "@/lib/types"
 import { motion } from "framer-motion"
 import { useQuery } from "react-query"
 
 interface Props {
 	interval: Interval
 	loading: boolean
+	userProgress: MemberProgress
+	clubId: number | null
+	readingId: number | null
 	isVertical: boolean
 	readingIndex: number
 }
 
-export function ReadingPageRight({ interval, loading, isVertical, readingIndex }: Props) {
+export function ReadingPageRight({
+	interval,
+	loading,
+	userProgress,
+	clubId,
+	readingId,
+	isVertical,
+	readingIndex,
+}: Props) {
 	const MotionCard = motion(Card)
 
 	//fix initial and animate
@@ -31,28 +42,32 @@ export function ReadingPageRight({ interval, loading, isVertical, readingIndex }
 
 	return (
 		<MotionCard
-			className="flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-md"
+			className="flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow shadow-md"
 			variants={rightVariants}
 			exit="exit"
 			transition={{ type: "tween", duration: 0.15, ease: "easeIn" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader>
+			<CardHeader className="px-4 md:px-6">
 				<CardTitle className="text-xl">discussion</CardTitle>
-				{/* <ReadingPosts clubId={clubId} readingId={readingId} redactSpoilers={intervals} /> */}
+				<ReadingPosts
+					clubId={clubId}
+					readingId={readingId}
+					redactSpoilers={userProgress ? !userProgress.is_complete : true}
+				/>
 			</CardHeader>
-			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2">
+			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
 				{interval && !loading ? (
 					<IntervalAvatarGroup progresses={interval.member_interval_progresses} />
 				) : (
 					<IntervalAvatarGroupSkeleton />
 				)}
 			</CardFooter>
-			<div className="bg-gradient-to-r from-border to-card py-2 hidden md:block absolute h-full top-0 left-0">
-				<Separator orientation="vertical" className="mr-4 bg-foreground/5" />
+			<div className="bg-gradient-to-r from-shadow to-card py-2 hidden md:block absolute h-full top-0 left-0">
+				<Separator orientation="vertical" className="mr-4 bg-shadow-dark" />
 			</div>
-			<div className="bg-gradient-to-b from-border to-card px-2 block md:hidden absolute w-full top-0 right-0">
-				<Separator orientation="horizontal" className="mb-4 bg-foreground/5" />
+			<div className="bg-gradient-to-b from-shadow to-card px-2 block md:hidden absolute w-full top-0 right-0">
+				<Separator orientation="horizontal" className="mb-4 bg-shadow-dark" />
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>

@@ -1,12 +1,18 @@
 "use client"
 
-import { PostType } from "@/utils/types"
 import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
 	Badge,
+	Drawer,
+	DrawerContent,
+	DrawerDescription,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
 	PostComments,
+	ScrollArea,
 	Separator,
 	Sheet,
 	SheetContent,
@@ -21,6 +27,8 @@ import { Button } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
 import Image from "next/image"
 import Link from "next/link"
+import type { Post } from "@/lib/types"
+import { useMediaQuery } from "@/hooks"
 
 interface Props {
 	clubId: string
@@ -47,9 +55,11 @@ export function Post({ clubId, readingId, postId }: Props) {
 		return await response.json()
 	}
 
-	const { data: post, isLoading: loading } = useQuery<PostType>(["post", clubId, readingId, postId], () => fetchPost())
+	const { data: post, isLoading: loading } = useQuery<Post>(["post", clubId, readingId, postId], () => fetchPost())
 
-	const createdAt = post && new Date(post?.createdAt)
+	const createdAt = post && new Date(post.created_at)
+
+	const isVertical = useMediaQuery("(max-width: 768px)")
 
 	return !loading && post ? (
 		<div className="flex flex-col justify-center max-w-4xl w-full space-y-4">
@@ -71,18 +81,18 @@ export function Post({ clubId, readingId, postId }: Props) {
 					</Button>
 					<div className="mr-4">
 						<Avatar className="w-8 h-8 md:w-10 md:h-10">
-							<AvatarImage src={post.member.profile.avatarUrl} />
+							<AvatarImage src={post.member?.avatar_url || ""} />
 							<AvatarFallback>
-								{post.member.profile.firstName && post.member.profile.lastName
-									? post.member.profile.firstName[0] + post.member.profile.lastName[0]
-									: post.member.profile.name.split(" ")[0] + post.member.profile.name.split(" ")[1]}
+								{post.member?.first_name && post.member?.last_name
+									? post.member?.first_name[0] + post.member?.last_name[0]
+									: post.member?.name && post.member?.name.split(" ")[0] + post.member?.name.split(" ")[1]}
 							</AvatarFallback>
 						</Avatar>
 					</div>
 					<div className="relative max-w-[calc(100%-56px)] w-full">
 						<div className="flex flex-col pr-10">
 							<p className="text-md">
-								{post.member.profile.name} •{" "}
+								{post.member?.name} •{" "}
 								<span className="text-sm">
 									{createdAt?.toLocaleDateString(undefined, {
 										year: "numeric",
@@ -96,74 +106,140 @@ export function Post({ clubId, readingId, postId }: Props) {
 							</p>
 						</div>
 						<div className="absolute right-0 top-0">
-							<Sheet>
-								<SheetTrigger className="hover:ring-secondary hover:ring-4 rounded transition-all">
-									<Image
-										className="rounded h-10 md:h-16 w-auto shadow-md"
-										src={post.reading.book.imageUrl}
-										width={post.reading.book.imageWidth}
-										height={post.reading.book.imageHeight}
-										alt={
-											"Cover photo of " +
-											post.reading.book.title +
-											" by " +
-											post.reading.book.authors.map((author, i) => {
-												if (i === post.reading.book.authors.length - 1) {
-													return author
-												} else if (i === post.reading.book.authors.length - 2) {
-													return author + " and "
-												} else {
-													return author + ", "
-												}
-											})
-										}
-									/>
-								</SheetTrigger>
-								<SheetContent className="space-y-4">
-									<SheetHeader className="text-left">
-										<SheetTitle>{post.reading.book.title}</SheetTitle>
-										<SheetDescription className="italic">
-											by{" "}
-											{post.reading.book.authors.map((author, i) => {
-												if (i === post.reading.book.authors.length - 1) {
-													return author
-												} else if (i === post.reading.book.authors.length - 2) {
-													return author + " and "
-												} else {
-													return author + ", "
-												}
-											})}
-										</SheetDescription>
-									</SheetHeader>
-									<Image
-										className="rounded-lg w-full max-h-full shadow-md"
-										src={post.reading.book.imageUrl}
-										width={post.reading.book.imageWidth}
-										height={post.reading.book.imageHeight}
-										alt={
-											"Cover photo of " +
-											post.reading.book.title +
-											" by " +
-											post.reading.book.authors.map((author, i) => {
-												if (i === post.reading.book.authors.length - 1) {
-													return author
-												} else if (i === post.reading.book.authors.length - 2) {
-													return author + " and "
-												} else {
-													return author + ", "
-												}
-											})
-										}
-									/>
-								</SheetContent>
-							</Sheet>
+							{isVertical ? (
+								<Drawer>
+									<DrawerTrigger className="hover:ring-secondary hover:ring-4 rounded transition-all">
+										<Image
+											className="rounded h-10 md:h-16 w-auto shadow-shadow shadow-md"
+											src={post.reading.book.cover_image_url || ""}
+											width={post.reading.book.cover_image_width || 0}
+											height={post.reading.book.cover_image_height || 0}
+											alt={
+												"Cover photo of " +
+												post.reading.book.title +
+												" by " +
+												post.reading.book.authors?.map((author, i) => {
+													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author
+													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author + " and "
+													} else {
+														return author + ", "
+													}
+												})
+											}
+										/>
+									</DrawerTrigger>
+									<DrawerContent className="space-y-4 p-6 max-h-screen h-full">
+										<DrawerHeader className="text-left p-0">
+											<DrawerTitle>{post.reading.book.title}</DrawerTitle>
+											<DrawerDescription className="italic">
+												by{" "}
+												{post.reading.book.authors?.map((author, i) => {
+													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author
+													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author + " and "
+													} else {
+														return author + ", "
+													}
+												})}
+											</DrawerDescription>
+										</DrawerHeader>
+										<Image
+											className="rounded-lg w-full max-w-48 shadow-shadow shadow-md"
+											src={post.reading.book.cover_image_url || ""}
+											width={post.reading.book.cover_image_width || 0}
+											height={post.reading.book.cover_image_height || 0}
+											alt={
+												"Cover photo of " +
+												post.reading.book.title +
+												" by " +
+												post.reading.book.authors?.map((author, i) => {
+													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author
+													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author + " and "
+													} else {
+														return author + ", "
+													}
+												})
+											}
+										/>
+										<DrawerDescription className="italic">{post.reading.book.description}</DrawerDescription>
+									</DrawerContent>
+								</Drawer>
+							) : (
+								<Sheet>
+									<SheetTrigger className="hover:ring-secondary hover:ring-4 rounded transition-all">
+										<Image
+											className="rounded h-10 md:h-16 w-auto shadow-shadow shadow-md"
+											src={post.reading.book.cover_image_url || ""}
+											width={post.reading.book.cover_image_width || 0}
+											height={post.reading.book.cover_image_height || 0}
+											alt={
+												"Cover photo of " +
+												post.reading.book.title +
+												" by " +
+												post.reading.book.authors?.map((author, i) => {
+													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author
+													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author + " and "
+													} else {
+														return author + ", "
+													}
+												})
+											}
+										/>
+									</SheetTrigger>
+									<SheetContent className="space-y-4">
+										<SheetHeader className="text-left">
+											<SheetTitle>{post.reading.book.title}</SheetTitle>
+											<SheetDescription className="italic">
+												by{" "}
+												{post.reading.book.authors?.map((author, i) => {
+													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author
+													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author + " and "
+													} else {
+														return author + ", "
+													}
+												})}
+											</SheetDescription>
+										</SheetHeader>
+										<Image
+											className="rounded-lg w-full max-h-full shadow-shadow shadow-md"
+											src={post.reading.book.cover_image_url || ""}
+											width={post.reading.book.cover_image_width || 0}
+											height={post.reading.book.cover_image_height || 0}
+											alt={
+												"Cover photo of " +
+												post.reading.book.title +
+												" by " +
+												post.reading.book.authors?.map((author, i) => {
+													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author
+													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
+														return author + " and "
+													} else {
+														return author + ", "
+													}
+												})
+											}
+										/>
+										<SheetDescription className="italic">{post.reading.book.description}</SheetDescription>
+									</SheetContent>
+								</Sheet>
+							)}
 						</div>
 					</div>
 				</div>
 				<h1 className="text-lg md:text-2xl font-bold">{post.title}</h1>
 				<p className="md:text-md text-sm">{post.content}</p>
 				<Button className="p-0 bg-background hover:bg-background mr-2" variant="secondary">
-					<Badge variant="secondary">{post.likes} 👍</Badge>
+					<Badge variant="secondary">{post.likes_count} 👍</Badge>
 				</Button>
 			</div>
 			<div className="pr-2">
@@ -196,7 +272,7 @@ export function PostSkeleton() {
 							<Skeleton className="h-5 w-56" />
 						</div>
 						<div className="absolute right-0 top-0">
-							<Skeleton className="rounded h-10 md:h-16 w-7 md:w-12 shadow-md" />
+							<Skeleton className="rounded h-10 md:h-16 w-7 md:w-12 shadow-shadow shadow-md" />
 						</div>
 					</div>
 				</div>

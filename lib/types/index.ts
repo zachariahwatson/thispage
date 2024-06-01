@@ -7,3 +7,9 @@ export type { Reading } from "./reading"
 export type { Interval } from "./interval"
 
 export type { MemberProgress } from "./member-progress"
+
+export type { ReadingPost } from "./reading-post"
+
+export type { Post } from "./post"
+
+export type { Comment } from "./comment"

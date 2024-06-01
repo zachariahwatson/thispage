@@ -1,8 +1,8 @@
 "use client"
 
-import { CommentType } from "@/utils/types"
 import { useQuery } from "react-query"
 import { Comment, CommentSkeleton } from "./comment"
+import type { Comment as CommentType } from "@/lib/types"
 
 interface Props {
 	clubId: string

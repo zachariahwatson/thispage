@@ -14,7 +14,7 @@ export function ClubBook({ clubMembershipData }: Props) {
 			</h1>
 			<Card
 				id={`club-${clubMembershipData.club.id}-content`}
-				className="h-[812px] md:h-[624px] p-4 rounded-3xl relative shadow-sm bg-secondary"
+				className="h-[calc(100vh-64px)] md:h-[624px] p-4 rounded-3xl relative shadow-shadow shadow-sm bg-secondary"
 			>
 				<Spreads clubMembershipData={clubMembershipData} />
 			</Card>

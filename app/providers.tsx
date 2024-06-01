@@ -2,8 +2,8 @@
 "use client"
 
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
-import { QueryClient, QueryClientProvider } from "react-query"
-import { TooltipProvider } from "@/components/ui"
+import { QueryClient, QueryClientProvider, useQuery } from "react-query"
+import { Nav, ThemeProvider, TooltipProvider } from "@/components/ui"
 import { Toaster } from "@/components/ui/sonner"
 
 function makeQueryClient() {
@@ -43,7 +43,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<TooltipProvider delayDuration={350}>{children}</TooltipProvider>
+			<TooltipProvider delayDuration={350}>
+				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+					{children}
+				</ThemeProvider>
+			</TooltipProvider>
 			<Toaster richColors />
 		</QueryClientProvider>
 	)

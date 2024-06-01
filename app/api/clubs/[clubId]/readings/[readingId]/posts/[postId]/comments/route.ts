@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server"
-import { CommentType, UnstructuredCommentType } from "@/utils/types"
 import { NextRequest } from "next/server"
+import type { Comment } from "@/lib/types"
 
 interface Props {
 	params: {
@@ -24,37 +24,37 @@ export async function GET(request: NextRequest, { params }: Props) {
 				`
                 id,
                 content,
-                likes,
+                likes_count,
                 created_at,
                 updated_at,
-                members(
-                    profiles(
-                        id,
-                        name,
-                        first_name,
-                        last_name,
-                        avatar_url
-                    )
+                member:members(
+                    ...users (
+						id,
+						name,
+						first_name,
+						last_name,
+						avatar_url
+					)
                 ),
                 comments!root_comment_id(
                     id,
                     content,
-                    likes,
+                    likes_count,
                     created_at,
                     updated_at,
-                    members(
-                        profiles(
-                            id,
-                            name,
-                            first_name,
-                            last_name,
-                            avatar_url
-                        )
+                    member:members(
+                        ...users (
+							id,
+							name,
+							first_name,
+							last_name,
+							avatar_url
+						)
                     ),
-					comments:parent_comment_id(
+					replying_to:comments!replying_to_comment_id(
 						id,
-						members(
-							profiles(
+						member:members(
+							...users (
 								id,
 								name,
 								first_name,
@@ -65,69 +65,19 @@ export async function GET(request: NextRequest, { params }: Props) {
 					)
                 )`
 			)
-			.eq("parent_post_id", params.postId)
+			.eq("post_id", params.postId)
 			.is("root_comment_id", null)
 
 		if (error) {
-			console.error("error getting post's comments: " + JSON.stringify(error))
-			throw new Error(error.message)
+			throw error
 		}
 
-		//structure data for better mutability
-		const structuredData: CommentType[] =
-			//have to do some weird typecasting here
-			(data as any)?.map((comment: UnstructuredCommentType) => {
-				return {
-					id: comment.id,
-					content: comment.content,
-					likes: comment.likes,
-					createdAt: new Date(comment.created_at),
-					updatedAt: new Date(comment.updated_at),
-					member: {
-						profile: {
-							id: comment.members.profiles.id,
-							name: comment.members.profiles.name,
-							firstName: comment.members.profiles.first_name,
-							lastName: comment.members.profiles.last_name,
-							avatarUrl: comment.members.profiles.avatar_url,
-						},
-					},
-					subComments:
-						comment.comments.map((subcomment) => ({
-							id: subcomment.id,
-							content: subcomment.content,
-							likes: subcomment.likes,
-							createdAt: new Date(subcomment.created_at),
-							updatedAt: new Date(subcomment.updated_at),
-							member: {
-								profile: {
-									id: subcomment.members.profiles.id,
-									name: subcomment.members.profiles.name,
-									firstName: subcomment.members.profiles.first_name,
-									lastName: subcomment.members.profiles.last_name,
-									avatarUrl: subcomment.members.profiles.avatar_url,
-								},
-							},
-							parentComment: subcomment.comments
-								? {
-										id: subcomment.comments.id,
-										member: {
-											profile: {
-												id: subcomment.comments.members.profiles.id,
-												name: subcomment.comments.members.profiles.name,
-												firstName: subcomment.comments.members.profiles.first_name,
-												lastName: subcomment.comments.members.profiles.last_name,
-												avatarUrl: subcomment.comments.members.profiles.avatar_url,
-											},
-										},
-								  }
-								: null,
-						})) || [],
-				}
-			}) || []
-		return Response.json(structuredData, { status: 200 })
+		return Response.json(data as Comment[], { status: 200 })
 	} catch (error) {
-		console.error(error)
-		return Response.json({ error: "an error occurred while fetching the post's comments" }, { status: 500 })
+		console.error(
+			"\x1b[31m%s\x1b[0m",
+			"\nan error occurred while fetching the post's comments:\n" + JSON.stringify(error, null, 2) + "\n"
+		)
+		return Response.json({ error: "an error occurred while fetching the post's comments." }, { status: 500 })
 	}
 }

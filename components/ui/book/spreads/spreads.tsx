@@ -16,8 +16,7 @@ interface Props {
  */
 export function Spreads({ clubMembershipData }: Props) {
 	const [readingIndex, setReadingIndex] = useState<number>(
-		// Number(localStorage.getItem(`club-${clubMembershipData.club?.id}-tab-index`))
-		0
+		Number(localStorage.getItem(`club-${clubMembershipData.club?.id}-tab-index`))
 	)
 
 	const fetchReadings = async () => {
@@ -48,7 +47,13 @@ export function Spreads({ clubMembershipData }: Props) {
 			{readings.map(
 				(reading, index) =>
 					reading && (
-						<ReadingSpread key={index} readingData={reading} isVisible={readingIndex === index} readingIndex={index} />
+						<ReadingSpread
+							key={index}
+							memberId={clubMembershipData.id}
+							readingData={reading}
+							isVisible={readingIndex === index}
+							readingIndex={index}
+						/>
 					)
 			)}
 			<NextReading

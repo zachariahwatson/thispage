@@ -5,7 +5,7 @@ import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
-import { signUpFormSchema } from "@/utils/zod"
+import { signUpFormSchema } from "@/lib/zod"
 
 export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	const origin = headers().get("origin")

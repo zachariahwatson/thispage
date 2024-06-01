@@ -1,3 +1,5 @@
+"use client"
+
 import {
 	Avatar,
 	AvatarFallback,
@@ -8,6 +10,7 @@ import {
 	CardTitle,
 	ScrollArea,
 } from "@/components/ui"
+import { useMediaQuery } from "@/hooks"
 import { Interval } from "@/lib/types"
 
 interface Props {
@@ -18,16 +21,14 @@ export function IntervalAvatarList({ progresses }: Props) {
 	return (
 		<>
 			<CardHeader>
-				<CardTitle>members</CardTitle>
+				<CardTitle>readers</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<ScrollArea className="h-[684px] border rounded-lg shadow-inner">
+				<ScrollArea className="h-[684px] border rounded-lg shadow-shadow shadow-inner">
 					<div className="grid md:grid-cols-3 p-4">
 						{progresses.map((progress, index) => (
 							<div key={index} className="h-10 flex flex-row mr-8 mb-4">
-								<Avatar
-									className={`${progress.is_complete ? "ring-ring ring-4" : "ring-background ring-4"} ring-offset-2`}
-								>
+								<Avatar className={`${progress.is_complete ? "ring-ring" : "ring-background"} ring-4`}>
 									<AvatarImage src={progress.member?.avatar_url || ""} />
 									<AvatarFallback>
 										{progress.member?.first_name && progress.member?.last_name

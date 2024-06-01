@@ -1,6 +1,6 @@
 "use client"
 
-import { CommentType } from "@/utils/types"
+import type { Comment as CommentType } from "@/lib/types"
 import { Button } from "@/components/ui/buttons"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge, Skeleton } from "@/components/ui"
@@ -20,20 +20,21 @@ export function Comment({ commentData }: Props) {
 			<div className="flex flex-row items-start">
 				<div className="mr-4">
 					<Avatar className="w-8 h-8 md:w-10 md:h-10">
-						<AvatarImage src={commentData.member.profile.avatarUrl} />
+						<AvatarImage src={commentData.member?.avatar_url || ""} />
 						<AvatarFallback>
-							{commentData.member.profile.firstName && commentData.member.profile.lastName
-								? commentData.member.profile.firstName[0] + commentData.member.profile.lastName[0]
-								: commentData.member.profile.name.split(" ")[0] + commentData.member.profile.name.split(" ")[1]}
+							{commentData.member?.first_name && commentData.member?.last_name
+								? commentData.member?.first_name[0] + commentData.member?.last_name[0]
+								: commentData.member?.name &&
+								  commentData.member?.name.split(" ")[0] + commentData.member?.name.split(" ")[1]}
 						</AvatarFallback>
 					</Avatar>
 				</div>
 				<div className="relative w-full">
 					<div className="flex flex-col space-y-2 w-full">
 						<p className="text-md">
-							{commentData.member.profile.name} •{" "}
+							{commentData.member?.name} •{" "}
 							<span className="text-sm">
-								{new Date(commentData.createdAt).toLocaleDateString(undefined, {
+								{new Date(commentData.created_at).toLocaleDateString(undefined, {
 									year: "numeric",
 									month: "long",
 									day: "numeric",
@@ -44,7 +45,7 @@ export function Comment({ commentData }: Props) {
 						<div className="flex flex-row">
 							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
 								<Badge variant="secondary" className="">
-									{commentData.likes} 👍
+									{commentData.likes_count} 👍
 								</Badge>
 							</Button>
 							<Button
@@ -75,7 +76,7 @@ export function Comment({ commentData }: Props) {
 					</div>
 					{repliesVisible ? (
 						<>
-							{commentData.subComments.map((subComment) => (
+							{commentData.comments.map((subComment) => (
 								<SubComment key={subComment.id} subCommentData={subComment} />
 							))}
 							<Button variant="link" onClick={() => setRepliesVisible(false)} className="text-muted-foreground">
@@ -83,9 +84,9 @@ export function Comment({ commentData }: Props) {
 							</Button>
 						</>
 					) : (
-						commentData.subComments.length !== 0 && (
+						commentData.comments.length !== 0 && (
 							<Button variant="link" onClick={() => setRepliesVisible(true)} className="text-muted-foreground">
-								view {commentData.subComments.length} {commentData.subComments.length === 1 ? "reply" : "replies"}
+								view {commentData.comments.length} {commentData.comments.length === 1 ? "reply" : "replies"}
 							</Button>
 						)
 					)}

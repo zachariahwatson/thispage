@@ -147,6 +147,7 @@ values
   ('member', 'member_roles.read'),
   ('member', 'readings.read'),
   ('member', 'intervals.read'),
+  ('member', 'member_interval_progresses.create'),
   ('member', 'member_interval_progresses.read'),
   ('member', 'member_interval_progresses.update.own'),
   ('member', 'member_interval_progresses.delete.own'),
@@ -169,6 +170,7 @@ values
   ('moderator', 'member_roles.read'),
   ('moderator', 'readings.read'),
   ('moderator', 'intervals.read'),
+  ('moderator', 'member_interval_progresses.create'),
   ('moderator', 'member_interval_progresses.read'),
   (
     'moderator',
@@ -208,6 +210,7 @@ values
   ('admin', 'readings.update'),
   ('admin', 'readings.delete'),
   ('admin', 'intervals.read'),
+  ('admin', 'member_interval_progresses.create'),
   ('admin', 'member_interval_progresses.read'),
   ('admin', 'member_interval_progresses.update.own'),
   ('admin', 'member_interval_progresses.delete.own'),
@@ -225,3 +228,4 @@ values
   ('admin', 'comments.update.own'),
   ('admin', 'comments.delete.own'),
   ('admin', 'comments.delete');
+

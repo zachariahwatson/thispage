@@ -1,3 +1,5 @@
+"use client"
+
 import {
 	Avatar,
 	AvatarImage,
@@ -9,10 +11,15 @@ import {
 	DialogContent,
 	Skeleton,
 	CardTitle,
+	Drawer,
+	DrawerTrigger,
+	DrawerTitle,
+	DrawerContent,
 } from "@/components/ui"
 import { Tooltip } from "@/components/ui"
 import { IntervalAvatarList } from "./interval-avatar-list"
 import type { Interval } from "@/lib/types"
+import { useMediaQuery } from "@/hooks"
 
 interface Props {
 	progresses: NonNullable<Interval>["member_interval_progresses"]
@@ -20,16 +27,29 @@ interface Props {
 
 export function IntervalAvatarGroup({ progresses }: Props) {
 	const previewProgresses = progresses.slice(0, 5)
+	const isVertical = useMediaQuery("(max-width: 768px)")
 	return (
 		<>
-			<Dialog>
-				<DialogTrigger>
-					<CardTitle className="text-xl">members</CardTitle>
-				</DialogTrigger>
-				<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
-					<IntervalAvatarList progresses={progresses} />
-				</DialogContent>
-			</Dialog>
+			{isVertical ? (
+				<Drawer>
+					<DrawerTrigger>
+						<DrawerTitle className="text-xl">readers</DrawerTitle>
+					</DrawerTrigger>
+					<DrawerContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
+						<IntervalAvatarList progresses={progresses} />
+					</DrawerContent>
+				</Drawer>
+			) : (
+				<Dialog>
+					<DialogTrigger>
+						<CardTitle className="text-xl">readers</CardTitle>
+					</DialogTrigger>
+					<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
+						<IntervalAvatarList progresses={progresses} />
+					</DialogContent>
+				</Dialog>
+			)}
+
 			<div className="flex flex-row -space-x-1">
 				{previewProgresses.map((progress, index) => (
 					<Tooltip key={index}>
@@ -75,7 +95,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 										</AvatarFallback>
 									</Avatar>
 								</TooltipTrigger>
-								<TooltipContent>view all members</TooltipContent>
+								<TooltipContent>view all readers</TooltipContent>
 							</Tooltip>
 						</DialogTrigger>
 						<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
@@ -91,7 +111,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 export function IntervalAvatarGroupSkeleton() {
 	return (
 		<>
-			<CardTitle className="text-xl">members</CardTitle>
+			<CardTitle className="text-xl">readers</CardTitle>
 			<div className="flex flex-row -space-x-1">
 				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-background outline-4" />
 				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-background outline-4" />
