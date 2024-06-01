@@ -127,7 +127,7 @@ export function Nav() {
 				</DropdownMenu>
 			</div>
 			{isVertical ? (
-				<Drawer>
+				<Drawer open={settingsVisible} onOpenChange={setSettingsVisible}>
 					<DrawerTrigger ref={settingsRef} />
 					<DrawerContent className="p-6">
 						<DrawerHeader>
