@@ -31,6 +31,7 @@ import { useRef, useState } from "react"
 import { useMediaQuery } from "@/hooks"
 import { DialogTriggerProps } from "@radix-ui/react-dialog"
 import { toast } from "sonner"
+import { signOut } from "@/actions/login"
 
 export function Nav() {
 	const [settingsVisible, setSettingsVisible] = useState<boolean>(false)
@@ -113,7 +114,13 @@ export function Nav() {
 							</svg>
 							settings
 						</DropdownMenuItem>
-						<DropdownMenuItem className="cursor-pointer">
+						<DropdownMenuItem
+							className="cursor-pointer"
+							onSelect={async () => {
+								await signOut()
+								queryClient.invalidateQueries(["user"])
+							}}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 mr-2">
 								<path
 									fillRule="evenodd"
