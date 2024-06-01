@@ -2,9 +2,33 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui"
 import { Button, JoinClubButton } from "@/components/ui/buttons"
+import { createClient } from "@/utils/supabase/client"
+import { redirect } from "next/navigation"
 import { useQuery } from "react-query"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { User } from "@supabase/supabase-js"
 
 export default function Page({ params }: { params: { clubId: string; inviteCode: string } }) {
+	const router = useRouter()
+	const supabase = createClient()
+	const [user, setUser] = useState<User>()
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const {
+				data: { user },
+			} = await supabase.auth.getUser()
+			if (user) {
+				setUser(user)
+			} else {
+				router.push("/login")
+			}
+		}
+
+		fetchUser()
+	}, [supabase])
+
 	const fetchClub = async () => {
 		const url = new URL(`http://localhost:3000/api/clubs/${params.clubId}`)
 		const response = await fetch(url, {
