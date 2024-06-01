@@ -121,6 +121,9 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 									<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
 								</svg>
 								<div className="self-center">
+									{/**
+									 * @todo add dialog box confirming if the user wants to complete the reading if they're the last member to do so
+									 */}
 									<CompleteIntervalButton
 										clubId={readingData?.club_id || null}
 										readingId={readingData?.id || null}
