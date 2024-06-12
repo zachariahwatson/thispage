@@ -42,6 +42,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							© 2024 ❤️ Zachariah Watson |{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
 								<Link href="https://github.com/zachariahwatson/thispage">github</Link>
+							</Button>{" "}
+							|{" "}
+							<Button variant="link" className="p-0 text-muted-foreground">
+								<Link href="/privacy">privacy</Link>
+							</Button>{" "}
+							|{" "}
+							<Button variant="link" className="p-0 text-muted-foreground">
+								<Link href="/terms">terms</Link>
 							</Button>
 						</div>
 					</footer>
