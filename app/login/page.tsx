@@ -24,9 +24,7 @@ export default function Login({ searchParams }: Props) {
 				toast(`${searchParams.message}`)
 			}
 		}
-		//reset query
-		router.push(`${path}${searchParams.redirect ? `?redirect=${searchParams.redirect}` : ""}`)
-	}, [searchParams.message || ""])
+	}, [searchParams.message])
 
 	return (
 		<div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">

@@ -24,6 +24,13 @@ export async function signInWithGoogle() {
 	})
 
 	if (error) {
+		if (referer) {
+			const refUrl = new URL(referer)
+			const next = refUrl.searchParams.get("redirect")
+			if (next) {
+				return redirect(`/login?message=failed to sign in with google&type=error?redirect=${next}`)
+			}
+		}
 		return redirect("/login?message=failed to sign in with google&type=error")
 	}
 

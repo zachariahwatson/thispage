@@ -90,7 +90,7 @@ export function Nav() {
 
 				<DropdownMenu>
 					<DropdownMenuTrigger>
-						{user && (
+						{user && !loading && (
 							<Avatar className="self-end hover:ring-4 hover:ring-secondary transition-all">
 								<AvatarImage src={user.avatar_url} />
 								<AvatarFallback>{user.name.split(" ")[0] + user.name.split(" ")[1]}</AvatarFallback>

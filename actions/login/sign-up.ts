@@ -34,6 +34,13 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	})
 
 	if (error) {
+		if (referer) {
+			const refUrl = new URL(referer)
+			const next = refUrl.searchParams.get("redirect")
+			if (next) {
+				return redirect(`/login?message=could not create user&type=error?redirect=${next}`)
+			}
+		}
 		return redirect("/login?message=could not create user&type=error")
 	}
 

@@ -51,7 +51,11 @@ export default function Page({ params }: { params: { clubId: string; inviteCode:
 		return await response.json()
 	}
 
-	const { data: club, isLoading: loading } = useQuery(["club", params.clubId], () => fetchClub())
+	const { data: club, isLoading: loading } = useQuery(
+		["club", params.clubId],
+		() => fetchClub(),
+		{ enabled: !!user } // Run the query only when the user is available
+	)
 
 	return (
 		club &&

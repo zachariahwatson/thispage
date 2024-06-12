@@ -21,6 +21,8 @@ export async function GET(request: NextRequest) {
 			}
 			return Response.json(data, { status: 200 })
 		}
+
+		return Response.json(null, { status: 200 })
 	} catch (error) {
 		console.error(
 			"\x1b[31m%s\x1b[0m",
@@ -59,6 +61,8 @@ export async function PATCH(request: NextRequest) {
 			revalidatePath("/", "layout")
 			return Response.json({ message: "successfully updated user" }, { status: 200 })
 		}
+
+		return Response.json(null, { status: 200 })
 	} catch (error) {
 		console.error(
 			"\x1b[31m%s\x1b[0m",

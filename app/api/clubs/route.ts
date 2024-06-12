@@ -12,10 +12,11 @@ export async function GET() {
 			data: { user },
 		} = await supabase.auth.getUser()
 
-		const { data, error } = await supabase
-			.from("members")
-			.select(
-				`
+		if (user) {
+			const { data, error } = await supabase
+				.from("members")
+				.select(
+					`
 				id,
 				club:clubs!members_club_id_fkey (
 					id,
@@ -27,14 +28,17 @@ export async function GET() {
 					role
 				)
 			`
-			)
-			.eq("user_id", user?.id || "")
+				)
+				.eq("user_id", user?.id || "")
 
-		if (error) {
-			throw error
+			if (error) {
+				throw error
+			}
+
+			return Response.json(data as ClubMembership[], { status: 200 })
 		}
 
-		return Response.json(data as ClubMembership[], { status: 200 })
+		return Response.json(null, { status: 200 })
 	} catch (error) {
 		console.error(
 			"\x1b[31m%s\x1b[0m",
