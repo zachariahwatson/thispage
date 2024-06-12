@@ -9,7 +9,9 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { User } from "@supabase/supabase-js"
 
-const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+	: "http://localhost:3000"
 
 export default function Page({ params }: { params: { clubId: string; inviteCode: string } }) {
 	const router = useRouter()

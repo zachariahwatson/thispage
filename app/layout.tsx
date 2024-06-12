@@ -7,7 +7,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
 
-const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+	: "http://localhost:3000"
 
 export const metadata = {
 	metadataBase: new URL(defaultUrl),

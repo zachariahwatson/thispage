@@ -12,7 +12,9 @@ interface Props {
 	intervalId: number | null
 }
 
-const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+	: "http://localhost:3000"
 
 export function JoinReadingButton({ clubId, readingId, memberId, intervalId }: Props) {
 	const queryClient = useQueryClient()
