@@ -32,6 +32,7 @@ import { useMediaQuery } from "@/hooks"
 import { DialogTriggerProps } from "@radix-ui/react-dialog"
 import { toast } from "sonner"
 import { signOut } from "@/actions/login"
+import { ThemeButton } from "./buttons"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -86,6 +87,7 @@ export function Nav() {
 					<Link href="/" className="text-2xl">
 						this<span className="font-bold">page</span>
 					</Link>
+					<ThemeButton />
 				</div>
 
 				<DropdownMenu>
