@@ -8,6 +8,36 @@ import { useQuery } from "react-query"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { User } from "@supabase/supabase-js"
+import { Metadata, ResolvingMetadata } from "next"
+
+const fetchClub = async (clubId: string) => {
+	const url = new URL(`${defaultUrl}/api/clubs/${clubId}`)
+	const response = await fetch(url, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	})
+
+	if (!response.ok) {
+		const body = await response.json()
+		throw new Error(body.error)
+	}
+
+	return await response.json()
+}
+
+export async function generateMetadata(
+	{ params }: { params: { clubId: string; inviteCode: string } },
+	parent: ResolvingMetadata
+): Promise<Metadata> {
+	// fetch data using the shared utility function
+	const club = await fetchClub(params.clubId)
+
+	return {
+		description: `invite from ${club.name}\n\n${club.description}`,
+	}
+}
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -33,24 +63,7 @@ export default function Page({ params }: { params: { clubId: string; inviteCode:
 		fetchUser()
 	}, [supabase])
 
-	const fetchClub = async () => {
-		const url = new URL(`${defaultUrl}/api/clubs/${params.clubId}`)
-		const response = await fetch(url, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-
-		if (!response.ok) {
-			const body = await response.json()
-			throw new Error(body.error)
-		}
-
-		return await response.json()
-	}
-
-	const { data: club, isLoading: loading } = useQuery(["club", params.clubId], () => fetchClub())
+	const { data: club, isLoading: loading } = useQuery(["club", params.clubId], () => fetchClub(params.clubId))
 
 	return (
 		club &&
