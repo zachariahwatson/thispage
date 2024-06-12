@@ -36,8 +36,8 @@ interface Props {
 	postId: string
 }
 
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
 export function Post({ clubId, readingId, postId }: Props) {

@@ -25,8 +25,8 @@ interface Props {
 	setVisible: Dispatch<SetStateAction<boolean>>
 }
 
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
 export function SettingsForm({ mutation, setVisible }: Props) {

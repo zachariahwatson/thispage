@@ -4,8 +4,8 @@ import { ClubBook, ClubBookSkeleton } from "@/components/ui/book"
 import { ClubMembership } from "@/lib/types"
 import { useQuery } from "react-query"
 
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
 /**
