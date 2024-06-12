@@ -60,7 +60,7 @@ export default function Page({ params }: { params: { clubId: string; inviteCode:
 	return (
 		club &&
 		!loading && (
-			<Card className="max-w-md">
+			<Card className="max-w-lg w-full">
 				<CardHeader>
 					<CardTitle>{club.name}</CardTitle>
 					<CardDescription className="text-md italic">has invited you!</CardDescription>
@@ -68,7 +68,7 @@ export default function Page({ params }: { params: { clubId: string; inviteCode:
 				<CardContent>
 					<p>{club.description}</p>
 				</CardContent>
-				<CardFooter>
+				<CardFooter className="flex justify-center">
 					<JoinClubButton clubId={params.clubId} inviteCode={params.inviteCode} len={club.members.length} />
 				</CardFooter>
 			</Card>
