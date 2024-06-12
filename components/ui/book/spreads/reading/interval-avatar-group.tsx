@@ -35,7 +35,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 					<DrawerTrigger>
 						<DrawerTitle className="text-xl">readers</DrawerTitle>
 					</DrawerTrigger>
-					<DrawerContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
+					<DrawerContent className="w-full rounded-lg">
 						<IntervalAvatarList progresses={progresses} />
 					</DrawerContent>
 				</Drawer>
@@ -72,36 +72,71 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 					</Tooltip>
 				))}
 				{progresses.length > previewProgresses.length && (
-					<Dialog>
-						<DialogTrigger>
-							<Tooltip>
-								<TooltipTrigger>
-									<Avatar className="ring-background ring-4">
-										<AvatarFallback className="bg-secondary">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												strokeWidth={1.5}
-												stroke="currentColor"
-												className="w-6 h-6"
-											>
-												<path
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-												/>
-											</svg>
-										</AvatarFallback>
-									</Avatar>
-								</TooltipTrigger>
-								<TooltipContent>view all readers</TooltipContent>
-							</Tooltip>
-						</DialogTrigger>
-						<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
-							<IntervalAvatarList progresses={progresses} />
-						</DialogContent>
-					</Dialog>
+					<>
+						{isVertical ? (
+							<Drawer>
+								<DrawerTrigger>
+									<Tooltip>
+										<TooltipTrigger>
+											<Avatar className="ring-background ring-4">
+												<AvatarFallback className="bg-secondary">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														fill="none"
+														viewBox="0 0 24 24"
+														strokeWidth={1.5}
+														stroke="currentColor"
+														className="w-6 h-6"
+													>
+														<path
+															strokeLinecap="round"
+															strokeLinejoin="round"
+															d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+														/>
+													</svg>
+												</AvatarFallback>
+											</Avatar>
+										</TooltipTrigger>
+										<TooltipContent>view all readers</TooltipContent>
+									</Tooltip>
+								</DrawerTrigger>
+								<DrawerContent className="w-full rounded-lg">
+									<IntervalAvatarList progresses={progresses} />
+								</DrawerContent>
+							</Drawer>
+						) : (
+							<Dialog>
+								<DialogTrigger>
+									<Tooltip>
+										<TooltipTrigger>
+											<Avatar className="ring-background ring-4">
+												<AvatarFallback className="bg-secondary">
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														fill="none"
+														viewBox="0 0 24 24"
+														strokeWidth={1.5}
+														stroke="currentColor"
+														className="w-6 h-6"
+													>
+														<path
+															strokeLinecap="round"
+															strokeLinejoin="round"
+															d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+														/>
+													</svg>
+												</AvatarFallback>
+											</Avatar>
+										</TooltipTrigger>
+										<TooltipContent>view all readers</TooltipContent>
+									</Tooltip>
+								</DialogTrigger>
+								<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
+									<IntervalAvatarList progresses={progresses} />
+								</DialogContent>
+							</Dialog>
+						)}
+					</>
 				)}
 			</div>
 		</>
