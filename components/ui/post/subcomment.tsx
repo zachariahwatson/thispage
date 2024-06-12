@@ -1,6 +1,6 @@
 "use client"
 
-import { CommentType, SubCommentType } from "@/utils/types"
+import type { Comment as CommentType } from "@/lib/types"
 import { Button } from "@/components/ui/buttons"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@/components/ui"
@@ -8,7 +8,7 @@ import { useState } from "react"
 import { ReplyTextArea } from "./reply-textarea"
 
 interface Props {
-	subCommentData: SubCommentType
+	subCommentData: CommentType["comments"][number]
 }
 
 export function SubComment({ subCommentData }: Props) {
@@ -18,29 +18,30 @@ export function SubComment({ subCommentData }: Props) {
 			<div className="flex flex-row items-start">
 				<div className="mr-4">
 					<Avatar className="w-8 h-8 md:w-10 md:h-10">
-						<AvatarImage src={subCommentData.member.profile.avatarUrl} />
+						<AvatarImage src={subCommentData.member?.avatar_url || ""} />
 						<AvatarFallback>
-							{subCommentData.member.profile.firstName && subCommentData.member.profile.lastName
-								? subCommentData.member.profile.firstName[0] + subCommentData.member.profile.lastName[0]
-								: subCommentData.member.profile.name.split(" ")[0] + subCommentData.member.profile.name.split(" ")[1]}
+							{subCommentData.member?.first_name && subCommentData.member?.last_name
+								? subCommentData.member?.first_name[0] + subCommentData.member?.last_name[0]
+								: subCommentData.member?.name &&
+								  subCommentData.member?.name.split(" ")[0] + subCommentData.member?.name.split(" ")[1]}
 						</AvatarFallback>
 					</Avatar>
 				</div>
 				<div className="relative w-full">
 					<div className="flex flex-col space-y-2 w-full">
 						<p className="text-md">
-							{subCommentData.member.profile.name} •{" "}
+							{subCommentData.member?.name} •{" "}
 							<span className="text-sm">
-								{new Date(subCommentData.createdAt).toLocaleDateString(undefined, {
+								{new Date(subCommentData.created_at).toLocaleDateString(undefined, {
 									year: "numeric",
 									month: "long",
 									day: "numeric",
 								})}
 							</span>{" "}
-							{subCommentData.parentComment && (
+							{subCommentData.replying_to && (
 								<span className="text-muted-foreground text-sm">
-									<Link href={`#subcomment-${subCommentData.parentComment.id}`}>
-										▸{subCommentData.parentComment.member.profile.name}
+									<Link href={`#subcomment-${subCommentData.replying_to[0].id}`}>
+										▸{subCommentData.replying_to[0].member?.name}
 									</Link>
 								</span>
 							)}
@@ -49,7 +50,7 @@ export function SubComment({ subCommentData }: Props) {
 						<div className="flex flex-row">
 							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
 								<Badge variant="secondary" className="">
-									{subCommentData.likes} 👍
+									{subCommentData.likes_count} 👍
 								</Badge>
 							</Button>
 							<Button
