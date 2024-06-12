@@ -27,7 +27,7 @@ export default function Page({ params }: { params: { clubId: string; inviteCode:
 			if (user) {
 				setUser(user)
 			} else {
-				router.push("/login")
+				router.push(`/login?redirect=/invite/${params.clubId}/${params.inviteCode}`)
 			}
 		}
 

@@ -9,6 +9,13 @@ import { signUpFormSchema } from "@/lib/zod"
 
 export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	const origin = headers().get("origin")
+	let redirectTo = `${origin}/auth/callback`
+	const referer = headers().get("referer")
+	if (referer) {
+		const refUrl = new URL(referer)
+		const next = refUrl.searchParams.get("redirect")
+		redirectTo += `?next=${next}`
+	}
 	const firstName = values.firstName as string
 	const lastName = values.lastName as string
 	const email = values.email as string
@@ -22,7 +29,7 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 			data: {
 				name: `${firstName} ${lastName}`,
 			},
-			emailRedirectTo: `${origin}/auth/callback`,
+			emailRedirectTo: redirectTo,
 		},
 	})
 

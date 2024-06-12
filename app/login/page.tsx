@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
 
 interface Props {
-	searchParams: { message?: string; type?: string }
+	searchParams: { message?: string; type?: string; redirect: string }
 }
 
 export default function Login({ searchParams }: Props) {
@@ -25,7 +25,7 @@ export default function Login({ searchParams }: Props) {
 			}
 		}
 		//reset query
-		router.push(path)
+		router.push(`${path}${searchParams.redirect ? `?redirect=${searchParams.redirect}` : ""}`)
 	}, [searchParams.message || ""])
 
 	return (

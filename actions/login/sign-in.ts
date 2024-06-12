@@ -9,6 +9,13 @@ import { revalidatePath } from "next/cache"
 
 export async function signIn(values: z.infer<typeof signInFormSchema>) {
 	const origin = headers().get("origin")
+	let redirectTo = `${origin}`
+	const referer = headers().get("referer")
+	if (referer) {
+		const refUrl = new URL(referer)
+		const next = refUrl.searchParams.get("redirect")
+		redirectTo += next
+	}
 	const email = values.email as string
 	const password = values.password as string
 	const supabase = createClient()
@@ -19,9 +26,16 @@ export async function signIn(values: z.infer<typeof signInFormSchema>) {
 	})
 
 	if (error) {
-		return redirect("/login?message=email or password incorrect&type=error")
+		if (referer) {
+			const refUrl = new URL(referer)
+			const next = refUrl.searchParams.get("redirect")
+			if (next) {
+				return redirect(`/login?message=email or password incorrect&type=error?redirect=${next}`)
+			}
+		}
+		return redirect(`/login?message=email or password incorrect&type=error`)
 	}
 
-	revalidatePath(`${origin}`, "layout")
-	return redirect(`${origin}`)
+	revalidatePath(`${redirectTo}`, "layout")
+	return redirect(`${redirectTo}`)
 }
