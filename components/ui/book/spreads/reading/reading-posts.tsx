@@ -36,6 +36,8 @@ interface Props {
 	redactSpoilers: boolean
 }
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export function ReadingPosts({ clubId, readingId, redactSpoilers }: Props) {
 	//gotta make a ref for the scrollarea to apply to the child div inside it - doing this because scrollarea adds a dive in between them with display:table and it messes up the truncation so we have to manually set the width back to what it's supposed to be
 	const scrollAreaRef = useRef<ScrollAreaElement>(null)
@@ -43,7 +45,7 @@ export function ReadingPosts({ clubId, readingId, redactSpoilers }: Props) {
 
 	//fetch reading's posts
 	const fetchPosts = async () => {
-		const url = new URL(`http://localhost:3000/api/clubs/${clubId}/readings/${readingId}/posts`)
+		const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts`)
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {

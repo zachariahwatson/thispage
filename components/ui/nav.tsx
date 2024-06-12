@@ -33,6 +33,8 @@ import { DialogTriggerProps } from "@radix-ui/react-dialog"
 import { toast } from "sonner"
 import { signOut } from "@/actions/login"
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export function Nav() {
 	const [settingsVisible, setSettingsVisible] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -40,7 +42,7 @@ export function Nav() {
 	const queryClient = useQueryClient()
 
 	const fetchUser = async () => {
-		const url = new URL(`http://localhost:3000/api/users`)
+		const url = new URL(`${defaultUrl}/api/users`)
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {
@@ -58,7 +60,7 @@ export function Nav() {
 
 	const settingsMutation = useMutation({
 		mutationFn: (data: { first_name: string; last_name: string }) => {
-			const url = new URL(`http://localhost:3000/api/users`)
+			const url = new URL(`${defaultUrl}/api/users`)
 			return fetch(url, {
 				method: "PATCH",
 				headers: {

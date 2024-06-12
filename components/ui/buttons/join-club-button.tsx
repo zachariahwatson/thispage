@@ -11,12 +11,14 @@ interface Props {
 	len: number
 }
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export function JoinClubButton({ clubId, inviteCode, len }: Props) {
 	const queryClient = useQueryClient()
 	const router = useRouter()
 	const mutation = useMutation({
 		mutationFn: (newMember: { club_id: number; used_club_invite_code: string }) => {
-			const url = new URL(`http://localhost:3000/api/clubs/${clubId}/members/${inviteCode}`)
+			const url = new URL(`${defaultUrl}/api/clubs/${clubId}/members/${inviteCode}`)
 			return fetch(url, {
 				method: "POST",
 				headers: {

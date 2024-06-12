@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { User } from "@supabase/supabase-js"
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export default function Page({ params }: { params: { clubId: string; inviteCode: string } }) {
 	const router = useRouter()
 	const supabase = createClient()
@@ -30,7 +32,7 @@ export default function Page({ params }: { params: { clubId: string; inviteCode:
 	}, [supabase])
 
 	const fetchClub = async () => {
-		const url = new URL(`http://localhost:3000/api/clubs/${params.clubId}`)
+		const url = new URL(`${defaultUrl}/api/clubs/${params.clubId}`)
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {

@@ -36,13 +36,15 @@ interface Props {
 import { createClient } from "@/utils/supabase/client"
 import { User } from "@supabase/supabase-js"
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export function ReadingSpread({ memberId, readingData, isVisible, readingIndex }: Props) {
 	const [userInterval, setUserInterval] = useState<User>()
 	const isVertical = useMediaQuery("(max-width: 768px)")
 
 	//fetch the reading's intervals
 	const fetchIntervals = async () => {
-		const url = new URL(`http://localhost:3000/api/clubs/${readingData?.club_id}/readings/${readingData?.id}/intervals`)
+		const url = new URL(`${defaultUrl}/api/clubs/${readingData?.club_id}/readings/${readingData?.id}/intervals`)
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {
@@ -66,7 +68,7 @@ export function ReadingSpread({ memberId, readingData, isVisible, readingIndex }
 	//fetch the user's progress
 	const fetchUserProgress = async () => {
 		const url = new URL(
-			`http://localhost:3000/api/users/progresses/${memberId}/intervals/${(intervals && intervals[0]?.id) || null}`
+			`${defaultUrl}/api/users/progresses/${memberId}/intervals/${(intervals && intervals[0]?.id) || null}`
 		)
 		const response = await fetch(url, {
 			method: "GET",

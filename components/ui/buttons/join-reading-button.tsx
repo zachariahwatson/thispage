@@ -12,12 +12,14 @@ interface Props {
 	intervalId: number | null
 }
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export function JoinReadingButton({ clubId, readingId, memberId, intervalId }: Props) {
 	const queryClient = useQueryClient()
 	const mutation = useMutation({
 		mutationFn: (newProgress: { member_id: number; interval_id: number }) => {
 			const url = new URL(
-				`http://localhost:3000/api/clubs/${clubId}/readings/${readingId}/intervals/${intervalId}/member-interval-progresses`
+				`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/intervals/${intervalId}/member-interval-progresses`
 			)
 			return fetch(url, {
 				method: "POST",

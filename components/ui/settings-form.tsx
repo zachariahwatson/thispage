@@ -25,6 +25,8 @@ interface Props {
 	setVisible: Dispatch<SetStateAction<boolean>>
 }
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export function SettingsForm({ mutation, setVisible }: Props) {
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof settingsFormSchema>>({
@@ -36,7 +38,7 @@ export function SettingsForm({ mutation, setVisible }: Props) {
 	})
 
 	const fetchUser = async () => {
-		const url = new URL(`http://localhost:3000/api/users`)
+		const url = new URL(`${defaultUrl}/api/users`)
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {

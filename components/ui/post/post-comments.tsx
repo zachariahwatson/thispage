@@ -10,10 +10,12 @@ interface Props {
 	postId: string
 }
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export function PostComments({ clubId, readingId, postId }: Props) {
 	//fetch other members' intervals
 	const fetchComments = async () => {
-		const url = new URL(`http://localhost:3000/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments`)
+		const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments`)
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {

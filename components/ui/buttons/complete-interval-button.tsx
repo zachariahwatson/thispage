@@ -16,11 +16,13 @@ interface Props {
 	userProgress: MemberProgress
 }
 
+const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"
+
 export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId, userProgress }: Props) {
 	const queryClient = useQueryClient()
 	const mutation = useMutation({
 		mutationFn: (data: { is_complete: boolean }) => {
-			const url = new URL(`http://localhost:3000/api/users/progresses/${memberId}/intervals/${intervalId}`)
+			const url = new URL(`${defaultUrl}/api/users/progresses/${memberId}/intervals/${intervalId}`)
 			return fetch(url, {
 				method: "PATCH",
 				headers: {
