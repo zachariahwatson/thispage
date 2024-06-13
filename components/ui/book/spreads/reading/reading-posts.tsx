@@ -31,6 +31,7 @@ import { useQuery } from "react-query"
 import type { ReadingPost as ReadingPostType } from "@/lib/types"
 
 interface Props {
+	memberId: number
 	clubId: number | null
 	readingId: number | null
 	redactSpoilers: boolean
@@ -40,7 +41,7 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function ReadingPosts({ clubId, readingId, redactSpoilers }: Props) {
+export function ReadingPosts({ memberId, clubId, readingId, redactSpoilers }: Props) {
 	//gotta make a ref for the scrollarea to apply to the child div inside it - doing this because scrollarea adds a dive in between them with display:table and it messes up the truncation so we have to manually set the width back to what it's supposed to be
 	const scrollAreaRef = useRef<ScrollAreaElement>(null)
 	const [innerWidth, setInnerWidth] = useState<string | number>("auto")
@@ -90,11 +91,18 @@ export function ReadingPosts({ clubId, readingId, redactSpoilers }: Props) {
 				{!loading && posts ? (
 					posts.map((post) =>
 						redactSpoilers && post.is_spoiler ? (
-							<ReadingPost key={post.id} likes={0} id={-1} clubId={clubId} readingId={readingId}>
+							<ReadingPost key={post.id} likes={0} id={-1} clubId={clubId} readingId={readingId} memberId={memberId}>
 								⚠️spoiler⚠️complete the reading!
 							</ReadingPost>
 						) : (
-							<ReadingPost key={post.id} likes={post.likes_count} id={post.id} clubId={clubId} readingId={readingId}>
+							<ReadingPost
+								key={post.id}
+								likes={post.likes_count}
+								id={post.id}
+								clubId={clubId}
+								readingId={readingId}
+								memberId={memberId}
+							>
 								{post.title}
 							</ReadingPost>
 						)
