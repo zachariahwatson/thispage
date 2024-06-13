@@ -6,6 +6,8 @@ import { createClient } from "@/utils/supabase/server"
 import Link from "next/link"
 import { Button } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -54,6 +56,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 						</div>
 					</footer>
 				</Providers>
+				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	)
