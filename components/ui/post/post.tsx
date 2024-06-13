@@ -23,7 +23,7 @@ import {
 	Skeleton,
 	Textarea,
 } from "@/components/ui"
-import { Button } from "@/components/ui/buttons"
+import { Button, RootCommentButton } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
 import Image from "next/image"
 import Link from "next/link"
@@ -249,12 +249,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 			<div className="pr-2">
 				<Separator />
 			</div>
-			<div className="space-y-2 w-full relative">
-				<Textarea className="mb-4" placeholder="type your comment here" />
-				<Button className="absolute bottom-6 right-2" size="sm">
-					comment
-				</Button>
-			</div>
+			{/* <RootCommentButton /> */}
 			<PostComments clubId={clubId} readingId={readingId} postId={postId} />
 		</div>
 	) : (
