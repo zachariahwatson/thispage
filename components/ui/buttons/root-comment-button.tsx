@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "react-query"
 import { Textarea } from "../textarea"
 import { Button } from "./button"
 import { SubmitButton } from "./submit-button"
+import { useState } from "react"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -13,12 +14,20 @@ interface Props {
 	clubId: string
 	readingId: string
 	postId: string
+	memberId: string
 }
 
-export function RootCommentButton({ clubId, readingId, postId }: Props) {
+export function RootCommentButton({ clubId, readingId, postId, memberId }: Props) {
 	const queryClient = useQueryClient()
+	const [content, setContent] = useState<string>("")
 	const mutation = useMutation({
-		mutationFn: (newComment: { post_id: number; content: string }) => {
+		mutationFn: (newComment: {
+			post_id: number
+			author_member_id: number
+			content: string
+			root_comment_id: null
+			replying_to_comment_id: null
+		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments`)
 			return fetch(url, {
 				method: "POST",
@@ -29,13 +38,20 @@ export function RootCommentButton({ clubId, readingId, postId }: Props) {
 			})
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries(["clubs"])
+			queryClient.invalidateQueries(["comments", clubId, readingId, postId])
+			queryClient.invalidateQueries(["post", clubId, readingId, postId])
+			setContent("")
 		},
 	})
 
 	return (
 		<div className="space-y-2 w-full relative">
-			<Textarea className="mb-4" placeholder="type your comment here" />
+			<Textarea
+				className="mb-4"
+				placeholder="type your comment here"
+				onChange={(e) => setContent(e.target.value)}
+				value={content}
+			/>
 			{mutation.isLoading ? (
 				<Button disabled className="absolute bottom-6 right-2">
 					<svg
@@ -56,9 +72,15 @@ export function RootCommentButton({ clubId, readingId, postId }: Props) {
 				</Button>
 			) : (
 				<Button
-					// onClick={() => {
-					// 	mutation.mutate({ content: content })
-					// }}
+					onClick={() => {
+						mutation.mutate({
+							post_id: Number(postId),
+							author_member_id: Number(memberId),
+							content: content,
+							root_comment_id: null,
+							replying_to_comment_id: null,
+						})
+					}}
 					className="absolute bottom-6 right-2"
 				>
 					comment

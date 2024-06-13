@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import { useQuery } from "react-query"
 
 interface Props {
+	memberId: number
 	interval: Interval
 	loading: boolean
 	userProgress: MemberProgress
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export function ReadingPageRight({
+	memberId,
 	interval,
 	loading,
 	userProgress,
@@ -51,6 +53,7 @@ export function ReadingPageRight({
 			<CardHeader className="px-4 md:px-6">
 				<CardTitle className="text-xl">discussion</CardTitle>
 				<ReadingPosts
+					memberId={memberId}
 					clubId={clubId}
 					readingId={readingId}
 					redactSpoilers={userProgress ? !userProgress.is_complete : true}

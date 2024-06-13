@@ -29,6 +29,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Post } from "@/lib/types"
 import { useMediaQuery } from "@/hooks"
+import { useSearchParams } from "next/navigation"
 
 interface Props {
 	clubId: string
@@ -41,6 +42,8 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	: "http://localhost:3000"
 
 export function Post({ clubId, readingId, postId }: Props) {
+	const searchParams = useSearchParams()
+	const memberId = searchParams.get("memberId")
 	//fetch other members' intervals
 	const fetchPost = async () => {
 		const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}`)
@@ -249,7 +252,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 			<div className="pr-2">
 				<Separator />
 			</div>
-			{/* <RootCommentButton /> */}
+			<RootCommentButton clubId={clubId} readingId={readingId} postId={postId} memberId={memberId || ""} />
 			<PostComments clubId={clubId} readingId={readingId} postId={postId} />
 		</div>
 	) : (

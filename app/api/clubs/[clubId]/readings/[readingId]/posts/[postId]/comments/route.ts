@@ -81,3 +81,33 @@ export async function GET(request: NextRequest, { params }: Props) {
 		return Response.json({ error: "an error occurred while fetching the post's comments." }, { status: 500 })
 	}
 }
+
+/**
+ * creates a comment in the specified post.
+ */
+export async function POST(request: NextRequest) {
+	try {
+		const supabase = createClient()
+
+		const body = await request.json()
+		console.log(JSON.stringify(body, null, 4))
+
+		const { error } = await supabase.from("comments").insert({
+			post_id: body.post_id,
+			author_member_id: body.author_member_id,
+			root_comment_id: body.root_comment_id,
+			replying_to_comment_id: body.replying_to_comment_id,
+			content: body.content,
+		})
+
+		if (error) {
+			throw error
+		}
+		// revalidatePath("/", "layout")
+		return Response.json({ message: "successfully created comment" }, { status: 200 })
+	} catch (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a comment:\n", error)
+
+		return Response.json({ error: "an error occurred while creating a comment." }, { status: 500 })
+	}
+}
