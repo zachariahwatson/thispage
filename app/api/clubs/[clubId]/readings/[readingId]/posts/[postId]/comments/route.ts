@@ -51,7 +51,7 @@ export async function GET(request: NextRequest, { params }: Props) {
 							avatar_url
 						)
                     ),
-					replying_to:comments!replying_to_comment_id(
+					replying_to:replying_to_comment_id(
 						id,
 						member:members(
 							...users (

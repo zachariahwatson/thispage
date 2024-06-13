@@ -41,6 +41,10 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
+/**
+ *
+ * @todo do something about the member id being exposed, dont like that
+ */
 export function Post({ clubId, readingId, postId }: Props) {
 	const searchParams = useSearchParams()
 	const memberId = searchParams.get("memberId")
@@ -253,7 +257,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 				<Separator />
 			</div>
 			<RootCommentButton clubId={clubId} readingId={readingId} postId={postId} memberId={memberId || ""} />
-			<PostComments clubId={clubId} readingId={readingId} postId={postId} />
+			<PostComments clubId={clubId} readingId={readingId} postId={postId} memberId={memberId || ""} />
 		</div>
 	) : (
 		<PostSkeleton />
