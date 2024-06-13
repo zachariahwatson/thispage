@@ -14,7 +14,9 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	if (referer) {
 		const refUrl = new URL(referer)
 		const next = refUrl.searchParams.get("redirect")
-		redirectTo += `?next=${next}`
+		if (next) {
+			redirectTo += `?next=${next}`
+		}
 	}
 	const firstName = values.firstName as string
 	const lastName = values.lastName as string

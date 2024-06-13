@@ -12,7 +12,9 @@ export async function signInWithGoogle() {
 	if (referer) {
 		const refUrl = new URL(referer)
 		const next = refUrl.searchParams.get("redirect")
-		redirectTo += `?next=${next}`
+		if (next) {
+			redirectTo += `?next=${next}`
+		}
 	}
 	const supabase = createClient()
 
