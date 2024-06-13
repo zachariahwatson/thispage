@@ -2,6 +2,7 @@ import { Badge, Separator, Skeleton } from "@/components/ui"
 import Link from "next/link"
 
 interface Props {
+	memberId: number
 	clubId: number | null
 	readingId: number | null
 	children: React.ReactNode
@@ -9,12 +10,12 @@ interface Props {
 	id: number
 }
 
-export function ReadingPost({ clubId, readingId, children, likes, id }: Props) {
+export function ReadingPost({ memberId, clubId, readingId, children, likes, id }: Props) {
 	return (
 		<>
 			<div className="flex flex-row pr-10 md:pr-14 relative">
 				<p className="text-xs md:text-sm truncate ... hover:font-medium transition-all">
-					<Link href={`clubs/${clubId}/readings/${readingId}/comments/${id}`}>{children}</Link>
+					<Link href={`club/${clubId}/reading/${readingId}/comments/${id}?memberId=${memberId}`}>{children}</Link>
 				</p>
 
 				<Badge variant="outline" className="absolute self-center right-0 px-1 md:px-2.5">

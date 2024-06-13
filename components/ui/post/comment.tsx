@@ -6,13 +6,17 @@ import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge, Skeleton } from "@/components/ui"
 import { useState } from "react"
 import { SubComment } from "./subcomment"
-import { ReplyTextArea } from "./reply-textarea"
+import { CommentButton } from "../buttons"
 
 interface Props {
 	commentData: CommentType
+	clubId: string
+	readingId: string
+	postId: string
+	memberId: string
 }
 
-export function Comment({ commentData }: Props) {
+export function Comment({ commentData, clubId, readingId, postId, memberId }: Props) {
 	const [repliesVisible, setRepliesVisible] = useState<boolean>(false)
 	const [replyBoxVisible, setReplyBoxVisible] = useState<boolean>(false)
 	return (
@@ -29,10 +33,10 @@ export function Comment({ commentData }: Props) {
 						</AvatarFallback>
 					</Avatar>
 				</div>
-				<div className="relative w-full">
+				<div className="relative w-full space-y-2">
 					<div className="flex flex-col space-y-2 w-full">
 						<p className="text-md">
-							{commentData.member?.name} •{" "}
+							{commentData.member?.name || "[deleted]"} •{" "}
 							<span className="text-sm">
 								{new Date(commentData.created_at).toLocaleDateString(undefined, {
 									year: "numeric",
@@ -72,12 +76,30 @@ export function Comment({ commentData }: Props) {
 								</Badge>
 							</Button>
 						</div>
-						{replyBoxVisible && <ReplyTextArea setReplyBoxVisible={setReplyBoxVisible} />}
+						{replyBoxVisible && (
+							<CommentButton
+								setReplyBoxVisible={setReplyBoxVisible}
+								setRepliesVisible={setRepliesVisible}
+								commentData={commentData}
+								clubId={clubId}
+								readingId={readingId}
+								postId={postId}
+								memberId={memberId}
+							/>
+						)}
 					</div>
 					{repliesVisible ? (
 						<>
 							{commentData.comments.map((subComment) => (
-								<SubComment key={subComment.id} subCommentData={subComment} />
+								<SubComment
+									key={subComment.id}
+									subCommentData={subComment}
+									rootCommentId={commentData.id}
+									clubId={clubId}
+									readingId={readingId}
+									postId={postId}
+									memberId={memberId}
+								/>
 							))}
 							<Button variant="link" onClick={() => setRepliesVisible(false)} className="text-muted-foreground">
 								hide

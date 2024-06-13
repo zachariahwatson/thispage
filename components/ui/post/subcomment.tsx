@@ -1,17 +1,22 @@
 "use client"
 
 import type { Comment as CommentType } from "@/lib/types"
-import { Button } from "@/components/ui/buttons"
+import { Button, SubCommentButton } from "@/components/ui/buttons"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@/components/ui"
-import { useState } from "react"
-import { ReplyTextArea } from "./reply-textarea"
+import { Dispatch, SetStateAction, useState } from "react"
+// import { ReplyTextArea } from "./comment-button"
 
 interface Props {
 	subCommentData: CommentType["comments"][number]
+	rootCommentId: number
+	clubId: string
+	readingId: string
+	postId: string
+	memberId: string
 }
 
-export function SubComment({ subCommentData }: Props) {
+export function SubComment({ subCommentData, rootCommentId, clubId, readingId, postId, memberId }: Props) {
 	const [replyBoxVisible, setReplyBoxVisible] = useState<boolean>(false)
 	return (
 		<div id={`subcomment-${subCommentData.id}`} className="space-y-2">
@@ -30,7 +35,7 @@ export function SubComment({ subCommentData }: Props) {
 				<div className="relative w-full">
 					<div className="flex flex-col space-y-2 w-full">
 						<p className="text-md">
-							{subCommentData.member?.name} •{" "}
+							{subCommentData.member?.name || "[deleted]"} •{" "}
 							<span className="text-sm">
 								{new Date(subCommentData.created_at).toLocaleDateString(undefined, {
 									year: "numeric",
@@ -40,8 +45,8 @@ export function SubComment({ subCommentData }: Props) {
 							</span>{" "}
 							{subCommentData.replying_to && (
 								<span className="text-muted-foreground text-sm">
-									<Link href={`#subcomment-${subCommentData.replying_to[0].id}`}>
-										▸{subCommentData.replying_to[0].member?.name}
+									<Link href={`#subcomment-${subCommentData.replying_to.id}`}>
+										▸{subCommentData.replying_to.member?.name || "[deleted]"}
 									</Link>
 								</span>
 							)}
@@ -77,7 +82,17 @@ export function SubComment({ subCommentData }: Props) {
 								</Badge>
 							</Button>
 						</div>
-						{replyBoxVisible && <ReplyTextArea setReplyBoxVisible={setReplyBoxVisible} />}
+						{replyBoxVisible && (
+							<SubCommentButton
+								setReplyBoxVisible={setReplyBoxVisible}
+								rootCommentId={rootCommentId}
+								subCommentData={subCommentData}
+								clubId={clubId}
+								readingId={readingId}
+								postId={postId}
+								memberId={memberId}
+							/>
+						)}
 					</div>
 				</div>
 			</div>

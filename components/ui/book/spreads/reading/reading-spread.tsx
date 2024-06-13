@@ -108,6 +108,7 @@ export function ReadingSpread({ memberId, readingData, isVisible, readingIndex }
 						readingIndex={readingIndex}
 					/>
 					<ReadingPageRight
+						memberId={memberId}
 						interval={(intervals && intervals[0]) || null}
 						loading={intervalsLoading}
 						userProgress={userProgress || null}
