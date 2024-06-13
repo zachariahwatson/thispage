@@ -79,7 +79,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 									<Tooltip>
 										<TooltipTrigger>
 											<Avatar className="ring-background ring-4">
-												<AvatarFallback className="bg-secondary">
+												<AvatarFallback>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"
@@ -110,7 +110,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 									<Tooltip>
 										<TooltipTrigger>
 											<Avatar className="ring-background ring-4">
-												<AvatarFallback className="bg-secondary">
+												<AvatarFallback>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"

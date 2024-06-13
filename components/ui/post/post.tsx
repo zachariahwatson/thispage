@@ -112,7 +112,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 						<div className="absolute right-0 top-0">
 							{isVertical ? (
 								<Drawer>
-									<DrawerTrigger className="hover:ring-secondary hover:ring-4 rounded transition-all">
+									<DrawerTrigger className="hover:ring-4 hover:ring-ring rounded transition-all">
 										<Image
 											className="rounded h-10 md:h-16 w-auto shadow-shadow shadow-md"
 											src={post.reading.book.cover_image_url || ""}
@@ -175,7 +175,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 								</Drawer>
 							) : (
 								<Sheet>
-									<SheetTrigger className="hover:ring-secondary hover:ring-4 rounded transition-all">
+									<SheetTrigger className="hover:ring-4 hover:ring-ring rounded transition-all">
 										<Image
 											className="rounded h-10 md:h-16 w-auto shadow-shadow shadow-md"
 											src={post.reading.book.cover_image_url || ""}
@@ -243,7 +243,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 				<h1 className="text-lg md:text-2xl font-bold">{post.title}</h1>
 				<p className="md:text-md text-sm">{post.content}</p>
 				<Button className="p-0 bg-background hover:bg-background mr-2" variant="secondary">
-					<Badge variant="secondary">{post.likes_count} 👍</Badge>
+					<Badge variant="outline">{post.likes_count} 👍</Badge>
 				</Button>
 			</div>
 			<div className="pr-2">

@@ -22,7 +22,7 @@ export function NextReading({ clubId, readingIndex, setReadingIndex, len }: Prop
 		len > 1 && (
 			<>
 				<motion.div
-					className="absolute bottom-4 right-4 border-b-[52px] border-l-[52px] border-b-secondary/50 border-l-background shadow-[-4px_-4px_5px_0_hsl(var(--shadow)/0.66)] rounded-tl-lg rounded-br-lg flex justify-center items-center"
+					className="absolute bottom-4 right-4 border-b-[52px] border-l-[52px] border-b-background border-l-card shadow-[-4px_-4px_5px_0_hsl(var(--shadow)/0.66)] rounded-tl-lg rounded-br-lg flex justify-center items-center"
 					initial={{ borderBottomWidth: 52, borderLeftWidth: 52 }}
 					animate={{ borderBottomWidth: isHovered ? 60 : 52, borderLeftWidth: isHovered ? 60 : 52 }}
 				/>

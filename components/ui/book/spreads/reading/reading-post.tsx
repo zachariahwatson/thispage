@@ -17,7 +17,7 @@ export function ReadingPost({ clubId, readingId, children, likes, id }: Props) {
 					<Link href={`clubs/${clubId}/readings/${readingId}/comments/${id}`}>{children}</Link>
 				</p>
 
-				<Badge variant="secondary" className="absolute self-center right-0 px-1 md:px-2.5">
+				<Badge variant="outline" className="absolute self-center right-0 px-1 md:px-2.5">
 					{likes} 👍
 				</Badge>
 			</div>

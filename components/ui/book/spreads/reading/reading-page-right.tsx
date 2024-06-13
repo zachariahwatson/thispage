@@ -42,7 +42,7 @@ export function ReadingPageRight({
 
 	return (
 		<MotionCard
-			className="flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow shadow-md"
+			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow shadow-md"
 			variants={rightVariants}
 			exit="exit"
 			transition={{ type: "tween", duration: 0.15, ease: "easeIn" }}
@@ -63,10 +63,10 @@ export function ReadingPageRight({
 					<IntervalAvatarGroupSkeleton />
 				)}
 			</CardFooter>
-			<div className="bg-gradient-to-r from-shadow to-card py-2 hidden md:block absolute h-full top-0 left-0">
+			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 bg-shadow-dark" />
 			</div>
-			<div className="bg-gradient-to-b from-shadow to-card px-2 block md:hidden absolute w-full top-0 right-0">
+			<div className="bg-gradient-to-b from-shadow to-background px-2 block md:hidden absolute w-full top-0 right-0">
 				<Separator orientation="horizontal" className="mb-4 bg-shadow-dark" />
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{readingIndex + 1}</p>

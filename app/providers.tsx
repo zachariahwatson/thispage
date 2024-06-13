@@ -44,7 +44,24 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<TooltipProvider delayDuration={350}>
-				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+				<ThemeProvider
+					attribute="class"
+					disableTransitionOnChange
+					themes={[
+						"light",
+						"terminal",
+						"kiss",
+						"cherry",
+						"depths",
+						"lilac",
+						"tokyo",
+						"cyber",
+						"mainframe",
+						"dawn",
+						"note",
+						"sky",
+					]}
+				>
 					{children}
 				</ThemeProvider>
 			</TooltipProvider>

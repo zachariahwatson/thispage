@@ -44,7 +44,7 @@ export function Comment({ commentData }: Props) {
 						<p className="md:text-md text-sm w-full">{commentData.content}</p>
 						<div className="flex flex-row">
 							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
-								<Badge variant="secondary" className="">
+								<Badge variant="outline" className="">
 									{commentData.likes_count} 👍
 								</Badge>
 							</Button>
@@ -53,7 +53,7 @@ export function Comment({ commentData }: Props) {
 								variant="secondary"
 								onClick={() => setReplyBoxVisible(!replyBoxVisible)}
 							>
-								<Badge variant="secondary" className="">
+								<Badge variant="outline" className="">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"

@@ -5,6 +5,7 @@ import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/buttons/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Separator } from "../separator"
 
 export function ThemeButton() {
 	const { setTheme } = useTheme()
@@ -28,13 +29,23 @@ export function ThemeButton() {
 						/>
 					</svg>
 
-					<span className="sr-only">Toggle theme</span>
+					<span className="sr-only">toggle theme</span>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="center" sideOffset={16}>
 				<DropdownMenuItem onClick={() => setTheme("light")}>light</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("dark")}>dark</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("system")}>system</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("note")}>note</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("dawn")}>dawn</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("kiss")}>kiss</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("lilac")}>lilac</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("sky")}>sky</DropdownMenuItem>
+				<Separator />
+				<DropdownMenuItem onClick={() => setTheme("terminal")}>terminal</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("tokyo")}>tokyo</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("cyber")}>cyber</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("mainframe")}>mainframe</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("cherry")}>cherry</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("depths")}>depths</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

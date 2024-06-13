@@ -81,7 +81,7 @@ export function Nav() {
 
 	const { data: user, isLoading: loading } = useQuery(["user"], () => fetchUser())
 	return (
-		<header className="flex justify-center border-b bg-secondary">
+		<header className="flex justify-center border-b bg-card">
 			<div className="px-6 md:px-8 py-4 flex flex-row items-center w-full justify-between max-w-5xl">
 				<div className="flex flex-row space-x-4 items-center ">
 					<Link href="/" className="text-2xl">
@@ -93,7 +93,7 @@ export function Nav() {
 				<DropdownMenu>
 					<DropdownMenuTrigger>
 						{user && !loading && (
-							<Avatar className="self-end hover:ring-4 hover:ring-secondary transition-all">
+							<Avatar className="self-end hover:ring-4 hover:ring-ring transition-all">
 								<AvatarImage src={user.avatar_url} />
 								<AvatarFallback>{user.name.split(" ")[0] + user.name.split(" ")[1]}</AvatarFallback>
 							</Avatar>
