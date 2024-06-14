@@ -78,15 +78,15 @@ export function CommentButton({
 	}
 
 	return (
-		<div className="space-y-2 w-full relative">
+		<div className="-space-y-2 w-full relative">
 			<Textarea
-				className="mb-4"
+				className="mb-4 h-48 md:h-full"
 				placeholder="type your reply here"
 				onChange={(e) => setContent(e.target.value)}
 				value={content}
 				onKeyDown={handleKeyDown}
 			/>
-			<div className="absolute bottom-6 right-2 space-x-1">
+			<div className="float-right space-x-1">
 				<Button size="sm" variant="secondary" onClick={() => setReplyBoxVisible(false)}>
 					cancel
 				</Button>

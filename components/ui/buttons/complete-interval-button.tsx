@@ -81,7 +81,7 @@ export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId
 				{mutation.isLoading ? (
 					<Button
 						variant={"ghost"}
-						className="w-14 md:w-16 h-14 md:h-16 p-0 rounded-full text-primary hover:text-primary"
+						className="w-16 md:w-24 h-16 md:h-24 p-0 rounded-full text-primary hover:text-primary"
 						disabled
 					>
 						<svg
@@ -90,7 +90,7 @@ export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId
 							viewBox="0 0 24 24"
 							strokeWidth={1.5}
 							stroke="currentColor"
-							className="w-14 md:w-16 h-14 md:h-16 animate-spin"
+							className="w-16 md:w-24 h-16 md:h-24 animate-spin"
 						>
 							<path
 								strokeLinecap="round"
@@ -102,7 +102,7 @@ export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId
 				) : (
 					<Button
 						variant={"ghost"}
-						className="w-14 md:w-16 h-14 md:h-16 p-0 rounded-full text-primary hover:text-primary"
+						className="w-16 md:w-24 h-16 md:h-24 p-0 rounded-full text-primary hover:text-primary"
 						onClick={() => mutation.mutate({ is_complete: !userProgress?.is_complete || false })}
 					>
 						{userProgress?.is_complete ? (
@@ -110,7 +110,7 @@ export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 24 24"
 								fill="currentColor"
-								className="w-14 md:w-16 h-14 md:h-16"
+								className="w-16 md:w-24 h-16 md:h-24"
 							>
 								<path
 									fillRule="evenodd"
@@ -125,7 +125,7 @@ export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId
 								viewBox="0 0 24 24"
 								strokeWidth={1.5}
 								stroke="currentColor"
-								className="w-14 md:w-16 h-14 md:h-16"
+								className="w-16 md:w-24 h-16 md:h-24"
 							>
 								<path
 									strokeLinecap="round"
