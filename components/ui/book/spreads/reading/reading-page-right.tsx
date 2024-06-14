@@ -2,6 +2,7 @@
 
 import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { ReadingPosts, IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "@/components/ui/book"
+import { CreatePostButton } from "@/components/ui/buttons"
 import { Interval, MemberProgress } from "@/lib/types"
 import { motion } from "framer-motion"
 import { useQuery } from "react-query"
@@ -51,7 +52,11 @@ export function ReadingPageRight({
 			style={{ transformPerspective: 2500 }}
 		>
 			<CardHeader className="px-4 md:px-6">
-				<CardTitle className="text-xl">discussion</CardTitle>
+				<div className="flex justify-between pr-1">
+					<CardTitle className="text-xl">discussion</CardTitle>
+					<CreatePostButton />
+				</div>
+
 				<ReadingPosts
 					memberId={memberId}
 					clubId={clubId}
