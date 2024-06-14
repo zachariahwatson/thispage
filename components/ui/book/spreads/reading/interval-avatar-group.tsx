@@ -75,9 +75,9 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 					<>
 						{isVertical ? (
 							<Drawer>
-								<DrawerTrigger>
-									<Tooltip>
-										<TooltipTrigger>
+								<Tooltip>
+									<TooltipTrigger>
+										<DrawerTrigger>
 											<Avatar className="ring-background ring-4">
 												<AvatarFallback>
 													<svg
@@ -96,19 +96,19 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 													</svg>
 												</AvatarFallback>
 											</Avatar>
-										</TooltipTrigger>
-										<TooltipContent>view all readers</TooltipContent>
-									</Tooltip>
-								</DrawerTrigger>
+										</DrawerTrigger>
+									</TooltipTrigger>
+									<TooltipContent>view all readers</TooltipContent>
+								</Tooltip>
 								<DrawerContent className="w-full rounded-lg">
 									<IntervalAvatarList progresses={progresses} />
 								</DrawerContent>
 							</Drawer>
 						) : (
 							<Dialog>
-								<DialogTrigger>
-									<Tooltip>
-										<TooltipTrigger>
+								<Tooltip>
+									<TooltipTrigger>
+										<DialogTrigger>
 											<Avatar className="ring-background ring-4">
 												<AvatarFallback>
 													<svg
@@ -127,10 +127,10 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 													</svg>
 												</AvatarFallback>
 											</Avatar>
-										</TooltipTrigger>
-										<TooltipContent>view all readers</TooltipContent>
-									</Tooltip>
-								</DialogTrigger>
+										</DialogTrigger>
+									</TooltipTrigger>
+									<TooltipContent>view all readers</TooltipContent>
+								</Tooltip>
 								<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
 									<IntervalAvatarList progresses={progresses} />
 								</DialogContent>
