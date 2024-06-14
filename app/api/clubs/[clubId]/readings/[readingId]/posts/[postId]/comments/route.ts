@@ -72,7 +72,7 @@ export async function GET(request: NextRequest, { params }: Props) {
 			throw error
 		}
 
-		return Response.json(data as Comment[], { status: 200 })
+		return Response.json(data as unknown as Comment[], { status: 200 })
 	} catch (error) {
 		console.error(
 			"\x1b[31m%s\x1b[0m",
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
 		const supabase = createClient()
 
 		const body = await request.json()
-		console.log(JSON.stringify(body, null, 4))
+		// console.log(JSON.stringify(body, null, 4))
 
 		const { error } = await supabase.from("comments").insert({
 			post_id: body.post_id,
