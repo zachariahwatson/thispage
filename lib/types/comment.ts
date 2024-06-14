@@ -33,6 +33,6 @@ export type Comment = {
 				last_name: string | null
 				avatar_url: string | null
 			} | null
-		}[]
+		} | null
 	}[]
 }
