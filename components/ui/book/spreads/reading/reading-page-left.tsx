@@ -108,7 +108,7 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 							<CardDescription>read to...</CardDescription>
 							<div className="flex flex-row">
 								<p className="font-bold italic md:text-xl">
-									p. <span className="text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
+									p.<span className="text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
 								</p>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 									viewBox="0 0 24 24"
 									strokeWidth={1}
 									stroke="currentColor"
-									className="w-12 md:w-16 h-12 md:h-16 self-center"
+									className="w-12 md:w-14 h-12 md:h-14 self-center"
 								>
 									<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
 								</svg>
@@ -162,10 +162,10 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 				</CardFooter>
 			</Card>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
-				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
+				<Separator orientation="vertical" className="ml-4 bg-shadow-dark" />
 			</div>
 			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
-				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
+				<Separator orientation="horizontal" className="mt-4 bg-shadow-dark" />
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>
