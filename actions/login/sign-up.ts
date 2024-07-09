@@ -8,15 +8,12 @@ import { z } from "zod"
 import { signUpFormSchema } from "@/lib/zod"
 
 export async function signUp(values: z.infer<typeof signUpFormSchema>) {
-	const origin = headers().get("origin")
-	let redirectTo = `${origin}`
+	let redirectTo = "/"
 	const referer = headers().get("referer")
 	if (referer) {
 		const refUrl = new URL(referer)
-		const next = refUrl.searchParams.get("redirect")
-		if (next) {
-			redirectTo += next
-		}
+		const next = refUrl.searchParams.get("redirect") ?? "/"
+		redirectTo = next
 	}
 	const firstName = values.firstName as string
 	const lastName = values.lastName as string

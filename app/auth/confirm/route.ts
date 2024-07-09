@@ -8,7 +8,6 @@ export async function GET(request: NextRequest) {
 	const token_hash = searchParams.get("token_hash")
 	const type = searchParams.get("type") as EmailOtpType | null
 	const next = searchParams.get("next") ?? "/"
-	const redirectTo = new URL(next)
 
 	if (token_hash && type) {
 		const cookieStore = cookies()
@@ -35,11 +34,10 @@ export async function GET(request: NextRequest) {
 			token_hash,
 		})
 		if (!error) {
-			return NextResponse.redirect(redirectTo)
+			return NextResponse.redirect(next)
 		}
 	}
 
 	// return the user to an error page with some instructions
-	redirectTo.pathname = "/auth/auth-code-error"
-	return NextResponse.redirect(redirectTo)
+	return NextResponse.redirect("/auth/auth-code-error")
 }
