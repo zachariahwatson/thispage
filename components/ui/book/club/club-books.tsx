@@ -1,6 +1,7 @@
 "use client"
 
 import { ClubBook, ClubBookSkeleton } from "@/components/ui/book"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui"
 import { ClubMembership } from "@/lib/types"
 import { useQuery } from "react-query"
 
@@ -31,7 +32,18 @@ export function ClubBooks() {
 	const { data: clubMemberships, isLoading: loading } = useQuery<ClubMembership[]>(["clubs"], () => fetchClubs())
 
 	return !loading && clubMemberships ? (
-		clubMemberships.map((clubMembership, index) => <ClubBook key={index} clubMembershipData={clubMembership} />)
+		clubMemberships.length > 0 ? (
+			clubMemberships.map((clubMembership, index) => <ClubBook key={index} clubMembershipData={clubMembership} />)
+		) : (
+			<Card className="max-w-lg w-full h-96">
+				<CardHeader>
+					<CardTitle>
+						welcome to this<span className="font-bold">page</span>! to get started, create a club or join one through an
+						invite link.
+					</CardTitle>
+				</CardHeader>
+			</Card>
+		)
 	) : (
 		<>
 			<ClubBookSkeleton />
