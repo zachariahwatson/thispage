@@ -142,7 +142,7 @@ export function Nav() {
 			{isVertical ? (
 				<Drawer open={settingsVisible} onOpenChange={setSettingsVisible}>
 					<DrawerTrigger ref={settingsRef} />
-					<DrawerContent className="p-6">
+					<DrawerContent className="w-full p-6">
 						<DrawerHeader>
 							<DrawerTitle>settings</DrawerTitle>
 						</DrawerHeader>

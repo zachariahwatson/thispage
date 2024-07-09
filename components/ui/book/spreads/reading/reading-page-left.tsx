@@ -162,10 +162,10 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 				</CardFooter>
 			</Card>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
-				<Separator orientation="vertical" className="ml-4 bg-shadow-dark" />
+				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
 			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
-				<Separator orientation="horizontal" className="mt-4 bg-shadow-dark" />
+				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>
