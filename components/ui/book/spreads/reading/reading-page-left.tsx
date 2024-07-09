@@ -54,7 +54,7 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 			style={{ transformPerspective: 2500 }}
 			onAnimationComplete={() => setFlipOnce(true)}
 		>
-			<div className="flex justify-center px-12 pb-16 pt-8 h-full w-full">
+			<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
 				<Image
 					className="rounded-lg h-full w-auto"
 					src={readingData?.book?.cover_image_url || ""}
