@@ -8,15 +8,12 @@ import { signInFormSchema } from "@/lib/zod"
 import { revalidatePath } from "next/cache"
 
 export async function signIn(values: z.infer<typeof signInFormSchema>) {
-	const origin = headers().get("origin")
-	let redirectTo = `${origin}`
+	let redirectTo = "/"
 	const referer = headers().get("referer")
 	if (referer) {
 		const refUrl = new URL(referer)
-		const next = refUrl.searchParams.get("redirect")
-		if (next) {
-			redirectTo += next
-		}
+		const next = refUrl.searchParams.get("redirect") ?? "/"
+		redirectTo = next
 	}
 	const email = values.email as string
 	const password = values.password as string
