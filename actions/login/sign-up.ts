@@ -9,7 +9,7 @@ import { signUpFormSchema } from "@/lib/zod"
 
 export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	const origin = headers().get("origin")
-	let redirectTo = `${origin}/auth/callback`
+	let redirectTo = `/auth/callback`
 	const referer = headers().get("referer")
 	if (referer) {
 		const refUrl = new URL(referer)
