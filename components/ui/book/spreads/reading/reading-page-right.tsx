@@ -53,7 +53,7 @@ export function ReadingPageRight({
 			transition={{ type: "tween", duration: 0.15, ease: "easeIn" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader className="px-4 md:px-6">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
 				<div className="flex justify-between pr-1">
 					<CardTitle className="text-xl">discussion</CardTitle>
 					<CreatePostButton memberId={memberId} clubId={clubId} readingId={readingId} readingData={readingData} />

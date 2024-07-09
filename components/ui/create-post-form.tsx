@@ -125,7 +125,7 @@ export function CreatePostForm({ memberId, clubId, readingId, setVisible }: Prop
 							<FormItem>
 								<FormLabel>content</FormLabel>
 								<FormControl>
-									<Textarea className="h-96" {...field}></Textarea>
+									<Textarea className="h-40 md:h-96" {...field}></Textarea>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

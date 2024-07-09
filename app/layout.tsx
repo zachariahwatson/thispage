@@ -36,7 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			<body className="bg-background text-foreground">
 				<Providers>
 					<Nav />
-					<main className="min-h-[calc(100vh-120px)] flex flex-col items-center pt-6 p-6 md:p-12 md:pt-12 space-y-8">
+					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-6 md:p-12 md:pt-12 space-y-8">
 						{children}
 					</main>
 					<footer className="flex justify-center items-center h-12 md:text-sm text-xs">
