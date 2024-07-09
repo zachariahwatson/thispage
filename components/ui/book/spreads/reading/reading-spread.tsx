@@ -114,6 +114,7 @@ export function ReadingSpread({ memberId, readingData, isVisible, readingIndex }
 						userProgress={userProgress || null}
 						clubId={readingData?.club_id || null}
 						readingId={readingData?.id || null}
+						readingData={readingData}
 						isVertical={isVertical}
 						readingIndex={readingIndex}
 					/>

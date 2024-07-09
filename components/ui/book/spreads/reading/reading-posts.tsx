@@ -91,7 +91,15 @@ export function ReadingPosts({ memberId, clubId, readingId, redactSpoilers }: Pr
 				{!loading && posts ? (
 					posts.map((post) =>
 						redactSpoilers && post.is_spoiler ? (
-							<ReadingPost key={post.id} likes={0} id={-1} clubId={clubId} readingId={readingId} memberId={memberId}>
+							<ReadingPost
+								disabled
+								key={post.id}
+								likes={0}
+								id={-1}
+								clubId={clubId}
+								readingId={readingId}
+								memberId={memberId}
+							>
 								⚠️spoiler⚠️complete the reading!
 							</ReadingPost>
 						) : (

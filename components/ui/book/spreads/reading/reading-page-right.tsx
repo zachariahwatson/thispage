@@ -2,7 +2,8 @@
 
 import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { ReadingPosts, IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "@/components/ui/book"
-import { Interval, MemberProgress } from "@/lib/types"
+import { CreatePostButton } from "@/components/ui/buttons"
+import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
 import { useQuery } from "react-query"
 
@@ -13,6 +14,7 @@ interface Props {
 	userProgress: MemberProgress
 	clubId: number | null
 	readingId: number | null
+	readingData: Reading
 	isVertical: boolean
 	readingIndex: number
 }
@@ -24,6 +26,7 @@ export function ReadingPageRight({
 	userProgress,
 	clubId,
 	readingId,
+	readingData,
 	isVertical,
 	readingIndex,
 }: Props) {
@@ -51,7 +54,11 @@ export function ReadingPageRight({
 			style={{ transformPerspective: 2500 }}
 		>
 			<CardHeader className="px-4 md:px-6">
-				<CardTitle className="text-xl">discussion</CardTitle>
+				<div className="flex justify-between pr-1">
+					<CardTitle className="text-xl">discussion</CardTitle>
+					<CreatePostButton memberId={memberId} clubId={clubId} readingId={readingId} readingData={readingData} />
+				</div>
+
 				<ReadingPosts
 					memberId={memberId}
 					clubId={clubId}
@@ -67,10 +74,10 @@ export function ReadingPageRight({
 				)}
 			</CardFooter>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
-				<Separator orientation="vertical" className="mr-4 bg-shadow-dark" />
+				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
 			<div className="bg-gradient-to-b from-shadow to-background px-2 block md:hidden absolute w-full top-0 right-0">
-				<Separator orientation="horizontal" className="mb-4 bg-shadow-dark" />
+				<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>

@@ -12,13 +12,13 @@ export const signUpFormSchema = z
 			.max(50, "last name must contain no more than 50 characters")
 			.regex(/^[A-Za-z'-]+$/, "Invalid last name format")
 			.optional(),
-		email: z.string().email("invalid email format"),
+		email: z.string({ required_error: "email is required" }).email("invalid email format").min(1, "email is required"),
 		password: z
-			.string()
+			.string({ required_error: "password is required" })
 			.min(8, "password must contain at least 8 characters")
 			.regex(/^[A-Za-z0-9!@#$%^&*()_+=[\]{}|;:'",.<>/?]+$/, "Invalid password format"),
 		confirmPassword: z
-			.string()
+			.string({ required_error: "comfirm password is required" })
 			.min(8, "confirm password must match the password")
 			.regex(/^[A-Za-z0-9!@#$%^&*()_+=[\]{}|;:'",.<>/?]+$/, "Invalid password format"),
 	})
