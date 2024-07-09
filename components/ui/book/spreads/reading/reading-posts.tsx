@@ -44,7 +44,9 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 export function ReadingPosts({ memberId, clubId, readingId, redactSpoilers }: Props) {
 	//gotta make a ref for the scrollarea to apply to the child div inside it - doing this because scrollarea adds a dive in between them with display:table and it messes up the truncation so we have to manually set the width back to what it's supposed to be
 	const scrollAreaRef = useRef<ScrollAreaElement>(null)
+	const scrollAreaWrapperRef = useRef<HTMLDivElement>(null)
 	const [innerWidth, setInnerWidth] = useState<string | number>("auto")
+	const [innerHeight, setInnerHeight] = useState<string | number>("auto")
 
 	//fetch reading's posts
 	const fetchPosts = async () => {
@@ -74,6 +76,9 @@ export function ReadingPosts({ memberId, clubId, readingId, redactSpoilers }: Pr
 			if (scrollAreaRef.current) {
 				setInnerWidth(scrollAreaRef.current.clientWidth)
 			}
+			if (scrollAreaWrapperRef.current) {
+				setInnerHeight(scrollAreaWrapperRef.current.offsetHeight)
+			}
 		}
 
 		handleResize() // Set initial width
@@ -86,43 +91,45 @@ export function ReadingPosts({ memberId, clubId, readingId, redactSpoilers }: Pr
 		/**
 		 * @todo - figure out why it's becoming display: table
 		 */
-		<ScrollArea ref={scrollAreaRef} className="border rounded-lg h-[200px] md:h-[418px] shadow-shadow shadow-inner">
-			<div className="p-3 md:p-4" style={{ width: innerWidth }}>
-				{!loading && posts ? (
-					posts.map((post) =>
-						redactSpoilers && post.is_spoiler ? (
-							<ReadingPost
-								disabled
-								key={post.id}
-								likes={0}
-								id={-1}
-								clubId={clubId}
-								readingId={readingId}
-								memberId={memberId}
-							>
-								⚠️spoiler⚠️complete the reading!
-							</ReadingPost>
-						) : (
-							<ReadingPost
-								key={post.id}
-								likes={post.likes_count}
-								id={post.id}
-								clubId={clubId}
-								readingId={readingId}
-								memberId={memberId}
-							>
-								{post.title}
-							</ReadingPost>
+		<div ref={scrollAreaWrapperRef} className="h-full">
+			<ScrollArea ref={scrollAreaRef} className="border rounded-lg md:h-[418px] shadow-shadow shadow-inner">
+				<div className="p-3 md:p-4" style={{ width: innerWidth, height: innerHeight }}>
+					{!loading && posts ? (
+						posts.map((post) =>
+							redactSpoilers && post.is_spoiler ? (
+								<ReadingPost
+									disabled
+									key={post.id}
+									likes={0}
+									id={-1}
+									clubId={clubId}
+									readingId={readingId}
+									memberId={memberId}
+								>
+									⚠️spoiler⚠️complete the reading!
+								</ReadingPost>
+							) : (
+								<ReadingPost
+									key={post.id}
+									likes={post.likes_count}
+									id={post.id}
+									clubId={clubId}
+									readingId={readingId}
+									memberId={memberId}
+								>
+									{post.title}
+								</ReadingPost>
+							)
 						)
-					)
-				) : (
-					<>
-						<ReadingPostSkeleton />
-						<ReadingPostSkeleton />
-						<ReadingPostSkeleton />
-					</>
-				)}
-			</div>
-		</ScrollArea>
+					) : (
+						<>
+							<ReadingPostSkeleton />
+							<ReadingPostSkeleton />
+							<ReadingPostSkeleton />
+						</>
+					)}
+				</div>
+			</ScrollArea>
+		</div>
 	)
 }
