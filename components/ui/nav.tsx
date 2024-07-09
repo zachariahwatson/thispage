@@ -95,7 +95,11 @@ export function Nav() {
 						{user && !loading && (
 							<Avatar className="self-end hover:ring-4 hover:ring-ring transition-all">
 								<AvatarImage src={user.avatar_url} />
-								<AvatarFallback>{user.name.split(" ")[0] + user.name.split(" ")[1]}</AvatarFallback>
+								<AvatarFallback>
+									{user.first_name && user.last_name
+										? user.first_name[0] + user.last_name[0]
+										: user.name && user.name?.split(" ")[0] + user.name?.split(" ")[1]}
+								</AvatarFallback>
 							</Avatar>
 						)}
 					</DropdownMenuTrigger>
