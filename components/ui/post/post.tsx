@@ -125,20 +125,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 											src={post.reading.book.cover_image_url || ""}
 											width={post.reading.book.cover_image_width || 0}
 											height={post.reading.book.cover_image_height || 0}
-											alt={
-												"Cover photo of " +
-												post.reading.book.title +
-												" by " +
-												post.reading.book.authors?.map((author, i) => {
-													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author
-													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author + " and "
-													} else {
-														return author + ", "
-													}
-												})
-											}
+											alt=""
 										/>
 									</DrawerTrigger>
 									<DrawerContent className="space-y-4 p-6 max-h-screen h-full">
