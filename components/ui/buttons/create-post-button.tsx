@@ -1,44 +1,58 @@
+"use client"
+
 import { useMediaQuery } from "@/hooks"
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "../drawer"
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../drawer"
 import { Dialog, DialogContent, DialogTrigger } from "../dialog"
 import { Tooltip, TooltipTrigger, TooltipContent } from "../tooltip"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../sheet"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../sheet"
+import { CreatePostForm } from "../create-post-form"
+import { useState } from "react"
+import { Reading } from "@/lib/types"
 
-export function CreatePostButton() {
+interface Props {
+	memberId: number
+	clubId: number | null
+	readingId: number | null
+	readingData: Reading
+}
+
+export function CreatePostButton({ memberId, clubId, readingId, readingData }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
+	const [createPostVisible, setCreatePostVisible] = useState<boolean>(false)
 	return (
 		<>
 			{isVertical ? (
-				<Drawer>
-					<Tooltip>
-						<TooltipTrigger>
-							<DrawerTrigger>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									strokeWidth={1.5}
-									stroke="currentColor"
-									className="size-6"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-									/>
-								</svg>
-							</DrawerTrigger>
-						</TooltipTrigger>
-						<TooltipContent>create post</TooltipContent>
-					</Tooltip>
-					<DrawerContent className="w-full rounded-lg">
+				<Drawer open={createPostVisible} onOpenChange={setCreatePostVisible}>
+					<DrawerTrigger>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="size-6"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+							/>
+						</svg>
+					</DrawerTrigger>
+					<DrawerContent className="w-full p-6">
 						<DrawerHeader>
 							<DrawerTitle>create post</DrawerTitle>
 						</DrawerHeader>
+						<CreatePostForm
+							memberId={memberId}
+							clubId={clubId}
+							readingId={readingId}
+							setVisible={setCreatePostVisible}
+						/>
 					</DrawerContent>
 				</Drawer>
 			) : (
-				<Sheet>
+				<Sheet open={createPostVisible} onOpenChange={setCreatePostVisible}>
 					<Tooltip>
 						<TooltipTrigger>
 							<SheetTrigger>
@@ -60,10 +74,16 @@ export function CreatePostButton() {
 						</TooltipTrigger>
 						<TooltipContent>create post</TooltipContent>
 					</Tooltip>
-					<SheetContent>
+					<SheetContent className="sm:max-w-2xl max-w-2xl w-full space-y-4">
 						<SheetHeader>
 							<SheetTitle>create post</SheetTitle>
 						</SheetHeader>
+						<CreatePostForm
+							memberId={memberId}
+							clubId={clubId}
+							readingId={readingId}
+							setVisible={setCreatePostVisible}
+						/>
 					</SheetContent>
 				</Sheet>
 			)}
