@@ -15,7 +15,7 @@ export async function signIn(values: z.infer<typeof signInFormSchema>) {
 		const refUrl = new URL(referer)
 		const next = refUrl.searchParams.get("redirect")
 		if (next) {
-			redirectTo += `?next=${next}`
+			redirectTo += next
 		}
 	}
 	const email = values.email as string
