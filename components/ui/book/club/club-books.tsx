@@ -35,14 +35,13 @@ export function ClubBooks() {
 		clubMemberships.length > 0 ? (
 			clubMemberships.map((clubMembership, index) => <ClubBook key={index} clubMembershipData={clubMembership} />)
 		) : (
-			<Card className="max-w-lg w-full h-96">
-				<CardHeader>
-					<CardTitle>
-						welcome to this<span className="font-bold">page</span>! to get started, create a club or join one through an
-						invite link.
-					</CardTitle>
-				</CardHeader>
-			</Card>
+			<div className="space-y-4 text-center w-full p-x-6">
+				<h1 className="text-2xl md:text-4xl">
+					welcome to <span className=" font-normal">this</span>
+					<span className="font-bold">page</span>!
+				</h1>
+				<p className="md:text-xl">to get started, create a club or join a club through an invite link.</p>
+			</div>
 		)
 	) : (
 		<>
