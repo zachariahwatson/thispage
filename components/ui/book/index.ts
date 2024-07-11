@@ -8,3 +8,6 @@ export { IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "./spreads/read
 export { IntervalAvatarList } from "./spreads/reading/interval-avatar-list"
 export { ReadingPosts } from "./spreads/reading/reading-posts"
 export { ReadingPost, ReadingPostSkeleton } from "./spreads/reading/reading-post"
+export { AddReadingSpread } from "./spreads/add-reading/add-reading-spread"
+export { AddReadingPageLeft } from "./spreads/add-reading/add-reading-page-left"
+export { AddReadingPageRight } from "./spreads/add-reading/add-reading-page-right"

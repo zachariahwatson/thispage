@@ -1,6 +1,6 @@
 "use client"
 
-import { ReadingSpread } from "@/components/ui/book/"
+import { AddReadingSpread, ReadingSpread } from "@/components/ui/book/"
 import { Skeleton } from "@/components/ui/"
 import { useContext, useState } from "react"
 import { NextReading } from "@/components/ui/buttons"
@@ -29,7 +29,15 @@ export function Spreads() {
 						</ReadingProvider>
 					)
 			)}
-			<NextReading readingIndex={readingIndex} setReadingIndex={setReadingIndex} len={readings.length} />
+			{readings.length < 4 && clubMembership?.role !== "member" && (
+				<AddReadingSpread isVisible={readingIndex === readings.length} readingIndex={readings.length} />
+			)}
+
+			<NextReading
+				readingIndex={readingIndex}
+				setReadingIndex={setReadingIndex}
+				len={clubMembership?.role !== "member" ? readings.length + 1 : readings.length}
+			/>
 		</>
 	) : (
 		<SpreadSkeleton />
