@@ -22,11 +22,9 @@ import { toast } from "sonner"
 import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useEffect } from "react"
+import { useClubMembership, useReading } from "@/contexts"
 
 interface Props {
-	memberId: number
-	clubId: number | null
-	readingId: number | null
 	setVisible: Dispatch<SetStateAction<boolean>>
 }
 
@@ -34,18 +32,20 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function CreatePostForm({ memberId, clubId, readingId, setVisible }: Props) {
+export function CreatePostForm({ setVisible }: Props) {
+	const readingData = useReading()
+	const clubMembership = useClubMembership()
 	const router = useRouter()
 	const queryClient = useQueryClient()
 	const postMutation = useMutation({
 		mutationFn: (data: {
 			reading_id: number | null
-			author_member_id: number
+			author_member_id: number | null
 			title: string
 			content: string
 			is_spoiler: boolean
 		}) => {
-			const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts`)
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}/posts`)
 			return fetch(url, {
 				method: "POST",
 				headers: {
@@ -56,7 +56,7 @@ export function CreatePostForm({ memberId, clubId, readingId, setVisible }: Prop
 		},
 		onSuccess: () => {
 			toast.success("post created!")
-			queryClient.invalidateQueries(["posts", clubId, readingId])
+			queryClient.invalidateQueries(["posts", clubMembership?.club.id, readingData?.id])
 		},
 	})
 
@@ -73,8 +73,8 @@ export function CreatePostForm({ memberId, clubId, readingId, setVisible }: Prop
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof createPostFormSchema>) {
 		postMutation.mutate({
-			reading_id: readingId,
-			author_member_id: memberId,
+			reading_id: readingData?.id || null,
+			author_member_id: clubMembership?.id || null,
 			title: values.title,
 			content: values.content || "",
 			is_spoiler: values.isSpoiler,

@@ -3,34 +3,21 @@
 import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { ReadingPosts, IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "@/components/ui/book"
 import { CreatePostButton } from "@/components/ui/buttons"
+import { useClubMembership, useReading } from "@/contexts"
+import { useMediaQuery } from "@/hooks"
+import { useIntervals, useUserProgress } from "@/hooks/state"
 import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
 import { useQuery } from "react-query"
 
-interface Props {
-	memberId: number
-	interval: Interval
-	loading: boolean
-	userProgress: MemberProgress
-	clubId: number | null
-	readingId: number | null
-	readingData: Reading
-	isVertical: boolean
-	readingIndex: number
-}
-
-export function ReadingPageRight({
-	memberId,
-	interval,
-	loading,
-	userProgress,
-	clubId,
-	readingId,
-	readingData,
-	isVertical,
-	readingIndex,
-}: Props) {
+export function ReadingPageRight() {
+	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
+	const clubMembership = useClubMembership()
+	const readingData = useReading()
+	const { data: intervals, isLoading: loading } = useIntervals(clubMembership?.club.id || null, readingData?.id || null)
+	const interval = (intervals && intervals[0]) || null
+	const { data: userProgress } = useUserProgress(interval?.id || null, clubMembership?.id || null)
 
 	//fix initial and animate
 	const rightVariants = isVertical
@@ -56,19 +43,20 @@ export function ReadingPageRight({
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
 				<div className="flex justify-between pr-1">
 					<CardTitle className="text-xl">discussion</CardTitle>
-					<CreatePostButton memberId={memberId} clubId={clubId} readingId={readingId} readingData={readingData} />
+					<CreatePostButton />
 				</div>
 
-				<ReadingPosts
-					memberId={memberId}
-					clubId={clubId}
-					readingId={readingId}
-					redactSpoilers={userProgress ? !userProgress.is_complete : true}
-				/>
+				<ReadingPosts redactSpoilers={userProgress ? !userProgress.is_complete : true} />
 			</CardHeader>
 			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
 				{interval && !loading ? (
-					<IntervalAvatarGroup progresses={interval.member_interval_progresses} />
+					<IntervalAvatarGroup
+						progresses={
+							userProgress
+								? [userProgress].concat(interval.member_interval_progresses)
+								: interval.member_interval_progresses
+						}
+					/>
 				) : (
 					<IntervalAvatarGroupSkeleton />
 				)}
@@ -79,7 +67,6 @@ export function ReadingPageRight({
 			<div className="bg-gradient-to-b from-shadow to-background px-2 block md:hidden absolute w-full top-0 right-0">
 				<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>
 	)
 }

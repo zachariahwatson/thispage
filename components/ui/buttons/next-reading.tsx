@@ -1,18 +1,20 @@
 "use client"
 
+import { useClubMembership } from "@/contexts"
 import { motion } from "framer-motion"
 import { useState } from "react"
 
 interface Props {
-	clubId: number
 	readingIndex: number
 	setReadingIndex: React.Dispatch<React.SetStateAction<number>>
 	len: number
 }
 
-export function NextReading({ clubId, readingIndex, setReadingIndex, len }: Props) {
+export function NextReading({ readingIndex, setReadingIndex, len }: Props) {
+	const clubMembership = useClubMembership()
+
 	const nextReading = () => {
-		localStorage.setItem(`club-${clubId}-tab-index`, ((readingIndex + 1) % len).toString())
+		localStorage.setItem(`club-${clubMembership?.club.id}-tab-index`, ((readingIndex + 1) % len).toString())
 		setReadingIndex((readingIndex + 1) % len)
 	}
 

@@ -4,11 +4,10 @@ import { useMutation, useQueryClient } from "react-query"
 import { Button } from "./button"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { useClubMembership } from "@/contexts"
 
 interface Props {
-	clubId: number | null
 	readingId: number | null
-	memberId: number
 	intervalId: number | null
 }
 
@@ -16,12 +15,13 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function JoinReadingButton({ clubId, readingId, memberId, intervalId }: Props) {
+export function JoinReadingButton({ readingId, intervalId }: Props) {
+	const clubMembership = useClubMembership()
 	const queryClient = useQueryClient()
 	const mutation = useMutation({
 		mutationFn: (newProgress: { member_id: number; interval_id: number }) => {
 			const url = new URL(
-				`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/intervals/${intervalId}/member-interval-progresses`
+				`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingId}/intervals/${intervalId}/member-interval-progresses`
 			)
 			return fetch(url, {
 				method: "POST",
@@ -33,7 +33,7 @@ export function JoinReadingButton({ clubId, readingId, memberId, intervalId }: P
 		},
 		onSuccess: () => {
 			toast.success("joined reading!")
-			queryClient.invalidateQueries(["intervals", clubId, readingId])
+			queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingId])
 			queryClient.invalidateQueries(["user progress", intervalId])
 		},
 	})
@@ -62,7 +62,7 @@ export function JoinReadingButton({ clubId, readingId, memberId, intervalId }: P
 				<Button
 					onClick={() => {
 						if (intervalId !== null) {
-							mutation.mutate({ member_id: memberId, interval_id: intervalId })
+							mutation.mutate({ member_id: clubMembership?.id || -1, interval_id: intervalId })
 						}
 					}}
 				>

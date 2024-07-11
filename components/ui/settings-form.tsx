@@ -11,6 +11,7 @@ import { toast } from "sonner"
 import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useEffect } from "react"
+import { useUser } from "@/hooks/state"
 
 interface Props {
 	mutation: UseMutationResult<
@@ -56,11 +57,14 @@ export function SettingsForm({ mutation, setVisible }: Props) {
 		return await response.json()
 	}
 
-	const { data: user, isLoading: loading } = useQuery(["user"], () => fetchUser())
+	const { data: user } = useUser()
+
+	const firstName = user?.first_name ? user?.first_name : user?.name.split(" ")[0]
+	const lastName = user?.last_name ? user?.last_name : user?.name.split(" ")[1]
 
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof settingsFormSchema>) {
-		mutation.mutate({ first_name: values.firstName || user?.first_name, last_name: values.lastName || user?.last_name })
+		mutation.mutate({ first_name: values.firstName || firstName, last_name: values.lastName || lastName })
 		setVisible(false)
 	}
 
@@ -75,7 +79,7 @@ export function SettingsForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>first name</FormLabel>
 								<FormControl>
-									<Input placeholder={user?.first_name} {...field} />
+									<Input placeholder={firstName} {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -88,7 +92,7 @@ export function SettingsForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>last name</FormLabel>
 								<FormControl>
-									<Input placeholder={user?.last_name} {...field} />
+									<Input placeholder={lastName} {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

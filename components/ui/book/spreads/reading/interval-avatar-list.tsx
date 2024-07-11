@@ -11,10 +11,10 @@ import {
 	ScrollArea,
 } from "@/components/ui"
 import { useMediaQuery } from "@/hooks"
-import { Interval } from "@/lib/types"
+import { Interval, MemberProgress } from "@/lib/types"
 
 interface Props {
-	progresses: NonNullable<Interval>["member_interval_progresses"]
+	progresses: MemberProgress[]
 }
 
 export function IntervalAvatarList({ progresses }: Props) {
@@ -28,19 +28,19 @@ export function IntervalAvatarList({ progresses }: Props) {
 					<div className="grid md:grid-cols-3 p-4">
 						{progresses.map((progress, index) => (
 							<div key={index} className="h-10 flex flex-row mr-8 mb-4">
-								<Avatar className={`${progress.is_complete ? "ring-ring" : "ring-background"} ring-4`}>
-									<AvatarImage src={progress.member?.avatar_url || ""} />
+								<Avatar className={`${progress?.is_complete ? "ring-ring" : "ring-background"} ring-4`}>
+									<AvatarImage src={progress?.member?.avatar_url || ""} />
 									<AvatarFallback>
-										{progress.member?.first_name && progress.member?.last_name
-											? progress.member.first_name[0] + progress.member.last_name[0]
-											: progress.member?.name &&
-											  progress.member?.name?.split(" ")[0] + progress.member?.name?.split(" ")[1]}
+										{progress?.member?.first_name && progress?.member?.last_name
+											? progress?.member.first_name[0] + progress?.member.last_name[0]
+											: progress?.member?.name &&
+											  progress?.member?.name?.split(" ")[0] + progress?.member?.name?.split(" ")[1]}
 									</AvatarFallback>
 								</Avatar>
 								<p className="ml-4 self-center">
-									{progress.member?.first_name && progress.member?.last_name
-										? progress.member.first_name + " " + progress.member.last_name
-										: progress.member?.name}
+									{progress?.member?.first_name && progress?.member?.last_name
+										? progress?.member.first_name + " " + progress?.member.last_name
+										: progress?.member?.name}
 								</p>
 							</div>
 						))}

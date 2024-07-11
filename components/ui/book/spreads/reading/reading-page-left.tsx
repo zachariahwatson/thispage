@@ -14,6 +14,9 @@ import {
 	TooltipTrigger,
 } from "@/components/ui"
 import { Button, JoinReadingButton, CompleteIntervalButton } from "@/components/ui/buttons"
+import { useClubMembership, useReading } from "@/contexts"
+import { useMediaQuery } from "@/hooks"
+import { useIntervals, useUserProgress } from "@/hooks/state"
 import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
 import Image from "next/image"
@@ -21,17 +24,24 @@ import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 
 interface Props {
-	memberId: number
-	userProgress: MemberProgress
-	interval: Interval
-	readingData: Reading
-	isVertical: boolean
 	readingIndex: number
 }
 
-export function ReadingPageLeft({ memberId, userProgress, interval, readingData, isVertical, readingIndex }: Props) {
+export function ReadingPageLeft({ readingIndex }: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
+	const readingData = useReading()
+	const clubMembership = useClubMembership()
+	const isVertical = useMediaQuery("(max-width: 768px)")
+
+	const { data: intervals } = useIntervals(clubMembership?.club.id || null, readingData?.id || null)
+
+	const interval = (intervals && intervals[0]) || null
+
+	const { data: userProgress, isLoading: userProgressLoading } = useUserProgress(
+		interval?.id || null,
+		clubMembership?.id || null
+	)
 
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
@@ -97,13 +107,28 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 							: null}
 					</CardDescription>
 				</CardHeader>
-				{userProgress && (
+				{!userProgressLoading && (
 					<div className="px-4">
 						<Separator />
 					</div>
 				)}
 				<CardContent className="pr-0 pt-6 md:pt-2 md:px-6 px-4">
-					{userProgress ? (
+					{userProgressLoading ? (
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="size-6 animate-spin"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+							/>
+						</svg>
+					) : userProgress ? (
 						<>
 							<CardDescription>read to...</CardDescription>
 							<div className="flex flex-row">
@@ -124,13 +149,7 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 									{/**
 									 * @todo add dialog box confirming if the user wants to complete the reading if they're the last member to do so
 									 */}
-									<CompleteIntervalButton
-										clubId={readingData?.club_id || null}
-										readingId={readingData?.id || null}
-										memberId={memberId}
-										intervalId={interval?.id || null}
-										userProgress={userProgress}
-									/>
+									<CompleteIntervalButton intervalId={interval?.id || null} />
 								</div>
 							</div>
 							<CardDescription className="italic">
@@ -142,12 +161,7 @@ export function ReadingPageLeft({ memberId, userProgress, interval, readingData,
 						/**
 						 * @todo do something with useOptimistic -
 						 */
-						<JoinReadingButton
-							clubId={readingData?.club_id || null}
-							readingId={readingData?.id || null}
-							memberId={memberId}
-							intervalId={interval?.id || null}
-						/>
+						<JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
 					)}
 				</CardContent>
 				<CardFooter className="md:px-6 px-4">
