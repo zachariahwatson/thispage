@@ -20,7 +20,17 @@ export async function GET(request: NextRequest, { params }: { params: { memberId
 			.select(
 				`
 				id,
-                is_complete
+                is_complete,
+				member:members (
+						id, 
+						user_id,
+						...users (
+							name,
+							first_name,
+							last_name,
+							avatar_url
+						)
+					)
 				`
 			)
 			.eq("interval_id", params.intervalId)

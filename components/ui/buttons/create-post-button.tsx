@@ -8,15 +8,9 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { CreatePostForm } from "../create-post-form"
 import { useState } from "react"
 import { Reading } from "@/lib/types"
+import { useReading } from "@/contexts"
 
-interface Props {
-	memberId: number
-	clubId: number | null
-	readingId: number | null
-	readingData: Reading
-}
-
-export function CreatePostButton({ memberId, clubId, readingId, readingData }: Props) {
+export function CreatePostButton() {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const [createPostVisible, setCreatePostVisible] = useState<boolean>(false)
 	return (
@@ -43,12 +37,7 @@ export function CreatePostButton({ memberId, clubId, readingId, readingData }: P
 						<DrawerHeader>
 							<DrawerTitle>create post</DrawerTitle>
 						</DrawerHeader>
-						<CreatePostForm
-							memberId={memberId}
-							clubId={clubId}
-							readingId={readingId}
-							setVisible={setCreatePostVisible}
-						/>
+						<CreatePostForm setVisible={setCreatePostVisible} />
 					</DrawerContent>
 				</Drawer>
 			) : (
@@ -78,12 +67,7 @@ export function CreatePostButton({ memberId, clubId, readingId, readingData }: P
 						<SheetHeader>
 							<SheetTitle>create post</SheetTitle>
 						</SheetHeader>
-						<CreatePostForm
-							memberId={memberId}
-							clubId={clubId}
-							readingId={readingId}
-							setVisible={setCreatePostVisible}
-						/>
+						<CreatePostForm setVisible={setCreatePostVisible} />
 					</SheetContent>
 				</Sheet>
 			)}

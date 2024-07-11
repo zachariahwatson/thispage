@@ -18,11 +18,11 @@ import {
 } from "@/components/ui"
 import { Tooltip } from "@/components/ui"
 import { IntervalAvatarList } from "./interval-avatar-list"
-import type { Interval } from "@/lib/types"
+import type { Interval, MemberProgress } from "@/lib/types"
 import { useMediaQuery } from "@/hooks"
 
 interface Props {
-	progresses: NonNullable<Interval>["member_interval_progresses"]
+	progresses: MemberProgress[]
 }
 
 export function IntervalAvatarGroup({ progresses }: Props) {
@@ -54,20 +54,20 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 				{previewProgresses.map((progress, index) => (
 					<Tooltip key={index}>
 						<TooltipTrigger className="cursor-default">
-							<Avatar className={`${progress.is_complete ? "ring-ring ring-4" : "ring-background ring-4"}`}>
-								<AvatarImage src={progress.member?.avatar_url || ""} />
+							<Avatar className={`${progress?.is_complete ? "ring-ring ring-4" : "ring-background ring-4"}`}>
+								<AvatarImage src={progress?.member?.avatar_url || ""} />
 								<AvatarFallback>
-									{progress.member?.first_name && progress.member?.last_name
-										? progress.member.first_name[0] + progress.member.last_name[0]
-										: progress.member?.name &&
-										  progress.member?.name?.split(" ")[0] + progress.member?.name?.split(" ")[1]}
+									{progress?.member?.first_name && progress?.member?.last_name
+										? progress?.member.first_name[0] + progress?.member.last_name[0]
+										: progress?.member?.name &&
+										  progress?.member?.name?.split(" ")[0] + progress?.member?.name?.split(" ")[1]}
 								</AvatarFallback>
 							</Avatar>
 						</TooltipTrigger>
 						<TooltipContent>
-							{progress.member?.first_name && progress.member?.last_name
-								? progress.member.first_name + " " + progress.member.last_name
-								: progress.member?.name}
+							{progress?.member?.first_name && progress?.member?.last_name
+								? progress?.member.first_name + " " + progress?.member.last_name
+								: progress?.member?.name}
 						</TooltipContent>
 					</Tooltip>
 				))}

@@ -2,70 +2,34 @@
 
 import { ReadingSpread } from "@/components/ui/book/"
 import { Skeleton } from "@/components/ui/"
-import { useEffect, useState } from "react"
-import { Button, NextReading } from "@/components/ui/buttons"
-import { useQuery } from "react-query"
-import { ClubMembership, Reading } from "@/lib/types"
-
-interface Props {
-	clubMembershipData: ClubMembership
-}
-
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-	: "http://localhost:3000"
+import { useContext, useState } from "react"
+import { NextReading } from "@/components/ui/buttons"
+import { useReadings } from "@/hooks/state"
+import { ReadingProvider, useClubMembership } from "@/contexts"
 
 /**
  * returns a list of book club reading "spreads". we can't use suspense here as we need the fetch to be called from the client in order to preserve auth cookies. <Suspense> only works with async components and client components can't be async.
  */
-export function Spreads({ clubMembershipData }: Props) {
+export function Spreads() {
+	const clubMembership = useClubMembership()
+
 	const [readingIndex, setReadingIndex] = useState<number>(
-		Number(localStorage.getItem(`club-${clubMembershipData.club?.id}-tab-index`))
+		Number(localStorage.getItem(`club-${clubMembership?.club.id}-tab-index`))
 	)
 
-	const fetchReadings = async () => {
-		const url = new URL(`${defaultUrl}/api/clubs/${clubMembershipData.club?.id}/readings`)
-		url.searchParams.append("current", "true")
-		url.searchParams.append("finished", "false")
-		const response = await fetch(url, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-
-		if (!response.ok) {
-			const body = await response.json()
-			throw new Error(body.error)
-		}
-
-		return await response.json()
-	}
-
-	const { data: readings, isLoading: loading } = useQuery<Reading[]>(["readings", clubMembershipData.club.id], () =>
-		fetchReadings()
-	)
+	const { data: readings, isLoading: loading } = useReadings(clubMembership?.club.id || -1)
 
 	return !loading && readings ? (
 		<>
 			{readings.map(
 				(reading, index) =>
 					reading && (
-						<ReadingSpread
-							key={index}
-							memberId={clubMembershipData.id}
-							readingData={reading}
-							isVisible={readingIndex === index}
-							readingIndex={index}
-						/>
+						<ReadingProvider key={index} readingData={reading}>
+							<ReadingSpread isVisible={readingIndex === index} readingIndex={index} />
+						</ReadingProvider>
 					)
 			)}
-			<NextReading
-				clubId={clubMembershipData.club.id}
-				readingIndex={readingIndex}
-				setReadingIndex={setReadingIndex}
-				len={readings.length}
-			/>
+			<NextReading readingIndex={readingIndex} setReadingIndex={setReadingIndex} len={readings.length} />
 		</>
 	) : (
 		<SpreadSkeleton />

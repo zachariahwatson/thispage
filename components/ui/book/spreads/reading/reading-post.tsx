@@ -1,23 +1,23 @@
 import { Badge, Separator, Skeleton } from "@/components/ui"
+import { useClubMembership, useReading } from "@/contexts"
 import Link from "next/link"
 
 interface Props {
 	disabled?: boolean | false
-	memberId: number
-	clubId: number | null
-	readingId: number | null
 	children: React.ReactNode
 	likes: number
 	id: number
 }
 
-export function ReadingPost({ disabled, memberId, clubId, readingId, children, likes, id }: Props) {
+export function ReadingPost({ disabled, children, likes, id }: Props) {
+	const clubMembership = useClubMembership()
+	const readingData = useReading()
 	return (
 		<>
 			<div className="flex flex-row pr-10 md:pr-14 relative">
 				<p className={`min-h-5 text-xs md:text-sm truncate ... ${!disabled ? "hover:font-medium transition-all" : ""}`}>
 					<Link
-						href={`club/${clubId}/reading/${readingId}/comments/${id}?memberId=${memberId}`}
+						href={`club/${clubMembership?.club.id}/reading/${readingData?.id}/comments/${id}`}
 						className={disabled ? "text-muted-foreground pointer-events-none" : ""}
 						aria-disabled={disabled}
 						tabIndex={disabled ? -1 : undefined}

@@ -27,9 +27,12 @@ import { Button, RootCommentButton } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
 import Image from "next/image"
 import Link from "next/link"
-import type { Post } from "@/lib/types"
+import type { ClubMembership, Post } from "@/lib/types"
 import { useMediaQuery } from "@/hooks"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, redirect } from "next/navigation"
+import { useClubs } from "@/hooks/state"
+import { toast } from "sonner"
+import { useEffect, useState } from "react"
 
 interface Props {
 	clubId: string
@@ -46,9 +49,19 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
  * @todo do something about the member id being exposed, dont like that
  */
 export function Post({ clubId, readingId, postId }: Props) {
-	const searchParams = useSearchParams()
-	const memberId = searchParams.get("memberId")
-	//fetch other members' intervals
+	const { data: clubMemberships } = useClubs()
+	const clubMembership = clubMemberships?.find((clubMembership) => String(clubMembership.club.id) === clubId)
+
+	useEffect(() => {
+		//check to make sure user is in club
+		if (!clubMembership) {
+			toast.error("oops! you don't have access to that page.")
+			redirect("/")
+		}
+	}, [])
+
+	const memberId = String(clubMembership?.id)
+	//fetch post
 	const fetchPost = async () => {
 		const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}`)
 		const response = await fetch(url, {
@@ -243,8 +256,8 @@ export function Post({ clubId, readingId, postId }: Props) {
 			<div className="pr-2">
 				<Separator />
 			</div>
-			<RootCommentButton clubId={clubId} readingId={readingId} postId={postId} memberId={memberId || ""} />
-			<PostComments clubId={clubId} readingId={readingId} postId={postId} memberId={memberId || ""} />
+			<RootCommentButton clubId={clubId} readingId={readingId} postId={postId} memberId={memberId} />
+			<PostComments clubId={clubId} readingId={readingId} postId={postId} memberId={memberId} />
 		</div>
 	) : (
 		<PostSkeleton />

@@ -33,6 +33,7 @@ import { DialogTriggerProps } from "@radix-ui/react-dialog"
 import { toast } from "sonner"
 import { signOut } from "@/actions/login"
 import { ThemeButton } from "./buttons"
+import { useUser } from "@/hooks/state"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -43,23 +44,7 @@ export function Nav() {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const settingsRef = useRef<HTMLButtonElement>(null)
 	const queryClient = useQueryClient()
-
-	const fetchUser = async () => {
-		const url = new URL(`${defaultUrl}/api/users`)
-		const response = await fetch(url, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-
-		if (!response.ok) {
-			const body = await response.json()
-			throw new Error(body.error)
-		}
-
-		return await response.json()
-	}
+	const { data: user, isLoading: loading } = useUser()
 
 	const settingsMutation = useMutation({
 		mutationFn: (data: { first_name: string; last_name: string }) => {
@@ -76,10 +61,12 @@ export function Nav() {
 			toast.success("user successfully updated")
 			queryClient.invalidateQueries(["intervals"])
 			queryClient.invalidateQueries(["user"])
+			queryClient.invalidateQueries(["user progress"])
+			queryClient.invalidateQueries(["posts"])
+			queryClient.invalidateQueries(["comments"])
 		},
 	})
 
-	const { data: user, isLoading: loading } = useQuery(["user"], () => fetchUser())
 	return (
 		<header className="flex justify-center border-b bg-card">
 			<div className="px-6 md:px-8 py-4 flex flex-row items-center w-full justify-between max-w-5xl">

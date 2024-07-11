@@ -38,6 +38,8 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 				`
 			)
 			.eq("reading_id", params.readingId)
+			//excluding user
+			.neq("member_interval_progresses.member.user_id", user?.id)
 			.order("goal_page", { ascending: false })
 
 		if (error) {
@@ -45,16 +47,16 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		}
 
 		// Sort member_interval_progresses so that the user's progresses are always first
-		const sortedData = data.map((interval) => {
-			interval.member_interval_progresses.sort((a, b) => {
-				if (a.member?.user_id === user?.id) return -1
-				if (b.member?.user_id === user?.id) return 1
-				return 0
-			})
-			return interval
-		})
+		// const sortedData = data.map((interval) => {
+		// 	interval.member_interval_progresses.sort((a, b) => {
+		// 		if (a.member?.user_id === user?.id) return -1
+		// 		if (b.member?.user_id === user?.id) return 1
+		// 		return 0
+		// 	})
+		// 	return interval
+		// })
 
-		return Response.json(sortedData as Interval[], { status: 200 })
+		return Response.json(data as Interval[], { status: 200 })
 	} catch (error) {
 		console.error(
 			"\x1b[31m%s\x1b[0m",

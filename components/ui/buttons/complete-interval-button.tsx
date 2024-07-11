@@ -2,29 +2,30 @@
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
+import { useClubMembership } from "@/contexts"
 import { MemberProgress } from "@/lib/types"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
+import { motion } from "framer-motion"
+import { useUserProgress } from "@/hooks/state"
 
 interface Props {
-	clubId: number | null
-	readingId: number | null
-	memberId: number
 	intervalId: number | null
-	userProgress: MemberProgress
 }
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId, userProgress }: Props) {
+export function CompleteIntervalButton({ intervalId }: Props) {
+	const clubMembership = useClubMembership()
 	const queryClient = useQueryClient()
+	const { data: userProgress } = useUserProgress(intervalId, clubMembership?.id || null)
 	const mutation = useMutation({
 		mutationFn: (data: { is_complete: boolean }) => {
-			const url = new URL(`${defaultUrl}/api/users/progresses/${memberId}/intervals/${intervalId}`)
+			const url = new URL(`${defaultUrl}/api/users/progresses/${clubMembership?.id}/intervals/${intervalId}`)
 			return fetch(url, {
 				method: "PATCH",
 				headers: {
@@ -33,7 +34,33 @@ export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId
 				body: JSON.stringify(data),
 			})
 		},
-		onSuccess: () => {
+		// When mutate is called:
+		onMutate: async (data) => {
+			// Cancel any outgoing refetches
+			// (so they don't overwrite our optimistic update)
+			await queryClient.cancelQueries({ queryKey: ["user progress", intervalId] })
+
+			// Snapshot the previous value
+			const previousProgress = queryClient.getQueryData(["user progress", intervalId])
+
+			// Optimistically update to the new value
+			queryClient.setQueryData(["user progress", intervalId], (old: any) => ({
+				...(old || {}),
+				is_complete: data.is_complete,
+			}))
+
+			// Return a context object with the snapshotted value
+			return { previousProgress }
+		},
+		// If the mutation fails,
+		// use the context returned from onMutate to roll back
+		onError: (err, data, context) => {
+			if (context) {
+				queryClient.setQueryData(["user progress", intervalId], context.previousProgress)
+			}
+			toast.error("an error occurred while updating user progress :(")
+		},
+		onSettled: () => {
 			if (!userProgress?.is_complete) {
 				const choices = [
 					`oooo you're on go mode! keep it up! 🔥`,
@@ -69,73 +96,55 @@ export function CompleteIntervalButton({ clubId, readingId, memberId, intervalId
 				]
 				toast.success(choices[Math.floor(Math.random() * choices.length)])
 			}
-			queryClient.invalidateQueries(["intervals", clubId, readingId])
-			queryClient.invalidateQueries(["user progress", intervalId])
-			queryClient.invalidateQueries(["posts", clubId, readingId])
+			//queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingId])
+			//queryClient.invalidateQueries(["user progress", intervalId])
+			//queryClient.invalidateQueries(["posts", clubMembership?.club.id, readingId])
 		},
 	})
 
 	return (
 		<Tooltip>
 			<TooltipTrigger>
-				{mutation.isLoading ? (
-					<Button
-						variant={"ghost"}
-						className="w-16 md:w-24 h-16 md:h-24 p-0 rounded-full text-primary hover:text-primary"
-						disabled
-					>
+				<motion.div
+					className="w-16 md:w-24 h-16 md:h-24 p-0 rounded-full text-primary"
+					onClick={() => mutation.mutate({ is_complete: !userProgress?.is_complete || false })}
+					initial={{
+						scale: 1.1,
+					}}
+					animate={{
+						scale: 1,
+					}}
+				>
+					{userProgress?.is_complete ? (
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							className="w-16 md:w-24 h-16 md:h-24"
+						>
+							<path
+								fillRule="evenodd"
+								d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+								clipRule="evenodd"
+							/>
+						</svg>
+					) : (
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
 							strokeWidth={1.5}
 							stroke="currentColor"
-							className="w-16 md:w-24 h-16 md:h-24 animate-spin"
+							className="w-16 md:w-24 h-16 md:h-24"
 						>
 							<path
 								strokeLinecap="round"
 								strokeLinejoin="round"
-								d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+								d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
 							/>
 						</svg>
-					</Button>
-				) : (
-					<Button
-						variant={"ghost"}
-						className="w-16 md:w-24 h-16 md:h-24 p-0 rounded-full text-primary hover:text-primary"
-						onClick={() => mutation.mutate({ is_complete: !userProgress?.is_complete || false })}
-					>
-						{userProgress?.is_complete ? (
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 24 24"
-								fill="currentColor"
-								className="w-16 md:w-24 h-16 md:h-24"
-							>
-								<path
-									fillRule="evenodd"
-									d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-									clipRule="evenodd"
-								/>
-							</svg>
-						) : (
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								strokeWidth={1.5}
-								stroke="currentColor"
-								className="w-16 md:w-24 h-16 md:h-24"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-								/>
-							</svg>
-						)}
-					</Button>
-				)}
+					)}
+				</motion.div>
 			</TooltipTrigger>
 			<TooltipContent>
 				<p>{userProgress?.is_complete ? "un-complete reading" : "complete reading"}</p>
