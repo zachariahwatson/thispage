@@ -24,12 +24,12 @@ export function NextReading({ readingIndex, setReadingIndex, len }: Props) {
 		len > 1 && (
 			<>
 				<motion.div
-					className="absolute bottom-4 right-4 border-b-[52px] border-l-[52px] border-b-background border-l-card shadow-[-4px_-4px_5px_0_hsl(var(--shadow)/0.66)] rounded-tl-lg rounded-br-lg flex justify-center items-center"
+					className="absolute bottom-4 right-4 border-b-[52px] border-l-[52px] border-b-transparent border-l-card shadow-[-4px_-4px_5px_0_hsl(var(--shadow)/0.66)] rounded-tl-lg rounded-br-lg flex justify-center items-center"
 					initial={{ borderBottomWidth: 52, borderLeftWidth: 52 }}
 					animate={{ borderBottomWidth: isHovered ? 60 : 52, borderLeftWidth: isHovered ? 60 : 52 }}
 				/>
 				<button
-					className="absolute bottom-4 right-4 w-[52px] h-[52px] flex justify-center items-center p-0 text-muted-foreground/50 border-border border-b-[.5px] border-r-[.5px] rounded-br-lg"
+					className="absolute bottom-4 right-4 w-[52px] h-[52px] flex justify-center items-center p-0 text-muted-foreground/50 rounded-br-lg"
 					onClick={nextReading}
 					onMouseEnter={() => setIsHovered(true)}
 					onMouseLeave={() => setIsHovered(false)}

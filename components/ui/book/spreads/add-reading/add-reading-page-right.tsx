@@ -1,6 +1,7 @@
 "use client"
 
 import {
+	AddReadingForm,
 	Card,
 	CardContent,
 	CardHeader,
@@ -73,6 +74,7 @@ export function AddReadingPageRight() {
 						<DrawerHeader>
 							<DrawerTitle>add a reading</DrawerTitle>
 						</DrawerHeader>
+						<AddReadingForm />
 					</DrawerContent>
 				</Drawer>
 			) : (
@@ -93,10 +95,11 @@ export function AddReadingPageRight() {
 							/>
 						</svg>
 					</SheetTrigger>
-					<SheetContent className="sm:max-w-2xl max-w-2xl w-full space-y-4">
+					<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4">
 						<SheetHeader>
 							<SheetTitle>add a reading</SheetTitle>
 						</SheetHeader>
+						<AddReadingForm />
 					</SheetContent>
 				</Sheet>
 			)}

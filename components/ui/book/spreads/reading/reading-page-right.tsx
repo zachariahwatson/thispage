@@ -18,6 +18,7 @@ export function ReadingPageRight() {
 	const { data: intervals, isLoading: loading } = useIntervals(clubMembership?.club.id || null, readingData?.id || null)
 	const interval = (intervals && intervals[0]) || null
 	const { data: userProgress } = useUserProgress(interval?.id || null, clubMembership?.id || null)
+	console.log(interval)
 
 	//fix initial and animate
 	const rightVariants = isVertical
