@@ -32,12 +32,19 @@ export function BookSearch({ field }: Props) {
 	const button = useRef<HTMLButtonElement | null>(null)
 	const radioGroup = useRef<HTMLDivElement | null>(null)
 
+	const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === "Enter") {
+			event.preventDefault()
+			setSearch(input.current?.value || "")
+		}
+	}
+
 	return (
 		<FormItem>
 			<FormLabel>book</FormLabel>
 			<div className="flex w-full items-center space-x-2">
-				<Input ref={input} placeholder="search books" />
-				<Button type="button" onClick={() => setSearch(input.current?.value || "")}>
+				<Input ref={input} placeholder="search books" onKeyDown={handleKeyPress} />
+				<Button type="button" variant="secondary" onClick={() => setSearch(input.current?.value || "")}>
 					search
 				</Button>
 			</div>

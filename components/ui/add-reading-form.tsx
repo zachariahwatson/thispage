@@ -84,36 +84,38 @@ export function AddReadingForm() {
 							</FormItem>
 						)}
 					/>
-					<FormField
-						control={form.control}
-						name="joinInProgress"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex flex-row items-start space-x-3 space-y-0">
-									<FormControl>
-										<Checkbox checked={field.value} onCheckedChange={field.onChange} />
-									</FormControl>
-									<FormLabel>join in progress</FormLabel>
-								</div>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="isCurrent"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex flex-row items-start space-x-3 space-y-0">
-									<FormControl>
-										<Checkbox checked={field.value} onCheckedChange={field.onChange} />
-									</FormControl>
-									<FormLabel>visible</FormLabel>
-								</div>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+					<div className="flex flex-row items-center space-x-4">
+						<FormField
+							control={form.control}
+							name="joinInProgress"
+							render={({ field }) => (
+								<FormItem>
+									<div className="flex flex-row items-start space-x-3 space-y-0">
+										<FormControl>
+											<Checkbox checked={field.value} onCheckedChange={field.onChange} />
+										</FormControl>
+										<FormLabel>join in progress</FormLabel>
+									</div>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="isCurrent"
+							render={({ field }) => (
+								<FormItem>
+									<div className="flex flex-row items-start space-x-3 space-y-0">
+										<FormControl>
+											<Checkbox checked={field.value} onCheckedChange={field.onChange} />
+										</FormControl>
+										<FormLabel>visible</FormLabel>
+									</div>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
 					{false ? (
 						<Button disabled className="float-right">
 							<svg
@@ -130,11 +132,11 @@ export function AddReadingForm() {
 									d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
 								/>
 							</svg>
-							saving...
+							adding...
 						</Button>
 					) : (
 						<Button type="submit" className="float-right">
-							save
+							add
 						</Button>
 					)}
 				</form>

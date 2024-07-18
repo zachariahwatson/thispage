@@ -43,6 +43,9 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 		clubMembership?.id || null
 	)
 
+	//concat user progress to intervals
+	const memberProgresses = [userProgress].concat(interval?.member_interval_progresses)
+
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
 		? {
@@ -75,17 +78,23 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 						"Unknown" +
 							(readingData?.book?.authors
 								? " by " +
-								  readingData.book.authors.map((author, i) => {
-										if (i === (readingData?.book?.authors ? readingData.book.authors?.length - 1 : 0)) {
-											return author
-										} else if (i === (readingData?.book?.authors ? readingData.book.authors?.length - 2 : 0)) {
-											return author + " and "
-										} else {
-											return author + ", "
-										}
-								  })
+								  (readingData?.book?.authors.length === 2
+										? readingData?.book?.authors.join(" and ")
+										: readingData?.book?.authors
+												.map((author: string, i: number) => {
+													if (
+														i === (readingData?.book?.authors ? readingData.book.authors?.length - 1 : 0) &&
+														readingData.book?.authors?.length !== 1
+													) {
+														return "and " + author
+													} else {
+														return author
+													}
+												})
+												.join(", "))
 								: null)
 					}
+					loading="eager"
 				/>
 			</div>
 
@@ -95,15 +104,20 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 					<CardDescription className="italic">
 						{readingData?.book?.authors
 							? " by " +
-							  readingData.book.authors.map((author, i) => {
-									if (i === (readingData?.book?.authors ? readingData.book.authors?.length - 1 : 0)) {
-										return author
-									} else if (i === (readingData?.book?.authors ? readingData.book.authors?.length - 2 : 0)) {
-										return author + " and "
-									} else {
-										return author + ", "
-									}
-							  })
+							  (readingData?.book?.authors.length === 2
+									? readingData?.book?.authors.join(" and ")
+									: readingData?.book?.authors
+											.map((author: string, i: number) => {
+												if (
+													i === (readingData?.book?.authors ? readingData.book.authors?.length - 1 : 0) &&
+													readingData.book?.authors?.length !== 1
+												) {
+													return "and " + author
+												} else {
+													return author
+												}
+											})
+											.join(", "))
 							: null}
 					</CardDescription>
 				</CardHeader>
@@ -153,8 +167,8 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 								</div>
 							</div>
 							<CardDescription className="italic">
-								{interval?.member_interval_progresses.filter((progress) => progress.is_complete).length}/
-								{interval?.member_interval_progresses.length} readers have completed
+								{memberProgresses.filter((progress) => progress?.is_complete).length}/{memberProgresses.length} readers
+								have completed
 							</CardDescription>
 						</>
 					) : (

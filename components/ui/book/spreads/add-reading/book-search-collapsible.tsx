@@ -65,15 +65,17 @@ export function BookSearchCollapsible({ item, radioRef }: Props) {
 							<span className="italic text-muted-foreground">
 								{item.author_name
 									? " by " +
-									  item.author_name.map((author: string, i: number) => {
-											if (i === (item.author_name ? item.author_name.length - 1 : 0)) {
-												return author
-											} else if (i === (item.author_name ? item.author_name.length - 2 : 0)) {
-												return author + " and "
-											} else {
-												return author + ", "
-											}
-									  })
+									  (item.author_name.length === 2
+											? item.author_name.join(" and ")
+											: item.author_name
+													.map((author: string, i: number) => {
+														if (i === item.author_name.length - 1 && item.author_name.length !== 1) {
+															return "and " + author
+														} else {
+															return author
+														}
+													})
+													.join(", "))
 									: null}
 							</span>
 							<FormDescription className="flex flex-row items-center text-xs">
@@ -98,9 +100,29 @@ export function BookSearchCollapsible({ item, radioRef }: Props) {
 				</CollapsibleTrigger>
 			</div>
 			<CollapsibleContent className="space-y-2 px-4">
-				{editions &&
+				{loading ? (
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-6 animate-spin"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+						/>
+					</svg>
+				) : (
+					editions &&
 					editions.entries &&
-					editions.entries.map((entry: any, i: number) => <BookSearchItem item={entry} key={i} radioRef={radioRef} />)}
+					editions.entries.map(
+						(entry: any, i: number) =>
+							(entry.number_of_pages || entry.pagination) && <BookSearchItem item={entry} key={i} radioRef={radioRef} />
+					)
+				)}
 			</CollapsibleContent>
 		</Collapsible>
 	)

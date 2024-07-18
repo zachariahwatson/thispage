@@ -146,15 +146,20 @@ export function Post({ clubId, readingId, postId }: Props) {
 											<DrawerTitle>{post.reading.book.title}</DrawerTitle>
 											<DrawerDescription className="italic">
 												by{" "}
-												{post.reading.book.authors?.map((author, i) => {
-													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author
-													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author + " and "
-													} else {
-														return author + ", "
-													}
-												})}
+												{post.reading.book.authors?.length === 2
+													? post.reading.book.authors.join(" and ")
+													: post.reading.book.authors
+															?.map((author: string, i: number) => {
+																if (
+																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
+																	post.reading.book.authors?.length !== 1
+																) {
+																	return "and " + author
+																} else {
+																	return author
+																}
+															})
+															.join(", ")}
 											</DrawerDescription>
 										</DrawerHeader>
 										<Image
@@ -166,15 +171,20 @@ export function Post({ clubId, readingId, postId }: Props) {
 												"Cover photo of " +
 												post.reading.book.title +
 												" by " +
-												post.reading.book.authors?.map((author, i) => {
-													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author
-													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author + " and "
-													} else {
-														return author + ", "
-													}
-												})
+												(post.reading.book.authors?.length === 2
+													? post.reading.book.authors.join(" and ")
+													: post.reading.book.authors
+															?.map((author: string, i: number) => {
+																if (
+																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
+																	post.reading.book.authors?.length !== 1
+																) {
+																	return "and " + author
+																} else {
+																	return author
+																}
+															})
+															.join(", "))
 											}
 										/>
 										<DrawerDescription className="italic">{post.reading.book.description}</DrawerDescription>
@@ -192,15 +202,20 @@ export function Post({ clubId, readingId, postId }: Props) {
 												"Cover photo of " +
 												post.reading.book.title +
 												" by " +
-												post.reading.book.authors?.map((author, i) => {
-													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author
-													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author + " and "
-													} else {
-														return author + ", "
-													}
-												})
+												(post.reading.book.authors?.length === 2
+													? post.reading.book.authors.join(" and ")
+													: post.reading.book.authors
+															?.map((author: string, i: number) => {
+																if (
+																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
+																	post.reading.book.authors?.length !== 1
+																) {
+																	return "and " + author
+																} else {
+																	return author
+																}
+															})
+															.join(", "))
 											}
 										/>
 									</SheetTrigger>
@@ -209,15 +224,20 @@ export function Post({ clubId, readingId, postId }: Props) {
 											<SheetTitle>{post.reading.book.title}</SheetTitle>
 											<SheetDescription className="italic">
 												by{" "}
-												{post.reading.book.authors?.map((author, i) => {
-													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author
-													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author + " and "
-													} else {
-														return author + ", "
-													}
-												})}
+												{post.reading.book.authors?.length === 2
+													? post.reading.book.authors.join(" and ")
+													: post.reading.book.authors
+															?.map((author: string, i: number) => {
+																if (
+																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
+																	post.reading.book.authors?.length !== 1
+																) {
+																	return "and " + author
+																} else {
+																	return author
+																}
+															})
+															.join(", ")}
 											</SheetDescription>
 										</SheetHeader>
 										<Image
@@ -229,15 +249,20 @@ export function Post({ clubId, readingId, postId }: Props) {
 												"Cover photo of " +
 												post.reading.book.title +
 												" by " +
-												post.reading.book.authors?.map((author, i) => {
-													if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author
-													} else if (i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0)) {
-														return author + " and "
-													} else {
-														return author + ", "
-													}
-												})
+												(post.reading.book.authors?.length === 2
+													? post.reading.book.authors.join(" and ")
+													: post.reading.book.authors
+															?.map((author: string, i: number) => {
+																if (
+																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
+																	post.reading.book.authors?.length !== 1
+																) {
+																	return "and " + author
+																} else {
+																	return author
+																}
+															})
+															.join(", "))
 											}
 										/>
 										<SheetDescription className="italic">{post.reading.book.description}</SheetDescription>
