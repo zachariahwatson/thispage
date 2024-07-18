@@ -79,7 +79,7 @@ export function BookSearchCollapsible({ item, radioRef }: Props) {
 									: null}
 							</span>
 							<FormDescription className="flex flex-row items-center text-xs">
-								view editions{" "}
+								view {editions && editions.entries && editions.entries.length} editions{" "}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
