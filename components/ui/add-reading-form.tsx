@@ -6,6 +6,7 @@ import { z } from "zod"
 import { addReadingFormSchema, settingsFormSchema } from "@/lib/zod"
 import { Button } from "@/components/ui/buttons"
 import {
+	Calendar,
 	Checkbox,
 	Form,
 	FormControl,
@@ -15,6 +16,9 @@ import {
 	FormLabel,
 	FormMessage,
 	Input,
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
 	RadioGroup,
 	RadioGroupItem,
 } from "@/components/ui"
@@ -25,16 +29,31 @@ import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { useUser } from "@/hooks/state"
 import { BookSearch } from "./book"
+import { useClubMembership } from "@/contexts"
+import { cn } from "@/lib/utils"
+import { format } from "date-fns"
 
 interface Props {
 	mutation: UseMutationResult<
 		Response,
 		unknown,
 		{
-			olid: string
-			intervalPageLength: number
-			joinInProgress: boolean
-			isCurrent: boolean
+			book: {
+				open_library_id: string
+				title?: string | undefined
+				description?: string | undefined
+				authors?: string[] | undefined
+				page_count?: number | undefined
+				cover_image_url?: string | undefined
+				cover_image_width?: number | undefined
+				cover_image_height?: number | undefined
+			}
+			club_id: number
+			creator_member_id: number
+			interval_page_length: number
+			start_date: Date
+			is_current: boolean
+			join_in_progress: boolean
 		},
 		unknown
 	>
@@ -45,7 +64,8 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function AddReadingForm() {
+export function AddReadingForm({ mutation, setVisible }: Props) {
+	const clubMembership = useClubMembership()
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof addReadingFormSchema>>({
 		resolver: zodResolver(addReadingFormSchema),
@@ -57,20 +77,52 @@ export function AddReadingForm() {
 
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof addReadingFormSchema>) {
-		// mutation.mutate({
-		// 	olid: values.olid,
-		// 	intervalPageLength: Number(values.intervalPageLength),
-		// 	joinInProgress: values.joinInProgress,
-		// 	isCurrent: values.isCurrent,
-		// })
-		// setVisible(false)
+		const parsedBook = JSON.parse(values.book)
+		mutation.mutate({
+			book: {
+				open_library_id: parsedBook.openLibraryId,
+				title: parsedBook.title,
+				description: parsedBook.description,
+				authors: parsedBook.authors,
+				page_count: parsedBook.pageCount,
+				cover_image_url: parsedBook.coverImageUrl,
+				cover_image_width: parsedBook.coverImageWidth,
+				cover_image_height: parsedBook.coverImageHeight,
+			},
+			club_id: clubMembership?.club.id || -1,
+			creator_member_id: clubMembership?.id || -1,
+			start_date: values.startDate,
+			interval_page_length: Number(values.intervalPageLength),
+			join_in_progress: values.joinInProgress,
+			is_current: values.isCurrent,
+		})
+		setVisible(false)
 	}
 
 	return (
 		<>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-					<FormField control={form.control} name="olid" render={({ field }) => <BookSearch field={field} />} />
+					<FormField control={form.control} name="book" render={({ field }) => <BookSearch field={field} />} />
+					<FormField
+						control={form.control}
+						name="startDate"
+						render={({ field }) => (
+							<FormItem className="flex flex-col">
+								<FormLabel>start date</FormLabel>
+								<FormControl className="flex justify-center">
+									<Calendar
+										mode="single"
+										selected={field.value}
+										onSelect={field.onChange}
+										disabled={(date) => date <= new Date()}
+										initialFocus
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 					<FormField
 						control={form.control}
 						name="intervalPageLength"

@@ -17,12 +17,13 @@ import { Button } from "@/components/ui/buttons"
 interface Props {
 	field: ControllerRenderProps<
 		{
-			olid: string
+			book: string
+			startDate: Date
 			intervalPageLength: string
 			joinInProgress: boolean
 			isCurrent: boolean
 		},
-		"olid"
+		"book"
 	>
 }
 
@@ -49,7 +50,7 @@ export function BookSearch({ field }: Props) {
 				</Button>
 			</div>
 			<FormControl>
-				<RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col space-y-1">
+				<RadioGroup onValueChange={field.onChange} defaultValue={""} className="flex flex-col space-y-1">
 					<BookSearchList search={search} radioRef={radioGroup} />
 				</RadioGroup>
 			</FormControl>

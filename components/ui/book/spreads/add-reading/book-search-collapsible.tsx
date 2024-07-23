@@ -120,7 +120,9 @@ export function BookSearchCollapsible({ item, radioRef }: Props) {
 					editions.entries &&
 					editions.entries.map(
 						(entry: any, i: number) =>
-							(entry.number_of_pages || entry.pagination) && <BookSearchItem item={entry} key={i} radioRef={radioRef} />
+							(entry.number_of_pages || entry.pagination) && (
+								<BookSearchItem item={entry} authors={item.author_name} key={i} radioRef={radioRef} />
+							)
 					)
 				)}
 			</CollapsibleContent>

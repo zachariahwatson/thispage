@@ -18,14 +18,58 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui"
+import { useClubMembership } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import { motion } from "framer-motion"
 import { useState } from "react"
+import { useMutation, useQueryClient } from "react-query"
+import { toast } from "sonner"
+
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
+	: "http://localhost:3000"
 
 export function AddReadingPageRight() {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const [addReadingVisible, setAddReadingVisible] = useState(false)
 	const MotionCard = motion(Card)
+	const clubMembership = useClubMembership()
+
+	const queryClient = useQueryClient()
+
+	const readingMutation = useMutation({
+		mutationFn: (data: {
+			book: {
+				open_library_id: string
+				title?: string | undefined
+				description?: string | undefined
+				authors?: string[] | undefined
+				page_count?: number | undefined
+				cover_image_url?: string | undefined
+				cover_image_width?: number | undefined
+				cover_image_height?: number | undefined
+			}
+			club_id: number
+			creator_member_id: number
+			interval_page_length: number
+			start_date: Date
+			is_current: boolean
+			join_in_progress: boolean
+		}) => {
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings`)
+			return fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			})
+		},
+		onSuccess: () => {
+			toast.success("reading successfully created")
+			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
+		},
+	})
 
 	const rightVariants = isVertical
 		? {
@@ -44,7 +88,7 @@ export function AddReadingPageRight() {
 			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow shadow-md relative"
 			variants={rightVariants}
 			exit="exit"
-			transition={{ type: "tween", duration: 0.15, ease: "easeIn" }}
+			transition={{ type: "tween", duration: 0.1, ease: "easeIn" }}
 			style={{ transformPerspective: 2500 }}
 		>
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
@@ -74,7 +118,7 @@ export function AddReadingPageRight() {
 						<DrawerHeader>
 							<DrawerTitle>add a reading</DrawerTitle>
 						</DrawerHeader>
-						<AddReadingForm />
+						<AddReadingForm mutation={readingMutation} setVisible={setAddReadingVisible} />
 					</DrawerContent>
 				</Drawer>
 			) : (
@@ -99,7 +143,7 @@ export function AddReadingPageRight() {
 						<SheetHeader>
 							<SheetTitle>add a reading</SheetTitle>
 						</SheetHeader>
-						<AddReadingForm />
+						<AddReadingForm mutation={readingMutation} setVisible={setAddReadingVisible} />
 					</SheetContent>
 				</Sheet>
 			)}

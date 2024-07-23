@@ -25,10 +25,11 @@ import { useQuery } from "react-query"
 
 interface Props {
 	item: any
+	authors?: string[]
 	radioRef: MutableRefObject<HTMLDivElement | null>
 }
 
-export function BookSearchItem({ item, radioRef }: Props) {
+export function BookSearchItem({ item, authors, radioRef }: Props) {
 	const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 		? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 		: "http://localhost:3000"
@@ -40,7 +41,7 @@ export function BookSearchItem({ item, radioRef }: Props) {
 		isError: error,
 		refetch,
 	} = useQuery({
-		queryKey: ["editions", item],
+		queryKey: ["covers", item.key.split("/")[2]],
 		queryFn: async () => {
 			if (item.covers) {
 				const url = new URL(`${defaultUrl}/api/books/cover/${item.covers[0]}`)
@@ -62,9 +63,23 @@ export function BookSearchItem({ item, radioRef }: Props) {
 		},
 	})
 	return (
+		/**
+		 * @todo create loading skeleton for whole entry, you don't want people selecting items before the cover info is loaded
+		 */
 		<FormItem className="flex flex-row items-center space-x-3 space-y-0">
 			<FormControl>
-				<RadioGroupItem value={item.key.split("/")[2]} />
+				<RadioGroupItem
+					value={JSON.stringify({
+						openLibraryId: item.key.split("/")[2],
+						title: item.title || "",
+						description: item.description || "",
+						authors: authors,
+						pageCount: Number(item.number_of_pages || item.pagination),
+						coverImageUrl: !loading && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
+						coverImageWidth: !loading && cover.width,
+						coverImageHeight: !loading && cover.height,
+					})}
+				/>
 			</FormControl>
 			<FormLabel className={`w-full h-full cursor-pointer`}>
 				<Card>
@@ -77,7 +92,11 @@ export function BookSearchItem({ item, radioRef }: Props) {
 							<CardDescription>{item.number_of_pages || item.pagination || "?"} pages</CardDescription>
 							<div className="flex flex-row items-center space-x-2">
 								{item.languages &&
-									item.languages.map((language: any) => <Badge variant="outline">{language.key.split("/")[2]}</Badge>)}
+									item.languages.map((language: any, i: number) => (
+										<Badge variant="outline" key={i}>
+											{language.key.split("/")[2]}
+										</Badge>
+									))}
 							</div>
 							<div className="absolute right-0 top-0 h-full p-4 max-w-full">
 								{loading ? (

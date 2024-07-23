@@ -53,3 +53,33 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		return Response.json({ error: "an error occurred while fetching club readings." }, { status: 500 })
 	}
 }
+
+/**
+ * creates a new reading.
+ */
+export async function POST(request: NextRequest) {
+	console.log(await request.json())
+	// try {
+	// 	const supabase = createClient()
+
+	// 	const body = await request.json()
+
+	// 	const { error } = await supabase.from("posts").insert({
+	// 		reading_id: body.reading_id,
+	// 		author_member_id: body.author_member_id,
+	// 		title: body.title,
+	// 		content: body.content,
+	// 		is_spoiler: body.is_spoiler,
+	// 	})
+
+	// 	if (error) {
+	// 		throw error
+	// 	}
+	// 	// revalidatePath("/", "layout")
+	// 	return Response.json({ message: "successfully created post" }, { status: 200 })
+	// } catch (error) {
+	// 	console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a post:\n", error)
+
+	// 	return Response.json({ error: "an error occurred while creating a post." }, { status: 500 })
+	// }
+}
