@@ -75,9 +75,9 @@ export function BookSearchItem({ item, authors, radioRef }: Props) {
 						description: item.description || "",
 						authors: authors,
 						pageCount: Number(item.number_of_pages || item.pagination),
-						coverImageUrl: !loading && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
-						coverImageWidth: !loading && cover.width,
-						coverImageHeight: !loading && cover.height,
+						coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
+						coverImageWidth: !loading && cover && cover.width,
+						coverImageHeight: !loading && cover && cover.height,
 					})}
 				/>
 			</FormControl>

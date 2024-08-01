@@ -4,7 +4,7 @@ export async function GET(request: NextRequest, { params }: { params: { title: s
 	try {
 		if (params.title !== "") {
 			const url = new URL(
-				`https://openlibrary.org/search.json?q=${params.title}&fields=key,title,author_name&limit=100`
+				`https://openlibrary.org/search.json?q=${params.title}&fields=key,title,author_name&limit=100&language=eng`
 			)
 			const response = await fetch(url, {
 				method: "GET",

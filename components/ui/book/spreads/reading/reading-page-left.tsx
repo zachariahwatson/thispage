@@ -43,6 +43,8 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 		clubMembership?.id || null
 	)
 
+	const startDate = new Date(readingData?.start_date || "")
+
 	//concat user progress to intervals
 	const memberProgresses = [userProgress].concat(interval?.member_interval_progresses)
 
@@ -127,7 +129,19 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 					</div>
 				)}
 				<CardContent className="pr-0 pt-6 md:pt-2 md:px-6 px-4">
-					{userProgressLoading ? (
+					{startDate.getTime() > Date.now() ? (
+						<div className="w-full h-full flex justify-center items-center pt-8 pr-6">
+							<p className="text-muted-foreground">
+								🚧this reading will start on{" "}
+								{startDate.toLocaleDateString(undefined, {
+									year: "numeric",
+									month: "long",
+									day: "numeric",
+								})}
+								🚧
+							</p>
+						</div>
+					) : userProgressLoading ? (
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
@@ -177,9 +191,6 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 							</CardDescription>
 						</>
 					) : (
-						/**
-						 * @todo do something with useOptimistic -
-						 */
 						<JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
 					)}
 				</CardContent>
