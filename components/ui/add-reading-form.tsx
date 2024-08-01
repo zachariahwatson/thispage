@@ -78,6 +78,8 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof addReadingFormSchema>) {
 		const parsedBook = JSON.parse(values.book)
+		const startDate = new Date(values.startDate)
+		startDate.setHours(0, 0, 0, 0)
 		mutation.mutate({
 			book: {
 				open_library_id: parsedBook.openLibraryId,
@@ -91,7 +93,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 			},
 			club_id: clubMembership?.club.id || -1,
 			creator_member_id: clubMembership?.id || -1,
-			start_date: new Date(values.startDate),
+			start_date: startDate,
 			interval_page_length: Number(values.intervalPageLength),
 			join_in_progress: values.joinInProgress,
 			is_current: values.isCurrent,

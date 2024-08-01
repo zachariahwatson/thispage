@@ -1,18 +1,33 @@
 "use client"
 
-import { Card, CardHeader, CardTitle, Separator } from "@/components/ui"
-
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+	Progress,
+	Separator,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui"
+import { Button, JoinReadingButton, CompleteIntervalButton } from "@/components/ui/buttons"
+import { useClubMembership, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
-
+import { useIntervals, useUserProgress } from "@/hooks/state"
+import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
-
-import { useState } from "react"
+import Image from "next/image"
+import { useEffect, useState } from "react"
+import { useQuery } from "react-query"
 
 interface Props {
 	readingIndex: number
 }
 
-export function AddReadingPageLeft({ readingIndex }: Props) {
+export function EmptyPageLeft({ readingIndex }: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -38,11 +53,9 @@ export function AddReadingPageLeft({ readingIndex }: Props) {
 			style={{ transformPerspective: 2500 }}
 			onAnimationComplete={() => setFlipOnce(true)}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
-				<div className="flex justify-between pr-1">
-					<CardTitle className="text-xl">dashboard</CardTitle>
-				</div>
-			</CardHeader>
+			<div className="p-4 flex justify-center items-center w-full h-full">
+				<p className="text-muted-foreground">hmm... no readings... a lil empty in here...</p>
+			</div>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
 				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>

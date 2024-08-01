@@ -1,6 +1,6 @@
 "use client"
 
-import { AddReadingSpread, ReadingSpread } from "@/components/ui/book/"
+import { AddReadingSpread, EmptyPageLeft, EmptyPageRight, ReadingSpread } from "@/components/ui/book/"
 import { Skeleton } from "@/components/ui/"
 import { useContext, useState } from "react"
 import { NextReading } from "@/components/ui/buttons"
@@ -29,8 +29,16 @@ export function Spreads() {
 						</ReadingProvider>
 					)
 			)}
-			{readings.length < 4 && clubMembership?.role !== "member" && (
+
+			{clubMembership?.role !== "member" ? (
 				<AddReadingSpread isVisible={readingIndex === readings.length} readingIndex={readings.length} />
+			) : (
+				readings.length === 0 && (
+					<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
+						<EmptyPageLeft readingIndex={0} />
+						<EmptyPageRight />
+					</div>
+				)
 			)}
 
 			<NextReading

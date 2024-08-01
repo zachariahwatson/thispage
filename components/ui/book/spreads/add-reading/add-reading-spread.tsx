@@ -7,7 +7,8 @@ interface Props {
 	isVisible: boolean
 	readingIndex: number
 }
-import { useReading } from "@/contexts"
+import { useClubMembership, useReading } from "@/contexts"
+import { useReadings } from "@/hooks/state"
 
 export function AddReadingSpread({ isVisible, readingIndex }: Props) {
 	return (

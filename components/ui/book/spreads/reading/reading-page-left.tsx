@@ -156,48 +156,51 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 								d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
 							/>
 						</svg>
-					) : userProgress ? (
-						<>
-							<CardDescription>read to...</CardDescription>
-							<div className="flex flex-row">
-								<p className="font-bold italic md:text-xl">
-									p.
-									<span className="text-6xl md:text-8xl not-italic">
-										{interval?.goal_page && interval?.goal_page < (readingData?.book_page_count || Infinity)
-											? interval?.goal_page
-											: readingData?.book_page_count}
-									</span>
-								</p>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									strokeWidth={1}
-									stroke="currentColor"
-									className="w-12 md:w-14 h-12 md:h-14 self-center"
-								>
-									<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-								</svg>
-								<div className="self-center">
-									{/**
-									 * @todo add dialog box confirming if the user wants to complete the reading if they're the last member to do so
-									 */}
-									<CompleteIntervalButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
-								</div>
-							</div>
-							<CardDescription className="italic">
-								{memberProgresses.filter((progress) => progress?.is_complete).length}/{memberProgresses.length} readers
-								have completed
-							</CardDescription>
-						</>
 					) : (
-						<JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
+						userProgress && (
+							<>
+								<CardDescription>read to...</CardDescription>
+								<div className="flex flex-row">
+									<p className="font-bold italic md:text-xl">
+										p.
+										<span className="text-6xl md:text-8xl not-italic">
+											{interval?.goal_page && interval?.goal_page < (readingData?.book_page_count || Infinity)
+												? interval?.goal_page
+												: readingData?.book_page_count}
+										</span>
+									</p>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth={1}
+										stroke="currentColor"
+										className="w-12 md:w-14 h-12 md:h-14 self-center"
+									>
+										<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+									</svg>
+									<div className="self-center">
+										{/**
+										 * @todo add dialog box confirming if the user wants to complete the reading if they're the last member to do so
+										 */}
+										<CompleteIntervalButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
+									</div>
+								</div>
+								<CardDescription className="italic">
+									{memberProgresses.filter((progress) => progress?.is_complete).length}/{memberProgresses.length}{" "}
+									readers have completed
+								</CardDescription>
+							</>
+						)
 					)}
+					{!userProgress && <JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />}
 				</CardContent>
 				<CardFooter className="md:px-6 px-4">
 					{userProgress && interval?.goal_page && readingData?.book_page_count ? (
 						<Progress
-							value={Math.floor((interval?.goal_page / readingData?.book_page_count) * 100)}
+							value={Math.floor(
+								((interval?.goal_page - readingData.interval_page_length) / readingData?.book_page_count) * 100
+							)}
 							className="h-2 md:h-4"
 						/>
 					) : (
