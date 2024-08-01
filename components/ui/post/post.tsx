@@ -126,7 +126,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 								</span>
 							</p>
 							<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
-								{post.reading.book.title} • {post.reading.club.name}
+								{post.reading.book_title} • {post.reading.club.name}
 							</p>
 						</div>
 						<div className="absolute right-0 top-0">
@@ -135,24 +135,24 @@ export function Post({ clubId, readingId, postId }: Props) {
 									<DrawerTrigger className="hover:ring-4 hover:ring-ring rounded transition-all">
 										<Image
 											className="rounded h-10 md:h-16 w-auto shadow-shadow shadow-md"
-											src={post.reading.book.cover_image_url || ""}
-											width={post.reading.book.cover_image_width || 0}
-											height={post.reading.book.cover_image_height || 0}
+											src={post.reading.book_cover_image_url || ""}
+											width={post.reading.book_cover_image_width || 0}
+											height={post.reading.book_cover_image_height || 0}
 											alt=""
 										/>
 									</DrawerTrigger>
 									<DrawerContent className="space-y-4 p-6 max-h-screen h-full">
 										<DrawerHeader className="text-left p-0">
-											<DrawerTitle>{post.reading.book.title}</DrawerTitle>
+											<DrawerTitle>{post.reading.book_title}</DrawerTitle>
 											<DrawerDescription className="italic">
 												by{" "}
-												{post.reading.book.authors?.length === 2
-													? post.reading.book.authors.join(" and ")
-													: post.reading.book.authors
+												{post.reading.book_authors?.length === 2
+													? post.reading.book_authors.join(" and ")
+													: post.reading.book_authors
 															?.map((author: string, i: number) => {
 																if (
-																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
-																	post.reading.book.authors?.length !== 1
+																	i === (post.reading.book_authors ? post.reading.book_authors.length - 1 : 0) &&
+																	post.reading.book_authors?.length !== 1
 																) {
 																	return "and " + author
 																} else {
@@ -164,20 +164,20 @@ export function Post({ clubId, readingId, postId }: Props) {
 										</DrawerHeader>
 										<Image
 											className="rounded-lg w-full max-w-48 shadow-shadow shadow-md"
-											src={post.reading.book.cover_image_url || ""}
-											width={post.reading.book.cover_image_width || 0}
-											height={post.reading.book.cover_image_height || 0}
+											src={post.reading.book_cover_image_url || ""}
+											width={post.reading.book_cover_image_width || 0}
+											height={post.reading.book_cover_image_height || 0}
 											alt={
 												"Cover photo of " +
-												post.reading.book.title +
+												post.reading.book_title +
 												" by " +
-												(post.reading.book.authors?.length === 2
-													? post.reading.book.authors.join(" and ")
-													: post.reading.book.authors
+												(post.reading.book_authors?.length === 2
+													? post.reading.book_authors.join(" and ")
+													: post.reading.book_authors
 															?.map((author: string, i: number) => {
 																if (
-																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
-																	post.reading.book.authors?.length !== 1
+																	i === (post.reading.book_authors ? post.reading.book_authors.length - 1 : 0) &&
+																	post.reading.book_authors?.length !== 1
 																) {
 																	return "and " + author
 																} else {
@@ -187,7 +187,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 															.join(", "))
 											}
 										/>
-										<DrawerDescription className="italic">{post.reading.book.description}</DrawerDescription>
+										<DrawerDescription className="italic">{post.reading.book_description}</DrawerDescription>
 									</DrawerContent>
 								</Drawer>
 							) : (
@@ -195,20 +195,20 @@ export function Post({ clubId, readingId, postId }: Props) {
 									<SheetTrigger className="hover:ring-4 hover:ring-ring rounded transition-all">
 										<Image
 											className="rounded h-10 md:h-16 w-auto shadow-shadow shadow-md"
-											src={post.reading.book.cover_image_url || ""}
-											width={post.reading.book.cover_image_width || 0}
-											height={post.reading.book.cover_image_height || 0}
+											src={post.reading.book_cover_image_url || ""}
+											width={post.reading.book_cover_image_width || 0}
+											height={post.reading.book_cover_image_height || 0}
 											alt={
 												"Cover photo of " +
-												post.reading.book.title +
+												post.reading.book_title +
 												" by " +
-												(post.reading.book.authors?.length === 2
-													? post.reading.book.authors.join(" and ")
-													: post.reading.book.authors
+												(post.reading.book_authors?.length === 2
+													? post.reading.book_authors.join(" and ")
+													: post.reading.book_authors
 															?.map((author: string, i: number) => {
 																if (
-																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
-																	post.reading.book.authors?.length !== 1
+																	i === (post.reading.book_authors ? post.reading.book_authors.length - 1 : 0) &&
+																	post.reading.book_authors?.length !== 1
 																) {
 																	return "and " + author
 																} else {
@@ -221,16 +221,16 @@ export function Post({ clubId, readingId, postId }: Props) {
 									</SheetTrigger>
 									<SheetContent className="space-y-4">
 										<SheetHeader className="text-left">
-											<SheetTitle>{post.reading.book.title}</SheetTitle>
+											<SheetTitle>{post.reading.book_title}</SheetTitle>
 											<SheetDescription className="italic">
 												by{" "}
-												{post.reading.book.authors?.length === 2
-													? post.reading.book.authors.join(" and ")
-													: post.reading.book.authors
+												{post.reading.book_authors?.length === 2
+													? post.reading.book_authors.join(" and ")
+													: post.reading.book_authors
 															?.map((author: string, i: number) => {
 																if (
-																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
-																	post.reading.book.authors?.length !== 1
+																	i === (post.reading.book_authors ? post.reading.book_authors.length - 1 : 0) &&
+																	post.reading.book_authors?.length !== 1
 																) {
 																	return "and " + author
 																} else {
@@ -242,20 +242,20 @@ export function Post({ clubId, readingId, postId }: Props) {
 										</SheetHeader>
 										<Image
 											className="rounded-lg w-full max-h-full shadow-shadow shadow-md"
-											src={post.reading.book.cover_image_url || ""}
-											width={post.reading.book.cover_image_width || 0}
-											height={post.reading.book.cover_image_height || 0}
+											src={post.reading.book_cover_image_url || ""}
+											width={post.reading.book_cover_image_width || 0}
+											height={post.reading.book_cover_image_height || 0}
 											alt={
 												"Cover photo of " +
-												post.reading.book.title +
+												post.reading.book_title +
 												" by " +
-												(post.reading.book.authors?.length === 2
-													? post.reading.book.authors.join(" and ")
-													: post.reading.book.authors
+												(post.reading.book_authors?.length === 2
+													? post.reading.book_authors.join(" and ")
+													: post.reading.book_authors
 															?.map((author: string, i: number) => {
 																if (
-																	i === (post.reading.book.authors ? post.reading.book.authors.length - 1 : 0) &&
-																	post.reading.book.authors?.length !== 1
+																	i === (post.reading.book_authors ? post.reading.book_authors.length - 1 : 0) &&
+																	post.reading.book_authors?.length !== 1
 																) {
 																	return "and " + author
 																} else {
@@ -265,7 +265,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 															.join(", "))
 											}
 										/>
-										<SheetDescription className="italic">{post.reading.book.description}</SheetDescription>
+										<SheetDescription className="italic">{post.reading.book_description}</SheetDescription>
 									</SheetContent>
 								</Sheet>
 							)}

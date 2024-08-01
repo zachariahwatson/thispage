@@ -18,7 +18,7 @@ interface Props {
 	field: ControllerRenderProps<
 		{
 			book: string
-			startDate: Date
+			startDate: string
 			intervalPageLength: string
 			joinInProgress: boolean
 			isCurrent: boolean

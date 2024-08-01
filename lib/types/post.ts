@@ -14,15 +14,13 @@ export type Post = {
 	} | null
 	reading: {
 		id: number
-		book: {
-			id: number
-			title: string
-			description: string | null
-			authors: string[] | null
-			cover_image_url: string | null
-			cover_image_width: number | null
-			cover_image_height: number | null
-		}
+		book_title: string
+		book_description: string | null
+		book_authors: string[] | null
+		book_page_count: number
+		book_cover_image_url: string | null
+		book_cover_image_width: number | null
+		book_cover_image_height: number | null
 		club: {
 			id: number
 			name: string

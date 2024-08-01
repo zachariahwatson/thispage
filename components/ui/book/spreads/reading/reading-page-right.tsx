@@ -18,7 +18,7 @@ export function ReadingPageRight() {
 	const { data: intervals, isLoading: loading } = useIntervals(clubMembership?.club.id || null, readingData?.id || null)
 	const interval = (intervals && intervals[0]) || null
 	const { data: userProgress } = useUserProgress(interval?.id || null, clubMembership?.id || null)
-	console.log(interval)
+	//console.log(interval)
 
 	//fix initial and animate
 	const rightVariants = isVertical
@@ -38,7 +38,7 @@ export function ReadingPageRight() {
 			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow shadow-md"
 			variants={rightVariants}
 			exit="exit"
-			transition={{ type: "tween", duration: 0.1, ease: "easeIn" }}
+			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">

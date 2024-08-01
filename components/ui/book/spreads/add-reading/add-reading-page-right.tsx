@@ -88,7 +88,7 @@ export function AddReadingPageRight() {
 			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow shadow-md relative"
 			variants={rightVariants}
 			exit="exit"
-			transition={{ type: "tween", duration: 0.1, ease: "easeIn" }}
+			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">

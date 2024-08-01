@@ -9,45 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      books: {
-        Row: {
-          authors: string[] | null
-          cover_image_height: number | null
-          cover_image_url: string | null
-          cover_image_width: number | null
-          created_at: string
-          description: string | null
-          id: number
-          open_library_id: string
-          page_count: number
-          title: string
-        }
-        Insert: {
-          authors?: string[] | null
-          cover_image_height?: number | null
-          cover_image_url?: string | null
-          cover_image_width?: number | null
-          created_at?: string
-          description?: string | null
-          id?: number
-          open_library_id: string
-          page_count: number
-          title: string
-        }
-        Update: {
-          authors?: string[] | null
-          cover_image_height?: number | null
-          cover_image_url?: string | null
-          cover_image_width?: number | null
-          created_at?: string
-          description?: string | null
-          id?: number
-          open_library_id?: string
-          page_count?: number
-          title?: string
-        }
-        Relationships: []
-      }
       club_invite_codes: {
         Row: {
           club_id: number
@@ -374,6 +335,7 @@ export type Database = {
           created_at: string
           id: number
           is_favorite: boolean
+          used_club_invite_code: string | null
           user_id: string
         }
         Insert: {
@@ -381,6 +343,7 @@ export type Database = {
           created_at?: string
           id?: number
           is_favorite?: boolean
+          used_club_invite_code?: string | null
           user_id: string
         }
         Update: {
@@ -388,6 +351,7 @@ export type Database = {
           created_at?: string
           id?: number
           is_favorite?: boolean
+          used_club_invite_code?: string | null
           user_id?: string
         }
         Relationships: [
@@ -397,6 +361,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "clubs"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "members_used_club_invite_code_fkey"
+            columns: ["used_club_invite_code"]
+            isOneToOne: false
+            referencedRelation: "club_invite_codes"
+            referencedColumns: ["code"]
           },
           {
             foreignKeyName: "members_user_id_fkey"
@@ -470,7 +441,14 @@ export type Database = {
       }
       readings: {
         Row: {
-          book_id: number
+          book_authors: string[] | null
+          book_cover_image_height: number | null
+          book_cover_image_url: string | null
+          book_cover_image_width: number | null
+          book_description: string | null
+          book_open_library_id: string
+          book_page_count: number
+          book_title: string
           club_id: number
           created_at: string
           creator_member_id: number | null
@@ -483,7 +461,14 @@ export type Database = {
           start_date: string
         }
         Insert: {
-          book_id: number
+          book_authors?: string[] | null
+          book_cover_image_height?: number | null
+          book_cover_image_url?: string | null
+          book_cover_image_width?: number | null
+          book_description?: string | null
+          book_open_library_id: string
+          book_page_count: number
+          book_title: string
           club_id: number
           created_at?: string
           creator_member_id?: number | null
@@ -496,7 +481,14 @@ export type Database = {
           start_date?: string
         }
         Update: {
-          book_id?: number
+          book_authors?: string[] | null
+          book_cover_image_height?: number | null
+          book_cover_image_url?: string | null
+          book_cover_image_width?: number | null
+          book_description?: string | null
+          book_open_library_id?: string
+          book_page_count?: number
+          book_title?: string
           club_id?: number
           created_at?: string
           creator_member_id?: number | null
@@ -509,13 +501,6 @@ export type Database = {
           start_date?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "readings_book_id_fkey"
-            columns: ["book_id"]
-            isOneToOne: false
-            referencedRelation: "books"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "readings_club_id_fkey"
             columns: ["club_id"]
@@ -584,6 +569,12 @@ export type Database = {
         }
         Returns: boolean
       }
+      check_reading_count: {
+        Args: {
+          _club_id: number
+        }
+        Returns: boolean
+      }
       cls_clubs: {
         Args: {
           _id: number
@@ -645,9 +636,16 @@ export type Database = {
         Args: {
           _id: number
           _club_id: number
-          _book_id: number
           _start_date: string
           _is_finished: boolean
+          _book_open_library_id: string
+          _book_title: string
+          _book_description: string
+          _book_authors: string[]
+          _book_page_count: number
+          _book_cover_image_url: string
+          _book_cover_image_width: number
+          _book_cover_image_height: number
           _created_at: string
           _creator_member_id: number
         }
@@ -703,6 +701,9 @@ export type Database = {
         | "comments.delete.own"
         | "members.delete.own"
         | "member_interval_progresses.delete.own"
+        | "member_interval_progresses.create"
+        | "likes.create.comment"
+        | "likes.create.post"
       club_role: "member" | "moderator" | "admin"
     }
     CompositeTypes: {
@@ -792,3 +793,4 @@ export type Enums<
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
     : never
+

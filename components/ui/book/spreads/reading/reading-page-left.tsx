@@ -29,6 +29,7 @@ interface Props {
 
 export function ReadingPageLeft({ readingIndex }: Props) {
 	const MotionCard = motion(Card)
+	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const readingData = useReading()
 	const clubMembership = useClubMembership()
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -48,11 +49,11 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
 		? {
-				initial: { rotateX: -90, originY: 1, zIndex: 2 },
+				initial: { rotateX: flipOnce ? 0 : -90, originY: 1, zIndex: 2 },
 				animate: { rotateX: 0, originY: 1, zIndex: 2 },
 		  }
 		: {
-				initial: { rotateY: 90, originX: 1, zIndex: 2 },
+				initial: { rotateY: flipOnce ? 0 : 90, originX: 1, zIndex: 2 },
 				animate: { rotateY: 0, originX: 1, zIndex: 2 },
 		  }
 
@@ -62,27 +63,28 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 			variants={leftVariants}
 			initial="initial"
 			animate="animate"
-			transition={{ type: "tween", duration: 0.1, delay: 0.1, ease: "easeOut" }}
+			transition={{ type: "tween", duration: 0.1, delay: 0.1, ease: "easeIn" }}
 			style={{ transformPerspective: 2500 }}
+			onAnimationComplete={() => setFlipOnce(true)}
 		>
 			<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
 				<Image
 					className="rounded-lg h-full w-auto"
-					src={readingData?.book?.cover_image_url || ""}
-					width={readingData?.book?.cover_image_width || 0}
-					height={readingData?.book?.cover_image_height || 0}
+					src={readingData?.book_cover_image_url || ""}
+					width={readingData?.book_cover_image_width || 0}
+					height={readingData?.book_cover_image_height || 0}
 					alt={
-						"Cover photo of " + readingData?.book?.title ||
+						"Cover photo of " + readingData?.book_title ||
 						"Unknown" +
-							(readingData?.book?.authors
+							(readingData?.book_authors
 								? " by " +
-								  (readingData?.book?.authors.length === 2
-										? readingData?.book?.authors.join(" and ")
-										: readingData?.book?.authors
+								  (readingData?.book_authors.length === 2
+										? readingData?.book_authors.join(" and ")
+										: readingData?.book_authors
 												.map((author: string, i: number) => {
 													if (
-														i === (readingData?.book?.authors ? readingData.book.authors?.length - 1 : 0) &&
-														readingData.book?.authors?.length !== 1
+														i === (readingData?.book_authors ? readingData.book_authors?.length - 1 : 0) &&
+														readingData.book_authors?.length !== 1
 													) {
 														return "and " + author
 													} else {
@@ -98,17 +100,17 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 
 			<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
 				<CardHeader className="pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4">
-					<CardTitle className="text-xl md:text-2xl">{readingData?.book?.title}</CardTitle>
+					<CardTitle className="text-xl md:text-2xl">{readingData?.book_title}</CardTitle>
 					<CardDescription className="italic">
-						{readingData?.book?.authors
+						{readingData?.book_authors
 							? " by " +
-							  (readingData?.book?.authors.length === 2
-									? readingData?.book?.authors.join(" and ")
-									: readingData?.book?.authors
+							  (readingData?.book_authors.length === 2
+									? readingData?.book_authors.join(" and ")
+									: readingData?.book_authors
 											.map((author: string, i: number) => {
 												if (
-													i === (readingData?.book?.authors ? readingData.book.authors?.length - 1 : 0) &&
-													readingData.book?.authors?.length !== 1
+													i === (readingData?.book_authors ? readingData.book_authors?.length - 1 : 0) &&
+													readingData.book_authors?.length !== 1
 												) {
 													return "and " + author
 												} else {
@@ -145,7 +147,12 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 							<CardDescription>read to...</CardDescription>
 							<div className="flex flex-row">
 								<p className="font-bold italic md:text-xl">
-									p.<span className="text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
+									p.
+									<span className="text-6xl md:text-8xl not-italic">
+										{interval?.goal_page && interval?.goal_page < (readingData?.book_page_count || Infinity)
+											? interval?.goal_page
+											: readingData?.book_page_count}
+									</span>
 								</p>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +168,7 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 									{/**
 									 * @todo add dialog box confirming if the user wants to complete the reading if they're the last member to do so
 									 */}
-									<CompleteIntervalButton intervalId={interval?.id || null} />
+									<CompleteIntervalButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
 								</div>
 							</div>
 							<CardDescription className="italic">
@@ -177,9 +184,9 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 					)}
 				</CardContent>
 				<CardFooter className="md:px-6 px-4">
-					{userProgress && interval?.goal_page && readingData?.book?.page_count ? (
+					{userProgress && interval?.goal_page && readingData?.book_page_count ? (
 						<Progress
-							value={Math.floor((interval?.goal_page / readingData?.book?.page_count) * 100)}
+							value={Math.floor((interval?.goal_page / readingData?.book_page_count) * 100)}
 							className="h-2 md:h-4"
 						/>
 					) : (

@@ -91,7 +91,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 			},
 			club_id: clubMembership?.club.id || -1,
 			creator_member_id: clubMembership?.id || -1,
-			start_date: values.startDate,
+			start_date: new Date(values.startDate),
 			interval_page_length: Number(values.intervalPageLength),
 			join_in_progress: values.joinInProgress,
 			is_current: values.isCurrent,
@@ -111,13 +111,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 							<FormItem className="flex flex-col">
 								<FormLabel>start date</FormLabel>
 								<FormControl className="flex justify-center">
-									<Calendar
-										mode="single"
-										selected={field.value}
-										onSelect={field.onChange}
-										disabled={(date) => date <= new Date()}
-										initialFocus
-									/>
+									<Input type="date" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

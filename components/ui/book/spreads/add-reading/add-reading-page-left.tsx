@@ -14,16 +14,17 @@ interface Props {
 
 export function AddReadingPageLeft({ readingIndex }: Props) {
 	const MotionCard = motion(Card)
+	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
 		? {
-				initial: { rotateX: -90, originY: 1, zIndex: 2 },
+				initial: { rotateX: flipOnce ? 0 : -90, originY: 1, zIndex: 2 },
 				animate: { rotateX: 0, originY: 1, zIndex: 2 },
 		  }
 		: {
-				initial: { rotateY: 90, originX: 1, zIndex: 2 },
+				initial: { rotateY: flipOnce ? 0 : 90, originX: 1, zIndex: 2 },
 				animate: { rotateY: 0, originX: 1, zIndex: 2 },
 		  }
 
@@ -33,8 +34,9 @@ export function AddReadingPageLeft({ readingIndex }: Props) {
 			variants={leftVariants}
 			initial="initial"
 			animate="animate"
-			transition={{ type: "tween", duration: 0.1, delay: 0.1, ease: "easeOut" }}
+			transition={{ type: "tween", duration: 0.1, delay: 0.1, ease: "easeIn" }}
 			style={{ transformPerspective: 2500 }}
+			onAnimationComplete={() => setFlipOnce(true)}
 		>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
 				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
