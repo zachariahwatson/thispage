@@ -47,7 +47,10 @@ export function ReadingPageRight() {
 					<CreatePostButton />
 				</div>
 
-				<ReadingPosts redactSpoilers={userProgress ? !userProgress.is_complete : true} />
+				<ReadingPosts
+					redactSpoilers={userProgress ? !userProgress.is_complete : true}
+					intervalDate={interval?.created_at || ""}
+				/>
 			</CardHeader>
 			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
 				{interval && !loading ? (
