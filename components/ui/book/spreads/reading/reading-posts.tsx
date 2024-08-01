@@ -34,13 +34,14 @@ import { useMediaQuery } from "@/hooks"
 
 interface Props {
 	redactSpoilers: boolean
+	intervalDate: string
 }
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function ReadingPosts({ redactSpoilers }: Props) {
+export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 	const clubMembership = useClubMembership()
 	const readingData = useReading()
 	//gotta make a ref for the scrollarea to apply to the child div inside it - doing this because scrollarea adds a dive in between them with display:table and it messes up the truncation so we have to manually set the width back to what it's supposed to be
@@ -82,13 +83,15 @@ export function ReadingPosts({ redactSpoilers }: Props) {
 				<div className="p-3 md:p-4" style={{ width: innerWidth, height: innerHeight }}>
 					{!loading && posts ? (
 						posts.map((post) =>
-							redactSpoilers && post.is_spoiler ? (
-								<ReadingPost disabled key={post.id} likes={0} id={-1}>
-									⚠️spoiler⚠️complete the reading!
-								</ReadingPost>
-							) : (
+							redactSpoilers &&
+							((post.is_spoiler && new Date(post.created_at).getTime() < new Date(intervalDate).getTime()) ||
+								!post.is_spoiler) ? (
 								<ReadingPost key={post.id} likes={post.likes_count} id={post.id}>
 									{post.title}
+								</ReadingPost>
+							) : (
+								<ReadingPost disabled key={post.id} likes={0} id={-1}>
+									⚠️spoiler⚠️complete the reading!
 								</ReadingPost>
 							)
 						)

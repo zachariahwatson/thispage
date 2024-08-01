@@ -55,7 +55,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 					<Tooltip key={index}>
 						<TooltipTrigger className="cursor-default">
 							<Avatar className={`${progress?.is_complete ? "ring-ring ring-4" : "ring-background ring-4"}`}>
-								<AvatarImage src={progress?.member?.avatar_url || ""} />
+								<AvatarImage src={progress?.member?.avatar_url || ""} loading="eager" />
 								<AvatarFallback>
 									{progress?.member?.first_name && progress?.member?.last_name
 										? progress?.member.first_name[0] + progress?.member.last_name[0]

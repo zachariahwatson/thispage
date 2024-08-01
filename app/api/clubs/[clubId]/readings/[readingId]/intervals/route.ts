@@ -40,6 +40,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			.eq("reading_id", params.readingId)
 			//excluding user
 			.neq("member_interval_progresses.member.user_id", user?.id)
+			.not("member_interval_progresses.member", "is", null)
 			.order("goal_page", { ascending: false })
 
 		if (error) {

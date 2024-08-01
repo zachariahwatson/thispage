@@ -38,15 +38,12 @@ export async function GET(request: NextRequest, { params }: Props) {
                 ),
                 reading:readings(
                     id,
-                    book:books(
-                        id,
-                        title,
-						description,
-                        authors,
-                        cover_image_url,
-                        cover_image_width,
-                        cover_image_height
-                    ),
+					book_title,
+					book_description,
+					book_authors,
+					book_cover_image_url,
+					book_cover_image_width,
+					book_cover_image_height,
                     club:clubs(
                         id,
                         name

@@ -12,6 +12,7 @@ import { motion } from "framer-motion"
 import { useUserProgress } from "@/hooks/state"
 
 interface Props {
+	readingId: number | null
 	intervalId: number | null
 }
 
@@ -19,7 +20,7 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function CompleteIntervalButton({ intervalId }: Props) {
+export function CompleteIntervalButton({ readingId, intervalId }: Props) {
 	const clubMembership = useClubMembership()
 	const queryClient = useQueryClient()
 	const { data: userProgress } = useUserProgress(intervalId, clubMembership?.id || null)
@@ -96,7 +97,7 @@ export function CompleteIntervalButton({ intervalId }: Props) {
 				]
 				toast.success(choices[Math.floor(Math.random() * choices.length)])
 			}
-			//queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingId])
+			queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingId])
 			//queryClient.invalidateQueries(["user progress", intervalId])
 			//queryClient.invalidateQueries(["posts", clubMembership?.club.id, readingId])
 		},

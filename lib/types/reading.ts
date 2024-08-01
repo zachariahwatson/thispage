@@ -5,14 +5,11 @@ export type Reading = {
 	is_finished: boolean
 	interval_page_length: number
 	start_date: string
-	book: {
-		id: number
-		title: string
-		description: string | null
-		authors: string[] | null
-		page_count: number
-		cover_image_url: string | null
-		cover_image_width: number | null
-		cover_image_height: number | null
-	} | null
+	book_title: string
+	book_description: string | null
+	book_authors: string[] | null
+	book_page_count: number
+	book_cover_image_url: string | null
+	book_cover_image_width: number | null
+	book_cover_image_height: number | null
 } | null

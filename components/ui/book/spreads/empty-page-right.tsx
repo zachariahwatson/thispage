@@ -10,15 +10,9 @@ import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
 import { useQuery } from "react-query"
 
-export function ReadingPageRight() {
+export function EmptyPageRight() {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
-	const clubMembership = useClubMembership()
-	const readingData = useReading()
-	const { data: intervals, isLoading: loading } = useIntervals(clubMembership?.club.id || null, readingData?.id || null)
-	const interval = (intervals && intervals[0]) || null
-	const { data: userProgress } = useUserProgress(interval?.id || null, clubMembership?.id || null)
-	//console.log(interval)
 
 	//fix initial and animate
 	const rightVariants = isVertical
@@ -41,30 +35,9 @@ export function ReadingPageRight() {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
-				<div className="flex justify-between pr-1">
-					<CardTitle className="text-xl">discussion</CardTitle>
-					<CreatePostButton />
-				</div>
-
-				<ReadingPosts
-					redactSpoilers={userProgress ? !userProgress.is_complete : true}
-					intervalDate={interval?.created_at || ""}
-				/>
-			</CardHeader>
-			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
-				{interval && !loading ? (
-					<IntervalAvatarGroup
-						progresses={
-							userProgress
-								? [userProgress].concat(interval.member_interval_progresses)
-								: interval.member_interval_progresses
-						}
-					/>
-				) : (
-					<IntervalAvatarGroupSkeleton />
-				)}
-			</CardFooter>
+			<div className="p-4 flex justify-center items-center w-full h-full">
+				<p className="text-muted-foreground">🦗*crickets*🦗</p>
+			</div>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
