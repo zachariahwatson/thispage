@@ -4,6 +4,7 @@ import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
+	CreateClubForm,
 	Drawer,
 	DrawerContent,
 	DrawerHeader,
@@ -41,10 +42,29 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 
 export function Nav() {
 	const [settingsVisible, setSettingsVisible] = useState<boolean>(false)
+	const [createClubVisible, setCreateClubVisible] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const settingsRef = useRef<HTMLButtonElement>(null)
+	const createClubRef = useRef<HTMLButtonElement>(null)
 	const queryClient = useQueryClient()
 	const { data: user, isLoading: loading } = useUser()
+
+	const createClubMutation = useMutation({
+		mutationFn: (data: { creator_user_id: string; name: string; description: string }) => {
+			const url = new URL(`${defaultUrl}/api/clubs`)
+			return fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			})
+		},
+		onSuccess: () => {
+			toast.success("club successfully created")
+			queryClient.invalidateQueries(["clubs"])
+		},
+	})
 
 	const settingsMutation = useMutation({
 		mutationFn: (data: { first_name: string; last_name: string }) => {
@@ -91,7 +111,7 @@ export function Nav() {
 						)}
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end" sideOffset={16}>
-						<DropdownMenuItem className="cursor-pointer">
+						<DropdownMenuItem className="cursor-pointer" onSelect={() => createClubRef?.current?.click()}>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 mr-2">
 								<path
 									fillRule="evenodd"
@@ -131,25 +151,47 @@ export function Nav() {
 				</DropdownMenu>
 			</div>
 			{isVertical ? (
-				<Drawer open={settingsVisible} onOpenChange={setSettingsVisible}>
-					<DrawerTrigger ref={settingsRef} />
-					<DrawerContent className="w-full p-6">
-						<DrawerHeader>
-							<DrawerTitle>settings</DrawerTitle>
-						</DrawerHeader>
-						<SettingsForm mutation={settingsMutation} setVisible={setSettingsVisible} />
-					</DrawerContent>
-				</Drawer>
+				<>
+					<Drawer open={createClubVisible} onOpenChange={setCreateClubVisible}>
+						<DrawerTrigger ref={createClubRef} />
+						<DrawerContent className="w-full p-6">
+							<DrawerHeader>
+								<DrawerTitle>create a club</DrawerTitle>
+							</DrawerHeader>
+							<CreateClubForm mutation={createClubMutation} setVisible={setCreateClubVisible} />
+						</DrawerContent>
+					</Drawer>
+					<Drawer open={settingsVisible} onOpenChange={setSettingsVisible}>
+						<DrawerTrigger ref={settingsRef} />
+						<DrawerContent className="w-full p-6">
+							<DrawerHeader>
+								<DrawerTitle>settings</DrawerTitle>
+							</DrawerHeader>
+							<SettingsForm mutation={settingsMutation} setVisible={setSettingsVisible} />
+						</DrawerContent>
+					</Drawer>
+				</>
 			) : (
-				<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
-					<SheetTrigger ref={settingsRef} />
-					<SheetContent className="space-y-4">
-						<SheetHeader>
-							<SheetTitle>settings</SheetTitle>
-						</SheetHeader>
-						<SettingsForm mutation={settingsMutation} setVisible={setSettingsVisible} />
-					</SheetContent>
-				</Sheet>
+				<>
+					<Sheet open={createClubVisible} onOpenChange={setCreateClubVisible}>
+						<SheetTrigger ref={createClubRef} />
+						<SheetContent className="space-y-4">
+							<SheetHeader>
+								<SheetTitle>create a club</SheetTitle>
+							</SheetHeader>
+							<CreateClubForm mutation={createClubMutation} setVisible={setCreateClubVisible} />
+						</SheetContent>
+					</Sheet>
+					<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
+						<SheetTrigger ref={settingsRef} />
+						<SheetContent className="space-y-4">
+							<SheetHeader>
+								<SheetTitle>settings</SheetTitle>
+							</SheetHeader>
+							<SettingsForm mutation={settingsMutation} setVisible={setSettingsVisible} />
+						</SheetContent>
+					</Sheet>
+				</>
 			)}
 		</header>
 	)

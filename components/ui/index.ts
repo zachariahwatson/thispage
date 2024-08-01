@@ -97,3 +97,5 @@ export { RadioGroup, RadioGroupItem } from "./radio-group"
 export { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./collapsible"
 
 export { Calendar } from "./calendar"
+
+export { CreateClubForm } from "./create-club-form"

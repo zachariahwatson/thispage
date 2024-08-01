@@ -1,5 +1,6 @@
 import { ClubMembership } from "@/lib/types"
 import { createClient } from "@/utils/supabase/server"
+import { NextRequest } from "next/server"
 
 /**
  * gets the authenticated user's clubs with memberships.
@@ -45,5 +46,32 @@ export async function GET() {
 			"\nan error occurred while fetching club memberships:\n" + JSON.stringify(error, null, 2) + "\n"
 		)
 		return Response.json({ error: "an error occurred while fetching club memberships." }, { status: 500 })
+	}
+}
+
+/**
+ * creates a new club.
+ */
+export async function POST(request: NextRequest) {
+	try {
+		const supabase = createClient()
+
+		const body = await request.json()
+
+		const { error } = await supabase.from("clubs").insert({
+			creator_user_id: body.creator_user_id,
+			name: body.name,
+			description: body.description,
+		})
+
+		if (error) {
+			throw error
+		}
+		// revalidatePath("/", "layout")
+		return Response.json({ message: "successfully created club" }, { status: 200 })
+	} catch (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a club:\n", error)
+
+		return Response.json({ error: "an error occurred while creating a club." }, { status: 500 })
 	}
 }
