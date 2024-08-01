@@ -84,8 +84,8 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 					{!loading && posts ? (
 						posts.map((post) =>
 							redactSpoilers &&
-							post.is_spoiler &&
-							new Date(post.created_at).getTime() < new Date(intervalDate).getTime() ? (
+							((post.is_spoiler && new Date(post.created_at).getTime() < new Date(intervalDate).getTime()) ||
+								!post.is_spoiler) ? (
 								<ReadingPost key={post.id} likes={post.likes_count} id={post.id}>
 									{post.title}
 								</ReadingPost>
