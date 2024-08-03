@@ -52,7 +52,7 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 							<FormItem>
 								<FormLabel>first name</FormLabel>
 								<FormControl>
-									<Input placeholder="optional" {...field} />
+									<Input {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -65,7 +65,7 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 							<FormItem>
 								<FormLabel>last name</FormLabel>
 								<FormControl>
-									<Input placeholder="optional" {...field} />
+									<Input {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

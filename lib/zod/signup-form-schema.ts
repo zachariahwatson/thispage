@@ -5,13 +5,11 @@ export const signUpFormSchema = z
 		firstName: z
 			.string()
 			.max(50, "first name must contain no more than 50 characters")
-			.regex(/^[A-Za-z'-]+$/, "Invalid first name format")
-			.optional(),
+			.regex(/^[A-Za-z'-]*$/, "Invalid first name format"),
 		lastName: z
 			.string()
 			.max(50, "last name must contain no more than 50 characters")
-			.regex(/^[A-Za-z'-]+$/, "Invalid last name format")
-			.optional(),
+			.regex(/^[A-Za-z'-]*$/, "Invalid last name format"),
 		email: z.string({ required_error: "email is required" }).email("invalid email format").min(1, "email is required"),
 		password: z
 			.string({ required_error: "password is required" })
