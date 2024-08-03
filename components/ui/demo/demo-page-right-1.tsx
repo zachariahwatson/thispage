@@ -45,7 +45,7 @@ export function DemoPageRight1({ demoIsComplete }: Props) {
 			<CardContent className="md:space-y-4 pt-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black">discuss</span> readings.
+						<span className="font-black text-primary">discuss</span> readings.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">create posts and comments with spoiler tags.</CardDescription>
 

@@ -59,12 +59,14 @@ export function DemoCompleteIntervalButton({ isComplete, setIsComplete, clicked,
 		if (setClicked) {
 			setClicked(true)
 			clicked && setIsComplete(!isComplete)
+			if (!isComplete || !clicked) {
+				toast.success(choices[Math.floor(Math.random() * choices.length)])
+			}
 		} else {
 			setIsComplete(!isComplete)
-		}
-
-		if (!isComplete || !clicked) {
-			toast.success(choices[Math.floor(Math.random() * choices.length)])
+			if (!isComplete) {
+				toast.success(choices[Math.floor(Math.random() * choices.length)])
+			}
 		}
 	}
 

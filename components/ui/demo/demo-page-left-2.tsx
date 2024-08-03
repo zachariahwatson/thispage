@@ -58,7 +58,7 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 			<CardContent className="md:space-y-4 pt-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black">create</span> multiple readings per club.
+						<span className="font-black text-primary">create</span> multiple readings per club.
 					</CardTitle>
 					<div className="px-10 md:px-6">
 						<Image

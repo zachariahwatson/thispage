@@ -56,13 +56,15 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete 
 			onAnimationComplete={() => setFlipOnce(true)}
 		>
 			<CardHeader className="pb-2">
-				<CardTitle className="text-lg md:text-2xl">...a simple site for book clubs.</CardTitle>
+				<CardTitle className="text-lg md:text-2xl">
+					...a simple site for <span className="text-primary">book clubs.</span>
+				</CardTitle>
 				<Separator />
 			</CardHeader>
 			<CardContent className="md:space-y-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black">track</span> what page your readers need to read to.
+						<span className="font-black text-primary">track</span> what page your readers need to read to.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
 						the goal page updates automatically once every reader has finished the reading interval.

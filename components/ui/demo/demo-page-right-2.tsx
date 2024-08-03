@@ -45,7 +45,7 @@ export function DemoPageRight2({ demoIsComplete }: Props) {
 			<CardContent className="md:space-y-4 pt-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black">poll</span> your members for the next book.
+						<span className="font-black text-primary">poll</span> your members for the next book.
 					</CardTitle>
 					<div className="px-10 md:px-6">
 						<Image
