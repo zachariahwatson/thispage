@@ -15,6 +15,10 @@ import {
 	DrawerTrigger,
 	DrawerTitle,
 	DrawerContent,
+	Sheet,
+	SheetContent,
+	SheetTitle,
+	SheetTrigger,
 } from "@/components/ui"
 import { Tooltip } from "@/components/ui"
 import { DemoIntervalAvatarList } from "./demo-interval-avatar-list"
@@ -31,14 +35,14 @@ export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
 	return (
 		<>
 			{isVertical ? (
-				<Drawer>
-					<DrawerTrigger>
-						<DrawerTitle className="text-xl">readers</DrawerTitle>
-					</DrawerTrigger>
-					<DrawerContent className="w-full rounded-lg">
+				<Sheet>
+					<SheetTrigger>
+						<SheetTitle className="text-xl">readers</SheetTitle>
+					</SheetTrigger>
+					<SheetContent className="w-full rounded-lg">
 						<DemoIntervalAvatarList isComplete={isComplete} clicked={clicked} />
-					</DrawerContent>
-				</Drawer>
+					</SheetContent>
+				</Sheet>
 			) : (
 				<Dialog>
 					<DialogTrigger>
@@ -84,8 +88,8 @@ export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
 					<TooltipContent>Lorem Ipsum</TooltipContent>
 				</Tooltip>
 				{isVertical ? (
-					<Drawer>
-						<DrawerTrigger>
+					<Sheet>
+						<SheetTrigger>
 							<Avatar className="ring-background ring-4">
 								<AvatarFallback>
 									<svg
@@ -104,11 +108,11 @@ export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
 									</svg>
 								</AvatarFallback>
 							</Avatar>
-						</DrawerTrigger>
-						<DrawerContent className="w-full rounded-lg">
+						</SheetTrigger>
+						<SheetContent className="w-full rounded-lg">
 							<DemoIntervalAvatarList isComplete={isComplete} clicked={clicked} />
-						</DrawerContent>
-					</Drawer>
+						</SheetContent>
+					</Sheet>
 				) : (
 					<Dialog>
 						<Tooltip>
