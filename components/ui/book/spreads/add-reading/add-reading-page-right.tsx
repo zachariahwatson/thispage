@@ -101,57 +101,31 @@ export function AddReadingPageRight() {
 							<CardTitle className="text-xl">add a reading</CardTitle>
 						</div>
 					</CardHeader>
-					{isVertical ? (
-						<Drawer open={addReadingVisible} onOpenChange={setAddReadingVisible}>
-							<DrawerTrigger>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									strokeWidth={1.5}
-									stroke="currentColor"
-									className="size-48 absolute top-[calc(50%-6rem)] right-[calc(50%-6rem)] text-secondary"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-									/>
-								</svg>
-							</DrawerTrigger>
-							<DrawerContent className="w-full p-6">
-								<DrawerHeader>
-									<DrawerTitle>add a reading</DrawerTitle>
-								</DrawerHeader>
-								<AddReadingForm mutation={readingMutation} setVisible={setAddReadingVisible} />
-							</DrawerContent>
-						</Drawer>
-					) : (
-						<Sheet open={addReadingVisible} onOpenChange={setAddReadingVisible}>
-							<SheetTrigger>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									strokeWidth={1.5}
-									stroke="currentColor"
-									className="size-48 absolute top-[calc(50%-6rem)] right-[calc(50%-6rem)] text-secondary"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-									/>
-								</svg>
-							</SheetTrigger>
-							<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4">
-								<SheetHeader>
-									<SheetTitle>add a reading</SheetTitle>
-								</SheetHeader>
-								<AddReadingForm mutation={readingMutation} setVisible={setAddReadingVisible} />
-							</SheetContent>
-						</Sheet>
-					)}
+
+					<Sheet open={addReadingVisible} onOpenChange={setAddReadingVisible}>
+						<SheetTrigger>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="size-48 absolute top-[calc(50%-6rem)] right-[calc(50%-6rem)] text-secondary"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+								/>
+							</svg>
+						</SheetTrigger>
+						<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4">
+							<SheetHeader>
+								<SheetTitle>add a reading</SheetTitle>
+							</SheetHeader>
+							<AddReadingForm mutation={readingMutation} setVisible={setAddReadingVisible} />
+						</SheetContent>
+					</Sheet>
 				</>
 			)}
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">

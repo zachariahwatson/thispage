@@ -15,6 +15,10 @@ import {
 	DrawerTrigger,
 	DrawerTitle,
 	DrawerContent,
+	Sheet,
+	SheetTrigger,
+	SheetTitle,
+	SheetContent,
 } from "@/components/ui"
 import { Tooltip } from "@/components/ui"
 import { IntervalAvatarList } from "./interval-avatar-list"
@@ -31,14 +35,14 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 	return (
 		<>
 			{isVertical ? (
-				<Drawer>
-					<DrawerTrigger>
-						<DrawerTitle className="text-xl">readers</DrawerTitle>
-					</DrawerTrigger>
-					<DrawerContent className="w-full rounded-lg">
+				<Sheet>
+					<SheetTrigger>
+						<SheetTitle className="text-xl">readers</SheetTitle>
+					</SheetTrigger>
+					<SheetContent className="w-full rounded-lg">
 						<IntervalAvatarList progresses={progresses} />
-					</DrawerContent>
-				</Drawer>
+					</SheetContent>
+				</Sheet>
 			) : (
 				<Dialog>
 					<DialogTrigger>
@@ -74,8 +78,8 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 				{progresses.length > previewProgresses.length && (
 					<>
 						{isVertical ? (
-							<Drawer>
-								<DrawerTrigger>
+							<Sheet>
+								<SheetTrigger>
 									<Avatar className="ring-background ring-4">
 										<AvatarFallback>
 											<svg
@@ -94,11 +98,11 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 											</svg>
 										</AvatarFallback>
 									</Avatar>
-								</DrawerTrigger>
-								<DrawerContent className="w-full rounded-lg">
+								</SheetTrigger>
+								<SheetContent className="w-full rounded-lg">
 									<IntervalAvatarList progresses={progresses} />
-								</DrawerContent>
-							</Drawer>
+								</SheetContent>
+							</Sheet>
 						) : (
 							<Dialog>
 								<Tooltip>
