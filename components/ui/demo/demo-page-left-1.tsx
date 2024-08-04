@@ -64,7 +64,8 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete 
 			<CardContent className="md:space-y-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black text-primary">track</span> what page your readers need to read to.
+						<span className="font-black text-primary">automatically update</span> the goal page based on the readers'
+						completions.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
 						the goal page updates automatically once every reader has finished the reading interval.
