@@ -24,7 +24,7 @@ export function DemoIntervalAvatarList({ isComplete }: Props) {
 				<CardTitle>readers</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<ScrollArea className="h-[684px] border rounded-lg shadow-shadow shadow-inner">
+				<ScrollArea className="h-[calc(100svh-144px)] md:h-[684px] border rounded-lg shadow-shadow shadow-inner">
 					<div className="grid md:grid-cols-3 p-4">
 						<div className="h-10 flex flex-row mr-8 mb-4">
 							<Avatar className={`${isComplete ? "ring-ring" : "ring-background"} ring-4`}>
