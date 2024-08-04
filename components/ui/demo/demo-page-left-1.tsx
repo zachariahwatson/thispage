@@ -68,9 +68,9 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete,
 				</div>
 				<div className="flex justify-center relative pt-4">
 					<div className="absolute w-16 h-8 bg-primary/80 z-10 top-1 -rotate-2 shadow-md rounded-[4px]" />
-					<Card className="w-full border-border -space-y-4 md:space-y-0 shadow-shadow shadow-md backdrop-blur-md bg-background/80 rounded-lg rotate-3">
+					<Card className="w-full border-border -space-y-4 md:space-y-0 shadow-shadow shadow-md backdrop-blur-md bg-background/80 rounded-lg rotate-3 pb-0">
 						<CardContent className="pr-0 pt-2 md:px-6 px-4">
-							<CardDescription>read to...</CardDescription>
+							<CardDescription className="text-xs md:text-sm">read to...</CardDescription>
 							<div className="flex flex-row">
 								<p className="font-bold italic md:text-xl">
 									p.
@@ -95,11 +95,11 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete,
 									/>
 								</div>
 							</div>
-							<CardDescription className="italic">
+							<CardDescription className="italic text-xs md:text-sm">
 								{!demoClicked ? (demoClicked ? "0" : "4") : demoIsComplete ? "1" : "0"}/5 readers have completed
 							</CardDescription>
 						</CardContent>
-						<CardFooter className="md:px-6 px-4">
+						<CardFooter className="md:px-6 px-4 pb-2">
 							<Progress value={Math.floor(((demoClicked ? 120 : 100) / 348) * 100)} className="h-2 md:h-4" />
 						</CardFooter>
 					</Card>

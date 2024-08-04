@@ -123,7 +123,7 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 								/>
 							</svg>
 						</SheetTrigger>
-						<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4">
+						<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4 overflow-scroll">
 							<SheetHeader>
 								<SheetTitle>add a reading</SheetTitle>
 							</SheetHeader>

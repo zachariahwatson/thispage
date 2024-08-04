@@ -67,7 +67,7 @@ export default function Page() {
 										alt="Cover photo of The Odyssey by Homer"
 									/>
 								</SheetTrigger>
-								<SheetContent className={`space-y-4 ${isVertical && "w-full"}`}>
+								<SheetContent className={`space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
 									<SheetHeader className="text-left">
 										<SheetTitle>The Odyssey</SheetTitle>
 										<SheetDescription className="italic">by Homer</SheetDescription>
