@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Dispatch, SetStateAction } from "react"
+import { useRouter } from "next/navigation"
 
 interface Props {
 	setFormType: Dispatch<SetStateAction<string>>
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export function SignUpForm({ setFormType, email, setEmail, password, setPassword }: Props) {
+	const router = useRouter()
 	const form = useForm<z.infer<typeof signUpFormSchema>>({
 		resolver: zodResolver(signUpFormSchema),
 		defaultValues: {
@@ -33,6 +35,7 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 	const onSubmit = async (values: z.infer<typeof signUpFormSchema>) => {
 		await signUp(values)
 		form.reset()
+		handleFormChange()
 	}
 
 	const handleFormChange = () => {
@@ -110,9 +113,6 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 							</FormItem>
 						)}
 					/>
-					<Button variant="secondary" onClick={handleFormChange}>
-						sign in
-					</Button>
 					<SubmitButton pendingText="signing up...">sign up</SubmitButton>
 
 					<div className="relative">
@@ -129,7 +129,7 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 				<SubmitButton
 					type="submit"
 					formAction={signInWithGoogle}
-					pendingText="signing in..."
+					pendingText="signing up..."
 					className="w-full bg-foreground text-background hover:opacity-90 hover:bg-foreground transition-opacity"
 				>
 					<svg
@@ -145,9 +145,15 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 							fill="currentColor"
 						/>
 					</svg>
-					sign in with google
+					sign up with google
 				</SubmitButton>
 			</form>
+			<div className="flex flex-row justify-center items-center">
+				have an account?
+				<Button onClick={handleFormChange} variant="link" className="underline text-md" size="sm">
+					sign in
+				</Button>
+			</div>
 		</>
 	)
 }
