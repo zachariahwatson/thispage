@@ -185,24 +185,49 @@ export function Nav() {
 					</Link>
 				)}
 			</div>
-			<Sheet open={createClubVisible} onOpenChange={setCreateClubVisible}>
-				<SheetTrigger ref={createClubRef} />
-				<SheetContent className="space-y-4">
-					<SheetHeader>
-						<SheetTitle>create a club</SheetTitle>
-					</SheetHeader>
-					<CreateClubForm mutation={createClubMutation} setVisible={setCreateClubVisible} />
-				</SheetContent>
-			</Sheet>
-			<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
-				<SheetTrigger ref={settingsRef} />
-				<SheetContent className="space-y-4">
-					<SheetHeader>
-						<SheetTitle>settings</SheetTitle>
-					</SheetHeader>
-					<SettingsForm mutation={settingsMutation} setVisible={setSettingsVisible} />
-				</SheetContent>
-			</Sheet>
+			{isVertical ? (
+				<>
+					<Sheet open={createClubVisible} onOpenChange={setCreateClubVisible}>
+						<SheetTrigger ref={createClubRef} />
+						<SheetContent className="space-y-4 w-full">
+							<SheetHeader>
+								<SheetTitle>create a club</SheetTitle>
+							</SheetHeader>
+							<CreateClubForm mutation={createClubMutation} setVisible={setCreateClubVisible} />
+						</SheetContent>
+					</Sheet>
+					<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
+						<SheetTrigger ref={settingsRef} />
+						<SheetContent className="space-y-4 w-full">
+							<SheetHeader>
+								<SheetTitle>settings</SheetTitle>
+							</SheetHeader>
+							<SettingsForm mutation={settingsMutation} setVisible={setSettingsVisible} />
+						</SheetContent>
+					</Sheet>
+				</>
+			) : (
+				<>
+					<Sheet open={createClubVisible} onOpenChange={setCreateClubVisible}>
+						<SheetTrigger ref={createClubRef} />
+						<SheetContent className="space-y-4">
+							<SheetHeader>
+								<SheetTitle>create a club</SheetTitle>
+							</SheetHeader>
+							<CreateClubForm mutation={createClubMutation} setVisible={setCreateClubVisible} />
+						</SheetContent>
+					</Sheet>
+					<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
+						<SheetTrigger ref={settingsRef} />
+						<SheetContent className="space-y-4">
+							<SheetHeader>
+								<SheetTitle>settings</SheetTitle>
+							</SheetHeader>
+							<SettingsForm mutation={settingsMutation} setVisible={setSettingsVisible} />
+						</SheetContent>
+					</Sheet>
+				</>
+			)}
 		</header>
 	)
 }
