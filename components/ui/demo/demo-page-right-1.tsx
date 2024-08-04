@@ -47,7 +47,9 @@ export function DemoPageRight1({ demoIsComplete }: Props) {
 					<CardTitle className="text-md md:text-xl">
 						<span className="font-black text-primary">discuss</span> readings.
 					</CardTitle>
-					<CardDescription className="text-xs md:text-sm">create posts with spoiler tags.</CardDescription>
+					<CardDescription className="text-xs md:text-sm">
+						create posts with spoiler tags that reveal once the reader has completed the interval.
+					</CardDescription>
 
 					<DemoReadingPosts clicked={demoIsComplete} />
 				</div>

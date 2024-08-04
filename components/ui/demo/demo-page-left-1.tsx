@@ -55,16 +55,10 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete 
 			style={{ transformPerspective: 2500 }}
 			onAnimationComplete={() => setFlipOnce(true)}
 		>
-			<CardHeader className="pb-2">
-				<CardTitle className="text-lg md:text-2xl">
-					...a simple site for <span className="text-primary">book clubs.</span>
-				</CardTitle>
-				<Separator />
-			</CardHeader>
-			<CardContent className="md:space-y-4">
+			<CardContent className="md:space-y-4 pt-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black text-primary">automatically update</span> the goal page based on the readers'
+						<span className="font-black text-primary">automatically update</span> what page to read to based on readers'
 						completions.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
