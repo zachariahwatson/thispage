@@ -19,6 +19,7 @@ export default async function Page() {
 				welcome to <span className="font-normal">this</span>
 				<span className="font-bold">page</span>!
 			</h1>
+			<h1 className="font-bold text-lg md:text-3xl pl-1 truncate ...">a simple site for book clubs.</h1>
 			<Card className="h-[calc(100svh-64px)] min-h-[624px] md:h-[624px] p-4 rounded-3xl relative shadow-shadow shadow-sm bg-card">
 				<DemoSpreads />
 			</Card>
