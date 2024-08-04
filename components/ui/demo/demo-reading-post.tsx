@@ -6,9 +6,10 @@ interface Props {
 	disabled?: boolean | false
 	children: React.ReactNode
 	likes: number
+	id: number
 }
 
-export function DemoReadingPost({ disabled, children, likes }: Props) {
+export function DemoReadingPost({ disabled, children, likes, id }: Props) {
 	return (
 		<>
 			<div className="flex flex-row pr-10 md:pr-14 relative">
@@ -17,7 +18,14 @@ export function DemoReadingPost({ disabled, children, likes }: Props) {
 						!disabled ? "hover:font-medium transition-all cursor-pointer" : "text-muted-foreground"
 					}`}
 				>
-					{children}
+					<Link
+						href={`demo/${id}`}
+						className={disabled ? "text-muted-foreground pointer-events-none" : ""}
+						aria-disabled={disabled}
+						tabIndex={disabled ? -1 : undefined}
+					>
+						{children}
+					</Link>
 				</p>
 
 				<Badge variant="outline" className="absolute self-center right-0 px-1 md:px-2.5">

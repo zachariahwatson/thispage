@@ -60,6 +60,9 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 					<CardTitle className="text-md md:text-xl">
 						<span className="font-black text-primary">create</span> multiple readings per club.
 					</CardTitle>
+					<CardDescription className="text-xs md:text-sm">
+						readers can pick specific books they want to participate in.
+					</CardDescription>
 					<div className="px-10 md:px-6">
 						<Image
 							src="/images/demo-placeholder.png"
@@ -69,9 +72,6 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 							className=" rounded-md"
 						></Image>
 					</div>
-					<CardDescription className="text-xs md:text-sm">
-						readers can pick specific books they want to participate in.
-					</CardDescription>
 				</div>
 			</CardContent>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">

@@ -51,16 +51,22 @@ export function DemoReadingPosts({ clicked }: Props) {
 		<div className="h-full">
 			<ScrollArea className="border rounded-lg h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner">
 				<div className="p-3 md:p-4" style={{ width: innerWidth, height: innerHeight }}>
-					<DemoReadingPost likes={3}>what do you guys think so far?</DemoReadingPost>
+					<DemoReadingPost likes={3} id={1}>
+						what do you guys think so far?
+					</DemoReadingPost>
 					{clicked ? (
-						<DemoReadingPost likes={1}>peekaboo!</DemoReadingPost>
+						<DemoReadingPost likes={1} id={2}>
+							peekaboo!
+						</DemoReadingPost>
 					) : (
-						<DemoReadingPost disabled likes={1}>
+						<DemoReadingPost disabled likes={1} id={2}>
 							⚠️spoiler⚠️complete the reading!
 						</DemoReadingPost>
 					)}
 
-					<DemoReadingPost likes={5}>meeting dates + times</DemoReadingPost>
+					<DemoReadingPost likes={5} id={3}>
+						meeting dates + times
+					</DemoReadingPost>
 				</div>
 			</ScrollArea>
 		</div>

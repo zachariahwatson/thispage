@@ -77,7 +77,7 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete 
 					<div className="flex flex-row">
 						<p className="font-bold italic md:text-xl">
 							p.
-							<span className="text-6xl md:text-8xl not-italic">99</span>
+							<span className="text-6xl md:text-8xl not-italic">120</span>
 						</p>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
