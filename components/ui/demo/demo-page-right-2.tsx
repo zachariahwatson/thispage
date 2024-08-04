@@ -13,10 +13,11 @@ import Image from "next/image"
 import { DemoReadingPosts } from "./demo-reading-posts"
 
 interface Props {
+	readingIndex: number
 	demoIsComplete: boolean
 }
 
-export function DemoPageRight2({ demoIsComplete }: Props) {
+export function DemoPageRight2({ readingIndex, demoIsComplete }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
 	//console.log(interval)
@@ -71,6 +72,7 @@ export function DemoPageRight2({ demoIsComplete }: Props) {
 			<div className="bg-gradient-to-b from-shadow to-background px-2 block md:hidden absolute w-full top-0 right-0">
 				<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
+			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>
 	)
 }

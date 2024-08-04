@@ -23,7 +23,7 @@ export function DemoSpread2({ isVisible, readingIndex }: Props) {
 						demoIsComplete={demoIsComplete}
 						setDemoIsComplete={setDemoIsComplete}
 					/>
-					<DemoPageRight2 demoIsComplete={demoIsComplete} />
+					<DemoPageRight2 readingIndex={readingIndex} demoIsComplete={demoIsComplete} />
 				</div>
 			)}
 		</AnimatePresence>

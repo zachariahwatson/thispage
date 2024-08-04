@@ -16,7 +16,7 @@ export function AddReadingSpread({ isVisible, readingIndex }: Props) {
 			{isVisible && (
 				<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
 					<AddReadingPageLeft readingIndex={readingIndex} />
-					<AddReadingPageRight />
+					<AddReadingPageRight readingIndex={readingIndex} />
 				</div>
 			)}
 		</AnimatePresence>

@@ -20,7 +20,7 @@ export function DemoReadingSpread({ isVisible, readingIndex }: Props) {
 			{isVisible && (
 				<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
 					<DemoReadingPageLeft readingIndex={readingIndex} isComplete={isComplete} setIsComplete={setIsComplete} />
-					<DemoReadingPageRight isComplete={isComplete} />
+					<DemoReadingPageRight readingIndex={readingIndex} isComplete={isComplete} />
 				</div>
 			)}
 		</AnimatePresence>
