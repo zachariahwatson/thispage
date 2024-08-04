@@ -71,6 +71,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 		resolver: zodResolver(addReadingFormSchema),
 		defaultValues: {
 			intervalPageLength: "10",
+			joinInProgress: true,
 			isCurrent: true,
 		},
 	})
@@ -113,7 +114,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 							<FormItem className="flex flex-col">
 								<FormLabel>start date</FormLabel>
 								<FormControl className="flex justify-center">
-									<Input type="date" {...field} />
+									<Input type="date" placeholder="mm / dd / yyyy" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

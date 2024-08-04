@@ -71,10 +71,10 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 					<Carousel opts={{ loop: true }} plugins={[AutoScroll({ startDelay: 200, stopOnInteraction: false })]}>
 						<CarouselContent className="rounded-md">
 							<CarouselItem>
-								<Card className="bg-background relative shadow-shadow shadow-md h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
-									<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
+								<Card className="bg-background relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
+									<div className="flex justify-center px-12 pb-16 pt-2 md:pt-4 h-full w-full">
 										<Image
-											className="rounded-md h-full w-auto"
+											className="rounded-[8px] md:rounded-md h-full w-auto"
 											src="/images/demo-cover.png"
 											width={1519}
 											height={2371}
@@ -156,10 +156,10 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 							</CarouselItem>
 
 							<CarouselItem>
-								<Card className="bg-background relative shadow-shadow shadow-md h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
-									<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
+								<Card className="bg-background relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
+									<div className="flex justify-center px-12 pb-16 pt-2 md:pt-4 h-full w-full">
 										<Image
-											className="rounded-md h-full w-auto"
+											className="rounded-[8px] md:rounded-md h-full w-auto"
 											src="/images/demo-cover-2.png"
 											width={383}
 											height={600}
@@ -183,7 +183,7 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 
 										<CardContent className={`pr-0 ${!isLong ? "pt-6" : "pt-2"} md:pt-2 md:px-6 px-4`}>
 											<div className="w-full h-full flex justify-center items-center pt-8">
-												<Button>join reading</Button>
+												<Button size={isLong ? "sm" : "default"}>join reading</Button>
 											</div>
 										</CardContent>
 									</Card>
@@ -191,10 +191,10 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 							</CarouselItem>
 
 							<CarouselItem>
-								<Card className="bg-background relative shadow-shadow shadow-md h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
-									<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
+								<Card className="bg-background relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
+									<div className="flex justify-center px-12 pb-16 pt-2 md:pt-4 h-full w-full">
 										<Image
-											className="rounded-md h-full w-auto"
+											className="rounded-[8px] md:rounded-md h-full w-auto"
 											src="/images/demo-cover-3.png"
 											width={400}
 											height={610}
@@ -278,10 +278,10 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 							</CarouselItem>
 
 							<CarouselItem>
-								<Card className="bg-background relative shadow-shadow shadow-md h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
-									<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
+								<Card className="bg-background relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
+									<div className="flex justify-center px-12 pb-16 pt-2 md:pt-4 h-full w-full">
 										<Image
-											className="rounded-md h-full w-auto"
+											className="rounded-[8px] md:rounded-md h-full w-auto"
 											src="/images/demo-cover-4.png"
 											width={294}
 											height={475}
@@ -305,7 +305,7 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 
 										<CardContent className={`pr-0 ${!isLong ? "pt-6" : "pt-2"} md:pt-2 md:px-6 px-4`}>
 											<div className="w-full h-full flex justify-center items-center pt-8">
-												<Button>join reading</Button>
+												<Button size={isLong ? "sm" : "default"}>join reading</Button>
 											</div>
 										</CardContent>
 									</Card>

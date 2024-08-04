@@ -158,7 +158,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 										}
 									/>
 								</SheetTrigger>
-								<SheetContent className={`space-y-4 ${isVertical && "w-full"}`}>
+								<SheetContent className={`space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
 									<SheetHeader className="text-left">
 										<SheetTitle>{post.reading.book_title}</SheetTitle>
 										<SheetDescription className="italic">

@@ -59,31 +59,29 @@ export function BookSearchList({ search, radioRef }: Props) {
 			refetch()
 		}
 	}, [search])
-	return (
-		<ScrollArea className="h-56 md:h-96 shadow-inner rounded-md shadow-shadow pt-3">
-			{loading ? (
-				<div>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						strokeWidth={1.5}
-						stroke="currentColor"
-						className="size-6 animate-spin"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-						/>
-					</svg>
-				</div>
-			) : books ? (
-				<div className="p-4 pt-0 space-y-3">
-					{books &&
-						books.docs?.map((book: any) => <BookSearchCollapsible item={book} key={book.key} radioRef={radioRef} />)}
-				</div>
-			) : null}
+	return loading ? (
+		<div>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				strokeWidth={1.5}
+				stroke="currentColor"
+				className="size-6 animate-spin"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+				/>
+			</svg>
+		</div>
+	) : books ? (
+		<ScrollArea className="h-96 shadow-inner rounded-md shadow-shadow pt-3">
+			<div className="p-4 pt-0 space-y-3">
+				{books &&
+					books.docs?.map((book: any) => <BookSearchCollapsible item={book} key={book.key} radioRef={radioRef} />)}
+			</div>
 		</ScrollArea>
-	)
+	) : null
 }

@@ -64,7 +64,7 @@ export function DemoPageRight2({ readingIndex, demoIsComplete }: Props) {
 			</CardContent>
 
 			<CardFooter className="absolute bottom-0 right-12 flex-col items-center space-y-2 md:p-6 p-4 pb-6">
-				<CardTitle className="flex flex-row text-md md:text-xl">view the demo 👉</CardTitle>
+				<CardTitle className="flex flex-row text-md md:text-xl">view a demo reading 👉</CardTitle>
 			</CardFooter>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
