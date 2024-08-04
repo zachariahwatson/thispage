@@ -27,10 +27,9 @@ import { useMediaQuery } from "@/hooks"
 
 interface Props {
 	isComplete: boolean
-	clicked: boolean
 }
 
-export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
+export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	return (
 		<>
@@ -40,7 +39,7 @@ export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
 						<SheetTitle className="text-xl">readers</SheetTitle>
 					</SheetTrigger>
 					<SheetContent className="w-full rounded-lg">
-						<DemoIntervalAvatarList isComplete={isComplete} clicked={clicked} />
+						<DemoIntervalAvatarList isComplete={isComplete} />
 					</SheetContent>
 				</Sheet>
 			) : (
@@ -49,7 +48,7 @@ export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
 						<CardTitle className="text-xl">readers</CardTitle>
 					</DialogTrigger>
 					<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
-						<DemoIntervalAvatarList isComplete={isComplete} clicked={clicked} />
+						<DemoIntervalAvatarList isComplete={isComplete} />
 					</DialogContent>
 				</Dialog>
 			)}
@@ -61,31 +60,31 @@ export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
 							<AvatarImage src="/images/default-avatar.png" loading="eager" />
 						</Avatar>
 					</TooltipTrigger>
-					<TooltipContent>Lorem Ipsum</TooltipContent>
+					<TooltipContent>you</TooltipContent>
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger className="cursor-default">
-						<Avatar className={`${!clicked ? "ring-ring" : "ring-background"} ring-4`}>
-							<AvatarImage src="/images/default-avatar.png" loading="eager" />
+						<Avatar className={`ring-ring ring-4`}>
+							<AvatarImage src="/images/demo-avatar-1.png" loading="eager" />
 						</Avatar>
 					</TooltipTrigger>
-					<TooltipContent>Lorem Ipsum</TooltipContent>
+					<TooltipContent>Isaac Newton</TooltipContent>
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger className="cursor-default">
-						<Avatar className={`${!clicked ? "ring-ring" : "ring-background"} ring-4`}>
-							<AvatarImage src="/images/default-avatar.png" loading="eager" />
+						<Avatar className={`ring-background ring-4`}>
+							<AvatarImage src="/images/demo-avatar-2.png" loading="eager" />
 						</Avatar>
 					</TooltipTrigger>
-					<TooltipContent>Lorem Ipsum</TooltipContent>
+					<TooltipContent>Albert Einstein</TooltipContent>
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger className="cursor-default">
-						<Avatar className={`${!clicked ? "ring-ring" : "ring-background"} ring-4`}>
-							<AvatarImage src="/images/default-avatar.png" loading="eager" />
+						<Avatar className={`ring-ring ring-4`}>
+							<AvatarImage src="/images/demo-avatar-3.png" loading="eager" />
 						</Avatar>
 					</TooltipTrigger>
-					<TooltipContent>Lorem Ipsum</TooltipContent>
+					<TooltipContent>Nikola Tesla</TooltipContent>
 				</Tooltip>
 				{isVertical ? (
 					<Sheet>
@@ -110,7 +109,7 @@ export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
 							</Avatar>
 						</SheetTrigger>
 						<SheetContent className="w-full rounded-lg">
-							<DemoIntervalAvatarList isComplete={isComplete} clicked={clicked} />
+							<DemoIntervalAvatarList isComplete={isComplete} />
 						</SheetContent>
 					</Sheet>
 				) : (
@@ -141,7 +140,7 @@ export function DemoIntervalAvatarGroup({ isComplete, clicked }: Props) {
 							<TooltipContent>view all readers</TooltipContent>
 						</Tooltip>
 						<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
-							<DemoIntervalAvatarList isComplete={isComplete} clicked={clicked} />
+							<DemoIntervalAvatarList isComplete={isComplete} />
 						</DialogContent>
 					</Dialog>
 				)}

@@ -27,11 +27,9 @@ interface Props {
 	readingIndex: number
 	isComplete: boolean
 	setIsComplete: Dispatch<SetStateAction<boolean>>
-	clicked: boolean
-	setClicked: Dispatch<SetStateAction<boolean>>
 }
 
-export function DemoReadingPageLeft({ readingIndex, isComplete, setIsComplete, clicked, setClicked }: Props) {
+export function DemoReadingPageLeft({ readingIndex, isComplete, setIsComplete }: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -81,7 +79,7 @@ export function DemoReadingPageLeft({ readingIndex, isComplete, setIsComplete, c
 					<div className="flex flex-row">
 						<p className="font-bold italic md:text-xl">
 							p.
-							<span className="text-6xl md:text-8xl not-italic">{clicked ? "60" : "50"}</span>
+							<span className="text-6xl md:text-8xl not-italic">50</span>
 						</p>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -94,20 +92,13 @@ export function DemoReadingPageLeft({ readingIndex, isComplete, setIsComplete, c
 							<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
 						</svg>
 						<div className="self-center">
-							<DemoCompleteIntervalButton
-								isComplete={isComplete}
-								setIsComplete={setIsComplete}
-								clicked={clicked}
-								setClicked={setClicked}
-							/>
+							<DemoCompleteIntervalButton isComplete={isComplete} setIsComplete={setIsComplete} />
 						</div>
 					</div>
-					<CardDescription className="italic">
-						{!clicked ? (clicked ? "0" : "7") : isComplete ? "1" : "0"}/8 readers have completed
-					</CardDescription>
+					<CardDescription className="italic">{isComplete ? "5" : "4"}/8 readers have completed</CardDescription>
 				</CardContent>
 				<CardFooter className="md:px-6 px-4">
-					<Progress value={Math.floor(((clicked ? 50 : 40) / 348) * 100)} className="h-2 md:h-4" />
+					<Progress value={Math.floor((40 / 348) * 100)} className="h-2 md:h-4" />
 				</CardFooter>
 			</Card>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">

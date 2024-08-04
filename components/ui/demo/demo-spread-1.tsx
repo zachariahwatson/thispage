@@ -14,6 +14,7 @@ import { useState } from "react"
 
 export function DemoSpread1({ isVisible, readingIndex }: Props) {
 	const [demoIsComplete, setDemoIsComplete] = useState<boolean>(false)
+	const [demoClicked, setDemoClicked] = useState<boolean>(false)
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
@@ -22,8 +23,10 @@ export function DemoSpread1({ isVisible, readingIndex }: Props) {
 						readingIndex={readingIndex}
 						demoIsComplete={demoIsComplete}
 						setDemoIsComplete={setDemoIsComplete}
+						demoClicked={demoClicked}
+						setDemoClicked={setDemoClicked}
 					/>
-					<DemoPageRight1 demoIsComplete={demoIsComplete} />
+					<DemoPageRight1 readingIndex={readingIndex} demoIsComplete={demoIsComplete} />
 				</div>
 			)}
 		</AnimatePresence>

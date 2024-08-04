@@ -17,7 +17,7 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 
 interface Props {
 	isComplete: boolean
-	setIsComplete: Dispatch<SetStateAction<boolean>>
+	setIsComplete?: Dispatch<SetStateAction<boolean>>
 	clicked?: boolean
 	setClicked?: Dispatch<SetStateAction<boolean>>
 }
@@ -56,13 +56,13 @@ export function DemoCompleteIntervalButton({ isComplete, setIsComplete, clicked,
 		`niiiiiiiiiiiiiiiiiiiiiiiice`,
 	]
 	const handleClick = () => {
-		if (setClicked) {
+		if (setClicked && setIsComplete) {
 			setClicked(true)
 			clicked && setIsComplete(!isComplete)
 			if (!isComplete || !clicked) {
 				toast.success(choices[Math.floor(Math.random() * choices.length)])
 			}
-		} else {
+		} else if (setIsComplete) {
 			setIsComplete(!isComplete)
 			if (!isComplete) {
 				toast.success(choices[Math.floor(Math.random() * choices.length)])

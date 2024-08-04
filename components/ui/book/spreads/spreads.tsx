@@ -36,7 +36,7 @@ export function Spreads() {
 				readings.length === 0 && (
 					<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
 						<EmptyPageLeft readingIndex={0} />
-						<EmptyPageRight />
+						<EmptyPageRight readingIndex={0} />
 					</div>
 				)
 			)}

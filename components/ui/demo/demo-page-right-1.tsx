@@ -13,10 +13,11 @@ import Image from "next/image"
 import { DemoReadingPosts } from "./demo-reading-posts"
 
 interface Props {
+	readingIndex: number
 	demoIsComplete: boolean
 }
 
-export function DemoPageRight1({ demoIsComplete }: Props) {
+export function DemoPageRight1({ readingIndex, demoIsComplete }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
 	//console.log(interval)
@@ -55,7 +56,7 @@ export function DemoPageRight1({ demoIsComplete }: Props) {
 				</div>
 			</CardContent>
 			<CardFooter className="absolute bottom-0 right-12 flex-col items-center space-y-2 md:p-6 p-4 pb-6">
-				<CardTitle className="flex flex-row text-md md:text-xl">flip to next page 👉</CardTitle>
+				<CardTitle className="flex flex-row text-md md:text-xl">flip to the next page 👉</CardTitle>
 			</CardFooter>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
@@ -63,6 +64,7 @@ export function DemoPageRight1({ demoIsComplete }: Props) {
 			<div className="bg-gradient-to-b from-shadow to-background px-2 block md:hidden absolute w-full top-0 right-0">
 				<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
+			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{readingIndex + 1}</p>
 		</MotionCard>
 	)
 }
