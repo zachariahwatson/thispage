@@ -69,9 +69,6 @@ export function SignInForm({ setFormType, email, setEmail, password, setPassword
 					/>
 
 					<SubmitButton pendingText="signing in...">sign in</SubmitButton>
-					<Button onClick={handleFormChange} variant="secondary">
-						sign up
-					</Button>
 
 					<div className="relative">
 						<div className="absolute inset-0 flex items-center">
@@ -106,6 +103,12 @@ export function SignInForm({ setFormType, email, setEmail, password, setPassword
 					sign in with google
 				</SubmitButton>
 			</form>
+			<div className="flex flex-row justify-center items-center">
+				don't have an account?
+				<Button onClick={handleFormChange} variant="link" className="underline text-md" size="sm">
+					sign up
+				</Button>
+			</div>
 		</>
 	)
 }

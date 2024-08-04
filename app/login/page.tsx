@@ -21,7 +21,7 @@ export default function Login({ searchParams }: Props) {
 			if (searchParams.type === "error") {
 				toast.error(`${searchParams.message}`)
 			} else {
-				toast(`${searchParams.message}`)
+				toast.warning(`${searchParams.message}`)
 			}
 		}
 	}, [searchParams.message])
