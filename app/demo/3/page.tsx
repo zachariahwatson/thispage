@@ -44,13 +44,13 @@ export default function Page() {
 					</Button>
 					<div className="mr-4">
 						<Avatar className="w-8 h-8 md:w-10 md:h-10">
-							<AvatarImage src="/images/default-avatar.png" />
+							<AvatarImage src="/images/demo-avatar-1.png" />
 						</Avatar>
 					</div>
 					<div className="relative max-w-[calc(100%-56px)] w-full">
 						<div className="flex flex-col pr-10">
 							<p className="text-md">
-								Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>
+								Isaac Newton • <span className="text-sm">January 1st, 1970</span>
 							</p>
 							<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
 								The Odyssey • thispage demo club
@@ -105,13 +105,13 @@ export default function Page() {
 					<div className="flex flex-row items-start">
 						<div className="mr-4">
 							<Avatar className="w-8 h-8 md:w-10 md:h-10">
-								<AvatarImage src="/images/default-avatar.png" />
+								<AvatarImage src="/images/demo-avatar-3.png" />
 							</Avatar>
 						</div>
 						<div className="relative w-full space-y-2">
 							<div className="flex flex-col space-y-2 w-full">
 								<p className="text-md">
-									Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>
+									Nikola Tesla • <span className="text-sm">January 1st, 1970</span>
 								</p>
 								<p className="md:text-md text-sm w-full">never. you smell.</p>
 								<div className="flex flex-row">
@@ -128,13 +128,13 @@ export default function Page() {
 										<div className="flex flex-row items-start">
 											<div className="mr-4">
 												<Avatar className="w-8 h-8 md:w-10 md:h-10">
-													<AvatarImage src="/images/default-avatar.png" />
+													<AvatarImage src="/images/demo-avatar-7.png" />
 												</Avatar>
 											</div>
 											<div className="relative w-full">
 												<div className="flex flex-col space-y-2 w-full">
 													<p className="text-md">
-														Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>{" "}
+														Carl Gauss • <span className="text-sm">January 1st, 1970</span>{" "}
 													</p>
 													<p className="md:text-md text-sm w-full">that's what i've been saying</p>
 													<div className="flex flex-row">
@@ -155,13 +155,13 @@ export default function Page() {
 										<div className="flex flex-row items-start">
 											<div className="mr-4">
 												<Avatar className="w-8 h-8 md:w-10 md:h-10">
-													<AvatarImage src="/images/default-avatar.png" />
+													<AvatarImage src="/images/demo-avatar-2.png" />
 												</Avatar>
 											</div>
 											<div className="relative w-full">
 												<div className="flex flex-col space-y-2 w-full">
 													<p className="text-md">
-														Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>{" "}
+														Albert Einstein • <span className="text-sm">January 1st, 1970</span>{" "}
 													</p>
 													<p className="md:text-md text-sm w-full">owned</p>
 													<div className="flex flex-row">
@@ -194,13 +194,13 @@ export default function Page() {
 					<div className="flex flex-row items-start">
 						<div className="mr-4">
 							<Avatar className="w-8 h-8 md:w-10 md:h-10">
-								<AvatarImage src="/images/default-avatar.png" />
+								<AvatarImage src="/images/demo-avatar-6.png" />
 							</Avatar>
 						</div>
 						<div className="relative w-full space-y-2">
 							<div className="flex flex-col space-y-2 w-full">
 								<p className="text-md">
-									Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>
+									Galileo Galilei • <span className="text-sm">January 1st, 1970</span>
 								</p>
 								<p className="md:text-md text-sm w-full">uh i can do sunday my mom just has to drop me off</p>
 								<div className="flex flex-row">

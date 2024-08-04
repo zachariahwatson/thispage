@@ -19,14 +19,8 @@ export function DemoReadingSpread({ isVisible, readingIndex }: Props) {
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
 				<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
-					<DemoReadingPageLeft
-						readingIndex={readingIndex}
-						isComplete={isComplete}
-						setIsComplete={setIsComplete}
-						clicked={clicked}
-						setClicked={setClicked}
-					/>
-					<DemoReadingPageRight isComplete={isComplete} clicked={clicked} />
+					<DemoReadingPageLeft readingIndex={readingIndex} isComplete={isComplete} setIsComplete={setIsComplete} />
+					<DemoReadingPageRight isComplete={isComplete} />
 				</div>
 			)}
 		</AnimatePresence>

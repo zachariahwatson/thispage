@@ -99,3 +99,5 @@ export { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./collapsib
 export { Calendar } from "./calendar"
 
 export { CreateClubForm } from "./create-club-form"
+
+export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "./carousel"

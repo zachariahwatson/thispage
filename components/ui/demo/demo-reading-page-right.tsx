@@ -14,10 +14,9 @@ import { Dispatch, SetStateAction } from "react"
 
 interface Props {
 	isComplete: boolean
-	clicked: boolean
 }
 
-export function DemoReadingPageRight({ isComplete, clicked }: Props) {
+export function DemoReadingPageRight({ isComplete }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
 	//console.log(interval)
@@ -46,12 +45,22 @@ export function DemoReadingPageRight({ isComplete, clicked }: Props) {
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
 				<div className="flex justify-between pr-1">
 					<CardTitle className="text-xl">discussion</CardTitle>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-6"
+					>
+						<path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+					</svg>
 				</div>
 
-				<DemoReadingPosts clicked={clicked} />
+				<DemoReadingPosts clicked={isComplete} />
 			</CardHeader>
 			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
-				<DemoIntervalAvatarGroup isComplete={isComplete} clicked={clicked} />
+				<DemoIntervalAvatarGroup isComplete={isComplete} />
 			</CardFooter>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />

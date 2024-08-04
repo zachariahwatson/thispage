@@ -14,7 +14,7 @@ export function ReadingPost({ disabled, children, likes, id }: Props) {
 	const readingData = useReading()
 	return (
 		<>
-			<div className="flex flex-row pr-10 md:pr-14 relative">
+			<div className="flex flex-row relative items-center justify-between">
 				<p className={`min-h-5 text-xs md:text-sm truncate ... ${!disabled ? "hover:font-medium transition-all" : ""}`}>
 					<Link
 						href={`club/${clubMembership?.club.id}/reading/${readingData?.id}/comments/${id}`}
@@ -26,8 +26,8 @@ export function ReadingPost({ disabled, children, likes, id }: Props) {
 					</Link>
 				</p>
 
-				<Badge variant="outline" className="absolute self-center right-0 px-1 md:px-2.5">
-					{likes} 👍
+				<Badge variant="outline" className="px-1 md:px-2.5">
+					<span className="mr-1">{likes}</span>👍
 				</Badge>
 			</div>
 

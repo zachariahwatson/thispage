@@ -23,14 +23,14 @@ export function DemoSpreads() {
 			<DemoSpread1 isVisible={readingIndex === 0} readingIndex={readingIndex} />
 			<DemoSpread2 isVisible={readingIndex === 1} readingIndex={readingIndex} />
 			<DemoReadingSpread isVisible={readingIndex === 2} readingIndex={readingIndex} />
-			{readingIndex === 3 && (
+			{/* {readingIndex === 3 && (
 				<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
 					<LoginPageLeft readingIndex={readingIndex} />
 					<LoginPageRight />
 				</div>
-			)}
+			)} */}
 
-			<NextReading readingIndex={readingIndex} setReadingIndex={setReadingIndex} len={4} />
+			<NextReading readingIndex={readingIndex} setReadingIndex={setReadingIndex} len={3} />
 		</>
 	)
 }

@@ -49,8 +49,8 @@ export function DemoReadingPosts({ clicked }: Props) {
 		 * @todo - figure out why it's becoming display: table
 		 */
 		<div className="h-full">
-			<ScrollArea className="border rounded-lg h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner">
-				<div className="p-3 md:p-4" style={{ width: innerWidth, height: innerHeight }}>
+			<ScrollArea className="border rounded-lg min-h-[124px] h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner">
+				<div className="p-3 md:p-4">
 					<DemoReadingPost likes={3} id={1}>
 						what do you guys think so far?
 					</DemoReadingPost>

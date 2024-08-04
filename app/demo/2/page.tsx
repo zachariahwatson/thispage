@@ -44,13 +44,13 @@ export default function Page() {
 					</Button>
 					<div className="mr-4">
 						<Avatar className="w-8 h-8 md:w-10 md:h-10">
-							<AvatarImage src="/images/default-avatar.png" />
+							<AvatarImage src="/images/demo-avatar-5.png" />
 						</Avatar>
 					</div>
 					<div className="relative max-w-[calc(100%-56px)] w-full">
 						<div className="flex flex-col pr-10">
 							<p className="text-md">
-								Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>
+								Pythagoras • <span className="text-sm">January 1st, 1970</span>
 							</p>
 							<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
 								The Odyssey • thispage demo club
@@ -92,10 +92,7 @@ export default function Page() {
 					</div>
 				</div>
 				<h1 className="text-lg md:text-2xl font-bold">peekaboo!</h1>
-				<p className="md:text-md text-sm">
-					blah blah blah this is the content of the post. funnily enough i've never read this book so i will type an
-					adequate amount until it looks like an actual post. BOO
-				</p>
+				<p className="md:text-md text-sm">BOO</p>
 				<Button className="p-0 bg-background hover:bg-background mr-2" variant="secondary">
 					<Badge variant="outline">3 👍</Badge>
 				</Button>
@@ -108,13 +105,13 @@ export default function Page() {
 					<div className="flex flex-row items-start">
 						<div className="mr-4">
 							<Avatar className="w-8 h-8 md:w-10 md:h-10">
-								<AvatarImage src="/images/default-avatar.png" />
+								<AvatarImage src="/images/demo-avatar-1.png" />
 							</Avatar>
 						</div>
 						<div className="relative w-full space-y-2">
 							<div className="flex flex-col space-y-2 w-full">
 								<p className="text-md">
-									Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>
+									Isaac Newton • <span className="text-sm">January 1st, 1970</span>
 								</p>
 								<p className="md:text-md text-sm w-full">AAAAAAAHHH!</p>
 								<div className="flex flex-row">
@@ -131,13 +128,13 @@ export default function Page() {
 										<div className="flex flex-row items-start">
 											<div className="mr-4">
 												<Avatar className="w-8 h-8 md:w-10 md:h-10">
-													<AvatarImage src="/images/default-avatar.png" />
+													<AvatarImage src="/images/demo-avatar-3.png" />
 												</Avatar>
 											</div>
 											<div className="relative w-full">
 												<div className="flex flex-col space-y-2 w-full">
 													<p className="text-md">
-														Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>{" "}
+														Nikola Tesla • <span className="text-sm">January 1st, 1970</span>{" "}
 													</p>
 													<p className="md:text-md text-sm w-full">same here! AAAAAAAAAH</p>
 													<div className="flex flex-row">
@@ -158,13 +155,13 @@ export default function Page() {
 										<div className="flex flex-row items-start">
 											<div className="mr-4">
 												<Avatar className="w-8 h-8 md:w-10 md:h-10">
-													<AvatarImage src="/images/default-avatar.png" />
+													<AvatarImage src="/images/demo-avatar-4.png" />
 												</Avatar>
 											</div>
 											<div className="relative w-full">
 												<div className="flex flex-col space-y-2 w-full">
 													<p className="text-md">
-														Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>{" "}
+														Tycho Brahe • <span className="text-sm">January 1st, 1970</span>{" "}
 													</p>
 													<p className="md:text-md text-sm w-full">meh. AAAAHHHHH!</p>
 													<div className="flex flex-row">
@@ -197,13 +194,13 @@ export default function Page() {
 					<div className="flex flex-row items-start">
 						<div className="mr-4">
 							<Avatar className="w-8 h-8 md:w-10 md:h-10">
-								<AvatarImage src="/images/default-avatar.png" />
+								<AvatarImage src="/images/demo-avatar-2.png" />
 							</Avatar>
 						</div>
 						<div className="relative w-full space-y-2">
 							<div className="flex flex-col space-y-2 w-full">
 								<p className="text-md">
-									Lorem Ipsum • <span className="text-sm">January 1st, 1970</span>
+									Albert Einstein • <span className="text-sm">January 1st, 1970</span>
 								</p>
 								<p className="md:text-md text-sm w-full">AHHHHH! AHHHHH! AHHHHH!</p>
 								<div className="flex flex-row">
