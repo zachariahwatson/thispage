@@ -33,28 +33,24 @@ export function MemberList() {
 	const columns: ColumnDef<Member>[] = [
 		{
 			id: "avatar",
+			header: "member",
 			cell: ({ row }) => {
 				const member = row.original
 				return (
-					<Avatar>
-						<AvatarImage src={member?.avatar_url || ""} />
-						<AvatarFallback>
-							{member?.first_name && member?.last_name
-								? member.first_name[0] + member.last_name[0]
-								: member?.name && member?.name?.split(" ")[0] + member?.name?.split(" ")[1]}
-						</AvatarFallback>
-					</Avatar>
+					<div className="flex flex-row items-center space-x-4">
+						<Avatar>
+							<AvatarImage src={member?.avatar_url || ""} />
+							<AvatarFallback>
+								{member?.first_name && member?.last_name
+									? member.first_name[0] + member.last_name[0]
+									: member?.name && member?.name?.split(" ")[0] + member?.name?.split(" ")[1]}
+							</AvatarFallback>
+						</Avatar>
+						<p>{member?.first_name && member?.last_name ? member.first_name + " " + member.last_name : member?.name}</p>
+					</div>
 				)
 			},
 			size: 10,
-		},
-		{
-			accessorKey: "name",
-			header: "name",
-			cell: ({ row }) => {
-				const member = row.original
-				return member?.first_name && member?.last_name ? member.first_name + " " + member.last_name : member?.name
-			},
 		},
 		{
 			accessorKey: "role",
