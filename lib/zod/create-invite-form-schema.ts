@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const createInviteFormSchema = z.object({
-	uses: z.string().refine(
+	uses: z.string({ required_error: "uses is required" }).refine(
 		(val) => {
 			if (val.trim() === "") {
 				return false // Empty strings should be invalid
