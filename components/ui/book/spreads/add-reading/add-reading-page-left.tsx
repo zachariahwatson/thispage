@@ -1,12 +1,19 @@
 "use client"
 
-import { Card, CardHeader, CardTitle, Separator } from "@/components/ui"
+import { Card, CardContent, CardHeader, CardTitle, Separator } from "@/components/ui"
+import { useClubMembership } from "@/contexts"
 
 import { useMediaQuery } from "@/hooks"
+import { InviteCode } from "@/lib/types"
 
 import { motion } from "framer-motion"
 
 import { useState } from "react"
+import { useQuery } from "react-query"
+import { InviteCodes } from "./invite-codes"
+import { ScrollArea } from "@radix-ui/react-scroll-area"
+import { MemberList } from "./member-list"
+import { CreateInviteButton } from "@/components/ui/buttons"
 
 interface Props {
 	readingIndex: number
@@ -38,9 +45,18 @@ export function AddReadingPageLeft({ readingIndex }: Props) {
 			style={{ transformPerspective: 2500 }}
 			onAnimationComplete={() => setFlipOnce(true)}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
-				<div className="flex justify-between pr-1">
-					<CardTitle className="text-xl">dashboard</CardTitle>
+			<CardHeader className="px-4 md:px-6 h-full">
+				<CardTitle className="text-xl">dashboard</CardTitle>
+				<Separator />
+
+				<div className="space-y-1.5 h-full overflow-scroll pt-2 pr-1">
+					<div className="flex justify-between pr-1">
+						<CardTitle className="text-lg">invite codes</CardTitle>
+						<CreateInviteButton />
+					</div>
+					<InviteCodes />
+					<CardTitle className="text-lg">members</CardTitle>
+					<MemberList />
 				</div>
 			</CardHeader>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
