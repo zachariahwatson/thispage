@@ -39,8 +39,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-6 md:p-12 md:pt-12 space-y-8">
 						{children}
 					</main>
-					<footer className="flex justify-center items-center h-12 md:text-sm text-xs">
-						<div>
+					<footer className="flex flex-col justify-center items-center md:text-sm text-xs">
+						<div className="h-8">
 							© 2024 ❤️ Zachariah Watson |{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
 								<Link href="https://github.com/zachariahwatson/thispage">github</Link>
@@ -54,6 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 								<Link href="/terms">terms</Link>
 							</Button>
 						</div>
+						<div className="text-muted-foreground">v. 0.3.9</div>
 					</footer>
 				</Providers>
 				<Analytics />
