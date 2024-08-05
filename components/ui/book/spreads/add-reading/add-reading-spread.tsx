@@ -12,6 +12,9 @@ import { useReadings } from "@/hooks/state"
 
 export function AddReadingSpread({ isVisible, readingIndex }: Props) {
 	return (
+		/**
+		 * @todo figure out why the spread gets stuck while exiting when adding a new reading
+		 */
 		//<AnimatePresence mode="popLayout">
 		isVisible && (
 			<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
