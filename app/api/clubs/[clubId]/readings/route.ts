@@ -36,6 +36,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			.eq("club_id", params.clubId)
 			.eq("is_current", current)
 			.eq("is_finished", finished)
+			.order("id", { ascending: true })
 
 		if (error) {
 			throw error

@@ -30,6 +30,7 @@ interface Props {
 }
 
 export function BookSearchItem({ item, authors, radioRef }: Props) {
+	const [coverLoading, setCoverLoading] = useState<boolean>(true)
 	const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 		? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 		: "http://localhost:3000"
@@ -99,7 +100,7 @@ export function BookSearchItem({ item, authors, radioRef }: Props) {
 									))}
 							</div>
 							<div className="absolute right-0 top-0 h-full p-4 max-w-full">
-								{loading ? (
+								{loading && coverLoading ? (
 									<Skeleton className={`max-h-full h-full w-16 float-right rounded-[4px] shadow-sm shadow-shadow`} />
 								) : cover && cover.id && cover.width && cover.height ? (
 									<Image
@@ -108,6 +109,7 @@ export function BookSearchItem({ item, authors, radioRef }: Props) {
 										height={cover.height}
 										alt="cover"
 										className="max-h-full w-auto float-right rounded-[4px] shadow-sm shadow-shadow"
+										onLoad={() => setCoverLoading(false)}
 									/>
 								) : (
 									<div className="max-h-full h-full w-16 float-right rounded-[4px] flex justify-center items-center text-muted-foreground">
