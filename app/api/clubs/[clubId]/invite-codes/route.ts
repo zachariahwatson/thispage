@@ -45,3 +45,31 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		return Response.json({ error: "an error occurred while fetching club invite codes." }, { status: 500 })
 	}
 }
+
+/**
+ * creates an invite code in the specified club.
+ */
+export async function POST(request: NextRequest) {
+	try {
+		const supabase = createClient()
+
+		const body = await request.json()
+
+		const { error } = await supabase.from("club_invite_codes").insert({
+			club_id: body.club_id,
+			expiration_date: body.expiration_date,
+			uses: body.uses,
+			creator_member_id: body.creator_member_id,
+		})
+
+		if (error) {
+			throw error
+		}
+		// revalidatePath("/", "layout")
+		return Response.json({ message: "successfully created invite code" }, { status: 200 })
+	} catch (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating an invite code:\n", error)
+
+		return Response.json({ error: "an error occurred while creating an invite code." }, { status: 500 })
+	}
+}

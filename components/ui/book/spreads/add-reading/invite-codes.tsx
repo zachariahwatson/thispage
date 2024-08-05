@@ -18,6 +18,7 @@ import {
 	Avatar,
 	AvatarImage,
 	AvatarFallback,
+	Skeleton,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { toast } from "sonner"
@@ -28,7 +29,7 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 
 const columns: ColumnDef<InviteCode>[] = [
 	{
-		header: "copy",
+		header: "link",
 		id: "actions",
 		cell: ({ row }) => {
 			const invite = row.original
@@ -71,7 +72,7 @@ const columns: ColumnDef<InviteCode>[] = [
 	},
 	{
 		accessorKey: "expiration_date",
-		header: "exp. date",
+		header: "expiry date",
 		cell: ({ row }) => {
 			const date = new Date(row.getValue("expiration_date"))
 			return date.toLocaleDateString(undefined, {
@@ -107,6 +108,9 @@ const columns: ColumnDef<InviteCode>[] = [
 	},
 ]
 
+/**
+ * @todo decrement the uses and add expiration date functionality
+ */
 export function InviteCodes() {
 	const clubMembership = useClubMembership()
 
@@ -130,5 +134,9 @@ export function InviteCodes() {
 		},
 	})
 
-	return inviteCodes && <DataTable columns={columns} data={inviteCodes} />
+	return !loading && inviteCodes ? <DataTable columns={columns} data={inviteCodes} /> : <InviteCodesSkeleton />
+}
+
+function InviteCodesSkeleton() {
+	return <Skeleton className="h-48" />
 }

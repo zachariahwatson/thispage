@@ -18,6 +18,7 @@ import {
 	Avatar,
 	AvatarImage,
 	AvatarFallback,
+	Skeleton,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { toast } from "sonner"
@@ -61,6 +62,7 @@ export function MemberList() {
 		},
 		{
 			id: "actions",
+			header: "action",
 			cell: ({ row }) => {
 				const member = row.original
 
@@ -89,12 +91,24 @@ export function MemberList() {
 							<DropdownMenuContent align="end">
 								{member.role !== "admin" && clubMembership?.role === "admin" ? (
 									<>
-										<DropdownMenuItem className="cursor-pointer">promote to admin</DropdownMenuItem>
-										<DropdownMenuItem className="cursor-pointer">demote to member</DropdownMenuItem>
+										{member.role === "moderator" ? (
+											<>
+												<DropdownMenuItem className="cursor-pointer">promote to admin</DropdownMenuItem>
+												<DropdownMenuItem className="cursor-pointer">demote to member</DropdownMenuItem>
+											</>
+										) : (
+											<DropdownMenuItem className="cursor-pointer">promote to moderator</DropdownMenuItem>
+										)}
+
 										<DropdownMenuSeparator />
 										<DropdownMenuItem className="text-destructive cursor-pointer">kick</DropdownMenuItem>
 									</>
-								) : null}
+								) : (
+									member.role === "member" &&
+									clubMembership?.role === "moderator" && (
+										<DropdownMenuItem className="text-destructive cursor-pointer">kick</DropdownMenuItem>
+									)
+								)}
 							</DropdownMenuContent>
 						</DropdownMenu>
 					)
@@ -122,7 +136,10 @@ export function MemberList() {
 			return await response.json()
 		},
 	})
-	console.log(members)
 
-	return members && <DataTable columns={columns} data={members} />
+	return !loading && members ? <DataTable columns={columns} data={members} /> : <MemberListSkeleton />
+}
+
+function MemberListSkeleton() {
+	return <Skeleton className="h-48" />
 }
