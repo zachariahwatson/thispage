@@ -2,9 +2,12 @@ import { NextRequest } from "next/server"
 
 export async function GET(request: NextRequest, { params }: { params: { title: string } }) {
 	try {
+		const searchParams = request.nextUrl.searchParams
 		if (params.title !== "") {
 			const url = new URL(
-				`https://openlibrary.org/search.json?q=${params.title}&fields=key,title,author_name&limit=100&language=eng`
+				`https://openlibrary.org/search.json?q=${params.title}&fields=key,title,author_name&limit=5&page=${
+					searchParams.get("page") || 1
+				}`
 			)
 			const response = await fetch(url, {
 				method: "GET",
