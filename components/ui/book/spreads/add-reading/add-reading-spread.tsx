@@ -12,13 +12,13 @@ import { useReadings } from "@/hooks/state"
 
 export function AddReadingSpread({ isVisible, readingIndex }: Props) {
 	return (
-		<AnimatePresence mode="popLayout">
-			{isVisible && (
-				<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
-					<AddReadingPageLeft readingIndex={readingIndex} />
-					<AddReadingPageRight readingIndex={readingIndex} />
-				</div>
-			)}
-		</AnimatePresence>
+		//<AnimatePresence mode="popLayout">
+		isVisible && (
+			<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
+				<AddReadingPageLeft readingIndex={readingIndex} />
+				<AddReadingPageRight readingIndex={readingIndex} />
+			</div>
+		)
+		//</AnimatePresence>
 	)
 }
