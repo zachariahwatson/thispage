@@ -51,15 +51,18 @@ export default function Page({ params }: { params: { clubId: string; inviteCode:
 		return await response.json()
 	}
 
-	const { data: club, isLoading: loading } = useQuery(
+	const {
+		data: club,
+		isLoading: loading,
+		isSuccess: success,
+	} = useQuery(
 		["club", params.clubId],
 		() => fetchClub(),
 		{ enabled: !!user } // Run the query only when the user is available
 	)
 
 	return (
-		club &&
-		!loading && (
+		success && (
 			<Card className="max-w-lg w-full">
 				<CardHeader>
 					<CardTitle>{club.name}</CardTitle>
