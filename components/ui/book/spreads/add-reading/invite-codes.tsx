@@ -36,7 +36,7 @@ const columns: ColumnDef<InviteCode>[] = [
 
 			return (
 				<Tooltip>
-					<TooltipTrigger>
+					<TooltipTrigger asChild>
 						<Button
 							variant="outline"
 							onClick={() => {

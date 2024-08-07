@@ -13,7 +13,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton } from "@/components/ui/buttons"
+import { Button, JoinReadingButton, CompleteIntervalButton, ReadingActionsButton } from "@/components/ui/buttons"
 import { useClubMembership, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import { useIntervals, useUserProgress } from "@/hooks/state"
@@ -99,6 +99,8 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 					loading="eager"
 				/>
 			</div>
+
+			<ReadingActionsButton />
 
 			<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
 				<CardHeader className="pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4">
