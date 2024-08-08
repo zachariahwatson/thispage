@@ -22,6 +22,7 @@ import {
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { toast } from "sonner"
+import { DataTableMembers } from "@/components/ui/data-table-members"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -32,7 +33,7 @@ export function MemberList() {
 
 	const columns: ColumnDef<Member>[] = [
 		{
-			id: "avatar",
+			accessorKey: "name",
 			header: "member",
 			cell: ({ row }) => {
 				const member = row.original
@@ -133,7 +134,7 @@ export function MemberList() {
 		},
 	})
 
-	return !loading && members ? <DataTable columns={columns} data={members} /> : <MemberListSkeleton />
+	return !loading && members ? <DataTableMembers columns={columns} data={members} /> : <MemberListSkeleton />
 }
 
 function MemberListSkeleton() {

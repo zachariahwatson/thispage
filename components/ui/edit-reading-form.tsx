@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { addReadingFormSchema, settingsFormSchema } from "@/lib/zod"
+import { addReadingFormSchema, editReadingFormSchema, settingsFormSchema } from "@/lib/zod"
 import { Button } from "@/components/ui/buttons"
 import {
 	Calendar,
@@ -29,7 +29,7 @@ import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { useUser } from "@/hooks/state"
 import { BookSearch } from "./book"
-import { useClubMembership } from "@/contexts"
+import { useClubMembership, useReading } from "@/contexts"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 
@@ -38,20 +38,9 @@ interface Props {
 		Response,
 		unknown,
 		{
-			book: {
-				open_library_id: string
-				title?: string | undefined
-				description?: string | undefined
-				authors?: string[] | undefined
-				page_count?: number | undefined
-				cover_image_url?: string | undefined
-				cover_image_width?: number | undefined
-				cover_image_height?: number | undefined
-			}
-			club_id: number
-			creator_member_id: number
+			editor_member_id: number
 			interval_page_length: number
-			start_date: Date
+			// start_date: Date
 			join_in_progress: boolean
 		},
 		unknown
@@ -63,36 +52,27 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function AddReadingForm({ mutation, setVisible }: Props) {
+export function EditReadingForm({ mutation, setVisible }: Props) {
 	const clubMembership = useClubMembership()
+	const readingData = useReading()
+
 	// 1. Define your form.
-	const form = useForm<z.infer<typeof addReadingFormSchema>>({
-		resolver: zodResolver(addReadingFormSchema),
+	const form = useForm<z.infer<typeof editReadingFormSchema>>({
+		resolver: zodResolver(editReadingFormSchema),
 		defaultValues: {
-			intervalPageLength: "10",
-			joinInProgress: true,
+			intervalPageLength: String(readingData?.interval_page_length),
+			joinInProgress: readingData?.join_in_progress,
 		},
 	})
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof addReadingFormSchema>) {
-		const parsedBook = JSON.parse(values.book)
-		const startDate = new Date(values.startDate)
-		startDate.setHours(0, 0, 0, 0)
+	function onSubmit(values: z.infer<typeof editReadingFormSchema>) {
+		// const startDate = new Date(values.startDate || readingData?.start_date || "")
+		// startDate.setHours(0, 0, 0, 0)
+		console.log(values, clubMembership?.id)
 		mutation.mutate({
-			book: {
-				open_library_id: parsedBook.openLibraryId,
-				title: parsedBook.title,
-				description: parsedBook.description.value,
-				authors: parsedBook.authors,
-				page_count: parsedBook.pageCount,
-				cover_image_url: parsedBook.coverImageUrl,
-				cover_image_width: parsedBook.coverImageWidth,
-				cover_image_height: parsedBook.coverImageHeight,
-			},
-			club_id: clubMembership?.club.id || -1,
-			creator_member_id: clubMembership?.id || -1,
-			start_date: startDate,
+			editor_member_id: clubMembership?.id || -1,
+			// start_date: startDate,
 			interval_page_length: Number(values.intervalPageLength),
 			join_in_progress: values.joinInProgress,
 		})
@@ -103,20 +83,19 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 		<>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-					<FormField control={form.control} name="book" render={({ field }) => <BookSearch field={field} />} />
-					<FormField
+					{/* <FormField
 						control={form.control}
 						name="startDate"
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
-								<FormLabel>start date</FormLabel>
+								<FormLabel>start date (optional)</FormLabel>
 								<FormControl className="flex justify-center">
 									<Input type="date" placeholder="mm / dd / yyyy" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
-					/>
+					/> */}
 					<FormField
 						control={form.control}
 						name="intervalPageLength"
@@ -124,7 +103,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>interval page length</FormLabel>
 								<FormControl>
-									<Input placeholder={"10"} {...field} />
+									<Input {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -163,11 +142,11 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 									d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
 								/>
 							</svg>
-							adding...
+							saving...
 						</Button>
 					) : (
 						<Button type="submit" className="float-right">
-							add
+							save
 						</Button>
 					)}
 				</form>
