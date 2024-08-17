@@ -91,9 +91,11 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 					{!loading && posts ? (
 						posts.map((post) =>
 							userProgress ? (
-								redactSpoilers &&
-								((post.is_spoiler && new Date(post.created_at).getTime() < new Date(intervalDate).getTime()) ||
-									!post.is_spoiler) ? (
+								(!redactSpoilers &&
+									post.is_spoiler &&
+									new Date(post.created_at).getTime() > new Date(intervalDate).getTime()) ||
+								!post.is_spoiler ||
+								(post.is_spoiler && new Date(post.created_at).getTime() < new Date(intervalDate).getTime()) ? (
 									<ReadingPost key={post.id} likes={post.likes_count} id={post.id}>
 										{post.title}
 									</ReadingPost>
