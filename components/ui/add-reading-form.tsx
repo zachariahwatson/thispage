@@ -124,7 +124,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>interval page length</FormLabel>
 								<FormControl>
-									<Input placeholder={"10"} {...field} />
+									<Input type="number" placeholder={"10"} {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

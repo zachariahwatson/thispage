@@ -103,7 +103,7 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>interval page length</FormLabel>
 								<FormControl>
-									<Input {...field} />
+									<Input type="number" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

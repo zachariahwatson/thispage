@@ -83,7 +83,7 @@ export function CreateInviteForm({ setVisible }: Props) {
 							<FormItem>
 								<FormLabel>uses</FormLabel>
 								<FormControl>
-									<Input {...field} />
+									<Input type="number" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
