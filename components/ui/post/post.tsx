@@ -30,7 +30,7 @@ import Link from "next/link"
 import type { ClubMembership, Post } from "@/lib/types"
 import { useMediaQuery } from "@/hooks"
 import { useSearchParams, redirect } from "next/navigation"
-import { useClubs } from "@/hooks/state"
+import { useClubs, useUser } from "@/hooks/state"
 import { toast } from "sonner"
 import { useEffect, useState } from "react"
 
@@ -49,12 +49,12 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
  * @todo do something about the member id being exposed, dont like that
  */
 export function Post({ clubId, readingId, postId }: Props) {
-	const { data: clubMemberships } = useClubs()
+	const { data: clubMemberships, isLoading: clubsLoading } = useClubs()
 	const clubMembership = clubMemberships?.find((clubMembership) => String(clubMembership.club.id) === clubId)
+	const { data: user, isLoading: userLoading } = useUser()
 
 	useEffect(() => {
-		//check to make sure user is in club
-		if (!clubMembership) {
+		if (!clubMembership && !clubsLoading) {
 			toast.error("oops! you don't have access to that page.")
 			redirect("/")
 		}
@@ -208,7 +208,10 @@ export function Post({ clubId, readingId, postId }: Props) {
 								</SheetContent>
 							</Sheet>
 						</div>
-						{clubMembership && <PostActionsButton post={post} clubMembership={clubMembership} />}
+
+						{clubMembership && (clubMembership.role !== "member" || (!userLoading && user.id === post.member?.id)) && (
+							<PostActionsButton post={post} clubMembership={clubMembership} />
+						)}
 					</div>
 				</div>
 				<h1 className="text-lg md:text-2xl font-bold">{post.title}</h1>
@@ -221,7 +224,15 @@ export function Post({ clubId, readingId, postId }: Props) {
 				<Separator />
 			</div>
 			<RootCommentButton clubId={clubId} readingId={readingId} postId={postId} memberId={memberId} />
-			<PostComments clubId={clubId} readingId={readingId} postId={postId} memberId={memberId} />
+			{clubMembership && (
+				<PostComments
+					clubId={clubId}
+					readingId={readingId}
+					postId={postId}
+					memberId={memberId}
+					clubMembership={clubMembership}
+				/>
+			)}
 		</div>
 	) : (
 		<PostSkeleton />

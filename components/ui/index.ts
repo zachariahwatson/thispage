@@ -107,3 +107,5 @@ export { DataTable } from "./data-table"
 export { EditClubForm } from "./edit-club-form"
 
 export { EditPostForm } from "./edit-post-form"
+
+export { EditCommentForm } from "./edit-comment-form"

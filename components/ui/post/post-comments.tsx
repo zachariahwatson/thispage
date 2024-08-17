@@ -2,20 +2,21 @@
 
 import { useQuery } from "react-query"
 import { Comment, CommentSkeleton } from "./comment"
-import type { Comment as CommentType } from "@/lib/types"
+import type { ClubMembership, Comment as CommentType } from "@/lib/types"
 
 interface Props {
 	clubId: string
 	readingId: string
 	postId: string
 	memberId: string
+	clubMembership: ClubMembership
 }
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function PostComments({ clubId, readingId, postId, memberId }: Props) {
+export function PostComments({ clubId, readingId, postId, memberId, clubMembership }: Props) {
 	//fetch other members' intervals
 	const fetchComments = async () => {
 		const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments`)
@@ -49,6 +50,7 @@ export function PostComments({ clubId, readingId, postId, memberId }: Props) {
 						readingId={readingId}
 						postId={postId}
 						memberId={memberId}
+						clubMembership={clubMembership}
 					/>
 				))
 			) : (

@@ -1,12 +1,13 @@
 "use client"
 
-import type { Comment as CommentType } from "@/lib/types"
-import { Button } from "@/components/ui/buttons"
+import type { ClubMembership, Comment as CommentType } from "@/lib/types"
+import { Button, CommentActionsButton } from "@/components/ui/buttons"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge, Skeleton } from "@/components/ui"
 import { useState } from "react"
 import { SubComment } from "./subcomment"
 import { CommentButton } from "../buttons"
+import { useUser } from "@/hooks/state"
 
 interface Props {
 	commentData: CommentType
@@ -14,11 +15,13 @@ interface Props {
 	readingId: string
 	postId: string
 	memberId: string
+	clubMembership: ClubMembership
 }
 
-export function Comment({ commentData, clubId, readingId, postId, memberId }: Props) {
+export function Comment({ commentData, clubId, readingId, postId, memberId, clubMembership }: Props) {
 	const [repliesVisible, setRepliesVisible] = useState<boolean>(false)
 	const [replyBoxVisible, setReplyBoxVisible] = useState<boolean>(false)
+	const { data: user, isLoading: loading } = useUser()
 	return (
 		<div className="space-y-2">
 			<div className="flex flex-row items-start">
@@ -46,7 +49,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId }: Pr
 							</span>
 						</p>
 						<p className="md:text-md text-sm w-full">{commentData.content}</p>
-						<div className="flex flex-row">
+						<div className="flex flex-row items-center">
 							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
 								<Badge variant="outline" className="">
 									{commentData.likes_count} 👍
@@ -75,6 +78,16 @@ export function Comment({ commentData, clubId, readingId, postId, memberId }: Pr
 									reply
 								</Badge>
 							</Button>
+							{clubMembership &&
+								(clubMembership.role !== "member" || (!loading && user.id === commentData.member?.id)) && (
+									<CommentActionsButton
+										commentData={commentData}
+										clubId={clubId}
+										readingId={readingId}
+										postId={postId}
+										clubMembership={clubMembership}
+									/>
+								)}
 						</div>
 						{replyBoxVisible && (
 							<CommentButton
@@ -99,6 +112,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId }: Pr
 									readingId={readingId}
 									postId={postId}
 									memberId={memberId}
+									clubMembership={clubMembership}
 								/>
 							))}
 							<Button variant="link" onClick={() => setRepliesVisible(false)} className="text-muted-foreground">

@@ -26,7 +26,7 @@ export function ReadingPost({ disabled, children, likes, id }: Props) {
 					}`}
 				>
 					<p className={`min-h-5 text-xs md:text-sm truncate ...`}>{children}</p>
-					<Badge variant="outline" className="px-1 md:px-2.5">
+					<Badge variant="outline" className="px-1 md:px-2.5 cursor-default">
 						<span className="mr-1">{likes}</span>👍
 					</Badge>
 				</div>

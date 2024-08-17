@@ -26,22 +26,25 @@ import { toast } from "sonner"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../sheet"
 import { EditReadingForm } from "../edit-reading-form"
 import { EditClubForm } from "../edit-club-form"
-import { ClubMembership, Post } from "@/lib/types"
+import { ClubMembership, Post, Comment as CommentType } from "@/lib/types"
 import { useRouter } from "next/navigation"
 import { EditPostForm } from "../edit-post-form"
+import { EditCommentForm } from "../edit-comment-form"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
 interface Props {
-	post: Post
+	commentData: CommentType | CommentType["comments"][number]
+	clubId: string
+	readingId: string
+	postId: string
 	clubMembership: ClubMembership
 }
 
-export function PostActionsButton({ post, clubMembership }: Props) {
+export function CommentActionsButton({ commentData, clubId, readingId, postId, clubMembership }: Props) {
 	const [editVisible, setEditVisible] = useState<boolean>(false)
-	const [leaveVisible, setLeaveVisible] = useState<boolean>(false)
 	const [deleteVisible, setDeleteVisible] = useState<boolean>(false)
 	const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
 	const { data: user, isLoading: loading } = useUser()
@@ -49,10 +52,10 @@ export function PostActionsButton({ post, clubMembership }: Props) {
 
 	const queryClient = useQueryClient()
 
-	const deletePostMutation = useMutation({
+	const deleteCommentMutation = useMutation({
 		mutationFn: () => {
 			const url = new URL(
-				`${defaultUrl}/api/clubs/${post.reading.club.id}/readings/${post.reading.id}/posts/${post.id}`
+				`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments/${commentData.id}`
 			)
 			return fetch(url, {
 				method: "DELETE",
@@ -62,16 +65,15 @@ export function PostActionsButton({ post, clubMembership }: Props) {
 			})
 		},
 		onSuccess: () => {
-			toast.success("post successfully deleted")
-			queryClient.invalidateQueries(["posts", post.reading.club.id, post.reading.id])
-			router.push(`/#club-${post.reading.club.id}`)
+			toast.success("comment successfully deleted")
+			queryClient.invalidateQueries(["comments", clubId, readingId, postId])
 		},
 	})
 
-	const updatePostMutation = useMutation({
-		mutationFn: (data: { editor_member_id: number; content: string; is_spoiler: boolean }) => {
+	const updateCommentMutation = useMutation({
+		mutationFn: (data: { content: string }) => {
 			const url = new URL(
-				`${defaultUrl}/api/clubs/${post.reading.club.id}/readings/${post.reading.id}/posts/${post.id}`
+				`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments/${commentData.id}`
 			)
 			return fetch(url, {
 				method: "PATCH",
@@ -82,14 +84,14 @@ export function PostActionsButton({ post, clubMembership }: Props) {
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully updated post")
-			queryClient.invalidateQueries(["post", String(post.reading.club.id), String(post.reading.id), String(post.id)])
+			toast.success("successfully updated comment")
+			queryClient.invalidateQueries(["comments", clubId, readingId, postId])
 		},
 	})
 
 	return (
 		<>
-			<div className="absolute top-0 right-0">
+			<div className="">
 				<DropdownMenu onOpenChange={setDropdownVisible}>
 					<DropdownMenuTrigger>
 						<svg
@@ -107,36 +109,17 @@ export function PostActionsButton({ post, clubMembership }: Props) {
 							/>
 						</svg>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						{!loading && user.id === post.member?.id ? (
+					<DropdownMenuContent align="start">
+						{!loading && user.id === commentData.member?.id && (
 							<>
 								<DropdownMenuItem className="cursor-pointer" onSelect={() => setEditVisible(true)}>
 									edit
 								</DropdownMenuItem>
 								<DropdownMenuSeparator />
 							</>
-						) : (
-							(clubMembership.role === "moderator" || clubMembership.role === "admin") &&
-							!post.is_spoiler && (
-								<>
-									<DropdownMenuItem
-										className="cursor-pointer"
-										onSelect={() =>
-											updatePostMutation.mutate({
-												is_spoiler: true,
-												editor_member_id: clubMembership.id,
-												content: post.content,
-											})
-										}
-									>
-										mark as spoiler
-									</DropdownMenuItem>
-									<DropdownMenuSeparator />
-								</>
-							)
 						)}
 
-						{((!loading && post.member?.id === user.id) ||
+						{((!loading && commentData.member?.id === user.id) ||
 							clubMembership.role === "moderator" ||
 							clubMembership.role === "admin") && (
 							<DropdownMenuItem className="text-destructive cursor-pointer" onSelect={() => setDeleteVisible(true)}>
@@ -150,26 +133,21 @@ export function PostActionsButton({ post, clubMembership }: Props) {
 			<Sheet open={editVisible && !dropdownVisible} onOpenChange={setEditVisible}>
 				<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4 overflow-scroll">
 					<SheetHeader>
-						<SheetTitle>edit post</SheetTitle>
+						<SheetTitle>edit comment</SheetTitle>
 					</SheetHeader>
-					<EditPostForm
-						mutation={updatePostMutation}
-						setVisible={setEditVisible}
-						post={post}
-						clubMembership={clubMembership}
-					/>
+					<EditCommentForm mutation={updateCommentMutation} setVisible={setEditVisible} commentData={commentData} />
 				</SheetContent>
 			</Sheet>
 
 			<AlertDialog open={deleteVisible && !dropdownVisible} onOpenChange={setDeleteVisible}>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>are you sure you want to delete this post?</AlertDialogTitle>
+						<AlertDialogTitle>are you sure you want to delete this comment?</AlertDialogTitle>
 						<AlertDialogDescription>this action cannot be undone.</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel>cancel</AlertDialogCancel>
-						<AlertDialogAction className="bg-destructive" onClick={() => deletePostMutation.mutate()}>
+						<AlertDialogAction className="bg-destructive" onClick={() => deleteCommentMutation.mutate()}>
 							delete
 						</AlertDialogAction>
 					</AlertDialogFooter>
