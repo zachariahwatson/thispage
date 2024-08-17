@@ -103,3 +103,5 @@ export { CreateClubForm } from "./create-club-form"
 export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "./carousel"
 
 export { DataTable } from "./data-table"
+
+export { EditClubForm } from "./edit-club-form"

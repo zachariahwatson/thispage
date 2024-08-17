@@ -5,11 +5,12 @@ import { Spreads } from "@/components/ui/book"
 import { ClubMembershipProvider, useClubMembership } from "@/contexts"
 import { ClubMembership } from "@/lib/types"
 import { createContext, useContext } from "react"
+import { ClubActionsButton } from "../../buttons"
 
 export function ClubBook() {
 	const clubMembership = useClubMembership()
 	return (
-		<div id={`club-${clubMembership?.club.id}`} className="max-w-sm md:max-w-4xl w-full space-y-3">
+		<div id={`club-${clubMembership?.club.id}`} className="max-w-sm md:max-w-4xl w-full space-y-3 relative">
 			<h1 id={`club-${clubMembership?.club.id}-title`} className="font-bold text-lg md:text-3xl pl-1 truncate ...">
 				{clubMembership?.club.name}
 			</h1>
@@ -19,6 +20,7 @@ export function ClubBook() {
 			>
 				<Spreads />
 			</Card>
+			<ClubActionsButton />
 		</div>
 	)
 }

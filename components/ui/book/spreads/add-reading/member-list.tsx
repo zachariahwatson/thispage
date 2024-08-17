@@ -170,12 +170,30 @@ export function MemberList() {
 											)}
 
 											<DropdownMenuSeparator />
-											<DropdownMenuItem className="text-destructive cursor-pointer">kick</DropdownMenuItem>
+											<DropdownMenuItem
+												className="text-destructive cursor-pointer"
+												onSelect={() =>
+													kickMemberMutation.mutate({
+														member_id: member.id,
+													})
+												}
+											>
+												kick
+											</DropdownMenuItem>
 										</>
 									) : (
 										member.role === "member" &&
 										clubMembership?.role === "moderator" && (
-											<DropdownMenuItem className="text-destructive cursor-pointer">kick</DropdownMenuItem>
+											<DropdownMenuItem
+												className="text-destructive cursor-pointer"
+												onSelect={() =>
+													kickMemberMutation.mutate({
+														member_id: member.id,
+													})
+												}
+											>
+												kick
+											</DropdownMenuItem>
 										)
 									)}
 								</DropdownMenuContent>

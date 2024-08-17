@@ -22,7 +22,8 @@ export async function GET() {
 				club:clubs!members_club_id_fkey (
 					id,
 					name,
-					description
+					description,
+					creator_user_id
 				),
 				is_favorite,
 				...member_roles!member_roles_member_id_fkey(
