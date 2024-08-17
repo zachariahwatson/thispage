@@ -160,8 +160,10 @@ export function ReadingActionsButton() {
 					<AlertDialog open={leaveVisible && !dropdownVisible} onOpenChange={setLeaveVisible}>
 						<AlertDialogContent>
 							<AlertDialogHeader>
-								<AlertDialogTitle>are you sure?</AlertDialogTitle>
-								<AlertDialogDescription>you may not be able to join this reading again.</AlertDialogDescription>
+								<AlertDialogTitle>
+									are you sure you want to leave this reading of {readingData?.book_title}?
+								</AlertDialogTitle>
+								<AlertDialogDescription>you may not be able to join again.</AlertDialogDescription>
 							</AlertDialogHeader>
 							<AlertDialogFooter>
 								<AlertDialogCancel>cancel</AlertDialogCancel>
@@ -175,7 +177,9 @@ export function ReadingActionsButton() {
 					<AlertDialog open={deleteVisible && !dropdownVisible} onOpenChange={setDeleteVisible}>
 						<AlertDialogContent>
 							<AlertDialogHeader>
-								<AlertDialogTitle>are you sure?</AlertDialogTitle>
+								<AlertDialogTitle>
+									are you sure you want to delete this reading of {readingData?.book_title}?
+								</AlertDialogTitle>
 								<AlertDialogDescription>this action cannot be undone.</AlertDialogDescription>
 							</AlertDialogHeader>
 							<AlertDialogFooter>

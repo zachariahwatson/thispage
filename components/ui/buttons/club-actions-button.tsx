@@ -144,8 +144,8 @@ export function ClubActionsButton() {
 			<AlertDialog open={leaveVisible && !dropdownVisible} onOpenChange={setLeaveVisible}>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>are you sure?</AlertDialogTitle>
-						<AlertDialogDescription>you will have to be invited to this club again.</AlertDialogDescription>
+						<AlertDialogTitle>are you sure you want to leave {clubMembership?.club.name}?</AlertDialogTitle>
+						<AlertDialogDescription>you will have to be invited to join this club again.</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel>cancel</AlertDialogCancel>
@@ -159,7 +159,7 @@ export function ClubActionsButton() {
 			<AlertDialog open={deleteVisible && !dropdownVisible} onOpenChange={setDeleteVisible}>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>are you sure?</AlertDialogTitle>
+						<AlertDialogTitle>are you sure you want to delete {clubMembership?.club.name}?</AlertDialogTitle>
 						<AlertDialogDescription>this action cannot be undone.</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
