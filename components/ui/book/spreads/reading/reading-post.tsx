@@ -14,22 +14,23 @@ export function ReadingPost({ disabled, children, likes, id }: Props) {
 	const readingData = useReading()
 	return (
 		<>
-			<div className="flex flex-row relative items-center justify-between">
-				<p className={`min-h-5 text-xs md:text-sm truncate ... ${!disabled ? "hover:font-medium transition-all" : ""}`}>
-					<Link
-						href={`club/${clubMembership?.club.id}/reading/${readingData?.id}/comments/${id}`}
-						className={disabled ? "text-muted-foreground pointer-events-none" : ""}
-						aria-disabled={disabled}
-						tabIndex={disabled ? -1 : undefined}
-					>
-						{children}
-					</Link>
-				</p>
-
-				<Badge variant="outline" className="px-1 md:px-2.5">
-					<span className="mr-1">{likes}</span>👍
-				</Badge>
-			</div>
+			<Link
+				href={`club/${clubMembership?.club.id}/reading/${readingData?.id}/comments/${id}`}
+				className={disabled ? "text-muted-foreground pointer-events-none" : ""}
+				aria-disabled={disabled}
+				tabIndex={disabled ? -1 : undefined}
+			>
+				<div
+					className={`flex flex-row relative items-center justify-between  ${
+						!disabled ? "hover:font-medium transition-all" : ""
+					}`}
+				>
+					<p className={`min-h-5 text-xs md:text-sm truncate ...`}>{children}</p>
+					<Badge variant="outline" className="px-1 md:px-2.5">
+						<span className="mr-1">{likes}</span>👍
+					</Badge>
+				</div>
+			</Link>
 
 			<Separator className="my-2" />
 		</>
