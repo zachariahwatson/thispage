@@ -2,7 +2,7 @@
 
 import { useClubMembership } from "@/contexts"
 import { InviteCode, Member } from "@/lib/types"
-import { useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTable } from "@/components/ui/data-table"
 import {
@@ -30,6 +30,40 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 
 export function MemberList() {
 	const clubMembership = useClubMembership()
+	const queryClient = useQueryClient()
+
+	const updateRoleMutation = useMutation({
+		mutationFn: (data: { editor_member_id: number; member_id: number; role: string }) => {
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/member-roles/${data.member_id}`)
+			return fetch(url, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			})
+		},
+		onSuccess: () => {
+			toast.success("successfully updated member role")
+			queryClient.invalidateQueries(["members", clubMembership?.club.id])
+		},
+	})
+
+	const kickMemberMutation = useMutation({
+		mutationFn: (data: { member_id: number }) => {
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/members/${data.member_id}`)
+			return fetch(url, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+		},
+		onSuccess: () => {
+			toast.success("successfully kicked member")
+			queryClient.invalidateQueries(["members", clubMembership?.club.id])
+		},
+	})
 
 	const columns: ColumnDef<Member>[] = [
 		{
@@ -90,11 +124,44 @@ export function MemberList() {
 									<>
 										{member.role === "moderator" ? (
 											<>
-												<DropdownMenuItem className="cursor-pointer">promote to admin</DropdownMenuItem>
-												<DropdownMenuItem className="cursor-pointer">demote to member</DropdownMenuItem>
+												<DropdownMenuItem
+													className="cursor-pointer"
+													onSelect={() =>
+														updateRoleMutation.mutate({
+															editor_member_id: clubMembership.id,
+															member_id: member.id,
+															role: "admin",
+														})
+													}
+												>
+													promote to admin
+												</DropdownMenuItem>
+												<DropdownMenuItem
+													className="cursor-pointer"
+													onSelect={() =>
+														updateRoleMutation.mutate({
+															editor_member_id: clubMembership.id,
+															member_id: member.id,
+															role: "member",
+														})
+													}
+												>
+													demote to member
+												</DropdownMenuItem>
 											</>
 										) : (
-											<DropdownMenuItem className="cursor-pointer">promote to moderator</DropdownMenuItem>
+											<DropdownMenuItem
+												className="cursor-pointer"
+												onSelect={() =>
+													updateRoleMutation.mutate({
+														editor_member_id: clubMembership.id,
+														member_id: member.id,
+														role: "moderator",
+													})
+												}
+											>
+												promote to moderator
+											</DropdownMenuItem>
 										)}
 
 										<DropdownMenuSeparator />
