@@ -489,7 +489,7 @@ end;$$;
 
 ALTER FUNCTION "public"."handle_new_user"() OWNER TO "postgres";
 
-CREATE OR REPLACE FUNCTION "public"."user_is_member"("_user_id" "uuid", "_member_id" bigint) RETURNS boolean
+CREATE OR REPLACE FUNCTION "public"."user_is_member"("_user_id" "uuid", "_member_id" bigint) RETURNS boolean 
     LANGUAGE "plpgsql" SECURITY DEFINER
     AS $$begin
   return exists (select 1 from public.members where members.user_id = _user_id and members.id = _member_id);
