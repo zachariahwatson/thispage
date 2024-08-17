@@ -11,7 +11,7 @@ export function ClubBook() {
 	const clubMembership = useClubMembership()
 	return (
 		<div id={`club-${clubMembership?.club.id}`} className="max-w-sm md:max-w-4xl w-full space-y-3 relative">
-			<h1 id={`club-${clubMembership?.club.id}-title`} className="font-bold text-lg md:text-3xl pl-1 truncate ...">
+			<h1 id={`club-${clubMembership?.club.id}-title`} className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-8">
 				{clubMembership?.club.name}
 			</h1>
 			<Card
