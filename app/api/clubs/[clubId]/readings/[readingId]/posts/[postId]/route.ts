@@ -27,6 +27,7 @@ export async function GET(request: NextRequest, { params }: Props) {
                 likes_count,
                 created_at,
                 updated_at,
+				is_spoiler,
                 member:members!posts_author_member_id_fkey(
                     ...users (
 						id,
@@ -65,5 +66,60 @@ export async function GET(request: NextRequest, { params }: Props) {
 			"\nan error occurred while fetching the post:\n" + JSON.stringify(error, null, 2) + "\n"
 		)
 		return Response.json({ error: "an error occurred while fetching the post." }, { status: 500 })
+	}
+}
+
+/**
+ * deletes a post.
+ */
+export async function DELETE(request: NextRequest, { params }: Props) {
+	try {
+		const supabase = createClient()
+
+		const { error } = await supabase.from("posts").delete().eq("id", params.postId).eq("reading_id", params.readingId)
+
+		if (error) {
+			throw error
+		}
+		// revalidatePath("/", "layout")
+		return Response.json({ message: "successfully deleted post" }, { status: 200 })
+	} catch (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while deleting a post:\n", error)
+
+		return Response.json({ error: "an error occurred while deleting a post." }, { status: 500 })
+	}
+}
+
+/**
+ * updates the specified post.
+ */
+export async function PATCH(request: NextRequest, { params }: Props) {
+	try {
+		const supabase = createClient()
+
+		const body = await request.json()
+
+		//query
+		const { error } = await supabase
+			.from("posts")
+			.update({
+				content: body.content,
+				is_spoiler: body.is_spoiler,
+				editor_member_id: body.editor_member_id,
+			})
+			.eq("id", params.postId)
+			.eq("reading_id", params.readingId)
+
+		if (error) {
+			throw error
+		}
+
+		return Response.json({ message: "successfully updated post" }, { status: 200 })
+	} catch (error) {
+		console.error(
+			"\x1b[31m%s\x1b[0m",
+			"\nan error occurred while updating a post:\n" + JSON.stringify(error, null, 2) + "\n"
+		)
+		return Response.json({ error: "an error occurred while updating a post." }, { status: 500 })
 	}
 }

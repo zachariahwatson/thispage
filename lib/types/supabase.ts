@@ -455,7 +455,6 @@ export type Database = {
           editor_member_id: number | null
           id: number
           interval_page_length: number
-          is_current: boolean
           is_finished: boolean
           join_in_progress: boolean
           start_date: string
@@ -475,7 +474,6 @@ export type Database = {
           editor_member_id?: number | null
           id?: number
           interval_page_length?: number
-          is_current?: boolean
           is_finished?: boolean
           join_in_progress?: boolean
           start_date?: string
@@ -495,7 +493,6 @@ export type Database = {
           editor_member_id?: number | null
           id?: number
           interval_page_length?: number
-          is_current?: boolean
           is_finished?: boolean
           join_in_progress?: boolean
           start_date?: string

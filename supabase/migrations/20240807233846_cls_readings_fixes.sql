@@ -333,7 +333,6 @@ BEGIN
   SELECT (
       (SELECT id FROM original_row) IS NOT DISTINCT FROM _id AND
       (SELECT club_id FROM original_row) IS NOT DISTINCT FROM _club_id AND
-      (SELECT book_id FROM original_row) IS NOT DISTINCT FROM _book_id AND
       (SELECT start_date FROM original_row) IS NOT DISTINCT FROM _start_date AND
       (SELECT is_finished FROM original_row) IS NOT DISTINCT FROM _is_finished AND
       (SELECT book_open_library_id FROM original_row) IS NOT DISTINCT FROM _book_open_library_id AND
@@ -490,7 +489,7 @@ end;$$;
 
 ALTER FUNCTION "public"."handle_new_user"() OWNER TO "postgres";
 
-CREATE OR REPLACE FUNCTION "public"."user_is_member"("_user_id" "uuid", "_member_id" bigint) RETURNS boolean
+CREATE OR REPLACE FUNCTION "public"."user_is_member"("_user_id" "uuid", "_member_id" bigint) RETURNS boolean 
     LANGUAGE "plpgsql" SECURITY DEFINER
     AS $$begin
   return exists (select 1 from public.members where members.user_id = _user_id and members.id = _member_id);
@@ -726,7 +725,6 @@ CREATE TABLE IF NOT EXISTS "public"."readings" (
     "club_id" bigint NOT NULL,
     "interval_page_length" bigint DEFAULT '10'::bigint NOT NULL,
     "start_date" timestamp with time zone DEFAULT "now"() NOT NULL,
-    "is_current" boolean DEFAULT true NOT NULL,
     "is_finished" boolean DEFAULT false NOT NULL,
     "join_in_progress" boolean DEFAULT false NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
@@ -987,7 +985,7 @@ CREATE POLICY "Members can delete their own progresses" ON "public"."member_inte
 
 CREATE POLICY "Members can read comments" ON "public"."comments" FOR SELECT TO "authenticated" USING ("public"."authorize"(( SELECT "auth"."uid"() AS "uid"), "id", 'comments.read'::"text"));
 
-CREATE POLICY "Members can read current readings" ON "public"."readings" FOR SELECT TO "authenticated" USING (("public"."authorize"(( SELECT "auth"."uid"() AS "uid"), "id", 'readings.read'::"text") AND ("is_current" = true)));
+CREATE POLICY "Members can read current readings" ON "public"."readings" FOR SELECT TO "authenticated" USING (("public"."authorize"(( SELECT "auth"."uid"() AS "uid"), "id", 'readings.read'::"text") AND ("is_finished" = false)));
 
 CREATE POLICY "Members can read intervals" ON "public"."intervals" FOR SELECT TO "authenticated" USING ("public"."authorize"(( SELECT "auth"."uid"() AS "uid"), "id", 'intervals.read'::"text"));
 
@@ -1232,4 +1230,6 @@ RESET ALL;
 --
 -- Dumped schema changes for auth and storage
 --
+
+CREATE OR REPLACE TRIGGER "on_auth_user_created" AFTER INSERT ON "auth"."users" FOR EACH ROW EXECUTE FUNCTION "public"."handle_new_user"();
 

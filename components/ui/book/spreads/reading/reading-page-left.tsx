@@ -9,11 +9,17 @@ import {
 	CardTitle,
 	Progress,
 	Separator,
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton } from "@/components/ui/buttons"
+import { Button, JoinReadingButton, CompleteIntervalButton, ReadingActionsButton } from "@/components/ui/buttons"
 import { useClubMembership, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import { useIntervals, useUserProgress } from "@/hooks/state"
@@ -70,35 +76,94 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 			onAnimationComplete={() => setFlipOnce(true)}
 		>
 			<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
-				<Image
-					className="rounded-lg h-full w-auto"
-					src={readingData?.book_cover_image_url || ""}
-					width={readingData?.book_cover_image_width || 0}
-					height={readingData?.book_cover_image_height || 0}
-					alt={
-						"Cover photo of " + readingData?.book_title ||
-						"Unknown" +
-							(readingData?.book_authors
-								? " by " +
-								  (readingData?.book_authors.length === 2
-										? readingData?.book_authors.join(" and ")
-										: readingData?.book_authors
-												.map((author: string, i: number) => {
-													if (
-														i === (readingData?.book_authors ? readingData.book_authors?.length - 1 : 0) &&
-														readingData.book_authors?.length !== 1
-													) {
-														return "and " + author
-													} else {
-														return author
-													}
-												})
-												.join(", "))
-								: null)
-					}
-					loading="eager"
-				/>
+				<Sheet>
+					<SheetTrigger>
+						<Image
+							className="rounded-lg h-full w-auto"
+							src={readingData?.book_cover_image_url || ""}
+							width={readingData?.book_cover_image_width || 0}
+							height={readingData?.book_cover_image_height || 0}
+							alt={
+								"Cover photo of " + readingData?.book_title ||
+								"Unknown" +
+									(readingData?.book_authors
+										? " by " +
+										  (readingData?.book_authors.length === 2
+												? readingData?.book_authors.join(" and ")
+												: readingData?.book_authors
+														.map((author: string, i: number) => {
+															if (
+																i === (readingData?.book_authors ? readingData.book_authors?.length - 1 : 0) &&
+																readingData.book_authors?.length !== 1
+															) {
+																return "and " + author
+															} else {
+																return author
+															}
+														})
+														.join(", "))
+										: null)
+							}
+							loading="eager"
+						/>
+					</SheetTrigger>
+					<SheetContent className={`space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
+						<SheetHeader className="text-left">
+							<SheetTitle>{readingData?.book_title}</SheetTitle>
+							<SheetDescription className="italic">
+								{readingData?.book_authors
+									? "by " +
+									  (readingData?.book_authors.length === 2
+											? readingData?.book_authors.join(" and ")
+											: readingData?.book_authors
+													.map((author: string, i: number) => {
+														if (
+															i === (readingData?.book_authors ? readingData.book_authors?.length - 1 : 0) &&
+															readingData.book_authors?.length !== 1
+														) {
+															return "and " + author
+														} else {
+															return author
+														}
+													})
+													.join(", "))
+									: null}
+							</SheetDescription>
+						</SheetHeader>
+						<Image
+							className="rounded-lg w-full max-h-full shadow-shadow shadow-md"
+							src={readingData?.book_cover_image_url || ""}
+							width={readingData?.book_cover_image_width || 0}
+							height={readingData?.book_cover_image_height || 0}
+							alt={
+								"Cover photo of " + readingData?.book_title ||
+								"Unknown" +
+									(readingData?.book_authors
+										? " by " +
+										  (readingData?.book_authors.length === 2
+												? readingData?.book_authors.join(" and ")
+												: readingData?.book_authors
+														.map((author: string, i: number) => {
+															if (
+																i === (readingData?.book_authors ? readingData.book_authors?.length - 1 : 0) &&
+																readingData.book_authors?.length !== 1
+															) {
+																return "and " + author
+															} else {
+																return author
+															}
+														})
+														.join(", "))
+										: null)
+							}
+							loading="eager"
+						/>
+						<SheetDescription className="italic">{readingData?.book_description}</SheetDescription>
+					</SheetContent>
+				</Sheet>
 			</div>
+
+			<ReadingActionsButton />
 
 			<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
 				<CardHeader className="pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4">

@@ -31,6 +31,7 @@ import { useQuery } from "react-query"
 import type { ReadingPost as ReadingPostType } from "@/lib/types"
 import { useClubMembership, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
+import { useIntervals, useUserProgress } from "@/hooks/state"
 
 interface Props {
 	redactSpoilers: boolean
@@ -50,6 +51,12 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const [innerWidth, setInnerWidth] = useState<string | number>("auto")
 	const [innerHeight, setInnerHeight] = useState<string | number>("auto")
+
+	const { data: intervals } = useIntervals(clubMembership?.club.id || null, readingData?.id || null)
+
+	const interval = (intervals && intervals[0]) || null
+
+	const { data: userProgress } = useUserProgress(interval?.id || null, clubMembership?.id || null)
 
 	//fetch reading's posts
 	const fetchPosts = async () => {
@@ -83,15 +90,23 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 				<div className="p-3 md:p-4" style={{ width: innerWidth, height: innerHeight }}>
 					{!loading && posts ? (
 						posts.map((post) =>
-							redactSpoilers &&
-							((post.is_spoiler && new Date(post.created_at).getTime() < new Date(intervalDate).getTime()) ||
-								!post.is_spoiler) ? (
-								<ReadingPost key={post.id} likes={post.likes_count} id={post.id}>
-									{post.title}
-								</ReadingPost>
+							userProgress ? (
+								(!redactSpoilers &&
+									post.is_spoiler &&
+									new Date(post.created_at).getTime() > new Date(intervalDate).getTime()) ||
+								!post.is_spoiler ||
+								(post.is_spoiler && new Date(post.created_at).getTime() < new Date(intervalDate).getTime()) ? (
+									<ReadingPost key={post.id} likes={post.likes_count} id={post.id}>
+										{post.title}
+									</ReadingPost>
+								) : (
+									<ReadingPost disabled key={post.id} likes={post.likes_count} id={-1}>
+										⚠️spoiler⚠️complete the reading!
+									</ReadingPost>
+								)
 							) : (
-								<ReadingPost disabled key={post.id} likes={0} id={-1}>
-									⚠️spoiler⚠️complete the reading!
+								<ReadingPost disabled key={post.id} likes={post.likes_count} id={-1}>
+									join the reading to view!
 								</ReadingPost>
 							)
 						)

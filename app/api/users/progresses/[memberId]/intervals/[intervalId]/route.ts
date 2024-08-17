@@ -87,3 +87,36 @@ export async function PATCH(request: NextRequest, { params }: { params: { member
 		return Response.json({ error: "an error occurred while updating the member's interval progress." }, { status: 500 })
 	}
 }
+
+/**
+ * deletes the specified member interval progress.
+ */
+export async function DELETE(request: NextRequest, { params }: { params: { memberId: string; intervalId: string } }) {
+	try {
+		if (params.intervalId === "null") {
+			return Response.json(null, { status: 200 })
+		}
+
+		const supabase = createClient()
+
+		//query
+		const { error } = await supabase
+			.from("member_interval_progresses")
+			.delete()
+			.eq("interval_id", params.intervalId)
+			.eq("member_id", params.memberId)
+
+		if (error) {
+			throw error
+		}
+
+		revalidatePath("/", "layout")
+		return Response.json({ message: "successfully deleted member progress" }, { status: 200 })
+	} catch (error) {
+		console.error(
+			"\x1b[31m%s\x1b[0m",
+			"\nan error occurred while deleting the member's interval progress:\n" + JSON.stringify(error, null, 2) + "\n"
+		)
+		return Response.json({ error: "an error occurred while deleting the member's interval progress." }, { status: 500 })
+	}
+}
