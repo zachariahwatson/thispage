@@ -1,10 +1,11 @@
 "use client"
 
-import type { Comment as CommentType } from "@/lib/types"
-import { Button, SubCommentButton } from "@/components/ui/buttons"
+import type { ClubMembership, Comment as CommentType } from "@/lib/types"
+import { Button, CommentActionsButton, SubCommentButton } from "@/components/ui/buttons"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@/components/ui"
 import { Dispatch, SetStateAction, useState } from "react"
+import { useUser } from "@/hooks/state"
 // import { ReplyTextArea } from "./comment-button"
 
 interface Props {
@@ -14,10 +15,20 @@ interface Props {
 	readingId: string
 	postId: string
 	memberId: string
+	clubMembership: ClubMembership
 }
 
-export function SubComment({ subCommentData, rootCommentId, clubId, readingId, postId, memberId }: Props) {
+export function SubComment({
+	subCommentData,
+	rootCommentId,
+	clubId,
+	readingId,
+	postId,
+	memberId,
+	clubMembership,
+}: Props) {
 	const [replyBoxVisible, setReplyBoxVisible] = useState<boolean>(false)
+	const { data: user, isLoading: loading } = useUser()
 	return (
 		<div id={`subcomment-${subCommentData.id}`} className="space-y-2">
 			<div className="flex flex-row items-start">
@@ -52,7 +63,7 @@ export function SubComment({ subCommentData, rootCommentId, clubId, readingId, p
 							)}
 						</p>
 						<p className="md:text-md text-sm w-full">{subCommentData.content}</p>
-						<div className="flex flex-row">
+						<div className="flex flex-row items-center">
 							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
 								<Badge variant="outline" className="">
 									{subCommentData.likes_count} 👍
@@ -81,6 +92,16 @@ export function SubComment({ subCommentData, rootCommentId, clubId, readingId, p
 									reply
 								</Badge>
 							</Button>
+							{clubMembership &&
+								(clubMembership.role !== "member" || (!loading && user.id === subCommentData.member?.id)) && (
+									<CommentActionsButton
+										commentData={subCommentData}
+										clubId={clubId}
+										readingId={readingId}
+										postId={postId}
+										clubMembership={clubMembership}
+									/>
+								)}
 						</div>
 						{replyBoxVisible && (
 							<SubCommentButton

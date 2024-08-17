@@ -13,7 +13,6 @@ export function useReadings(clubId: number) {
 		queryKey: ["readings", clubId],
 		queryFn: async () => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings`)
-			url.searchParams.append("current", "true")
 			url.searchParams.append("finished", "false")
 			const response = await fetch(url, {
 				method: "GET",

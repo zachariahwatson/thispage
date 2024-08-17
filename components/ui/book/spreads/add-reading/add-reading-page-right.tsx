@@ -60,7 +60,6 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 			creator_member_id: number
 			interval_page_length: number
 			start_date: Date
-			is_current: boolean
 			join_in_progress: boolean
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings`)

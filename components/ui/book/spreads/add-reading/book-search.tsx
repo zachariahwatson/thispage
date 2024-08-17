@@ -21,7 +21,6 @@ interface Props {
 			startDate: string
 			intervalPageLength: string
 			joinInProgress: boolean
-			isCurrent: boolean
 		},
 		"book"
 	>

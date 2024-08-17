@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { createInviteFormSchema, createPostFormSchema } from "@/lib/zod"
+import { createClubFormSchema, createPostFormSchema, editClubFormSchema } from "@/lib/zod"
 import { Button } from "@/components/ui/buttons"
 import {
 	Checkbox,
@@ -23,51 +23,40 @@ import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { useClubMembership, useReading } from "@/contexts"
+import { useUser } from "@/hooks/state"
 
 interface Props {
+	mutation: UseMutationResult<
+		Response,
+		unknown,
+		{
+			editor_member_id: number
+			name: string
+			description: string
+		},
+		unknown
+	>
 	setVisible: Dispatch<SetStateAction<boolean>>
 }
 
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-	: "http://localhost:3000"
-
-export function CreateInviteForm({ setVisible }: Props) {
-	const readingData = useReading()
+export function EditClubForm({ mutation, setVisible }: Props) {
 	const clubMembership = useClubMembership()
-	const router = useRouter()
-	const queryClient = useQueryClient()
-	const inviteMutation = useMutation({
-		mutationFn: (data: { club_id: number; expiration_date: Date; uses: number; creator_member_id: number }) => {
-			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/invite-codes`)
-			return fetch(url, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			})
-		},
-		onSuccess: () => {
-			toast.success("invite code created!")
-			queryClient.invalidateQueries(["invite codes", clubMembership?.club.id])
-		},
-	})
 
 	// 1. Define your form.
-	const form = useForm<z.infer<typeof createInviteFormSchema>>({
-		resolver: zodResolver(createInviteFormSchema),
+	const form = useForm<z.infer<typeof editClubFormSchema>>({
+		resolver: zodResolver(editClubFormSchema),
+		defaultValues: {
+			name: clubMembership?.club.name,
+			description: clubMembership?.club.description || "",
+		},
 	})
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof createInviteFormSchema>) {
-		const expirationDate = new Date(values.expirationDate)
-		expirationDate.setHours(0, 0, 0, 0)
-		inviteMutation.mutate({
-			club_id: clubMembership?.club.id || -1,
-			expiration_date: expirationDate,
-			uses: Number(values.uses),
-			creator_member_id: clubMembership?.id || -1,
+	function onSubmit(values: z.infer<typeof editClubFormSchema>) {
+		mutation.mutate({
+			editor_member_id: clubMembership?.id || -1,
+			name: values.name,
+			description: values.description || "",
 		})
 		setVisible(false)
 	}
@@ -78,12 +67,12 @@ export function CreateInviteForm({ setVisible }: Props) {
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 					<FormField
 						control={form.control}
-						name="uses"
+						name="name"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>uses</FormLabel>
+								<FormLabel>name</FormLabel>
 								<FormControl>
-									<Input type="number" {...field} />
+									<Input {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -91,18 +80,18 @@ export function CreateInviteForm({ setVisible }: Props) {
 					/>
 					<FormField
 						control={form.control}
-						name="expirationDate"
+						name="description"
 						render={({ field }) => (
-							<FormItem className="flex flex-col">
-								<FormLabel>expiration date</FormLabel>
-								<FormControl className="flex justify-center">
-									<Input type="date" placeholder="mm / dd / yyyy" {...field} />
+							<FormItem>
+								<FormLabel>description</FormLabel>
+								<FormControl>
+									<Textarea className="h-40 md:h-96" {...field}></Textarea>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-					{inviteMutation.isLoading ? (
+					{mutation.isLoading ? (
 						<Button disabled className="float-right">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -118,11 +107,11 @@ export function CreateInviteForm({ setVisible }: Props) {
 									d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
 								/>
 							</svg>
-							creating...
+							saving...
 						</Button>
 					) : (
 						<Button type="submit" className="float-right">
-							create
+							save
 						</Button>
 					)}
 				</form>
