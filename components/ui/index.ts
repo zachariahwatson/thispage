@@ -105,3 +105,5 @@ export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrev
 export { DataTable } from "./data-table"
 
 export { EditClubForm } from "./edit-club-form"
+
+export { EditPostForm } from "./edit-post-form"

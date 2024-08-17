@@ -5,6 +5,7 @@ export type Post = {
 	likes_count: number
 	created_at: string
 	updated_at: string | null
+	is_spoiler: boolean
 	member: {
 		id: string
 		name: string | null

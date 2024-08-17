@@ -23,7 +23,7 @@ import {
 	Skeleton,
 	Textarea,
 } from "@/components/ui"
-import { Button, RootCommentButton } from "@/components/ui/buttons"
+import { Button, PostActionsButton, RootCommentButton } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
 import Image from "next/image"
 import Link from "next/link"
@@ -129,7 +129,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 								{post.reading.book_title} • {post.reading.club.name}
 							</p>
 						</div>
-						<div className="absolute right-0 top-0">
+						<div className="absolute right-0 top-8">
 							<Sheet>
 								<SheetTrigger className="hover:ring-4 hover:ring-ring rounded transition-all">
 									<Image
@@ -208,6 +208,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 								</SheetContent>
 							</Sheet>
 						</div>
+						{clubMembership && <PostActionsButton post={post} clubMembership={clubMembership} />}
 					</div>
 				</div>
 				<h1 className="text-lg md:text-2xl font-bold">{post.title}</h1>
