@@ -84,6 +84,7 @@ export function PostActionsButton({ post, clubMembership }: Props) {
 		onSuccess: () => {
 			toast.success("successfully updated post")
 			queryClient.invalidateQueries(["post", String(post.reading.club.id), String(post.reading.id), String(post.id)])
+			queryClient.invalidateQueries(["posts", post.reading.club.id, post.reading.id])
 		},
 	})
 
