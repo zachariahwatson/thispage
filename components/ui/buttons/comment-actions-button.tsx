@@ -119,7 +119,7 @@ export function CommentActionsButton({ commentData, clubId, readingId, postId, c
 							</>
 						)}
 
-						{((!loading && commentData.member?.id === user.id) ||
+						{((user && !loading && commentData.member?.id === user.id) ||
 							clubMembership.role === "moderator" ||
 							clubMembership.role === "admin") && (
 							<DropdownMenuItem className="text-destructive cursor-pointer" onSelect={() => setDeleteVisible(true)}>
