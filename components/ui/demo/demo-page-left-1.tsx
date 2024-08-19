@@ -60,7 +60,7 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete,
 			<CardContent className="md:space-y-4 pt-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black text-primary">complete</span> page goals with automatic increments.
+						<span className="font-black text-primary">complete</span> group page goals with automatic increments.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
 						once all readers have completed the page goal, it will be automatically incremented by a custom amount.
