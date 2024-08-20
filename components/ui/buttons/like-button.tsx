@@ -23,20 +23,30 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 	const { data: userLikes } = useLikes({ memberId })
 
 	// check if user has already liked the post or comment
-	const hasLiked = userLikes?.some(
-		(like: Like) =>
-			(like.post_id === postId && postId !== undefined) || (like.comment_id === commentId && commentId !== undefined)
+	const hasLiked = userLikes?.find((like: Like) =>
+		commentId ? like.comment_id === Number(commentId) : like.post_id === Number(postId)
 	)
-	console.log(hasLiked)
 
 	const queryClient = useQueryClient()
 	const mutation = useMutation({
 		mutationFn: (newLike: { member_id: number }) => {
 			const url = new URL(
-				commentId
+				hasLiked
+					? commentId
+						? `${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments/${commentId}/likes/${hasLiked.id}`
+						: `${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/likes/${hasLiked.id}`
+					: commentId
 					? `${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments/${commentId}/likes`
 					: `${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/likes`
 			)
+			if (hasLiked) {
+				return fetch(url, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				})
+			}
 			return fetch(url, {
 				method: "POST",
 				headers: {
@@ -47,6 +57,9 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries(["post", clubId, readingId, postId])
+			queryClient.invalidateQueries(["comments", clubId, readingId, postId])
+			queryClient.invalidateQueries(["likes", memberId])
+			queryClient.invalidateQueries(["posts", Number(clubId), Number(readingId)])
 		},
 	})
 
@@ -56,7 +69,27 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 			variant="ghost"
 			onClick={() => mutation.mutate({ member_id: Number(memberId) })}
 		>
-			<Badge variant={hasLiked ? "default" : "outline"}>{likesCount} 👍</Badge>
+			<Badge variant={hasLiked ? "default" : "outline"}>
+				{mutation.isLoading ? (
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-3 animate-spin"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+						/>
+					</svg>
+				) : (
+					likesCount
+				)}{" "}
+				👍
+			</Badge>
 		</Button>
 	)
 }

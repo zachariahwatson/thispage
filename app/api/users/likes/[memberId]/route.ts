@@ -5,12 +5,8 @@ import { NextRequest } from "next/server"
 /**
  * gets the specified user's likes.
  */
-export async function GET(request: NextRequest, { params }: { params: { userId: string; memberId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { memberId: string } }) {
 	try {
-		if (params.userId === "null") {
-			return Response.json(null, { status: 200 })
-		}
-
 		const supabase = createClient()
 
 		//query

@@ -1,7 +1,7 @@
 "use client"
 
 import type { ClubMembership, Comment as CommentType } from "@/lib/types"
-import { Button, CommentActionsButton, SubCommentButton } from "@/components/ui/buttons"
+import { Button, CommentActionsButton, LikeButton, SubCommentButton } from "@/components/ui/buttons"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@/components/ui"
 import { Dispatch, SetStateAction, useState } from "react"
@@ -64,11 +64,14 @@ export function SubComment({
 						</p>
 						<p className="md:text-md text-sm w-full">{subCommentData.content}</p>
 						<div className="flex flex-row items-center">
-							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
-								<Badge variant="outline" className="">
-									{subCommentData.likes_count} 👍
-								</Badge>
-							</Button>
+							<LikeButton
+								likesCount={subCommentData.likes_count}
+								clubId={clubId}
+								readingId={readingId}
+								postId={postId}
+								commentId={String(subCommentData.id)}
+								memberId={String(clubMembership?.id)}
+							/>
 							<Button
 								className="p-0 bg-background hover:bg-background mr-2 justify-start"
 								variant="secondary"
