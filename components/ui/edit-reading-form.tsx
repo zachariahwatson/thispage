@@ -101,7 +101,7 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 						name="intervalPageLength"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>interval page length</FormLabel>
+								<FormLabel>goal page increment amount</FormLabel>
 								<FormControl>
 									<Input type="number" {...field} />
 								</FormControl>

@@ -11,7 +11,7 @@ export const editReadingFormSchema = z.object({
 			return !isNaN(num) && num > 0
 		},
 		{
-			message: "interval page length must be a valid number greater than zero.",
+			message: "goal page increment amount must be a valid number greater than zero.",
 		}
 	),
 	joinInProgress: z.boolean(),
