@@ -23,7 +23,7 @@ import {
 	Skeleton,
 	Textarea,
 } from "@/components/ui"
-import { Button, PostActionsButton, RootCommentButton } from "@/components/ui/buttons"
+import { Button, LikeButton, PostActionsButton, RootCommentButton } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
 import Image from "next/image"
 import Link from "next/link"
@@ -216,9 +216,13 @@ export function Post({ clubId, readingId, postId }: Props) {
 				</div>
 				<h1 className="text-lg md:text-2xl font-bold">{post.title}</h1>
 				<p className="md:text-md text-sm">{post.content}</p>
-				<Button className="p-0 bg-background hover:bg-background mr-2" variant="secondary">
-					<Badge variant="outline">{post.likes_count} 👍</Badge>
-				</Button>
+				<LikeButton
+					likesCount={post.likes_count}
+					clubId={clubId}
+					readingId={readingId}
+					postId={postId}
+					memberId={String(clubMembership?.id)}
+				/>
 			</div>
 			<div className="pr-2">
 				<Separator />

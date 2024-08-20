@@ -1,5 +1,9 @@
+"use client"
+
 import { Badge, Separator, Skeleton } from "@/components/ui"
 import { useClubMembership, useReading } from "@/contexts"
+import { useLikes } from "@/hooks/state"
+import { Like } from "@/lib/types"
 import Link from "next/link"
 
 interface Props {
@@ -12,6 +16,9 @@ interface Props {
 export function ReadingPost({ disabled, children, likes, id }: Props) {
 	const clubMembership = useClubMembership()
 	const readingData = useReading()
+	const { data: userLikes } = useLikes({ memberId: String(clubMembership?.id) })
+	// check if user has already liked the post or comment
+	const hasLiked = userLikes?.find((like: Like) => like.post_id === Number(id) && id !== undefined)
 	return (
 		<>
 			<Link
@@ -26,7 +33,7 @@ export function ReadingPost({ disabled, children, likes, id }: Props) {
 					}`}
 				>
 					<p className={`min-h-5 text-xs md:text-sm truncate ...`}>{children}</p>
-					<Badge variant="outline" className="px-1 md:px-2.5 cursor-default">
+					<Badge variant={hasLiked ? "default" : "outline"} className="px-1 md:px-2.5 cursor-default">
 						<span className="mr-1">{likes}</span>👍
 					</Badge>
 				</div>

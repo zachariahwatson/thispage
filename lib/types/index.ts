@@ -17,3 +17,5 @@ export type { Comment } from "./comment"
 export type { InviteCode } from "./invite-code"
 
 export type { Member } from "./member"
+
+export type { Like } from "./like"
