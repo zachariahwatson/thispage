@@ -1,7 +1,7 @@
 "use client"
 
 import type { ClubMembership, Comment as CommentType } from "@/lib/types"
-import { Button, CommentActionsButton } from "@/components/ui/buttons"
+import { Button, CommentActionsButton, LikeButton } from "@/components/ui/buttons"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge, Skeleton } from "@/components/ui"
 import { useState } from "react"
@@ -50,11 +50,19 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 						</p>
 						<p className="md:text-md text-sm w-full">{commentData.content}</p>
 						<div className="flex flex-row items-center">
-							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
 								<Badge variant="outline" className="">
 									{commentData.likes_count} 👍
 								</Badge>
-							</Button>
+							</Button> */}
+							<LikeButton
+								likesCount={commentData.likes_count}
+								clubId={clubId}
+								readingId={readingId}
+								postId={postId}
+								commentId={String(commentData.id)}
+								memberId={String(clubMembership?.id)}
+							/>
 							<Button
 								className="p-0 bg-background hover:bg-background mr-2 justify-start"
 								variant="secondary"

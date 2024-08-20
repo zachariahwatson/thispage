@@ -99,9 +99,12 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 		>
 			{!loading && readings && readings.length < 4 && (
 				<>
-					<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
-						<div className="flex justify-between pr-1">
+					<CardHeader className="px-4 md:px-6 h-full">
+						<div className="flex justify-between pr-1 h-1/2">
 							<CardTitle className="text-xl">add a reading</CardTitle>
+						</div>
+						<div className="flex justify-between pr-1 h-1/2">
+							<CardTitle className="text-xl">add a poll</CardTitle>
 						</div>
 					</CardHeader>
 
@@ -113,7 +116,7 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 								viewBox="0 0 24 24"
 								strokeWidth={1.5}
 								stroke="currentColor"
-								className="size-48 absolute top-[calc(50%-6rem)] right-[calc(50%-6rem)] text-secondary"
+								className="size-32 absolute top-[calc(25%-2rem)] right-[calc(50%-4rem)] text-secondary"
 							>
 								<path
 									strokeLinecap="round"
