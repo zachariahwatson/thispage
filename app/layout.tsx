@@ -53,7 +53,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							<Button variant="link" className="p-0 text-muted-foreground">
 								<Link href="/terms">terms</Link>
 							</Button>{" "}
-							| <div className="p-0 text-muted-foreground inline-block">v. 0.5.2</div>
+							|{" "}
+							<Button variant="link" className="p-0 text-muted-foreground">
+								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.6.0</Link>
+							</Button>{" "}
 						</div>
 					</footer>
 				</Providers>
