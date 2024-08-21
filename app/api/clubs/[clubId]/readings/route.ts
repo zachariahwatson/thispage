@@ -4,13 +4,13 @@ import { NextRequest } from "next/server"
 
 /**
  * gets the specified club's readings along with the user's interval. rls ensures that the authenticated user is a member of the club.
- * @param {searchParam} finished - url query that filters readings based on the is_finished value
+ * @param {searchParam} archived - url query that filters readings based on the is_archived value
  */
 export async function GET(request: NextRequest, { params }: { params: { clubId: string } }) {
 	try {
 		const supabase = createClient()
 		const searchParams = request.nextUrl.searchParams
-		const finished: boolean = searchParams.get("finished") === "true"
+		const archived: boolean = searchParams.get("archived") === "true"
 
 		//query
 		const { data, error } = await supabase
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			`
 			)
 			.eq("club_id", params.clubId)
-			.eq("is_finished", finished)
+			.eq("is_archived", archived)
 			.order("id", { ascending: true })
 
 		if (error) {

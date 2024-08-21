@@ -38,6 +38,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { clubId
 				editor_member_id: body.editor_member_id,
 				interval_page_length: body.interval_page_length,
 				join_in_progress: body.join_in_progress,
+				is_archived: body.is_archived || false,
 			})
 			.eq("club_id", params.clubId)
 			.eq("id", params.readingId)

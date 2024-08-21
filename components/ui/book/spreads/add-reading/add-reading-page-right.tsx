@@ -97,17 +97,13 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			{!loading && readings && readings.length < 4 && (
+			<CardHeader className="px-4 md:px-6">
+				<div className="flex justify-between pr-1">
+					<CardTitle className="text-xl">add a reading</CardTitle>
+				</div>
+			</CardHeader>
+			{!loading && readings && readings.length < 4 ? (
 				<>
-					<CardHeader className="px-4 md:px-6 h-full">
-						<div className="flex justify-between pr-1 h-1/2">
-							<CardTitle className="text-xl">add a reading</CardTitle>
-						</div>
-						<div className="flex justify-between pr-1 h-1/2">
-							<CardTitle className="text-xl">add a poll</CardTitle>
-						</div>
-					</CardHeader>
-
 					<Sheet open={addReadingVisible} onOpenChange={setAddReadingVisible}>
 						<SheetTrigger>
 							<svg
@@ -116,7 +112,7 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 								viewBox="0 0 24 24"
 								strokeWidth={1.5}
 								stroke="currentColor"
-								className="size-32 absolute top-[calc(25%-2rem)] right-[calc(50%-4rem)] text-secondary"
+								className="size-48 absolute top-[calc(50%-6rem)] right-[calc(50%-6rem)] text-secondary"
 							>
 								<path
 									strokeLinecap="round"
@@ -133,6 +129,13 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 						</SheetContent>
 					</Sheet>
 				</>
+			) : (
+				<CardContent>
+					<div>
+						<p className="text-muted-foreground">reading limit reached.</p>
+						<p className="text-muted-foreground">archive or delete readings to add more.</p>
+					</div>
+				</CardContent>
 			)}
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
