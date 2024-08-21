@@ -123,7 +123,7 @@ export function ClubActionsButton() {
 						<DropdownMenuItem className="text-destructive cursor-pointer" onSelect={() => setLeaveVisible(true)}>
 							leave
 						</DropdownMenuItem>
-						{!loading && clubMembership?.club.creator_user_id === user.id && (
+						{!loading && user && clubMembership?.club.creator_user_id === user.id && (
 							<DropdownMenuItem className="text-destructive cursor-pointer" onSelect={() => setDeleteVisible(true)}>
 								delete
 							</DropdownMenuItem>

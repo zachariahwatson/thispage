@@ -29,7 +29,35 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 
 const columns: ColumnDef<InviteCode>[] = [
 	{
-		header: "link",
+		accessorKey: "creator",
+		header: "creator",
+		cell: ({ row }) => {
+			const creator: InviteCode["creator"] = row.getValue("creator")
+			return (
+				<Tooltip>
+					<TooltipTrigger className="cursor-default">
+						<Avatar>
+							<AvatarImage src={creator?.avatar_url || ""} />
+							<AvatarFallback>
+								{creator?.first_name && creator?.last_name
+									? creator.first_name[0] + creator.last_name[0]
+									: creator?.name && creator?.name?.split(" ")[0][0] + creator?.name?.split(" ")[1][0]}
+							</AvatarFallback>
+						</Avatar>
+					</TooltipTrigger>
+					<TooltipContent>
+						{creator?.first_name && creator?.last_name ? creator.first_name + " " + creator.last_name : creator?.name}
+					</TooltipContent>
+				</Tooltip>
+			)
+		},
+	},
+	{
+		accessorKey: "uses",
+		header: "uses",
+	},
+	{
+		header: "copy link",
 		id: "actions",
 		cell: ({ row }) => {
 			const invite = row.original
@@ -62,46 +90,6 @@ const columns: ColumnDef<InviteCode>[] = [
 						</Button>
 					</TooltipTrigger>
 					<TooltipContent>copy link</TooltipContent>
-				</Tooltip>
-			)
-		},
-	},
-	{
-		accessorKey: "uses",
-		header: "uses",
-	},
-	{
-		accessorKey: "expiration_date",
-		header: "expiry date",
-		cell: ({ row }) => {
-			const date = new Date(row.getValue("expiration_date"))
-			return date.toLocaleDateString(undefined, {
-				year: "numeric",
-				month: "long",
-				day: "numeric",
-			})
-		},
-	},
-	{
-		accessorKey: "creator",
-		header: "creator",
-		cell: ({ row }) => {
-			const creator: InviteCode["creator"] = row.getValue("creator")
-			return (
-				<Tooltip>
-					<TooltipTrigger className="cursor-default">
-						<Avatar>
-							<AvatarImage src={creator?.avatar_url || ""} />
-							<AvatarFallback>
-								{creator?.first_name && creator?.last_name
-									? creator.first_name[0] + creator.last_name[0]
-									: creator?.name && creator?.name?.split(" ")[0] + creator?.name?.split(" ")[1]}
-							</AvatarFallback>
-						</Avatar>
-					</TooltipTrigger>
-					<TooltipContent>
-						{creator?.first_name && creator?.last_name ? creator.first_name + " " + creator.last_name : creator?.name}
-					</TooltipContent>
 				</Tooltip>
 			)
 		},

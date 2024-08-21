@@ -109,7 +109,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 							<AvatarFallback>
 								{post.member?.first_name && post.member?.last_name
 									? post.member?.first_name[0] + post.member?.last_name[0]
-									: post.member?.name && post.member?.name.split(" ")[0] + post.member?.name.split(" ")[1]}
+									: post.member?.name && post.member?.name.split(" ")[0][0] + post.member?.name.split(" ")[1][0]}
 							</AvatarFallback>
 						</Avatar>
 					</div>

@@ -64,7 +64,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 									{progress?.member?.first_name && progress?.member?.last_name
 										? progress?.member.first_name[0] + progress?.member.last_name[0]
 										: progress?.member?.name &&
-										  progress?.member?.name?.split(" ")[0] + progress?.member?.name?.split(" ")[1]}
+										  progress?.member?.name?.split(" ")[0][0] + progress?.member?.name?.split(" ")[1][0]}
 								</AvatarFallback>
 							</Avatar>
 						</TooltipTrigger>

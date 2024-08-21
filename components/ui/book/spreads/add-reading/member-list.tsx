@@ -91,7 +91,7 @@ export function MemberList() {
 							<AvatarFallback>
 								{member?.first_name && member?.last_name
 									? member.first_name[0] + member.last_name[0]
-									: member?.name && member?.name?.split(" ")[0] + member?.name?.split(" ")[1]}
+									: member?.name && member?.name?.split(" ")[0][0] + member?.name?.split(" ")[1][0]}
 							</AvatarFallback>
 						</Avatar>
 						<p>{member?.first_name && member?.last_name ? member.first_name + " " + member.last_name : member?.name}</p>
