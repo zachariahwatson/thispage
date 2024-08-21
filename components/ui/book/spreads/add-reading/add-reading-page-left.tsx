@@ -51,7 +51,7 @@ export function AddReadingPageLeft({ readingIndex }: Props) {
 
 				<div className="space-y-1.5 h-full overflow-scroll pt-2 pr-1">
 					<div className="flex justify-between pr-1">
-						<CardTitle className="text-lg">invite codes</CardTitle>
+						<CardTitle className="text-lg">invites</CardTitle>
 						<CreateInviteButton />
 					</div>
 					<InviteCodes />

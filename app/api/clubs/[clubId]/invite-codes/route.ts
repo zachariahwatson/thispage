@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 
 		const { error } = await supabase.from("club_invite_codes").insert({
 			club_id: body.club_id,
-			expiration_date: body.expiration_date,
+			//expiration_date: body.expiration_date,
 			uses: body.uses,
 			creator_member_id: body.creator_member_id,
 		})

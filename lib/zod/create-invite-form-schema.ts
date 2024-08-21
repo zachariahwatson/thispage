@@ -13,5 +13,5 @@ export const createInviteFormSchema = z.object({
 			message: "uses must be a valid number greater than zero.",
 		}
 	),
-	expirationDate: z.string({ required_error: "expiration date is required" }).date(),
+	// expirationDate: z.string({ required_error: "expiration date is required" }).date(),
 })

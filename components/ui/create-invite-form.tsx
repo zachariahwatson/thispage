@@ -38,7 +38,7 @@ export function CreateInviteForm({ setVisible }: Props) {
 	const router = useRouter()
 	const queryClient = useQueryClient()
 	const inviteMutation = useMutation({
-		mutationFn: (data: { club_id: number; expiration_date: Date; uses: number; creator_member_id: number }) => {
+		mutationFn: (data: { club_id: number; uses: number; creator_member_id: number }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/invite-codes`)
 			return fetch(url, {
 				method: "POST",
@@ -57,15 +57,18 @@ export function CreateInviteForm({ setVisible }: Props) {
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof createInviteFormSchema>>({
 		resolver: zodResolver(createInviteFormSchema),
+		defaultValues: {
+			uses: "10",
+		},
 	})
 
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof createInviteFormSchema>) {
-		const expirationDate = new Date(values.expirationDate)
-		expirationDate.setHours(0, 0, 0, 0)
+		// const expirationDate = new Date(values.expirationDate)
+		// expirationDate.setHours(0, 0, 0, 0)
 		inviteMutation.mutate({
 			club_id: clubMembership?.club.id || -1,
-			expiration_date: expirationDate,
+			//expiration_date: expirationDate,
 			uses: Number(values.uses),
 			creator_member_id: clubMembership?.id || -1,
 		})
@@ -89,7 +92,7 @@ export function CreateInviteForm({ setVisible }: Props) {
 							</FormItem>
 						)}
 					/>
-					<FormField
+					{/* <FormField
 						control={form.control}
 						name="expirationDate"
 						render={({ field }) => (
@@ -101,7 +104,7 @@ export function CreateInviteForm({ setVisible }: Props) {
 								<FormMessage />
 							</FormItem>
 						)}
-					/>
+					/> */}
 					{inviteMutation.isLoading ? (
 						<Button disabled className="float-right">
 							<svg

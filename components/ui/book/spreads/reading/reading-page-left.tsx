@@ -19,7 +19,13 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton, ReadingActionsButton } from "@/components/ui/buttons"
+import {
+	Button,
+	JoinReadingButton,
+	CompleteIntervalButton,
+	ReadingActionsButton,
+	ArchiveButton,
+} from "@/components/ui/buttons"
 import { useClubMembership, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import { useIntervals, useUserProgress } from "@/hooks/state"
@@ -194,78 +200,92 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 					</div>
 				)}
 				<CardContent className="pr-0 pt-6 md:pt-2 md:px-6 px-4">
-					{startDate.getTime() > Date.now() ? (
-						<div className="w-full h-full flex justify-center items-center pt-8 pr-6">
-							<p className="text-muted-foreground">
-								🚧this reading will start on{" "}
-								{startDate.toLocaleDateString(undefined, {
-									year: "numeric",
-									month: "long",
-									day: "numeric",
-								})}
-								🚧
-							</p>
-						</div>
-					) : userProgressLoading ? (
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							stroke="currentColor"
-							className="size-6 animate-spin"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-							/>
-						</svg>
-					) : (
-						userProgress && (
-							<>
-								<CardDescription>read to...</CardDescription>
-								<div className="flex flex-row">
-									<p className="font-bold italic md:text-xl">
-										p.
-										<span className="text-6xl md:text-8xl not-italic">
-											{interval?.goal_page && interval?.goal_page < (readingData?.book_page_count || Infinity)
-												? interval?.goal_page
-												: readingData?.book_page_count}
-										</span>
-									</p>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										strokeWidth={1}
-										stroke="currentColor"
-										className="w-12 md:w-14 h-12 md:h-14 self-center"
-									>
-										<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-									</svg>
-									<div className="self-center">
-										{/**
-										 * @todo add dialog box confirming if the user wants to complete the reading if they're the last member to do so
-										 */}
-										<CompleteIntervalButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
+					{!readingData?.is_finished ? (
+						startDate.getTime() > Date.now() ? (
+							<div className="w-full h-full flex justify-center items-center pt-8 pr-6">
+								<p className="text-muted-foreground">
+									🚧this reading will start on{" "}
+									{startDate.toLocaleDateString(undefined, {
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									})}
+									🚧
+								</p>
+							</div>
+						) : userProgressLoading ? (
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="size-6 animate-spin"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+								/>
+							</svg>
+						) : (
+							userProgress && (
+								<>
+									<CardDescription>read to...</CardDescription>
+									<div className="flex flex-row">
+										<p className="font-bold italic md:text-xl">
+											p.
+											<span className="text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
+										</p>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											strokeWidth={1}
+											stroke="currentColor"
+											className="w-12 md:w-14 h-12 md:h-14 self-center"
+										>
+											<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+										</svg>
+										<div className="self-center">
+											{/**
+											 * @todo add dialog box confirming if the user wants to complete the reading if they're the last member to do so
+											 */}
+											<CompleteIntervalButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
+										</div>
 									</div>
-								</div>
-								<CardDescription className="italic">
-									{memberProgresses.filter((progress) => progress?.is_complete).length}/{memberProgresses.length}{" "}
-									readers have completed
-								</CardDescription>
-							</>
+									<CardDescription className="italic">
+										{memberProgresses.filter((progress) => progress?.is_complete).length}/{memberProgresses.length}{" "}
+										readers have completed
+									</CardDescription>
+								</>
+							)
 						)
+					) : (
+						<div className="w-full h-full flex justify-center items-center pt-8 pr-6">
+							<p className="text-muted-foreground">🎉reading finished!🎉</p>
+						</div>
 					)}
-					{!userProgress && <JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />}
+					<div className="w-full h-full flex justify-center items-center pt-8 pr-6 space-x-2">
+						{!userProgress &&
+							(!readingData?.join_in_progress && new Date().getTime() > startDate.getTime() ? (
+								<p className="text-muted-foreground">sorry, this reading has already started :(</p>
+							) : (
+								<JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
+							))}
+						{clubMembership?.role === "admin" && readingData?.is_finished && <ArchiveButton />}
+					</div>
 				</CardContent>
 				<CardFooter className="md:px-6 px-4">
 					{userProgress && interval?.goal_page && readingData?.book_page_count ? (
 						<Progress
-							value={Math.floor(
-								((interval?.goal_page - readingData.interval_page_length) / readingData?.book_page_count) * 100
-							)}
+							value={
+								!readingData.is_finished
+									? Math.floor(
+											((interval?.goal_page - readingData.interval_page_length) / readingData?.book_page_count) * 100
+									  )
+									: 100
+							}
 							className="h-2 md:h-4"
 						/>
 					) : (

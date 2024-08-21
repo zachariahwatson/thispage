@@ -32,7 +32,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 							{commentData.member?.first_name && commentData.member?.last_name
 								? commentData.member?.first_name[0] + commentData.member?.last_name[0]
 								: commentData.member?.name &&
-								  commentData.member?.name.split(" ")[0] + commentData.member?.name.split(" ")[1]}
+								  commentData.member?.name.split(" ")[0][0] + commentData.member?.name.split(" ")[1][0]}
 						</AvatarFallback>
 					</Avatar>
 				</div>

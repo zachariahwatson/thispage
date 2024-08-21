@@ -26,6 +26,8 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 		password,
 		options: {
 			data: {
+				first_name: firstName,
+				last_name: lastName,
 				name: `${firstName} ${lastName}`,
 			},
 			emailRedirectTo: redirectTo,

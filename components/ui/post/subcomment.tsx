@@ -39,7 +39,7 @@ export function SubComment({
 							{subCommentData.member?.first_name && subCommentData.member?.last_name
 								? subCommentData.member?.first_name[0] + subCommentData.member?.last_name[0]
 								: subCommentData.member?.name &&
-								  subCommentData.member?.name.split(" ")[0] + subCommentData.member?.name.split(" ")[1]}
+								  subCommentData.member?.name.split(" ")[0][0] + subCommentData.member?.name.split(" ")[1][0]}
 						</AvatarFallback>
 					</Avatar>
 				</div>
