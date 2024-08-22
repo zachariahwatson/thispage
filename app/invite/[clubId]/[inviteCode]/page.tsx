@@ -68,9 +68,9 @@ export default function Page({ params }: { params: { clubId: string; inviteCode:
 		{ enabled: !!user } // Run the query only when the user is available
 	)
 
-	return clubsSuccess ? (
+	return clubsSuccess && clubMemberships ? (
 		!isMember ? (
-			success ? (
+			success && club ? (
 				<Card className="max-w-lg w-full">
 					<CardHeader>
 						<CardTitle>{club.name}</CardTitle>
