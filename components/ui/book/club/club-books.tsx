@@ -12,7 +12,7 @@ export function ClubBooks() {
 	const { data: clubMemberships, isSuccess: success } = useClubs()
 
 	return success ? (
-		clubMemberships.length > 0 ? (
+		clubMemberships && clubMemberships.length > 0 ? (
 			clubMemberships.map((clubMembership, index) => (
 				<ClubMembershipProvider key={index} clubMembershipData={clubMembership}>
 					<ClubBook />

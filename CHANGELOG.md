@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Themes
 
+## [0.6.1] - 2024-08-22
+
+### Fixed
+
+- Client-side application error upon first load
+
 ## [0.6.0] - 2024-08-21
 
 ### Added
