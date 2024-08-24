@@ -37,6 +37,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { clubId
 			.update({
 				editor_member_id: body.editor_member_id,
 				interval_page_length: body.interval_page_length,
+				interval_section_length: body.interval_section_length,
+				book_sections: body.book_sections,
+				section_name: body.section_name,
 				join_in_progress: body.join_in_progress,
 				is_archived: body.is_archived || false,
 			})

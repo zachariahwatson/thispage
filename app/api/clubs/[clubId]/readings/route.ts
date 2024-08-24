@@ -20,6 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			club_id,
 			join_in_progress,
 			is_finished,
+			is_archived,
 			interval_page_length,
 			interval_section_length,
 			start_date,

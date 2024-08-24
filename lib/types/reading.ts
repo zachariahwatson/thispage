@@ -3,6 +3,7 @@ export type Reading = {
 	club_id: number
 	join_in_progress: boolean
 	is_finished: boolean
+	is_archived: boolean
 	interval_page_length: number
 	interval_section_length: number
 	start_date: string
