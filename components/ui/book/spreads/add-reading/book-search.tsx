@@ -19,8 +19,11 @@ interface Props {
 		{
 			book: string
 			startDate: string
-			intervalPageLength: string
+			incrementType: "pages" | "sections"
 			joinInProgress: boolean
+			intervalPageLength?: string | undefined
+			bookSections?: string | undefined
+			sectionName?: string | undefined
 		},
 		"book"
 	>

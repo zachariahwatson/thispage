@@ -94,7 +94,7 @@ export function CompleteIntervalButton({ readingId, intervalId }: Props) {
 			}
 			queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingId])
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
-			//queryClient.invalidateQueries(["user progress", intervalId])
+			queryClient.invalidateQueries(["user progress", intervalId])
 			//queryClient.invalidateQueries(["posts", clubMembership?.club.id, readingId])
 		},
 	})

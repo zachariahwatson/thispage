@@ -84,7 +84,10 @@ export function ReadingActionsButton() {
 		mutationFn: (data: {
 			editor_member_id: number
 			// start_date: Date
-			interval_page_length: number
+			interval_page_length?: number
+			interval_section_length?: number
+			book_sections?: number
+			section_name?: string
 			join_in_progress: boolean
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}`)
@@ -125,7 +128,7 @@ export function ReadingActionsButton() {
 								</svg>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
-								{clubMembership?.role === "admin" && (
+								{clubMembership?.role === "admin" && !readingData?.is_archived && (
 									<>
 										<DropdownMenuItem className="cursor-pointer" onSelect={() => setEditVisible(true)}>
 											edit
