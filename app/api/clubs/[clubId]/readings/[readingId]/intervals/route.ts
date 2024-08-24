@@ -20,6 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 				`
 				id,
                 goal_page,
+				goal_section,
                 created_at,
                 member_interval_progresses (
 					id,

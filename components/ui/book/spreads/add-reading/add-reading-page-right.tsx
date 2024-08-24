@@ -58,9 +58,13 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 			}
 			club_id: number
 			creator_member_id: number
-			interval_page_length: number
+			interval_page_length?: number
+			interval_section_length?: number
 			start_date: Date
 			join_in_progress: boolean
+			increment_type: "pages" | "sections"
+			book_sections?: number | undefined
+			section_name?: string | undefined
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings`)
 			return fetch(url, {

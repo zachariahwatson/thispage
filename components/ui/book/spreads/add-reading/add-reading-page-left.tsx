@@ -14,6 +14,7 @@ import { InviteCodes } from "./invite-codes"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
 import { MemberList } from "./member-list"
 import { CreateInviteButton } from "@/components/ui/buttons"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface Props {
 	readingIndex: number
@@ -50,13 +51,23 @@ export function AddReadingPageLeft({ readingIndex }: Props) {
 				<Separator />
 
 				<div className="space-y-1.5 h-full overflow-scroll pt-2 pr-1">
-					<div className="flex justify-between pr-1">
-						<CardTitle className="text-lg">invites</CardTitle>
-						<CreateInviteButton />
-					</div>
-					<InviteCodes />
-					<CardTitle className="text-lg">members</CardTitle>
-					<MemberList />
+					<Tabs defaultValue="invites">
+						<TabsList>
+							<TabsTrigger value="invites">invites</TabsTrigger>
+							<TabsTrigger value="members">members</TabsTrigger>
+						</TabsList>
+						<TabsContent value="invites">
+							<div className="flex justify-between pr-1">
+								<CardTitle className="text-lg">invites</CardTitle>
+								<CreateInviteButton />
+							</div>
+							<InviteCodes />
+						</TabsContent>
+						<TabsContent value="members">
+							<CardTitle className="text-lg">members</CardTitle>
+							<MemberList />
+						</TabsContent>
+					</Tabs>
 				</div>
 			</CardHeader>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
