@@ -75,7 +75,6 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 			intervalPageLength: "10",
 			intervalSectionLength: "1",
 			joinInProgress: true,
-			incrementType: "pages",
 		},
 	})
 
@@ -84,7 +83,8 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 		const parsedBook = JSON.parse(values.book)
 		const startDate = new Date(values.startDate)
 		startDate.setHours(0, 0, 0, 0)
-		mutation.mutate({
+		// Prepare the mutation payload
+		const payload: any = {
 			book: {
 				open_library_id: parsedBook.openLibraryId,
 				title: parsedBook.title,
@@ -96,13 +96,19 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 			club_id: clubMembership?.club.id || -1,
 			creator_member_id: clubMembership?.id || -1,
 			start_date: startDate,
-			interval_page_length: Number(values.intervalPageLength),
-			interval_section_length: Number(values.intervalSectionLength),
 			join_in_progress: values.joinInProgress,
 			increment_type: values.incrementType,
-			book_sections: Number(values.bookSections),
-			section_name: values.sectionName,
-		})
+		}
+		// Add fields conditionally based on incrementType
+		if (values.incrementType === "pages" || values.incrementType === undefined) {
+			payload.interval_page_length = Number(values.intervalPageLength)
+		} else if (values.incrementType === "sections") {
+			payload.book_sections = Number(values.bookSections)
+			payload.interval_section_length = Number(values.intervalSectionLength)
+			payload.section_name = values.sectionName
+		}
+
+		mutation.mutate(payload)
 		setVisible(false)
 	}
 

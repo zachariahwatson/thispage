@@ -24,7 +24,8 @@ import { useIntervals, useUserProgress } from "@/hooks/state"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../sheet"
-import { EditReadingForm } from "../edit-reading-form"
+import { EditReadingFormPages } from "../edit-reading-form-pages"
+import { EditReadingFormSections } from "../edit-reading-form-sections"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -89,7 +90,7 @@ export function ReadingActionsButton() {
 			book_sections?: number
 			section_name?: string
 			join_in_progress: boolean
-			book_cover_image_url: string
+			book_cover_image_url?: string
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}`)
 			return fetch(url, {
@@ -130,7 +131,7 @@ export function ReadingActionsButton() {
 								</svg>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
-								{clubMembership?.role === "admin" && !readingData?.is_archived && (
+								{clubMembership?.role === "admin" && !readingData?.is_finished && (
 									<>
 										<DropdownMenuItem className="cursor-pointer" onSelect={() => setEditVisible(true)}>
 											edit
@@ -158,7 +159,11 @@ export function ReadingActionsButton() {
 							<SheetHeader>
 								<SheetTitle>edit reading</SheetTitle>
 							</SheetHeader>
-							<EditReadingForm mutation={updateReadingMutation} setVisible={setEditVisible} />
+							{readingData?.increment_type === "pages" ? (
+								<EditReadingFormPages mutation={updateReadingMutation} setVisible={setEditVisible} />
+							) : (
+								<EditReadingFormSections mutation={updateReadingMutation} setVisible={setEditVisible} />
+							)}
 						</SheetContent>
 					</Sheet>
 

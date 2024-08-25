@@ -14,7 +14,8 @@ export function Spreads() {
 	const clubMembership = useClubMembership()
 
 	const [readingIndex, setReadingIndex] = useState<number>(
-		Number(localStorage.getItem(`club-${clubMembership?.club.id}-tab-index`))
+		//Number(localStorage.getItem(`club-${clubMembership?.club.id}-tab-index`))
+		0
 	)
 
 	const { data: readings, isLoading: loading } = useReadings(clubMembership?.club.id || -1)

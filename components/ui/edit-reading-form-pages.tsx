@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { addReadingFormSchema, editReadingFormSchema, settingsFormSchema } from "@/lib/zod"
+import { addReadingFormSchema, editReadingFormSchemaPages, settingsFormSchema } from "@/lib/zod"
 import { Button } from "@/components/ui/buttons"
 import {
 	Calendar,
@@ -44,7 +44,7 @@ interface Props {
 			book_sections?: number
 			section_name?: string
 			join_in_progress: boolean
-			book_cover_image_url: string
+			book_cover_image_url?: string
 		},
 		unknown
 	>
@@ -55,41 +55,29 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-// Type definition for the form data based on the Zod schema
-type EditReadingFormData = z.infer<ReturnType<typeof editReadingFormSchema>>
-
-export function EditReadingForm({ mutation, setVisible }: Props) {
+export function EditReadingFormPages({ mutation, setVisible }: Props) {
 	const clubMembership = useClubMembership()
 	const readingData = useReading()
 
-	// Create the form schema instance by invoking the schema function
-	const schema = editReadingFormSchema(readingData?.book_sections || 0)
-
 	// 1. Define your form.
-	const form = useForm<EditReadingFormData>({
-		resolver: zodResolver(schema),
+	const form = useForm<z.infer<typeof editReadingFormSchemaPages>>({
+		resolver: zodResolver(editReadingFormSchemaPages),
 		defaultValues: {
 			intervalPageLength: String(readingData?.interval_page_length),
-			intervalSectionLength: String(readingData?.interval_section_length),
-			bookSections: String(readingData?.book_sections),
-			sectionName: readingData?.section_name,
 			joinInProgress: readingData?.join_in_progress,
 		},
 	})
 
 	// 2. Define a submit handler.
-	function onSubmit(values: EditReadingFormData) {
+	function onSubmit(values: z.infer<typeof editReadingFormSchemaPages>) {
 		// const startDate = new Date(values.startDate || readingData?.start_date || "")
 		// startDate.setHours(0, 0, 0, 0)
 		mutation.mutate({
 			editor_member_id: clubMembership?.id || -1,
 			// start_date: startDate,
 			interval_page_length: Number(values.intervalPageLength),
-			interval_section_length: Number(values.intervalSectionLength),
-			book_sections: Number(values.bookSections),
-			section_name: values.sectionName,
 			join_in_progress: values.joinInProgress,
-			book_cover_image_url: values.bookCoverImageURL || "",
+			book_cover_image_url: values.bookCoverImageURL,
 		})
 		setVisible(false)
 	}
@@ -124,71 +112,6 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 							</FormItem>
 						)}
 					/>
-					{readingData?.increment_type === "pages" ? (
-						<FormField
-							control={form.control}
-							name="intervalPageLength"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>goal page increment amount</FormLabel>
-									<FormControl>
-										<Input type="number" {...field} />
-									</FormControl>
-									<FormDescription>
-										how many pages your readers will read in order to reach the next goal.
-									</FormDescription>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					) : (
-						<>
-							<FormField
-								control={form.control}
-								name="bookSections"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>section count</FormLabel>
-										<FormControl>
-											<Input type="number" {...field} />
-										</FormControl>
-										<FormDescription>how many chapters, stories, etc are in your book.</FormDescription>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="intervalSectionLength"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>goal section increment amount</FormLabel>
-										<FormControl>
-											<Input type="number" {...field} />
-										</FormControl>
-										<FormDescription>
-											how many sections your readers will read in order to reach the next goal.
-										</FormDescription>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="sectionName"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>section name</FormLabel>
-										<FormControl>
-											<Input {...field} />
-										</FormControl>
-										<FormDescription>"chapter", "story", "part", etc.</FormDescription>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</>
-					)}
 					<div className="flex flex-row items-center space-x-4">
 						<FormField
 							control={form.control}
@@ -206,6 +129,23 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 							)}
 						/>
 					</div>
+					<FormField
+						control={form.control}
+						name="intervalPageLength"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>goal page increment amount</FormLabel>
+								<FormControl>
+									<Input type="number" {...field} />
+								</FormControl>
+								<FormDescription>
+									how many pages your readers will read in order to reach the next goal.
+								</FormDescription>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
 					{mutation.isLoading ? (
 						<Button disabled className="float-right">
 							<svg

@@ -49,7 +49,9 @@ export function ArchiveButton() {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
-				<Button variant="destructive">archive</Button>
+				<Button variant="destructive" className="mt-4">
+					archive
+				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>

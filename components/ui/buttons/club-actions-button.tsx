@@ -24,7 +24,7 @@ import { useIntervals, useUser, useUserProgress } from "@/hooks/state"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../sheet"
-import { EditReadingForm } from "../edit-reading-form"
+import { EditReadingForm } from "../edit-reading-form-pages"
 import { EditClubForm } from "../edit-club-form"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL

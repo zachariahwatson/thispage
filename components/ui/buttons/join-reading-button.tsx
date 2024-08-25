@@ -39,7 +39,7 @@ export function JoinReadingButton({ readingId, intervalId }: Props) {
 	})
 	const router = useRouter()
 	return mutation.isLoading ? (
-		<Button disabled>
+		<Button disabled className="mt-4">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -63,6 +63,7 @@ export function JoinReadingButton({ readingId, intervalId }: Props) {
 					mutation.mutate({ member_id: clubMembership?.id || -1, interval_id: intervalId })
 				}
 			}}
+			className="mt-4"
 		>
 			join reading
 		</Button>

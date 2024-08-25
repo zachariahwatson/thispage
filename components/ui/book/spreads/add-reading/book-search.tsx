@@ -16,14 +16,22 @@ import { Button } from "@/components/ui/buttons"
 
 interface Props {
 	field: ControllerRenderProps<
-		{
+		(
+			| {
+					incrementType?: "pages" | undefined
+					intervalPageLength: string
+			  }
+			| {
+					incrementType: "sections"
+					bookSections: string
+					intervalSectionLength: string
+					sectionName?: string | undefined
+			  }
+		) & {
 			book: string
 			startDate: string
-			incrementType: "pages" | "sections"
 			joinInProgress: boolean
-			intervalPageLength?: string | undefined
-			bookSections?: string | undefined
-			sectionName?: string | undefined
+			bookCoverImageURL?: string | undefined
 		},
 		"book"
 	>

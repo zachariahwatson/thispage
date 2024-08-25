@@ -155,9 +155,9 @@ export function Post({ clubId, readingId, postId }: Props) {
 								<SheetTrigger className="hover:ring-4 hover:ring-ring rounded transition-all">
 									<Image
 										className="rounded h-10 md:h-16 w-auto shadow-shadow shadow-md"
-										src={coverImage?.url || ""}
-										width={coverImage?.width || 0}
-										height={coverImage?.height || 0}
+										src={post.reading.book_cover_image_url || ""}
+										width={post.reading.book_cover_image_width || 0}
+										height={post.reading.book_cover_image_height || 0}
 										alt={
 											"Cover photo of " +
 											post.reading.book_title +
@@ -202,9 +202,9 @@ export function Post({ clubId, readingId, postId }: Props) {
 									</SheetHeader>
 									<Image
 										className="rounded-lg w-full max-h-full shadow-shadow shadow-md"
-										src={coverImage?.url || ""}
-										width={coverImage?.width || 0}
-										height={coverImage?.height || 0}
+										src={post.reading.book_cover_image_url || ""}
+										width={post.reading.book_cover_image_width || 0}
+										height={post.reading.book_cover_image_height || 0}
 										alt={
 											"Cover photo of " +
 											post.reading.book_title +
