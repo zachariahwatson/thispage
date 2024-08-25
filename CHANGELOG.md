@@ -10,13 +10,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Polls
-- Ability to increment readings by user-created sections
 - Password recovery page
 - Filter book search based on language
+- Email push notifications
 
 ### Changed
 
 - Themes
+
+## [0.7.0] - 2024-08-24
+
+### Added
+
+- Ability to increment readings by user-created sections
+- Custom cover images
+
+### Changed
+
+- Remade dashboard with tabs
 
 ## [0.6.1] - 2024-08-22
 
@@ -48,5 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.7.0]: https://github.com/zachariahwatson/thispage/compare/0.6.1...0.7.0
+[0.6.1]: https://github.com/zachariahwatson/thispage/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/zachariahwatson/thispage/compare/0.5.2...0.6.0
 [0.5.2]: https://github.com/zachariahwatson/thispage/releases/tag/0.5.2
