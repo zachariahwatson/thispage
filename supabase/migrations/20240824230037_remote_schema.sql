@@ -2,7 +2,7 @@ drop policy "Admins can update readings" on "public"."readings";
 
 set check_function_bodies = off;
 
-CREATE OR REPLACE FUNCTION public.cls_readings(_id bigint, _club_id bigint, _start_date timestamp with time zone, _is_finished boolean, _book_open_library_id text, _book_title text, _book_description text, _book_authors text[], _book_page_count bigint, _created_at timestamp with time zone, _creator_member_id bigint, _increment_type reading_increment)
+CREATE FUNCTION public.cls_readings(_id bigint, _club_id bigint, _start_date timestamp with time zone, _is_finished boolean, _book_open_library_id text, _book_title text, _book_description text, _book_authors text[], _book_page_count bigint, _created_at timestamp with time zone, _creator_member_id bigint, _increment_type reading_increment)
  RETURNS boolean
  LANGUAGE plpgsql
  SECURITY DEFINER
@@ -40,7 +40,7 @@ as permissive
 for update
 to authenticated
 using (authorize(( SELECT auth.uid() AS uid), id, 'readings.update'::text))
-with check ((user_is_member(( SELECT auth.uid() AS uid), editor_member_id) AND cls_readings(id, club_id, start_date, is_finished, book_open_library_id, book_title, book_description, book_authors, book_page_count, book_cover_image_url, book_cover_image_width, book_cover_image_height, created_at, creator_member_id, increment_type)));
+with check ((user_is_member(( SELECT auth.uid() AS uid), editor_member_id) AND cls_readings(id, club_id, start_date, is_finished, book_open_library_id, book_title, book_description, book_authors, book_page_count, created_at, creator_member_id, increment_type)));
 
 
 
