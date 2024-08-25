@@ -53,8 +53,6 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 				authors?: string[] | undefined
 				page_count?: number | undefined
 				cover_image_url?: string | undefined
-				cover_image_width?: number | undefined
-				cover_image_height?: number | undefined
 			}
 			club_id: number
 			creator_member_id: number

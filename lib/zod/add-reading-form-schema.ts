@@ -2,6 +2,7 @@ import { z } from "zod"
 
 export const addReadingFormSchema = z.object({
 	book: z.string({ required_error: "book selection is required" }).min(1, "book selection is required"),
+	bookCoverImageURL: z.string().url({ message: "invalid url" }).optional().or(z.literal("")),
 	startDate: z.string({ required_error: "start date is required" }).date(),
 	intervalPageLength: z
 		.string()

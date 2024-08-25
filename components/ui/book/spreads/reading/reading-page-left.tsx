@@ -34,10 +34,15 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
+import probe, { ProbeResult } from "probe-image-size"
 
 interface Props {
 	readingIndex: number
 }
+
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
+	: "http://localhost:3000"
 
 export function ReadingPageLeft({ readingIndex }: Props) {
 	const MotionCard = motion(Card)
@@ -71,6 +76,26 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 				animate: { rotateY: 0, originX: 1, zIndex: 2 },
 		  }
 
+	const { data: coverImage, isLoading: loading } = useQuery<ProbeResult>({
+		queryKey: ["cover image", readingData?.id],
+		queryFn: async () => {
+			const url = new URL(`${defaultUrl}/api/images?url=${readingData?.book_cover_image_url}`)
+			const response = await fetch(url, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+
+			if (!response.ok) {
+				const body = await response.json()
+				throw new Error(body.error)
+			}
+
+			return await response.json()
+		},
+	})
+
 	return (
 		<MotionCard
 			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow shadow-md"
@@ -86,9 +111,9 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 					<SheetTrigger>
 						<Image
 							className="rounded-lg h-full w-auto"
-							src={readingData?.book_cover_image_url || ""}
-							width={readingData?.book_cover_image_width || 0}
-							height={readingData?.book_cover_image_height || 0}
+							src={coverImage?.url || ""}
+							width={coverImage?.width || 0}
+							height={coverImage?.height || 0}
 							alt={
 								"Cover photo of " + readingData?.book_title ||
 								"Unknown" +
@@ -138,9 +163,9 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 						</SheetHeader>
 						<Image
 							className="rounded-lg w-full max-h-full shadow-shadow shadow-md"
-							src={readingData?.book_cover_image_url || ""}
-							width={readingData?.book_cover_image_width || 0}
-							height={readingData?.book_cover_image_height || 0}
+							src={coverImage?.url || ""}
+							width={coverImage?.width || 0}
+							height={coverImage?.height || 0}
 							alt={
 								"Cover photo of " + readingData?.book_title ||
 								"Unknown" +

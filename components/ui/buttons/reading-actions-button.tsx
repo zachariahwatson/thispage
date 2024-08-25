@@ -89,6 +89,7 @@ export function ReadingActionsButton() {
 			book_sections?: number
 			section_name?: string
 			join_in_progress: boolean
+			book_cover_image_url: string
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}`)
 			return fetch(url, {
@@ -102,6 +103,7 @@ export function ReadingActionsButton() {
 		onSuccess: () => {
 			toast.success("successfully updated reading")
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
+			queryClient.invalidateQueries(["cover image", readingData?.id])
 		},
 	})
 

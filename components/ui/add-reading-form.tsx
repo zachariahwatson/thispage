@@ -46,8 +46,6 @@ interface Props {
 				authors?: string[] | undefined
 				page_count?: number | undefined
 				cover_image_url?: string | undefined
-				cover_image_width?: number | undefined
-				cover_image_height?: number | undefined
 			}
 			club_id: number
 			creator_member_id: number
@@ -93,9 +91,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 				description: parsedBook.description.value,
 				authors: parsedBook.authors,
 				page_count: parsedBook.pageCount,
-				cover_image_url: parsedBook.coverImageUrl,
-				cover_image_width: parsedBook.coverImageWidth,
-				cover_image_height: parsedBook.coverImageHeight,
+				cover_image_url: values.bookCoverImageURL || parsedBook.coverImageUrl,
 			},
 			club_id: clubMembership?.club.id || -1,
 			creator_member_id: clubMembership?.id || -1,
@@ -115,6 +111,19 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 					<FormField control={form.control} name="book" render={({ field }) => <BookSearch field={field} />} />
+					<FormField
+						control={form.control}
+						name="bookCoverImageURL"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>custom cover image url</FormLabel>
+								<FormControl>
+									<Input placeholder="optional" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 					<FormField
 						control={form.control}
 						name="startDate"

@@ -36,7 +36,6 @@ export async function DELETE(request: NextRequest, { params }: Props) {
  */
 export async function PATCH(request: NextRequest, { params }: Props) {
 	try {
-		console.log("testing", params)
 		const supabase = createClient()
 
 		const body = await request.json()

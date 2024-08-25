@@ -42,6 +42,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { clubId
 				section_name: body.section_name,
 				join_in_progress: body.join_in_progress,
 				is_archived: body.is_archived || false,
+				book_cover_image_url: body.book_cover_image_url,
 			})
 			.eq("club_id", params.clubId)
 			.eq("id", params.readingId)

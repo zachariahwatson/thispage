@@ -44,6 +44,7 @@ interface Props {
 			book_sections?: number
 			section_name?: string
 			join_in_progress: boolean
+			book_cover_image_url: string
 		},
 		unknown
 	>
@@ -73,6 +74,7 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 			bookSections: String(readingData?.book_sections),
 			sectionName: readingData?.section_name,
 			joinInProgress: readingData?.join_in_progress,
+			bookCoverImageURL: readingData?.book_cover_image_url || "",
 		},
 	})
 
@@ -80,7 +82,6 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 	function onSubmit(values: EditReadingFormData) {
 		// const startDate = new Date(values.startDate || readingData?.start_date || "")
 		// startDate.setHours(0, 0, 0, 0)
-		console.log(values, clubMembership?.id)
 		mutation.mutate({
 			editor_member_id: clubMembership?.id || -1,
 			// start_date: startDate,
@@ -89,6 +90,7 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 			book_sections: Number(values.bookSections),
 			section_name: values.sectionName,
 			join_in_progress: values.joinInProgress,
+			book_cover_image_url: values.bookCoverImageURL || "",
 		})
 		setVisible(false)
 	}
@@ -110,6 +112,19 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 							</FormItem>
 						)}
 					/> */}
+					<FormField
+						control={form.control}
+						name="bookCoverImageURL"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>custom cover image url</FormLabel>
+								<FormControl>
+									<Input placeholder="optional" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 					{readingData?.increment_type === "pages" ? (
 						<FormField
 							control={form.control}

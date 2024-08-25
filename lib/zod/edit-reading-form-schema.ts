@@ -2,6 +2,7 @@ import { z } from "zod"
 
 export const editReadingFormSchema = (bookSections: number) =>
 	z.object({
+		bookCoverImageURL: z.string().url({ message: "invalid url" }).optional().or(z.literal("")),
 		// startDate: z.string().date().optional(),
 		intervalPageLength: z.string().refine(
 			(val) => {

@@ -62,7 +62,6 @@ export async function POST(request: NextRequest) {
 		const supabase = createClient()
 
 		const body = await request.json()
-		console.log(body)
 
 		const { error } = await supabase.from("readings").insert({
 			club_id: body.club_id,
