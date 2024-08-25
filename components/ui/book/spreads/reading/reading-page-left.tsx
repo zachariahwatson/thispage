@@ -76,26 +76,6 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 				animate: { rotateY: 0, originX: 1, zIndex: 2 },
 		  }
 
-	const { data: coverImage, isLoading: loading } = useQuery<ProbeResult>({
-		queryKey: ["cover image", readingData?.id],
-		queryFn: async () => {
-			const url = new URL(`${defaultUrl}/api/images?url=${readingData?.book_cover_image_url}`)
-			const response = await fetch(url, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			})
-
-			if (!response.ok) {
-				const body = await response.json()
-				throw new Error(body.error)
-			}
-
-			return await response.json()
-		},
-	})
-
 	return (
 		<MotionCard
 			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow shadow-md"
@@ -111,9 +91,9 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 					<SheetTrigger>
 						<Image
 							className="rounded-lg h-full w-auto"
-							src={coverImage?.url || ""}
-							width={coverImage?.width || 0}
-							height={coverImage?.height || 0}
+							src={readingData?.book_cover_image_url || ""}
+							width={readingData?.book_cover_image_width || 0}
+							height={readingData?.book_cover_image_height || 0}
 							alt={
 								"Cover photo of " + readingData?.book_title ||
 								"Unknown" +
@@ -163,9 +143,9 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 						</SheetHeader>
 						<Image
 							className="rounded-lg w-full max-h-full shadow-shadow shadow-md"
-							src={coverImage?.url || ""}
-							width={coverImage?.width || 0}
-							height={coverImage?.height || 0}
+							src={readingData?.book_cover_image_url || ""}
+							width={readingData?.book_cover_image_width || 0}
+							height={readingData?.book_cover_image_height || 0}
 							alt={
 								"Cover photo of " + readingData?.book_title ||
 								"Unknown" +
@@ -261,12 +241,12 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 										{readingData?.increment_type === "pages" ? (
 											<p className="font-bold italic md:text-xl">
 												p.
-												<span className="text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
+												<span className="ml-1 text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
 											</p>
 										) : (
 											<p className="font-bold italic md:text-xl">
-												{readingData?.section_name}
-												<span className="text-6xl md:text-8xl not-italic">{interval?.goal_section}</span>
+												{readingData?.section_name}.
+												<span className="ml-1 text-6xl md:text-8xl not-italic">{interval?.goal_section}</span>
 											</p>
 										)}
 
@@ -299,10 +279,10 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 							<p className="text-muted-foreground">🎉reading finished!🎉</p>
 						</div>
 					)}
-					<div className="w-full h-full flex justify-center items-center pt-8 pr-6 space-x-2">
+					<div className="w-full h-full flex justify-center items-center pr-6 space-x-2">
 						{!userProgress &&
 							(!readingData?.join_in_progress && new Date().getTime() > startDate.getTime() ? (
-								<p className="text-muted-foreground">sorry, this reading has already started :(</p>
+								<p className="text-muted-foreground mt-4">sorry, this reading has already started :(</p>
 							) : (
 								<JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
 							))}

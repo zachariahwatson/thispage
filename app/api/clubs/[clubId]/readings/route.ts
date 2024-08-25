@@ -1,6 +1,7 @@
 import { Reading } from "@/lib/types"
 import { createClient } from "@/utils/supabase/server"
 import { NextRequest } from "next/server"
+import probe from "probe-image-size"
 
 /**
  * gets the specified club's readings along with the user's interval. rls ensures that the authenticated user is a member of the club.
@@ -62,6 +63,7 @@ export async function POST(request: NextRequest) {
 		const supabase = createClient()
 
 		const body = await request.json()
+		const image = await probe(body.book.cover_image_url)
 
 		const { error } = await supabase.from("readings").insert({
 			club_id: body.club_id,
@@ -76,8 +78,8 @@ export async function POST(request: NextRequest) {
 			book_authors: body.book.authors,
 			book_page_count: body.book.page_count,
 			book_cover_image_url: body.book.cover_image_url,
-			book_cover_image_width: body.book.cover_image_width,
-			book_cover_image_height: body.book.cover_image_height,
+			book_cover_image_width: image.width,
+			book_cover_image_height: image.height,
 			book_sections: body.book_sections,
 			section_name: body.section_name,
 			increment_type: body.increment_type,

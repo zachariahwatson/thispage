@@ -109,3 +109,6 @@ export { EditClubForm } from "./edit-club-form"
 export { EditPostForm } from "./edit-post-form"
 
 export { EditCommentForm } from "./edit-comment-form"
+
+export { EditReadingFormPages } from "./edit-reading-form-pages"
+export { EditReadingFormSections } from "./edit-reading-form-sections"
