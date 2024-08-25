@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Password recovery page
 - Filter book search based on language
 - Email push notifications
+- View archived readings
 
 ### Changed
 
