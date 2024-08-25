@@ -1,6 +1,7 @@
 export type Interval = {
 	id: number
 	goal_page: number
+	goal_section: number
 	created_at: string
 	member_interval_progresses: {
 		id: number

@@ -34,10 +34,15 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
+import probe, { ProbeResult } from "probe-image-size"
 
 interface Props {
 	readingIndex: number
 }
+
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
+	: "http://localhost:3000"
 
 export function ReadingPageLeft({ readingIndex }: Props) {
 	const MotionCard = motion(Card)
@@ -233,10 +238,18 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 								<>
 									<CardDescription>read to...</CardDescription>
 									<div className="flex flex-row">
-										<p className="font-bold italic md:text-xl">
-											p.
-											<span className="text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
-										</p>
+										{readingData?.increment_type === "pages" ? (
+											<p className="font-bold italic md:text-xl">
+												p.
+												<span className="ml-1 text-6xl md:text-8xl not-italic">{interval?.goal_page}</span>
+											</p>
+										) : (
+											<p className="font-bold italic md:text-xl">
+												{readingData?.section_name}.
+												<span className="ml-1 text-6xl md:text-8xl not-italic">{interval?.goal_section}</span>
+											</p>
+										)}
+
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -266,10 +279,10 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 							<p className="text-muted-foreground">🎉reading finished!🎉</p>
 						</div>
 					)}
-					<div className="w-full h-full flex justify-center items-center pt-8 pr-6 space-x-2">
+					<div className="w-full h-full flex justify-center items-center pr-6 space-x-2">
 						{!userProgress &&
 							(!readingData?.join_in_progress && new Date().getTime() > startDate.getTime() ? (
-								<p className="text-muted-foreground">sorry, this reading has already started :(</p>
+								<p className="text-muted-foreground mt-4">sorry, this reading has already started :(</p>
 							) : (
 								<JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
 							))}
@@ -277,12 +290,28 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 					</div>
 				</CardContent>
 				<CardFooter className="md:px-6 px-4">
-					{userProgress && interval?.goal_page && readingData?.book_page_count ? (
+					{userProgress && readingData?.increment_type === "pages" ? (
+						interval?.goal_page && readingData?.book_page_count ? (
+							<Progress
+								value={
+									!readingData.is_finished
+										? Math.floor(
+												((interval?.goal_page - readingData.interval_page_length) / readingData?.book_page_count) * 100
+										  )
+										: 100
+								}
+								className="h-2 md:h-4"
+							/>
+						) : (
+							<></>
+						)
+					) : interval?.goal_section && readingData?.book_sections ? (
 						<Progress
 							value={
 								!readingData.is_finished
 									? Math.floor(
-											((interval?.goal_page - readingData.interval_page_length) / readingData?.book_page_count) * 100
+											((interval?.goal_section - readingData.interval_section_length) / readingData?.book_sections) *
+												100
 									  )
 									: 100
 							}

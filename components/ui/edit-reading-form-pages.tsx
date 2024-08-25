@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { addReadingFormSchema, editReadingFormSchema, settingsFormSchema } from "@/lib/zod"
+import { addReadingFormSchema, editReadingFormSchemaPages, settingsFormSchema } from "@/lib/zod"
 import { Button } from "@/components/ui/buttons"
 import {
 	Calendar,
@@ -39,9 +39,12 @@ interface Props {
 		unknown,
 		{
 			editor_member_id: number
-			interval_page_length: number
-			// start_date: Date
+			interval_page_length?: number
+			interval_section_length?: number
+			book_sections?: number
+			section_name?: string
 			join_in_progress: boolean
+			book_cover_image_url?: string
 		},
 		unknown
 	>
@@ -52,13 +55,13 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function EditReadingForm({ mutation, setVisible }: Props) {
+export function EditReadingFormPages({ mutation, setVisible }: Props) {
 	const clubMembership = useClubMembership()
 	const readingData = useReading()
 
 	// 1. Define your form.
-	const form = useForm<z.infer<typeof editReadingFormSchema>>({
-		resolver: zodResolver(editReadingFormSchema),
+	const form = useForm<z.infer<typeof editReadingFormSchemaPages>>({
+		resolver: zodResolver(editReadingFormSchemaPages),
 		defaultValues: {
 			intervalPageLength: String(readingData?.interval_page_length),
 			joinInProgress: readingData?.join_in_progress,
@@ -66,15 +69,15 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 	})
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof editReadingFormSchema>) {
+	function onSubmit(values: z.infer<typeof editReadingFormSchemaPages>) {
 		// const startDate = new Date(values.startDate || readingData?.start_date || "")
 		// startDate.setHours(0, 0, 0, 0)
-		console.log(values, clubMembership?.id)
 		mutation.mutate({
 			editor_member_id: clubMembership?.id || -1,
 			// start_date: startDate,
 			interval_page_length: Number(values.intervalPageLength),
 			join_in_progress: values.joinInProgress,
+			book_cover_image_url: values.bookCoverImageURL,
 		})
 		setVisible(false)
 	}
@@ -98,12 +101,12 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 					/> */}
 					<FormField
 						control={form.control}
-						name="intervalPageLength"
+						name="bookCoverImageURL"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>goal page increment amount</FormLabel>
+								<FormLabel>custom cover image url</FormLabel>
 								<FormControl>
-									<Input type="number" {...field} />
+									<Input placeholder="optional" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -126,6 +129,23 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 							)}
 						/>
 					</div>
+					<FormField
+						control={form.control}
+						name="intervalPageLength"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>goal page increment amount</FormLabel>
+								<FormControl>
+									<Input type="number" {...field} />
+								</FormControl>
+								<FormDescription>
+									how many pages your readers will read in order to reach the next goal.
+								</FormDescription>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
 					{mutation.isLoading ? (
 						<Button disabled className="float-right">
 							<svg

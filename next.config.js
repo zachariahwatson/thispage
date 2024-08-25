@@ -4,18 +4,7 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "picsum.photos",
-				port: "",
-			},
-			{
-				protocol: "https",
-				hostname: "covers.openlibrary.org",
-				port: "",
-			},
-			{
-				protocol: "https",
-				hostname: "*.*.archive.org",
-				port: "",
+				hostname: "**",
 			},
 		],
 	},

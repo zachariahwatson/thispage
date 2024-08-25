@@ -33,6 +33,7 @@ import { useSearchParams, redirect } from "next/navigation"
 import { useClubs, useUser } from "@/hooks/state"
 import { toast } from "sonner"
 import { useEffect, useState } from "react"
+import { ProbeResult } from "probe-image-size"
 
 interface Props {
 	clubId: string
@@ -84,6 +85,26 @@ export function Post({ clubId, readingId, postId }: Props) {
 	const createdAt = post && new Date(post.created_at)
 
 	const isVertical = useMediaQuery("(max-width: 768px)")
+
+	const { data: coverImage } = useQuery<ProbeResult>({
+		queryKey: ["cover image", readingId],
+		queryFn: async () => {
+			const url = new URL(`${defaultUrl}/api/images?url=${post?.reading.book_cover_image_url}`)
+			const response = await fetch(url, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+
+			if (!response.ok) {
+				const body = await response.json()
+				throw new Error(body.error)
+			}
+
+			return await response.json()
+		},
+	})
 
 	return !loading && post ? (
 		<div className="flex flex-col justify-center max-w-4xl w-full space-y-4">
