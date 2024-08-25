@@ -299,15 +299,18 @@ export function ReadingPageLeft({ readingIndex }: Props) {
 							<p className="text-muted-foreground">🎉reading finished!🎉</p>
 						</div>
 					)}
-					<div className="w-full h-full flex justify-center items-center pt-8 pr-6 space-x-2">
-						{!userProgress &&
-							(!readingData?.join_in_progress && new Date().getTime() > startDate.getTime() ? (
+
+					{!userProgress &&
+						(!readingData?.join_in_progress && new Date().getTime() > startDate.getTime() ? (
+							<div className="w-full h-full flex justify-center items-center pt-8 pr-6 space-x-2">
 								<p className="text-muted-foreground">sorry, this reading has already started :(</p>
-							) : (
+							</div>
+						) : (
+							<div className="w-full h-full flex justify-center items-center pt-8 pr-6 space-x-2">
 								<JoinReadingButton readingId={readingData?.id || null} intervalId={interval?.id || null} />
-							))}
-						{clubMembership?.role === "admin" && readingData?.is_finished && <ArchiveButton />}
-					</div>
+							</div>
+						))}
+					{clubMembership?.role === "admin" && readingData?.is_finished && <ArchiveButton />}
 				</CardContent>
 				<CardFooter className="md:px-6 px-4">
 					{userProgress && readingData?.increment_type === "pages" ? (
