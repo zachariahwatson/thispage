@@ -74,7 +74,6 @@ export function EditReadingForm({ mutation, setVisible }: Props) {
 			bookSections: String(readingData?.book_sections),
 			sectionName: readingData?.section_name,
 			joinInProgress: readingData?.join_in_progress,
-			bookCoverImageURL: readingData?.book_cover_image_url || "",
 		},
 	})
 
