@@ -112,3 +112,4 @@ export { EditCommentForm } from "./edit-comment-form"
 
 export { EditReadingFormPages } from "./edit-reading-form-pages"
 export { EditReadingFormSections } from "./edit-reading-form-sections"
+export { WhatsNewDialog } from "./whats-new-dialog"
