@@ -1,4 +1,4 @@
 {
 	"cSpell.words": ["supabase"],
-	"deno.enable": true
+	"deno.enable": false
 }
