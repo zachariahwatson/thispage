@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
 import { ClubBooks } from "@/components/ui/book"
 import { DemoSpreads } from "@/components/ui/demo"
-import { Card } from "@/components/ui"
+import { Card, WhatsNewDialog } from "@/components/ui"
 import Link from "next/link"
 
 export default async function Page() {
@@ -13,7 +13,10 @@ export default async function Page() {
 	} = await supabase.auth.getUser()
 
 	return user ? (
-		<ClubBooks />
+		<>
+			<ClubBooks />
+			<WhatsNewDialog />
+		</>
 	) : (
 		<div className="max-w-sm md:max-w-4xl w-full space-y-3">
 			<div>

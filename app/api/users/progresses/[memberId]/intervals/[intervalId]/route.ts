@@ -69,6 +69,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { member
 			.from("member_interval_progresses")
 			.update({
 				is_complete: body.is_complete,
+				updated_at: new Date().toISOString(),
 			})
 			.eq("interval_id", params.intervalId)
 			.eq("member_id", params.memberId)

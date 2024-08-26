@@ -12,12 +12,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Polls
 - Password recovery page
 - Filter book search based on language
-- Email push notifications
 - View archived readings
 
 ### Changed
 
 - Themes
+
+## [0.8.0] - 2024-08-26
+
+### Added
+
+- Email push notifications when reading goals are completed
+- "What's new" popup
+
+### Changed
+
+- Sign up message placement
 
 ## [0.7.0] - 2024-08-24
 
@@ -60,6 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.8.0]: https://github.com/zachariahwatson/thispage/compare/0.7.0...0.8.0
 [0.7.0]: https://github.com/zachariahwatson/thispage/compare/0.6.1...0.7.0
 [0.6.1]: https://github.com/zachariahwatson/thispage/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/zachariahwatson/thispage/compare/0.5.2...0.6.0
