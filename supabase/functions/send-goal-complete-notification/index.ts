@@ -112,10 +112,10 @@ Deno.serve(async (req) => {
 							emailData.increment_type === "pages" ? "page" : emailData.section_name
 						} ${emailData.increment_type === "pages" ? emailData.goal_page : emailData.goal_section} in ${
 							emailData.club_name
-						}. now's the time to discuss what you thought!
+						}. discuss what you thought!
             </p>
-            <p>love,</p>
-            <p>thispage</p>
+            <p style="margin:0px;">sincerely,</p>
+            <p style="margin:0px;"><strong>this</strong>page</p>
           </div>
         `,
 					}),
