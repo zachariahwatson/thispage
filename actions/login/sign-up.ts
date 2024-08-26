@@ -46,5 +46,5 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	}
 
 	revalidatePath("/login", "layout")
-	return redirect("/login?message=check email to continue the sign up process")
+	return redirect("/login?message=check your email to continue the sign up process! :)")
 }

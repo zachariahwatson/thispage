@@ -13,6 +13,7 @@ export default function Login({ searchParams }: Props) {
 	const [formType, setFormType] = useState("signin")
 	const [email, setEmail] = useState<string>("")
 	const [password, setPassword] = useState<string>("")
+	const [message, setMessage] = useState<string>("")
 	const router = useRouter()
 	const path = usePathname()
 
@@ -21,7 +22,7 @@ export default function Login({ searchParams }: Props) {
 			if (searchParams.type === "error") {
 				toast.error(`${searchParams.message}`)
 			} else {
-				toast.warning(`${searchParams.message}`)
+				setMessage(searchParams.message)
 			}
 		}
 	}, [searchParams.message])
@@ -31,6 +32,7 @@ export default function Login({ searchParams }: Props) {
 			{searchParams.redirect && (
 				<h1 className="w-full text-center font-medium text-2xl mb-4">log in to view that page ;)</h1>
 			)}
+			<h1 className="w-full text-center font-medium text-2xl mb-4">{message}</h1>
 			{formType === "signin" ? (
 				<SignInForm
 					setFormType={setFormType}
