@@ -51,11 +51,11 @@ Deno.serve(async (req) => {
 			// Remove the most recent member interval so they don't receive the email
 			memberIntervalProgresses?.pop()
 
-			const userIDs = memberIntervalProgresses?.map((member) => member?.user_id) || []
+			const userIDs = memberIntervalProgresses?.map((member: { user_id: string }) => member?.user_id) || []
 
 			// Fetch user data for each user_id and store in emails array
 			const emails = await Promise.all(
-				userIDs.map(async (user_id) => {
+				userIDs.map(async (user_id: string) => {
 					const { data, error } = await supabase.auth.admin.getUserById(user_id)
 					if (error) {
 						throw error
