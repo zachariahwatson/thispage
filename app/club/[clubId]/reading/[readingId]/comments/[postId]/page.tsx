@@ -12,7 +12,7 @@ interface Props {
 	}
 }
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: "a post | thispage",
 	description: "join the discussion",
 	openGraph: {
