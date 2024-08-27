@@ -4,12 +4,12 @@ import { DashboardPageLeft, DashboardPageRight } from "@/components/ui/books/clu
 
 interface Props {
 	isVisible: boolean
-	readingIndex: number
+	userSpreadIndex: number
 }
 import { useClubMembership, useReading } from "@/contexts"
 import { useReadings } from "@/hooks/state"
 
-export function DashboardSpread({ isVisible, readingIndex }: Props) {
+export function DashboardSpread({ isVisible, userSpreadIndex }: Props) {
 	return (
 		/**
 		 * @todo figure out why the spread gets stuck while exiting when adding a new reading
@@ -17,8 +17,8 @@ export function DashboardSpread({ isVisible, readingIndex }: Props) {
 		//<AnimatePresence mode="popLayout">
 		isVisible && (
 			<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
-				<DashboardPageLeft readingIndex={readingIndex} />
-				<DashboardPageRight readingIndex={readingIndex} />
+				<DashboardPageLeft userSpreadIndex={userSpreadIndex} />
+				<DashboardPageRight userSpreadIndex={userSpreadIndex} />
 			</div>
 		)
 		//</AnimatePresence>

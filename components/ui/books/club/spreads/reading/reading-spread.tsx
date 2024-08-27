@@ -6,10 +6,10 @@ import { AnimatePresence } from "framer-motion"
 
 interface Props {
 	isVisible: boolean
-	readingIndex: number
+	userSpreadIndex: number
 }
 
-export function ReadingSpread({ isVisible, readingIndex }: Props) {
+export function ReadingSpread({ isVisible, userSpreadIndex }: Props) {
 	const readingData = useReading()
 
 	return (
@@ -19,8 +19,8 @@ export function ReadingSpread({ isVisible, readingIndex }: Props) {
 					id={`club-${readingData?.club_id}-spread`}
 					className="h-full flex flex-col md:flex-row rounded-lg bg-background"
 				>
-					<ReadingPageLeft readingIndex={readingIndex} />
-					<ReadingPageRight readingIndex={readingIndex} />
+					<ReadingPageLeft userSpreadIndex={userSpreadIndex} />
+					<ReadingPageRight userSpreadIndex={userSpreadIndex} />
 				</div>
 			)}
 		</AnimatePresence>

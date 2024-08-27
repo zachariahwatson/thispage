@@ -17,7 +17,7 @@ import { PollSpread } from "@/components/ui/books/club/spreads/poll"
 export function Spreads() {
 	const clubMembership = useClubMembership()
 
-	const [readingIndex, setReadingIndex] = useState<number>(
+	const [userSpreadIndex, setUserSpreadIndex] = useState<number>(
 		//Number(localStorage.getItem(`club-${clubMembership?.club.id}-tab-index`))
 		0
 	)
@@ -33,7 +33,7 @@ export function Spreads() {
 				(reading) =>
 					reading && (
 						<ReadingProvider key={spreadIndex} readingData={reading}>
-							<ReadingSpread isVisible={readingIndex === spreadIndex} readingIndex={spreadIndex++} />
+							<ReadingSpread isVisible={userSpreadIndex === spreadIndex} userSpreadIndex={spreadIndex++} />
 						</ReadingProvider>
 					)
 			)}
@@ -42,23 +42,23 @@ export function Spreads() {
 				(poll) =>
 					poll && (
 						<PollProvider key={spreadIndex} pollData={poll}>
-							<PollSpread isVisible={readingIndex === spreadIndex} readingIndex={spreadIndex++} />
+							<PollSpread isVisible={userSpreadIndex === spreadIndex} userSpreadIndex={spreadIndex++} />
 						</PollProvider>
 					)
 			)}
 
 			{clubMembership?.role !== "member" ? (
-				<DashboardSpread isVisible={readingIndex === spreadIndex} readingIndex={spreadIndex++} />
+				<DashboardSpread isVisible={userSpreadIndex === spreadIndex} userSpreadIndex={spreadIndex++} />
 			) : (
 				readings.length === 0 && (
 					<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
-						<EmptyPageLeft readingIndex={0} />
-						<EmptyPageRight readingIndex={0} />
+						<EmptyPageLeft userSpreadIndex={0} />
+						<EmptyPageRight userSpreadIndex={0} />
 					</div>
 				)
 			)}
 
-			<NextReading readingIndex={readingIndex} setReadingIndex={setReadingIndex} len={spreadIndex} />
+			<NextReading userSpreadIndex={userSpreadIndex} setUserSpreadIndex={setUserSpreadIndex} len={spreadIndex} />
 		</>
 	) : (
 		<SpreadSkeleton />

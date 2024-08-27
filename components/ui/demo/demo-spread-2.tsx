@@ -6,21 +6,21 @@ import { useState } from "react"
 
 interface Props {
 	isVisible: boolean
-	readingIndex: number
+	userSpreadIndex: number
 }
 
-export function DemoSpread2({ isVisible, readingIndex }: Props) {
+export function DemoSpread2({ isVisible, userSpreadIndex }: Props) {
 	const [demoIsComplete, setDemoIsComplete] = useState<boolean>(false)
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
 				<div id={`demo-spread`} className="h-full w-full flex flex-col md:flex-row rounded-lg bg-background">
 					<DemoPageLeft2
-						readingIndex={readingIndex}
+						userSpreadIndex={userSpreadIndex}
 						demoIsComplete={demoIsComplete}
 						setDemoIsComplete={setDemoIsComplete}
 					/>
-					<DemoPageRight2 readingIndex={readingIndex} demoIsComplete={demoIsComplete} />
+					<DemoPageRight2 userSpreadIndex={userSpreadIndex} demoIsComplete={demoIsComplete} />
 				</div>
 			)}
 		</AnimatePresence>

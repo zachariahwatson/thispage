@@ -7,14 +7,20 @@ import { motion } from "framer-motion"
 import { Dispatch, SetStateAction, useState } from "react"
 
 interface Props {
-	readingIndex: number
+	userSpreadIndex: number
 	demoIsComplete: boolean
 	setDemoIsComplete: Dispatch<SetStateAction<boolean>>
 	demoClicked: boolean
 	setDemoClicked: Dispatch<SetStateAction<boolean>>
 }
 
-export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete, demoClicked, setDemoClicked }: Props) {
+export function DemoPageLeft1({
+	userSpreadIndex,
+	demoIsComplete,
+	setDemoIsComplete,
+	demoClicked,
+	setDemoClicked,
+}: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -95,7 +101,7 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete,
 			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
 				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{readingIndex + 1}</p>
+			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>
 	)
 }
