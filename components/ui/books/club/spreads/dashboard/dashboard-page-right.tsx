@@ -19,7 +19,7 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
-import { AddReadingForm } from "@/components/ui/forms/create"
+import { AddPollForm, AddReadingForm } from "@/components/ui/forms/create"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -32,6 +32,7 @@ interface Props {
 export function DashboardPageRight({ readingIndex }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const [addReadingVisible, setAddReadingVisible] = useState(false)
+	const [addPollVisible, setAddPollVisible] = useState(false)
 	const MotionCard = motion(Card)
 	const clubMembership = useClubMembership()
 
@@ -71,6 +72,30 @@ export function DashboardPageRight({ readingIndex }: Props) {
 		onSuccess: () => {
 			toast.success("reading successfully created")
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
+		},
+	})
+
+	const pollMutation = useMutation({
+		mutationFn: (data: {
+			club_id: number
+			creator_member_id: number
+			end_date: Date
+			is_locked: boolean
+			name: string
+			description?: string | undefined
+		}) => {
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/polls`)
+			return fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			})
+		},
+		onSuccess: () => {
+			toast.success("poll successfully created")
+			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})
 
@@ -120,13 +145,11 @@ export function DashboardPageRight({ readingIndex }: Props) {
 											</svg>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												strokeWidth={1.5}
-												stroke="currentColor"
+												viewBox="0 0 16 16"
+												fill="currentColor"
 												className="size-16 text-secondary absolute -top-7 right-[calc(50%-5.5rem)]"
 											>
-												<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+												<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
 											</svg>
 										</div>
 									</SheetTrigger>
@@ -151,7 +174,7 @@ export function DashboardPageRight({ readingIndex }: Props) {
 				<div className="pr-1 h-1/2">
 					<CardTitle className="text-lg">add a poll</CardTitle>
 					<div className="flex justify-center items-center h-full">
-						<Sheet open={addReadingVisible} onOpenChange={setAddReadingVisible}>
+						<Sheet open={addPollVisible} onOpenChange={setAddPollVisible}>
 							<SheetTrigger>
 								<div className="relative">
 									<svg
@@ -170,13 +193,11 @@ export function DashboardPageRight({ readingIndex }: Props) {
 									</svg>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										strokeWidth={1.5}
-										stroke="currentColor"
+										viewBox="0 0 16 16"
+										fill="currentColor"
 										className="size-16 text-secondary absolute -top-8 right-[calc(50%-5.5rem)]"
 									>
-										<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+										<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
 									</svg>
 								</div>
 							</SheetTrigger>
@@ -184,7 +205,7 @@ export function DashboardPageRight({ readingIndex }: Props) {
 								<SheetHeader>
 									<SheetTitle>add a poll</SheetTitle>
 								</SheetHeader>
-								<AddReadingForm mutation={readingMutation} setVisible={setAddReadingVisible} />
+								<AddPollForm mutation={pollMutation} setVisible={setAddPollVisible} />
 							</SheetContent>
 						</Sheet>
 					</div>
