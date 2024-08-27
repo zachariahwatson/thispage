@@ -18,6 +18,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Themes
 
+## [0.8.3] - 2024-08-27
+
+### Added
+
+- Cancel button on all forms
+
+### Changed
+
+- Shortened toast messages
+- Made submit and cancel buttons more mobile friendly on forms
+
 ## [0.8.2] - 2024-08-27
 
 ### Changed
@@ -82,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.8.1]: https://github.com/zachariahwatson/thispage/compare/0.8.2...0.8.3
 [0.8.1]: https://github.com/zachariahwatson/thispage/compare/0.8.1...0.8.2
 [0.8.1]: https://github.com/zachariahwatson/thispage/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/zachariahwatson/thispage/compare/0.7.0...0.8.0

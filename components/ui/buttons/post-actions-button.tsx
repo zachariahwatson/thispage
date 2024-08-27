@@ -61,7 +61,7 @@ export function PostActionsButton({ post, clubMembership }: Props) {
 			})
 		},
 		onSuccess: () => {
-			toast.success("post successfully deleted")
+			toast.success("post deleted!")
 			queryClient.invalidateQueries(["posts", post.reading.club.id, post.reading.id])
 			router.push(`/#club-${post.reading.club.id}`)
 		},
@@ -81,7 +81,7 @@ export function PostActionsButton({ post, clubMembership }: Props) {
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully updated post")
+			toast.success("post updated!")
 			queryClient.invalidateQueries(["post", String(post.reading.club.id), String(post.reading.id), String(post.id)])
 			queryClient.invalidateQueries(["posts", post.reading.club.id, post.reading.id])
 		},

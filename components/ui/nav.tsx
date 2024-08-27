@@ -62,7 +62,7 @@ export function Nav() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("club successfully created")
+			toast.success("club created!")
 			queryClient.invalidateQueries(["clubs"])
 		},
 	})
@@ -79,7 +79,7 @@ export function Nav() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("user successfully updated")
+			toast.success("user updated!")
 			queryClient.invalidateQueries(["intervals"])
 			queryClient.invalidateQueries(["user"])
 			queryClient.invalidateQueries(["user progress"])
