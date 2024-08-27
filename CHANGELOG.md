@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Themes
 
+## [0.8.1] - 2024-08-27
+
+### Added
+
+- Metadata for the invite page
+
 ## [0.8.0] - 2024-08-26
 
 ### Added
@@ -70,6 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.8.1]: https://github.com/zachariahwatson/thispage/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/zachariahwatson/thispage/compare/0.7.0...0.8.0
 [0.7.0]: https://github.com/zachariahwatson/thispage/compare/0.6.1...0.7.0
 [0.6.1]: https://github.com/zachariahwatson/thispage/compare/0.6.0...0.6.1
