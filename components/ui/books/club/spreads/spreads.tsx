@@ -5,12 +5,14 @@ import { EmptyPageLeft, EmptyPageRight } from "@/components/ui/books/club/spread
 import { DashboardSpread } from "@/components/ui/books/club/spreads/dashboard"
 import { ReadingSpread } from "@/components/ui/books/club/spreads/reading"
 import { NextReading } from "@/components/ui/buttons"
-import { ReadingProvider, useClubMembership } from "@/contexts"
-import { useReadings } from "@/hooks/state"
+import { PollProvider, ReadingProvider, useClubMembership } from "@/contexts"
+import { usePolls, useReadings } from "@/hooks/state"
 import { useState } from "react"
+import { PollSpread } from "@/components/ui/books/club/spreads/poll"
 
 /**
  * returns a list of book club reading "spreads". we can't use suspense here as we need the fetch to be called from the client in order to preserve auth cookies. <Suspense> only works with async components and client components can't be async.
+ * @todo add a "bookmark" at the start of each spread map
  */
 export function Spreads() {
 	const clubMembership = useClubMembership()
@@ -20,21 +22,33 @@ export function Spreads() {
 		0
 	)
 
-	const { data: readings, isLoading: loading } = useReadings(clubMembership?.club.id || -1)
+	let spreadIndex = 0
 
-	return !loading && readings ? (
+	const { data: readings, isLoading: readingsLoading } = useReadings(clubMembership?.club.id || -1)
+	const { data: polls, isLoading: pollsLoading } = usePolls(clubMembership?.club.id || -1)
+
+	return !readingsLoading && readings && !pollsLoading && polls ? (
 		<>
 			{readings.map(
-				(reading, index) =>
+				(reading) =>
 					reading && (
-						<ReadingProvider key={index} readingData={reading}>
-							<ReadingSpread isVisible={readingIndex === index} readingIndex={index} />
+						<ReadingProvider key={spreadIndex} readingData={reading}>
+							<ReadingSpread isVisible={readingIndex === spreadIndex} readingIndex={spreadIndex++} />
 						</ReadingProvider>
 					)
 			)}
 
+			{polls.map(
+				(poll) =>
+					poll && (
+						<PollProvider key={spreadIndex} pollData={poll}>
+							<PollSpread isVisible={readingIndex === spreadIndex} readingIndex={spreadIndex++} />
+						</PollProvider>
+					)
+			)}
+
 			{clubMembership?.role !== "member" ? (
-				<DashboardSpread isVisible={readingIndex === readings.length} readingIndex={readings.length} />
+				<DashboardSpread isVisible={readingIndex === spreadIndex} readingIndex={spreadIndex++} />
 			) : (
 				readings.length === 0 && (
 					<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
@@ -44,11 +58,7 @@ export function Spreads() {
 				)
 			)}
 
-			<NextReading
-				readingIndex={readingIndex}
-				setReadingIndex={setReadingIndex}
-				len={clubMembership?.role !== "member" ? readings.length + 1 : readings.length}
-			/>
+			<NextReading readingIndex={readingIndex} setReadingIndex={setReadingIndex} len={spreadIndex} />
 		</>
 	) : (
 		<SpreadSkeleton />

@@ -94,7 +94,7 @@ export function DashboardPageRight({ readingIndex }: Props) {
 			})
 		},
 		onSuccess: () => {
-			toast.success("poll successfully created")
+			toast.success("poll created!")
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})

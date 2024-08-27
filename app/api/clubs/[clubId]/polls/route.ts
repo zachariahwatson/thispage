@@ -54,3 +54,33 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		return Response.json({ error: "an error occurred while fetching club polls." }, { status: 500 })
 	}
 }
+
+/**
+ * creates a new poll.
+ */
+export async function POST(request: NextRequest) {
+	try {
+		const supabase = createClient()
+
+		const body = await request.json()
+
+		const { error } = await supabase.from("polls").insert({
+			club_id: body.club_id,
+			creator_member_id: body.creator_member_id,
+			end_date: body.end_date,
+			is_locked: body.is_locked,
+			name: body.name,
+			description: body.description,
+		})
+
+		if (error) {
+			throw error
+		}
+		// revalidatePath("/", "layout")
+		return Response.json({ message: "successfully created poll" }, { status: 200 })
+	} catch (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a poll:\n", error)
+
+		return Response.json({ error: "an error occurred while creating a poll." }, { status: 500 })
+	}
+}

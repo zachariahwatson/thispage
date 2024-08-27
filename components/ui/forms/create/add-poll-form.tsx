@@ -1,6 +1,6 @@
 "use client"
 
-import { Checkbox, Input, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui"
+import { Checkbox, Input, Tabs, TabsContent, TabsList, TabsTrigger, Textarea } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
 import { useClubMembership } from "@/contexts"
@@ -80,7 +80,7 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>description</FormLabel>
 								<FormControl>
-									<Input placeholder="optional" {...field} />
+									<Textarea className="h-40 md:h-96" placeholder="optional" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -140,7 +140,14 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 						) : (
 							<Button type="submit">add</Button>
 						)}
-						<Button variant="secondary" className="md:mr-2" onClick={() => setVisible(false)}>
+						<Button
+							variant="secondary"
+							className="md:mr-2"
+							onClick={(event) => {
+								event.preventDefault()
+								setVisible(false)
+							}}
+						>
 							cancel
 						</Button>
 					</div>
