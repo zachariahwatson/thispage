@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { InviteCodes, MemberList } from "@/components/ui/books/club/spreads/dashboard"
 import { CreateInviteButton } from "@/components/ui/buttons"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useClubMembership } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import { motion } from "framer-motion"
 import { useState } from "react"
@@ -16,6 +17,7 @@ export function DashboardPageLeft({ readingIndex }: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
+	const clubMembership = useClubMembership()
 
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
@@ -51,7 +53,7 @@ export function DashboardPageLeft({ readingIndex }: Props) {
 						<TabsContent value="invites">
 							<div className="flex justify-between pr-1">
 								<CardTitle className="text-lg">invites</CardTitle>
-								<CreateInviteButton />
+								{clubMembership?.role === "admin" && <CreateInviteButton />}
 							</div>
 							<InviteCodes />
 						</TabsContent>

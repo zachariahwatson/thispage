@@ -104,8 +104,8 @@ export function MemberList() {
 				const member = row.original
 
 				return (
-					clubMembership?.role !== "member" &&
-					member.role !== "admin" && (
+					((clubMembership?.role === "admin" && member.role !== "admin") ||
+						(clubMembership?.role === "moderator" && member.role === "member")) && (
 						<>
 							<DropdownMenu onOpenChange={setDropdownVisible}>
 								<DropdownMenuTrigger asChild>
