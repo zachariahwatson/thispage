@@ -1,16 +1,9 @@
 "use client"
 
-import { AddReadingSpread, EmptyPageLeft, EmptyPageRight, ReadingSpread } from "@/components/ui/book/"
 import { Skeleton } from "@/components/ui/"
-import { useContext, useState } from "react"
 import { NextReading } from "@/components/ui/buttons"
-import { useReadings } from "@/hooks/state"
-import { ReadingProvider, useClubMembership } from "@/contexts"
-import { DemoSpread1 } from "./demo-spread-1"
-import { DemoReadingSpread } from "./demo-reading-spread"
-import { DemoSpread2 } from "./demo-spread-2"
-import { LoginPageLeft } from "./login-page-left"
-import { LoginPageRight } from "./login-page-right"
+import { DemoReadingSpread, DemoSpread1, DemoSpread2 } from "@/components/ui/demo"
+import { useState } from "react"
 
 /**
  * returns a list of book club reading "spreads". we can't use suspense here as we need the fetch to be called from the client in order to preserve auth cookies. <Suspense> only works with async components and client components can't be async.

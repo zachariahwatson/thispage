@@ -24,8 +24,8 @@ import { useIntervals, useUserProgress } from "@/hooks/state"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../sheet"
-import { EditReadingFormPages } from "../edit-reading-form-pages"
-import { EditReadingFormSections } from "../edit-reading-form-sections"
+import { EditReadingFormPages } from "../forms/update/edit-reading-form-pages"
+import { EditReadingFormSections } from "../forms/update/edit-reading-form-sections"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`

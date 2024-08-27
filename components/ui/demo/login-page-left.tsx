@@ -1,27 +1,9 @@
 "use client"
 
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-	Progress,
-	Separator,
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { Card, Separator } from "@/components/ui"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { useQuery } from "react-query"
+import { useState } from "react"
 
 interface Props {
 	readingIndex: number

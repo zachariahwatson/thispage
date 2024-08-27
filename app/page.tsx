@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server"
-import { redirect } from "next/navigation"
-import { ClubBooks } from "@/components/ui/book"
+import { ClubBooks } from "@/components/ui/books/club"
 import { DemoSpreads } from "@/components/ui/demo"
 import { Card, WhatsNewDialog } from "@/components/ui"
 import Link from "next/link"

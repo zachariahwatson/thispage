@@ -1,16 +1,9 @@
 "use client"
 
 import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
-import { ReadingPosts, IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "@/components/ui/book"
-import { CreatePostButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
-import { useQuery } from "react-query"
 import { DemoIntervalAvatarGroup, DemoReadingPosts } from "."
-import { Dispatch, SetStateAction } from "react"
 
 interface Props {
 	readingIndex: number

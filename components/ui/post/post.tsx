@@ -4,15 +4,6 @@ import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-	Badge,
-	Drawer,
-	DrawerContent,
-	DrawerDescription,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
-	PostComments,
-	ScrollArea,
 	Separator,
 	Sheet,
 	SheetContent,
@@ -21,19 +12,19 @@ import {
 	SheetTitle,
 	SheetTrigger,
 	Skeleton,
-	Textarea,
 } from "@/components/ui"
 import { Button, LikeButton, PostActionsButton, RootCommentButton } from "@/components/ui/buttons"
-import { useQuery } from "react-query"
+import { PostComments } from "@/components/ui/post"
+import { useMediaQuery } from "@/hooks"
+import { useClubs, useUser } from "@/hooks/state"
+import type { Post } from "@/lib/types"
 import Image from "next/image"
 import Link from "next/link"
-import type { ClubMembership, Post } from "@/lib/types"
-import { useMediaQuery } from "@/hooks"
-import { useSearchParams, redirect } from "next/navigation"
-import { useClubs, useUser } from "@/hooks/state"
-import { toast } from "sonner"
-import { useEffect, useState } from "react"
+import { redirect } from "next/navigation"
 import { ProbeResult } from "probe-image-size"
+import { useEffect } from "react"
+import { useQuery } from "react-query"
+import { toast } from "sonner"
 
 interface Props {
 	clubId: string

@@ -1,15 +1,11 @@
 "use client"
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui"
-import { Button } from "@/components/ui/buttons"
 import { useClubMembership } from "@/contexts"
-import { MemberProgress } from "@/lib/types"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useUserProgress } from "@/hooks/state"
+import { motion } from "framer-motion"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
-import { motion } from "framer-motion"
-import { useUserProgress } from "@/hooks/state"
 
 interface Props {
 	readingId: number | null

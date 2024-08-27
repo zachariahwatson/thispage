@@ -1,8 +1,8 @@
 "use client"
 
-import { useQuery } from "react-query"
-import { Comment, CommentSkeleton } from "./comment"
+import { Comment, CommentSkeleton } from "@/components/ui/post"
 import type { ClubMembership, Comment as CommentType } from "@/lib/types"
+import { useQuery } from "react-query"
 
 interface Props {
 	clubId: string

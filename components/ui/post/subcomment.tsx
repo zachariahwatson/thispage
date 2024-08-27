@@ -1,12 +1,11 @@
 "use client"
 
-import type { ClubMembership, Comment as CommentType } from "@/lib/types"
-import { Button, CommentActionsButton, LikeButton, SubCommentButton } from "@/components/ui/buttons"
-import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@/components/ui"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Button, CommentActionsButton, LikeButton, SubCommentButton } from "@/components/ui/buttons"
 import { useUser } from "@/hooks/state"
-// import { ReplyTextArea } from "./comment-button"
+import type { ClubMembership, Comment as CommentType } from "@/lib/types"
+import Link from "next/link"
+import { useState } from "react"
 
 interface Props {
 	subCommentData: CommentType["comments"][number]

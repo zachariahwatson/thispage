@@ -1,17 +1,6 @@
 "use client"
 
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage,
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-	ScrollArea,
-} from "@/components/ui"
-import { useMediaQuery } from "@/hooks"
-import { Interval, MemberProgress } from "@/lib/types"
+import { Avatar, AvatarImage, CardContent, CardHeader, CardTitle, ScrollArea } from "@/components/ui"
 
 interface Props {
 	isComplete: boolean

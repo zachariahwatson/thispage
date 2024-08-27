@@ -1,9 +1,18 @@
 "use client"
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	Separator,
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+} from "@/components/ui/"
 import { useEffect, useState } from "react"
-import { Separator } from "./separator"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs"
 
 const version = "0.8.0"
 

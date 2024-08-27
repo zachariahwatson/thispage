@@ -9,19 +9,12 @@ import {
 	CardTitle,
 	Progress,
 	Separator,
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
 } from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton, DemoCompleteIntervalButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { DemoCompleteIntervalButton } from "@/components/ui/buttons"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { useQuery } from "react-query"
+import { Dispatch, SetStateAction, useState } from "react"
 
 interface Props {
 	readingIndex: number

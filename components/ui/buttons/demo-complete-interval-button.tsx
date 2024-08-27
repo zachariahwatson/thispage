@@ -1,19 +1,9 @@
 "use client"
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui"
-import { Button } from "@/components/ui/buttons"
-import { useClubMembership } from "@/contexts"
-import { MemberProgress } from "@/lib/types"
-import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction, useEffect } from "react"
-import { useMutation, useQueryClient } from "react-query"
-import { toast } from "sonner"
 import { motion } from "framer-motion"
-import { useUserProgress } from "@/hooks/state"
-
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-	: "http://localhost:3000"
+import { Dispatch, SetStateAction } from "react"
+import { toast } from "sonner"
 
 interface Props {
 	isComplete: boolean

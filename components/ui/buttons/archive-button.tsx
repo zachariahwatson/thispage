@@ -1,10 +1,8 @@
 "use client"
 
-import { useMutation, useQueryClient } from "react-query"
-import { Button } from "./button"
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 import { useClubMembership, useReading } from "@/contexts"
+import { useMutation, useQueryClient } from "react-query"
+import { toast } from "sonner"
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -15,7 +13,8 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "../alert-dialog"
+} from "@/components/ui"
+import { Button } from "@/components/ui/buttons"
 
 interface Props {
 	readingId: number | null

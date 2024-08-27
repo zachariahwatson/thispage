@@ -1,16 +1,13 @@
 "use client"
 
-import { ReadingPageLeft, ReadingPageRight } from "@/components/ui/book"
+import { DemoPageLeft1, DemoPageRight1 } from "@/components/ui/demo"
 import { AnimatePresence } from "framer-motion"
+import { useState } from "react"
 
 interface Props {
 	isVisible: boolean
 	readingIndex: number
 }
-import { useReading } from "@/contexts"
-import { DemoPageLeft1 } from "./demo-page-left-1"
-import { DemoPageRight1 } from "./demo-page-right-1"
-import { useState } from "react"
 
 export function DemoSpread1({ isVisible, readingIndex }: Props) {
 	const [demoIsComplete, setDemoIsComplete] = useState<boolean>(false)

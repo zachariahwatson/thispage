@@ -4,7 +4,6 @@ import {
 	Avatar,
 	AvatarImage,
 	Badge,
-	Post,
 	Separator,
 	Sheet,
 	SheetContent,
@@ -14,11 +13,9 @@ import {
 	SheetTrigger,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
-import { createClient } from "@/utils/supabase/server"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import Image from "next/image"
 import { useMediaQuery } from "@/hooks"
+import Image from "next/image"
+import Link from "next/link"
 import { useState } from "react"
 
 export default function Page() {

@@ -2,9 +2,9 @@
 "use client"
 
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
-import { QueryClient, QueryClientProvider, useQuery } from "react-query"
-import { Nav, ThemeProvider, TooltipProvider } from "@/components/ui"
+import { ThemeProvider, TooltipProvider } from "@/components/ui"
 import { Toaster } from "@/components/ui/sonner"
+import { QueryClient, QueryClientProvider } from "react-query"
 
 function makeQueryClient() {
 	return new QueryClient({

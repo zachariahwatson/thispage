@@ -1,35 +1,8 @@
 "use client"
 
 // import { ReadingType, ReadingPostType } from "@/utils/types"
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-	Progress,
-	ScrollArea,
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui"
-import {
-	IntervalAvatarGroup,
-	IntervalAvatarGroupSkeleton,
-	ReadingPageLeft,
-	ReadingPageRight,
-	ReadingPost,
-	ReadingPostSkeleton,
-} from "@/components/ui/book"
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
-import { Button } from "@/components/ui/buttons"
-import Image from "next/image"
-import { ScrollAreaElement } from "@radix-ui/react-scroll-area"
-import { useQuery } from "react-query"
-import type { ReadingPost as ReadingPostType } from "@/lib/types"
-import { useClubMembership, useReading } from "@/contexts"
-import { useMediaQuery } from "@/hooks"
+import { ScrollArea } from "@/components/ui"
+import { useState } from "react"
 import { DemoReadingPost } from "."
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL

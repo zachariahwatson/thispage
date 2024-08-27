@@ -1,15 +1,8 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
-import { ReadingPosts, IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "@/components/ui/book"
-import { CreatePostButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { Card, CardContent, CardDescription, CardFooter, CardTitle, Separator } from "@/components/ui"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
-import { useQuery } from "react-query"
-import Image from "next/image"
 import { DemoReadingPosts } from "./demo-reading-posts"
 
 interface Props {

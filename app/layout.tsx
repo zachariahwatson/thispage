@@ -1,13 +1,11 @@
-import { GeistSans } from "geist/font/sans"
-import "@/styles/globals.css"
-import Providers from "./providers"
-import { Nav } from "@/components/ui"
-import { createClient } from "@/utils/supabase/server"
-import Link from "next/link"
 import { Button } from "@/components/ui/buttons"
-import { useQuery } from "react-query"
+import { Nav } from "@/components/ui/nav"
+import "@/styles/globals.css"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { GeistSans } from "geist/font/sans"
+import Link from "next/link"
+import Providers from "./providers"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`

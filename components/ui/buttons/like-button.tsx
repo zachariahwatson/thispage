@@ -1,8 +1,8 @@
 "use client"
 
+import { Badge } from "@/components/ui"
+import { Button } from "@/components/ui/buttons"
 import { useLikes } from "@/hooks/state"
-import { Badge } from "../badge"
-import { Button } from "../button"
 import { Like } from "@/lib/types"
 import { useMutation, useQueryClient } from "react-query"
 

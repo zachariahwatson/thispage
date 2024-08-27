@@ -1,10 +1,9 @@
 "use client"
 
-import { useMutation, useQueryClient } from "react-query"
-import { Textarea } from "../textarea"
-import { Button } from "./button"
-import { SubmitButton } from "./submit-button"
+import { Textarea } from "@/components/ui"
+import { Button } from "@/components/ui/buttons"
 import { useState } from "react"
+import { useMutation, useQueryClient } from "react-query"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
