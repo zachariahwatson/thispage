@@ -32,7 +32,7 @@ export function JoinReadingButton({ readingId, intervalId }: Props) {
 			})
 		},
 		onSuccess: () => {
-			toast.success("joined reading!")
+			toast.success("reading joined!")
 			queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingId])
 			queryClient.invalidateQueries(["user progress", intervalId])
 		},

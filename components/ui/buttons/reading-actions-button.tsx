@@ -59,7 +59,7 @@ export function ReadingActionsButton() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("reading successfully deleted")
+			toast.success("reading deleted!")
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 		},
 	})
@@ -75,7 +75,7 @@ export function ReadingActionsButton() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully left reading")
+			toast.success("reading left!")
 			queryClient.invalidateQueries(["user progress", interval?.id])
 			queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingData?.id])
 		},
@@ -102,7 +102,7 @@ export function ReadingActionsButton() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully updated reading")
+			toast.success("reading updated!")
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 			queryClient.invalidateQueries(["cover image", readingData?.id])
 		},

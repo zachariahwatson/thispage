@@ -64,7 +64,7 @@ export function CommentActionsButton({ commentData, clubId, readingId, postId, c
 			})
 		},
 		onSuccess: () => {
-			toast.success("comment successfully deleted")
+			toast.success("comment deleted!")
 			queryClient.invalidateQueries(["comments", clubId, readingId, postId])
 		},
 	})
@@ -83,7 +83,7 @@ export function CommentActionsButton({ commentData, clubId, readingId, postId, c
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully updated comment")
+			toast.success("comment updated!")
 			queryClient.invalidateQueries(["comments", clubId, readingId, postId])
 		},
 	})
