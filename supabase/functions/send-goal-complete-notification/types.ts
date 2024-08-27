@@ -42,6 +42,13 @@ export type Database = {
             foreignKeyName: "club_invite_codes_club_id_fkey"
             columns: ["club_id"]
             isOneToOne: false
+            referencedRelation: "club_invite_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "club_invite_codes_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
             referencedRelation: "clubs"
             referencedColumns: ["id"]
           },
@@ -160,6 +167,13 @@ export type Database = {
             foreignKeyName: "comments_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
+            referencedRelation: "post_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
@@ -249,6 +263,13 @@ export type Database = {
             columns: ["member_id"]
             isOneToOne: false
             referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "post_view"
             referencedColumns: ["id"]
           },
           {
@@ -364,6 +385,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "members_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "club_invite_view"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "members_club_id_fkey"
             columns: ["club_id"]
@@ -526,6 +554,13 @@ export type Database = {
             foreignKeyName: "readings_club_id_fkey"
             columns: ["club_id"]
             isOneToOne: false
+            referencedRelation: "club_invite_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "readings_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
             referencedRelation: "clubs"
             referencedColumns: ["id"]
           },
@@ -579,7 +614,24 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      club_invite_view: {
+        Row: {
+          description: string | null
+          id: number | null
+          name: string | null
+          total_members: number | null
+        }
+        Relationships: []
+      }
+      post_view: {
+        Row: {
+          book_title: string | null
+          club_name: string | null
+          id: number | null
+          title: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       authorize: {

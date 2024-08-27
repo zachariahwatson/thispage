@@ -28,7 +28,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			`
 			)
 			.eq("id", params.clubId)
-			.single()
+			.maybeSingle()
 
 		if (error) {
 			throw error

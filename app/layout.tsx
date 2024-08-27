@@ -16,7 +16,7 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 export const metadata = {
 	metadataBase: new URL(defaultUrl),
 	title: "thispage",
-	description: "A simple book club app",
+	description: "a simple book club app",
 	icons: {
 		icon: [
 			{ rel: "icon", sizes: "16x16", url: "/favicon-16x16.png" },
@@ -27,6 +27,10 @@ export const metadata = {
 			{ rel: "icon", sizes: "192x192", url: "/android-chrome-192x192.png" },
 			{ rel: "icon", sizes: "512x512", url: "/android-chrome-512x512.png" },
 		],
+	},
+	openGraph: {
+		title: "thispage",
+		description: "a simple book club app",
 	},
 }
 
@@ -55,7 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							</Button>{" "}
 							|{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.8.0</Link>
+								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.8.1</Link>
 							</Button>{" "}
 						</div>
 					</footer>
