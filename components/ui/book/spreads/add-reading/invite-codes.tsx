@@ -69,7 +69,7 @@ const columns: ColumnDef<InviteCode>[] = [
 							variant="outline"
 							onClick={() => {
 								navigator.clipboard.writeText(`${defaultUrl}/invite/${invite.club_id}/${invite.code}`)
-								toast.success("link copied")
+								toast.success("link copied!")
 							}}
 							className="p-2"
 						>

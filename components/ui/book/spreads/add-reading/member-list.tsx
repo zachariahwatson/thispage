@@ -57,7 +57,7 @@ export function MemberList() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully updated member role")
+			toast.success("member role updated!")
 			queryClient.invalidateQueries(["members", clubMembership?.club.id])
 		},
 	})
@@ -73,7 +73,7 @@ export function MemberList() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully kicked member")
+			toast.success("member kicked!")
 			queryClient.invalidateQueries(["members", clubMembership?.club.id])
 		},
 	})

@@ -74,7 +74,7 @@ export function AddReadingPageRight({ readingIndex }: Props) {
 			})
 		},
 		onSuccess: () => {
-			toast.success("reading successfully created")
+			toast.success("reading created!")
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 		},
 	})

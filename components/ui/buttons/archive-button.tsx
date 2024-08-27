@@ -41,7 +41,7 @@ export function ArchiveButton() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("archived reading!")
+			toast.success("reading archived!")
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 		},
 	})

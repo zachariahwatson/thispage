@@ -51,7 +51,7 @@ export function ClubActionsButton() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("club successfully deleted")
+			toast.success("club deleted!")
 			queryClient.invalidateQueries(["clubs"])
 		},
 	})
@@ -67,7 +67,7 @@ export function ClubActionsButton() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully left club")
+			toast.success("club left!")
 			queryClient.invalidateQueries(["clubs"])
 		},
 	})
@@ -84,7 +84,7 @@ export function ClubActionsButton() {
 			})
 		},
 		onSuccess: () => {
-			toast.success("successfully updated club")
+			toast.success("club updated!")
 			queryClient.invalidateQueries(["clubs"])
 		},
 	})

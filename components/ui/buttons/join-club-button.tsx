@@ -30,7 +30,7 @@ export function JoinClubButton({ clubId, inviteCode, len }: Props) {
 			})
 		},
 		onSuccess: () => {
-			toast.success("joined club!")
+			toast.success("club joined!")
 			queryClient.invalidateQueries(["clubs"])
 			router.push("/")
 		},
