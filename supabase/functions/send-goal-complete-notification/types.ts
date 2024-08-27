@@ -167,13 +167,6 @@ export type Database = {
             foreignKeyName: "comments_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
-            referencedRelation: "post_view"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "comments_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
@@ -263,13 +256,6 @@ export type Database = {
             columns: ["member_id"]
             isOneToOne: false
             referencedRelation: "members"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "likes_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "post_view"
             referencedColumns: ["id"]
           },
           {
@@ -411,6 +397,167 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      poll_items: {
+        Row: {
+          book_authors: string[] | null
+          book_cover_image_url: string | null
+          book_description: string | null
+          book_open_library_id: string
+          book_title: string
+          created_at: string
+          creator_member_id: number | null
+          id: number
+          poll_id: number
+          votes_count: number
+        }
+        Insert: {
+          book_authors?: string[] | null
+          book_cover_image_url?: string | null
+          book_description?: string | null
+          book_open_library_id: string
+          book_title: string
+          created_at?: string
+          creator_member_id?: number | null
+          id?: number
+          poll_id: number
+          votes_count?: number
+        }
+        Update: {
+          book_authors?: string[] | null
+          book_cover_image_url?: string | null
+          book_description?: string | null
+          book_open_library_id?: string
+          book_title?: string
+          created_at?: string
+          creator_member_id?: number | null
+          id?: number
+          poll_id?: number
+          votes_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_poll_items_creator_member_id_fkey"
+            columns: ["creator_member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_poll_items_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      poll_votes: {
+        Row: {
+          created_at: string
+          id: number
+          member_id: number
+          poll_item_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          member_id: number
+          poll_item_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          member_id?: number
+          poll_item_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_poll_votes_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_poll_votes_poll_item_id_fkey"
+            columns: ["poll_item_id"]
+            isOneToOne: false
+            referencedRelation: "poll_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      polls: {
+        Row: {
+          club_id: number
+          created_at: string
+          creator_member_id: number | null
+          description: string
+          editor_member_id: number | null
+          end_date: string
+          id: number
+          is_archived: boolean
+          is_finished: boolean
+          is_locked: boolean
+          name: string
+        }
+        Insert: {
+          club_id: number
+          created_at?: string
+          creator_member_id?: number | null
+          description: string
+          editor_member_id?: number | null
+          end_date: string
+          id?: number
+          is_archived?: boolean
+          is_finished?: boolean
+          is_locked?: boolean
+          name: string
+        }
+        Update: {
+          club_id?: number
+          created_at?: string
+          creator_member_id?: number | null
+          description?: string
+          editor_member_id?: number | null
+          end_date?: string
+          id?: number
+          is_archived?: boolean
+          is_finished?: boolean
+          is_locked?: boolean
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_polls_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "club_invite_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_polls_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "clubs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_polls_creator_member_id_fkey"
+            columns: ["creator_member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_polls_editor_member_id_fkey"
+            columns: ["editor_member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
             referencedColumns: ["id"]
           },
         ]
@@ -623,15 +770,6 @@ export type Database = {
         }
         Relationships: []
       }
-      post_view: {
-        Row: {
-          book_title: string | null
-          club_name: string | null
-          id: number | null
-          title: string | null
-        }
-        Relationships: []
-      }
     }
     Functions: {
       authorize: {
@@ -680,6 +818,17 @@ export type Database = {
         Args: {
           _id: number
           _member_id: number
+        }
+        Returns: boolean
+      }
+      cls_polls: {
+        Args: {
+          _id: number
+          _created_at: string
+          _club_id: number
+          _end_date: string
+          _creator_member_id: number
+          _is_finished: boolean
         }
         Returns: boolean
       }
@@ -795,6 +944,17 @@ export type Database = {
         | "member_interval_progresses.create"
         | "likes.create.comment"
         | "likes.create.post"
+        | "polls.read"
+        | "polls.create"
+        | "polls.delete"
+        | "polls.update"
+        | "poll_items.read"
+        | "poll_items.create"
+        | "poll_items.delete"
+        | "poll_items.delete.own"
+        | "poll_votes.create"
+        | "poll_votes.delete.own"
+        | "polls.read.all"
       club_role: "member" | "moderator" | "admin"
       reading_increment: "pages" | "sections"
     }
