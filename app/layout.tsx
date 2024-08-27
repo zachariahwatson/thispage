@@ -8,12 +8,13 @@ import { Button } from "@/components/ui/buttons"
 import { useQuery } from "react-query"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Metadata, Viewport } from "next"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export const metadata = {
+export const metadata: Metadata = {
 	metadataBase: new URL(defaultUrl),
 	title: "thispage",
 	description: "a simple book club app",
@@ -32,6 +33,13 @@ export const metadata = {
 		title: "thispage",
 		description: "a simple book club app",
 	},
+}
+
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	maximumScale: 1,
+	userScalable: false,
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -59,7 +67,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							</Button>{" "}
 							|{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.8.1</Link>
+								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.8.2</Link>
 							</Button>{" "}
 						</div>
 					</footer>
