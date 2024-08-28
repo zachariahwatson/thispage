@@ -25,6 +25,7 @@ import { useClubMembership, useReading } from "@/contexts"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 import { EditReadingFormPages, EditReadingFormSections } from "@/components/ui/forms/update"
+import { buttonVariants } from "@/components/ui/buttons/button"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -180,7 +181,7 @@ export function ReadingActionsButton() {
 							<AlertDialogFooter>
 								<AlertDialogCancel disabled={leaveReadingMutation.isLoading}>cancel</AlertDialogCancel>
 								{leaveReadingMutation.isLoading ? (
-									<Button disabled className="bg-destructive">
+									<Button disabled variant="destructive">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -199,7 +200,7 @@ export function ReadingActionsButton() {
 									</Button>
 								) : (
 									<AlertDialogAction
-										className="bg-destructive"
+										className={buttonVariants({ variant: "destructive" })}
 										onClick={(e) => {
 											leaveReadingMutation.mutate()
 											e.preventDefault()
@@ -223,7 +224,7 @@ export function ReadingActionsButton() {
 							<AlertDialogFooter>
 								<AlertDialogCancel disabled={deleteReadingMutation.isLoading}>cancel</AlertDialogCancel>
 								{deleteReadingMutation.isLoading ? (
-									<Button disabled className="bg-destructive">
+									<Button disabled variant="destructive">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -242,7 +243,7 @@ export function ReadingActionsButton() {
 									</Button>
 								) : (
 									<AlertDialogAction
-										className="bg-destructive"
+										className={buttonVariants({ variant: "destructive" })}
 										onClick={(e) => {
 											deleteReadingMutation.mutate()
 											e.preventDefault()

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { useState } from "react"
+import { buttonVariants } from "@/components/ui/buttons/button"
 
 interface Props {
 	readingId: number | null
@@ -70,7 +71,7 @@ export function ArchiveButton() {
 				<AlertDialogFooter>
 					<AlertDialogCancel disabled={mutation.isLoading}>cancel</AlertDialogCancel>
 					{mutation.isLoading ? (
-						<Button disabled className="bg-destructive">
+						<Button disabled variant="destructive">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
@@ -89,11 +90,11 @@ export function ArchiveButton() {
 						</Button>
 					) : (
 						<AlertDialogAction
+							className={buttonVariants({ variant: "destructive" })}
 							onClick={(e) => {
 								mutation.mutate({ editor_member_id: clubMembership?.id || -1, is_archived: true })
 								e.preventDefault()
 							}}
-							className="bg-destructive"
 						>
 							archive
 						</AlertDialogAction>

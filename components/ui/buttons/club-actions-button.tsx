@@ -26,6 +26,7 @@ import { useUser } from "@/hooks/state"
 import { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
+import { buttonVariants } from "@/components/ui/buttons/button"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -159,7 +160,7 @@ export function ClubActionsButton() {
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={leaveClubMutation.isLoading}>cancel</AlertDialogCancel>
 						{leaveClubMutation.isLoading ? (
-							<Button disabled className="bg-destructive">
+							<Button disabled variant="destructive">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
@@ -178,7 +179,7 @@ export function ClubActionsButton() {
 							</Button>
 						) : (
 							<AlertDialogAction
-								className="bg-destructive"
+								className={buttonVariants({ variant: "destructive" })}
 								onClick={(e) => {
 									leaveClubMutation.mutate()
 									e.preventDefault()
@@ -200,7 +201,7 @@ export function ClubActionsButton() {
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={deleteClubMutation.isLoading}>cancel</AlertDialogCancel>
 						{deleteClubMutation.isLoading ? (
-							<Button disabled className="bg-destructive">
+							<Button disabled variant="destructive">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
@@ -219,7 +220,7 @@ export function ClubActionsButton() {
 							</Button>
 						) : (
 							<AlertDialogAction
-								className="bg-destructive"
+								className={buttonVariants({ variant: "destructive" })}
 								onClick={(e) => {
 									deleteClubMutation.mutate()
 									e.preventDefault()
