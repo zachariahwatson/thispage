@@ -75,10 +75,10 @@ export function Nav() {
 		},
 		onSuccess: () => {
 			toast.success("user successfully updated")
-			queryClient.invalidateQueries(["clubs"])
 			queryClient.invalidateQueries(["user"])
 			queryClient.invalidateQueries(["posts"])
 			queryClient.invalidateQueries(["comments"])
+			queryClient.invalidateQueries(["readings"])
 		},
 	})
 
