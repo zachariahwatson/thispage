@@ -65,7 +65,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 					{children}
 				</ThemeProvider>
 			</TooltipProvider>
-			<Toaster offset={84} position="top-right" richColors />
+			<Toaster offset={84} position="top-right" richColors closeButton />
 		</QueryClientProvider>
 	)
 }
