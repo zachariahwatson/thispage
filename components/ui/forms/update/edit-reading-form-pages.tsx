@@ -57,7 +57,6 @@ export function EditReadingFormPages({ mutation, setVisible }: Props) {
 			join_in_progress: values.joinInProgress,
 			book_cover_image_url: values.bookCoverImageURL,
 		})
-		setVisible(false)
 	}
 
 	return (

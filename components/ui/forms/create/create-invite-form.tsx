@@ -37,6 +37,9 @@ export function CreateInviteForm({ setVisible }: Props) {
 				body: JSON.stringify(data),
 			})
 		},
+		onSettled: () => {
+			setVisible(false)
+		},
 		onSuccess: () => {
 			toast.success("invite code created!")
 			queryClient.invalidateQueries(["invite codes", clubMembership?.club.id])
@@ -61,7 +64,6 @@ export function CreateInviteForm({ setVisible }: Props) {
 			uses: Number(values.uses),
 			creator_member_id: clubMembership?.id || -1,
 		})
-		setVisible(false)
 	}
 
 	return (

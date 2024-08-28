@@ -53,6 +53,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "club_invite_codes_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "spreads_count_view"
+            referencedColumns: ["club_id"]
+          },
+          {
             foreignKeyName: "club_invite_codes_creator_member_id_fkey"
             columns: ["creator_member_id"]
             isOneToOne: false
@@ -386,6 +393,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "members_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "spreads_count_view"
+            referencedColumns: ["club_id"]
+          },
+          {
             foreignKeyName: "members_used_club_invite_code_fkey"
             columns: ["used_club_invite_code"]
             isOneToOne: false
@@ -496,7 +510,7 @@ export type Database = {
           club_id: number
           created_at: string
           creator_member_id: number | null
-          description: string
+          description: string | null
           editor_member_id: number | null
           end_date: string
           id: number
@@ -509,7 +523,7 @@ export type Database = {
           club_id: number
           created_at?: string
           creator_member_id?: number | null
-          description: string
+          description?: string | null
           editor_member_id?: number | null
           end_date: string
           id?: number
@@ -522,7 +536,7 @@ export type Database = {
           club_id?: number
           created_at?: string
           creator_member_id?: number | null
-          description?: string
+          description?: string | null
           editor_member_id?: number | null
           end_date?: string
           id?: number
@@ -545,6 +559,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "clubs"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_polls_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "spreads_count_view"
+            referencedColumns: ["club_id"]
           },
           {
             foreignKeyName: "public_polls_creator_member_id_fkey"
@@ -712,6 +733,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "readings_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "spreads_count_view"
+            referencedColumns: ["club_id"]
+          },
+          {
             foreignKeyName: "readings_creator_member_id_fkey"
             columns: ["creator_member_id"]
             isOneToOne: false
@@ -767,6 +795,15 @@ export type Database = {
           id: number | null
           name: string | null
           total_members: number | null
+        }
+        Relationships: []
+      }
+      spreads_count_view: {
+        Row: {
+          club_id: number | null
+          total_polls: number | null
+          total_readings: number | null
+          total_spreads: number | null
         }
         Relationships: []
       }

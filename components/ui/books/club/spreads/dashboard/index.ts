@@ -1,5 +1,5 @@
 export { BookSearch } from "./book-search"
-export { BookSearchCollapsible } from "./book-search-collapsible"
+export { BookSearchCollapsible, BookSearchCollapsibleSkeleton } from "./book-search-collapsible"
 export { BookSearchItem } from "./book-search-item"
 export { BookSearchList } from "./book-search-list"
 export { DashboardPageLeft } from "./dashboard-page-left"

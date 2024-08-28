@@ -87,7 +87,6 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 		}
 
 		mutation.mutate(payload)
-		setVisible(false)
 	}
 
 	return (

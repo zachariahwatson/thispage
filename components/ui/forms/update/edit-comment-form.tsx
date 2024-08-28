@@ -44,7 +44,6 @@ export function EditCommentForm({ mutation, setVisible, commentData }: Props) {
 		mutation.mutate({
 			content: values.content || "",
 		})
-		setVisible(false)
 	}
 
 	return (

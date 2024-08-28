@@ -43,6 +43,9 @@ export function CreatePostForm({ setVisible }: Props) {
 				body: JSON.stringify(data),
 			})
 		},
+		onSettled: () => {
+			setVisible(false)
+		},
 		onSuccess: () => {
 			toast.success("post created!")
 			queryClient.invalidateQueries(["posts", clubMembership?.club.id, readingData?.id])
@@ -68,7 +71,6 @@ export function CreatePostForm({ setVisible }: Props) {
 			content: values.content || "",
 			is_spoiler: values.isSpoiler,
 		})
-		setVisible(false)
 	}
 
 	return (

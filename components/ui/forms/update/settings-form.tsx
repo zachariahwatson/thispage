@@ -38,23 +38,6 @@ export function SettingsForm({ mutation, setVisible }: Props) {
 		},
 	})
 
-	const fetchUser = async () => {
-		const url = new URL(`${defaultUrl}/api/users`)
-		const response = await fetch(url, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-
-		if (!response.ok) {
-			const body = await response.json()
-			throw new Error(body.error)
-		}
-
-		return await response.json()
-	}
-
 	const { data: user } = useUser()
 
 	const firstName = user?.first_name ? user?.first_name : user?.name.split(" ")[0]
@@ -63,7 +46,6 @@ export function SettingsForm({ mutation, setVisible }: Props) {
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof settingsFormSchema>) {
 		mutation.mutate({ first_name: values.firstName || firstName, last_name: values.lastName || lastName })
-		setVisible(false)
 	}
 
 	return (

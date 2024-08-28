@@ -22,11 +22,11 @@ import { useMediaQuery } from "@/hooks"
 import type { MemberProgress } from "@/lib/types"
 
 interface Props {
-	progresses: MemberProgress[]
+	progresses?: (MemberProgress | undefined)[]
 }
 
 export function IntervalAvatarGroup({ progresses }: Props) {
-	const previewProgresses = progresses.slice(0, 5)
+	const previewProgresses = progresses?.slice(0, 5)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	return (
 		<>
@@ -51,27 +51,30 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 			)}
 
 			<div className="flex flex-row -space-x-1">
-				{previewProgresses.map((progress, index) => (
-					<Tooltip key={index}>
-						<TooltipTrigger className="cursor-default">
-							<Avatar className={`${progress?.is_complete ? "ring-ring ring-4" : "ring-background ring-4"}`}>
-								<AvatarImage src={progress?.member?.avatar_url || ""} loading="eager" />
-								<AvatarFallback>
+				{previewProgresses?.map(
+					(progress, index) =>
+						progress && (
+							<Tooltip key={index}>
+								<TooltipTrigger className="cursor-default">
+									<Avatar className={`${progress?.is_complete ? "ring-ring ring-4" : "ring-background ring-4"}`}>
+										<AvatarImage src={progress?.member?.avatar_url || ""} loading="eager" />
+										<AvatarFallback>
+											{progress?.member?.first_name && progress?.member?.last_name
+												? progress?.member.first_name[0] + progress?.member.last_name[0]
+												: progress?.member?.name &&
+												  progress?.member?.name?.split(" ")[0][0] + progress?.member?.name?.split(" ")[1][0]}
+										</AvatarFallback>
+									</Avatar>
+								</TooltipTrigger>
+								<TooltipContent>
 									{progress?.member?.first_name && progress?.member?.last_name
-										? progress?.member.first_name[0] + progress?.member.last_name[0]
-										: progress?.member?.name &&
-										  progress?.member?.name?.split(" ")[0][0] + progress?.member?.name?.split(" ")[1][0]}
-								</AvatarFallback>
-							</Avatar>
-						</TooltipTrigger>
-						<TooltipContent>
-							{progress?.member?.first_name && progress?.member?.last_name
-								? progress?.member.first_name + " " + progress?.member.last_name
-								: progress?.member?.name}
-						</TooltipContent>
-					</Tooltip>
-				))}
-				{progresses.length > previewProgresses.length && (
+										? progress?.member.first_name + " " + progress?.member.last_name
+										: progress?.member?.name}
+								</TooltipContent>
+							</Tooltip>
+						)
+				)}
+				{progresses && previewProgresses && progresses.length > previewProgresses.length && (
 					<>
 						{isVertical ? (
 							<Sheet>

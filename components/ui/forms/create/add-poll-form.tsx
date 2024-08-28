@@ -53,7 +53,6 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 		}
 
 		mutation.mutate(payload)
-		setVisible(false)
 	}
 
 	return (
@@ -147,6 +146,7 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 								event.preventDefault()
 								setVisible(false)
 							}}
+							disabled={mutation.isLoading}
 						>
 							cancel
 						</Button>

@@ -1,3 +1,5 @@
+import type { Interval } from "@/lib/types/interval"
+
 export type Reading = {
 	id: number
 	club_id: number
@@ -15,6 +17,7 @@ export type Reading = {
 	book_cover_image_width: number | null
 	book_cover_image_height: number | null
 	book_sections: number | null
-	section_name: string
+	section_name: string | null
 	increment_type: string
+	interval: Interval
 } | null

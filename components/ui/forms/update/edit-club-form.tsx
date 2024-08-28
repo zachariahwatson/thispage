@@ -44,7 +44,6 @@ export function EditClubForm({ mutation, setVisible }: Props) {
 			name: values.name,
 			description: values.description || "",
 		})
-		setVisible(false)
 	}
 
 	return (

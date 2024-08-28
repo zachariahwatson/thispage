@@ -14,7 +14,10 @@ export function NextReading({ userSpreadIndex, setUserSpreadIndex, len }: Props)
 	const clubMembership = useClubMembership()
 
 	const nextReading = () => {
-		localStorage.setItem(`club-${clubMembership?.club.id}-tab-index`, ((userSpreadIndex + 1) % len).toString())
+		localStorage.setItem(
+			`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`,
+			((userSpreadIndex + 1) % len).toString()
+		)
 		setUserSpreadIndex((userSpreadIndex + 1) % len)
 	}
 

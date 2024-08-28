@@ -1,6 +1,7 @@
 "use client"
 
 import { Card, Separator } from "@/components/ui"
+import { useFirstLoadAnimation } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import { motion } from "framer-motion"
 import { useState } from "react"
@@ -13,6 +14,7 @@ export function EmptyPageLeft({ userSpreadIndex }: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
+	const firstLoad = useFirstLoadAnimation()
 
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
@@ -21,7 +23,7 @@ export function EmptyPageLeft({ userSpreadIndex }: Props) {
 				animate: { rotateX: 0, originY: 1, zIndex: 2 },
 		  }
 		: {
-				initial: { rotateY: flipOnce ? 0 : 90, originX: 1, zIndex: 2 },
+				initial: { rotateY: flipOnce ? 0 : firstLoad?.firstLoad ? 90 : 180, originX: 1, zIndex: 2 },
 				animate: { rotateY: 0, originX: 1, zIndex: 2 },
 		  }
 

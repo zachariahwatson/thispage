@@ -2,6 +2,7 @@
 
 import { ClubBook, ClubBookSkeleton } from "@/components/ui/books/club"
 import { ClubMembershipProvider } from "@/contexts"
+import { FirstLoadAnimationProvider } from "@/contexts/first-load-animation"
 import { useClubs } from "@/hooks/state"
 
 /**
@@ -13,9 +14,11 @@ export function ClubBooks() {
 	return !loading ? (
 		clubMemberships && clubMemberships.length > 0 ? (
 			clubMemberships.map((clubMembership, index) => (
-				<ClubMembershipProvider key={index} clubMembershipData={clubMembership}>
-					<ClubBook />
-				</ClubMembershipProvider>
+				<FirstLoadAnimationProvider key={index}>
+					<ClubMembershipProvider clubMembershipData={clubMembership}>
+						<ClubBook />
+					</ClubMembershipProvider>
+				</FirstLoadAnimationProvider>
 			))
 		) : (
 			<div className="space-y-4 text-center w-full p-x-6">

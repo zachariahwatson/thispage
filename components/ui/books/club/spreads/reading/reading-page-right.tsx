@@ -1,15 +1,10 @@
 "use client"
 
 import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
-import {
-	IntervalAvatarGroup,
-	IntervalAvatarGroupSkeleton,
-	ReadingPosts,
-} from "@/components/ui/books/club/spreads/reading"
+import { IntervalAvatarGroup, ReadingPosts } from "@/components/ui/books/club/spreads/reading"
 import { CreatePostButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
 import { motion } from "framer-motion"
 
 interface Props {
@@ -19,12 +14,13 @@ interface Props {
 export function ReadingPageRight({ userSpreadIndex }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
-	const clubMembership = useClubMembership()
 	const readingData = useReading()
-	const { data: intervals, isLoading: loading } = useIntervals(clubMembership?.club.id || null, readingData?.id || null)
-	const interval = (intervals && intervals[0]) || null
-	const { data: userProgress } = useUserProgress(interval?.id || null, clubMembership?.id || null)
 	//console.log(interval)
+
+	//concat user progress to intervals
+	const memberProgresses = [readingData?.interval?.user_progress].concat(
+		readingData?.interval?.member_interval_progresses
+	)
 
 	//fix initial and animate
 	const rightVariants = isVertical
@@ -54,22 +50,14 @@ export function ReadingPageRight({ userSpreadIndex }: Props) {
 				</div>
 
 				<ReadingPosts
-					redactSpoilers={userProgress ? !userProgress.is_complete : true}
-					intervalDate={interval?.created_at || ""}
+					redactSpoilers={
+						readingData?.interval?.user_progress ? !readingData?.interval?.user_progress.is_complete : true
+					}
+					intervalDate={readingData?.interval?.created_at || ""}
 				/>
 			</CardHeader>
 			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
-				{interval && !loading ? (
-					<IntervalAvatarGroup
-						progresses={
-							userProgress
-								? [userProgress].concat(interval.member_interval_progresses)
-								: interval.member_interval_progresses
-						}
-					/>
-				) : (
-					<IntervalAvatarGroupSkeleton />
-				)}
+				{memberProgresses && <IntervalAvatarGroup progresses={memberProgresses} />}
 			</CardFooter>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />

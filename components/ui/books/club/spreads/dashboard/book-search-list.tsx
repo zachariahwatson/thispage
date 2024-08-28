@@ -1,6 +1,6 @@
 "use client"
 import { ScrollArea } from "@/components/ui"
-import { BookSearchCollapsible } from "@/components/ui/books/club/spreads/dashboard"
+import { BookSearchCollapsible, BookSearchCollapsibleSkeleton } from "@/components/ui/books/club/spreads/dashboard"
 import React, { MutableRefObject, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 import { useInfiniteQuery } from "react-query"
@@ -72,7 +72,15 @@ export function BookSearchList({ search, radioRef }: Props) {
 								))}
 						</React.Fragment>
 					))}
-				{loading || loadingNext ? (
+				{loading && !loadingNext ? (
+					<>
+						<BookSearchCollapsibleSkeleton />
+						<BookSearchCollapsibleSkeleton />
+						<BookSearchCollapsibleSkeleton />
+						<BookSearchCollapsibleSkeleton />
+						<BookSearchCollapsibleSkeleton />
+					</>
+				) : loadingNext ? (
 					<div className="flex justify-center">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

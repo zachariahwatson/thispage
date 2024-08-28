@@ -50,7 +50,6 @@ export function EditPostForm({ mutation, setVisible, post, clubMembership }: Pro
 			is_spoiler: values.isSpoiler,
 			editor_member_id: clubMembership.id,
 		})
-		setVisible(false)
 	}
 
 	return (

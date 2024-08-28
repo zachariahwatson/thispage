@@ -50,6 +50,9 @@ export function Nav() {
 				body: JSON.stringify(data),
 			})
 		},
+		onSettled: () => {
+			setCreateClubVisible(false)
+		},
 		onSuccess: () => {
 			toast.success("club successfully created")
 			queryClient.invalidateQueries(["clubs"])
@@ -67,11 +70,13 @@ export function Nav() {
 				body: JSON.stringify(data),
 			})
 		},
+		onSettled: () => {
+			setSettingsVisible(false)
+		},
 		onSuccess: () => {
 			toast.success("user successfully updated")
-			queryClient.invalidateQueries(["intervals"])
+			queryClient.invalidateQueries(["clubs"])
 			queryClient.invalidateQueries(["user"])
-			queryClient.invalidateQueries(["user progress"])
 			queryClient.invalidateQueries(["posts"])
 			queryClient.invalidateQueries(["comments"])
 		},

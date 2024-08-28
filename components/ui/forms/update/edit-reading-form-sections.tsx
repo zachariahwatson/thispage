@@ -49,7 +49,7 @@ export function EditReadingFormSections({ mutation, setVisible }: Props) {
 		defaultValues: {
 			intervalSectionLength: String(readingData?.interval_section_length),
 			bookSections: String(readingData?.book_sections) || "0",
-			sectionName: readingData?.section_name,
+			sectionName: readingData?.section_name || "section",
 			joinInProgress: readingData?.join_in_progress,
 		},
 	})
@@ -67,7 +67,6 @@ export function EditReadingFormSections({ mutation, setVisible }: Props) {
 			join_in_progress: values.joinInProgress,
 			book_cover_image_url: values.bookCoverImageURL,
 		})
-		setVisible(false)
 	}
 
 	return (

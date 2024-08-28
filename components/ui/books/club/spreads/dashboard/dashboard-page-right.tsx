@@ -35,11 +35,8 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 	const [addPollVisible, setAddPollVisible] = useState(false)
 	const MotionCard = motion(Card)
 	const clubMembership = useClubMembership()
-
-	const { data: readings, isLoading: loading } = useReadings(clubMembership?.club.id || -1)
-
+	const { data: readings, isLoading: loading } = useReadings(clubMembership?.club.id || -1, clubMembership?.id || -1)
 	const queryClient = useQueryClient()
-
 	const readingMutation = useMutation({
 		mutationFn: (data: {
 			book: {
@@ -69,9 +66,14 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 				body: JSON.stringify(data),
 			})
 		},
+		onSettled: () => {
+			setAddReadingVisible(false)
+		},
 		onSuccess: () => {
 			toast.success("reading successfully created")
+			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
+			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})
 
@@ -93,8 +95,13 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 				body: JSON.stringify(data),
 			})
 		},
+		onSettled: () => {
+			setAddPollVisible(false)
+		},
 		onSuccess: () => {
 			toast.success("poll created!")
+			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
+			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})

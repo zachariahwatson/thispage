@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage, CardContent, CardHeader, CardTitle
 import { MemberProgress } from "@/lib/types"
 
 interface Props {
-	progresses: MemberProgress[]
+	progresses: (MemberProgress | undefined)[] | undefined
 }
 
 export function IntervalAvatarList({ progresses }: Props) {
@@ -16,7 +16,7 @@ export function IntervalAvatarList({ progresses }: Props) {
 			<CardContent>
 				<ScrollArea className="h-[calc(100svh-144px)] md:h-[684px] border rounded-lg shadow-shadow shadow-inner">
 					<div className="grid md:grid-cols-3 p-4">
-						{progresses.map((progress, index) => (
+						{progresses?.map((progress, index) => (
 							<div key={index} className="h-10 flex flex-row mr-8 mb-4">
 								<Avatar className={`${progress?.is_complete ? "ring-ring" : "ring-background"} ring-4`}>
 									<AvatarImage src={progress?.member?.avatar_url || ""} />

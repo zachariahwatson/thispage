@@ -1,7 +1,8 @@
 "use client"
 
 import { ReadingPageLeft, ReadingPageRight } from "@/components/ui/books/club/spreads/reading"
-import { useReading } from "@/contexts"
+import { useClubMembership, useReading } from "@/contexts"
+import { useSpreadsCount } from "@/hooks/state"
 import { AnimatePresence } from "framer-motion"
 
 interface Props {
@@ -11,13 +12,16 @@ interface Props {
 
 export function ReadingSpread({ isVisible, userSpreadIndex }: Props) {
 	const readingData = useReading()
+	const clubMembership = useClubMembership()
+	const { data: spreadsCount } = useSpreadsCount(clubMembership?.club.id || -1, clubMembership?.role || "member")
 
 	return (
 		<AnimatePresence mode="popLayout">
-			{isVisible && (
+			{isVisible && spreadsCount && (
 				<div
 					id={`club-${readingData?.club_id}-spread`}
-					className="h-full flex flex-col md:flex-row rounded-lg bg-background"
+					className="h-full flex flex-col md:flex-row rounded-lg"
+					key={`${readingData?.id} ${clubMembership?.id} ${spreadsCount.total_spreads}`}
 				>
 					<ReadingPageLeft userSpreadIndex={userSpreadIndex} />
 					<ReadingPageRight userSpreadIndex={userSpreadIndex} />

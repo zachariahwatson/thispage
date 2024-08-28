@@ -4,9 +4,9 @@ import { Card, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { InviteCodes, MemberList } from "@/components/ui/books/club/spreads/dashboard"
 import { CreateInviteButton } from "@/components/ui/buttons"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useClubMembership } from "@/contexts"
+import { useClubMembership, useFirstLoadAnimation } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
-import { motion } from "framer-motion"
+import { motion, useMotionValue } from "framer-motion"
 import { useState } from "react"
 
 interface Props {
@@ -18,6 +18,7 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const clubMembership = useClubMembership()
+	const firstLoad = useFirstLoadAnimation()
 
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
@@ -26,7 +27,7 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 				animate: { rotateX: 0, originY: 1, zIndex: 2 },
 		  }
 		: {
-				initial: { rotateY: flipOnce ? 0 : 90, originX: 1, zIndex: 2 },
+				initial: { rotateY: flipOnce ? 0 : firstLoad?.firstLoad ? 90 : 180, originX: 1, zIndex: 2 },
 				animate: { rotateY: 0, originX: 1, zIndex: 2 },
 		  }
 
@@ -36,34 +37,44 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 			variants={leftVariants}
 			initial="initial"
 			animate="animate"
-			transition={{ type: "tween", duration: 0.1, delay: 0.1, ease: "easeIn" }}
+			transition={{ type: "tween", duration: firstLoad?.firstLoad ? 0.1 : 0.2, delay: 0.1, ease: "easeIn" }}
 			style={{ transformPerspective: 2500 }}
-			onAnimationComplete={() => setFlipOnce(true)}
+			onAnimationComplete={() => {
+				setFlipOnce(true)
+			}}
+			onUpdate={(latest) => {
+				// Check if the animation has progressed past a certain point
+				if (!firstLoad?.firstLoad && latest.rotateY && Number(latest.rotateY) < 90) {
+					firstLoad?.setFirstLoad(true)
+				}
+			}}
 		>
-			<CardHeader className="px-4 md:px-6 h-full">
-				<CardTitle className="text-xl">dashboard</CardTitle>
-				<Separator />
+			{firstLoad?.firstLoad && (
+				<CardHeader className="px-4 md:px-6 h-full">
+					<CardTitle className="text-xl">dashboard</CardTitle>
+					<Separator />
 
-				<div className="space-y-1.5 h-full overflow-scroll pt-2 pr-1">
-					<Tabs defaultValue="invites">
-						<TabsList>
-							<TabsTrigger value="invites">invites</TabsTrigger>
-							<TabsTrigger value="members">members</TabsTrigger>
-						</TabsList>
-						<TabsContent value="invites">
-							<div className="flex justify-between pr-1">
-								<CardTitle className="text-lg">invites</CardTitle>
-								{clubMembership?.role === "admin" && <CreateInviteButton />}
-							</div>
-							<InviteCodes />
-						</TabsContent>
-						<TabsContent value="members">
-							<CardTitle className="text-lg">members</CardTitle>
-							<MemberList />
-						</TabsContent>
-					</Tabs>
-				</div>
-			</CardHeader>
+					<div className="space-y-1.5 h-full overflow-scroll pt-2 pr-1">
+						<Tabs defaultValue="invites">
+							<TabsList>
+								<TabsTrigger value="invites">invites</TabsTrigger>
+								<TabsTrigger value="members">members</TabsTrigger>
+							</TabsList>
+							<TabsContent value="invites">
+								<div className="flex justify-between pr-1">
+									<CardTitle className="text-lg">invites</CardTitle>
+									{clubMembership?.role === "admin" && <CreateInviteButton />}
+								</div>
+								<InviteCodes />
+							</TabsContent>
+							<TabsContent value="members">
+								<CardTitle className="text-lg">members</CardTitle>
+								<MemberList />
+							</TabsContent>
+						</Tabs>
+					</div>
+				</CardHeader>
+			)}
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
 				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
