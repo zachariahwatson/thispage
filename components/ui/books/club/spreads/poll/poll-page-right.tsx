@@ -7,7 +7,7 @@ import {
 	ReadingPosts,
 } from "@/components/ui/books/club/spreads/reading"
 import { CreatePostButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { useClubMembership, usePoll, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import { useIntervals, useUserProgress } from "@/hooks/state"
 import { motion } from "framer-motion"
@@ -20,10 +20,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
 	const clubMembership = useClubMembership()
-	const readingData = useReading()
-	const { data: intervals, isLoading: loading } = useIntervals(clubMembership?.club.id || null, readingData?.id || null)
-	const interval = (intervals && intervals[0]) || null
-	const { data: userProgress } = useUserProgress(interval?.id || null, clubMembership?.id || null)
+	const pollData = usePoll()
 	//console.log(interval)
 
 	//fix initial and animate
@@ -52,25 +49,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 					<CardTitle className="text-xl">discussion</CardTitle>
 					<CreatePostButton />
 				</div>
-
-				<ReadingPosts
-					redactSpoilers={userProgress ? !userProgress.is_complete : true}
-					intervalDate={interval?.created_at || ""}
-				/>
 			</CardHeader>
-			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
-				{interval && !loading ? (
-					<IntervalAvatarGroup
-						progresses={
-							userProgress
-								? [userProgress].concat(interval.member_interval_progresses)
-								: interval.member_interval_progresses
-						}
-					/>
-				) : (
-					<IntervalAvatarGroupSkeleton />
-				)}
-			</CardFooter>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
