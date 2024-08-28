@@ -135,7 +135,7 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 							<>
 								<Sheet open={addReadingVisible} onOpenChange={setAddReadingVisible}>
 									<SheetTrigger>
-										<div className="relative">
+										<div className="relative scale-75 md:scale-100">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												fill="none"
@@ -183,7 +183,7 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 					<div className="flex justify-center items-center h-full">
 						<Sheet open={addPollVisible} onOpenChange={setAddPollVisible}>
 							<SheetTrigger>
-								<div className="relative">
+								<div className="relative scale-75 md:scale-100">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"

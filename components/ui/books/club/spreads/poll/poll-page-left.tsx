@@ -16,7 +16,13 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui"
-import { ArchiveButton, CompleteIntervalButton, JoinReadingButton, ReadingActionsButton } from "@/components/ui/buttons"
+import {
+	ArchiveButton,
+	CompleteIntervalButton,
+	JoinReadingButton,
+	PollActionsButton,
+	ReadingActionsButton,
+} from "@/components/ui/buttons"
 import { useClubMembership, useFirstLoadAnimation, usePoll, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import { useIntervals, useUserProgress } from "@/hooks/state"
@@ -44,7 +50,7 @@ export function PollPageLeft({ userSpreadIndex }: Props) {
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
 		? {
-				initial: { rotateX: flipOnce ? 0 : -90, originY: 1, zIndex: 2 },
+				initial: { rotateX: flipOnce ? 0 : firstLoad?.firstLoad ? -90 : -180, originY: 1, zIndex: 2 },
 				animate: { rotateX: 0, originY: 1, zIndex: 2 },
 		  }
 		: {
@@ -65,13 +71,17 @@ export function PollPageLeft({ userSpreadIndex }: Props) {
 			}}
 			onUpdate={(latest) => {
 				// Check if the animation has progressed past a certain point
-				if (!firstLoad?.firstLoad && latest.rotateY && Number(latest.rotateY) < 90) {
+				if (
+					!firstLoad?.firstLoad &&
+					((latest.rotateY && Number(latest.rotateY) < 90) || (latest.rotateX && Number(latest.rotateX) > -90))
+				) {
 					firstLoad?.setFirstLoad(true)
 				}
 			}}
 		>
 			{firstLoad?.firstLoad && (
 				<>
+					<PollActionsButton />
 					<CardHeader className="px-4 md:px-6">
 						<CardTitle className="text-xl">poll</CardTitle>
 						<Separator />

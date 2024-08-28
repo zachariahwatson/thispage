@@ -44,7 +44,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 	//framer motion responsive animation (turns book page flip into notepad page flip)
 	const leftVariants = isVertical
 		? {
-				initial: { rotateX: flipOnce ? 0 : -90, originY: 1, zIndex: 2 },
+				initial: { rotateX: flipOnce ? 0 : firstLoad?.firstLoad ? -90 : -180, originY: 1, zIndex: 2 },
 				animate: { rotateX: 0, originY: 1, zIndex: 2 },
 		  }
 		: {
@@ -65,7 +65,10 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 			}}
 			onUpdate={(latest) => {
 				// Check if the animation has progressed past a certain point
-				if (!firstLoad?.firstLoad && latest.rotateY && Number(latest.rotateY) < 90) {
+				if (
+					!firstLoad?.firstLoad &&
+					((latest.rotateY && Number(latest.rotateY) < 90) || (latest.rotateX && Number(latest.rotateX) > -90))
+				) {
 					firstLoad?.setFirstLoad(true)
 				}
 			}}
