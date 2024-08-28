@@ -3,7 +3,7 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui"
 import { useClubMembership, useReading } from "@/contexts"
 import { Reading } from "@/lib/types"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 
@@ -105,15 +105,9 @@ export function CompleteIntervalButton() {
 	return readingData?.interval?.user_progress ? (
 		<Tooltip>
 			<TooltipTrigger>
-				<motion.div
+				<div
 					className="w-16 md:w-24 h-16 md:h-24 p-0 rounded-full text-primary"
 					onClick={() => mutation.mutate({ is_complete: !readingData?.interval?.user_progress?.is_complete || false })}
-					initial={{
-						scale: 1.1,
-					}}
-					animate={{
-						scale: 1,
-					}}
 				>
 					{readingData?.interval?.user_progress?.is_complete ? (
 						<svg
@@ -144,7 +138,7 @@ export function CompleteIntervalButton() {
 							/>
 						</svg>
 					)}
-				</motion.div>
+				</div>
 			</TooltipTrigger>
 			<TooltipContent>
 				<p>{readingData?.interval?.user_progress?.is_complete ? "un-complete reading" : "complete reading"}</p>
