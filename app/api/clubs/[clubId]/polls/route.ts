@@ -26,6 +26,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
                 description,
                 is_finished,
                 is_archived,
+				total_votes_count,
                 items:poll_items (
                     id,
                     created_at,
@@ -33,6 +34,9 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
                     book_description,
                     book_authors,
                     book_cover_image_url,
+					book_cover_image_width,
+					book_cover_image_height,
+					book_page_count,
                     votes_count
                 )
 			`
@@ -46,19 +50,22 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		}
 
 		return Response.json(data as Poll[], { status: 200 })
-	} catch (error) {
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while fetching club polls:\n" + JSON.stringify(error, null, 2) + "\n"
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while fetching polls in club ${params.clubId}:\n`, error)
+		return Response.json(
+			{
+				message: "an error occurred while fetching polls :(",
+				code: error.code,
+			},
+			{ status: 500 }
 		)
-		return Response.json({ error: "an error occurred while fetching club polls." }, { status: 500 })
 	}
 }
 
 /**
  * creates a new poll.
  */
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest, { params }: { params: { clubId: string } }) {
 	try {
 		const supabase = createClient()
 
@@ -77,10 +84,15 @@ export async function POST(request: NextRequest) {
 			throw error
 		}
 		// revalidatePath("/", "layout")
-		return Response.json({ message: "successfully created poll" }, { status: 200 })
-	} catch (error) {
-		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a poll:\n", error)
-
-		return Response.json({ error: "an error occurred while creating a poll." }, { status: 500 })
+		return Response.json({ message: "poll created!" }, { status: 200 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while creating a poll in club ${params.clubId}:\n`, error)
+		return Response.json(
+			{
+				message: "an error occurred while creating the poll :(",
+				code: error.code,
+			},
+			{ status: 500 }
+		)
 	}
 }

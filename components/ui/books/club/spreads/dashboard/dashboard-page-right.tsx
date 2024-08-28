@@ -20,6 +20,7 @@ import { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 import { AddPollForm, AddReadingForm } from "@/components/ui/forms/create"
+import { QueryError } from "@/utils/errors"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -73,12 +74,11 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 			toast.success("reading successfully created")
 			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
-			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})
 
 	const pollMutation = useMutation({
-		mutationFn: (data: {
+		mutationFn: async (data: {
 			club_id: number
 			creator_member_id: number
 			end_date: Date
@@ -87,21 +87,29 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 			description?: string | undefined
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/polls`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setAddPollVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("poll created!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
-			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})

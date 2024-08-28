@@ -39,7 +39,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { clubId
 		const { error } = await supabase
 			.from("polls")
 			.update({
-				editor_member_id: body.creator_member_id,
+				editor_member_id: body.editor_member_id,
 				is_locked: body.is_locked,
 				is_archived: body.is_archived,
 				name: body.name,

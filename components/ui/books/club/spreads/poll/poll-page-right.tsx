@@ -1,16 +1,10 @@
 "use client"
 
-import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
-import {
-	IntervalAvatarGroup,
-	IntervalAvatarGroupSkeleton,
-	ReadingPosts,
-} from "@/components/ui/books/club/spreads/reading"
-import { CreatePostButton } from "@/components/ui/buttons"
-import { useClubMembership, usePoll, useReading } from "@/contexts"
+import { Card, CardHeader, CardTitle, Separator } from "@/components/ui"
+import { CreatePollItemButton } from "@/components/ui/buttons"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
 import { motion } from "framer-motion"
+import { PollItems } from "@/components/ui/books/club/spreads/poll"
 
 interface Props {
 	userSpreadIndex: number
@@ -19,9 +13,6 @@ interface Props {
 export function PollPageRight({ userSpreadIndex }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
-	const clubMembership = useClubMembership()
-	const pollData = usePoll()
-	//console.log(interval)
 
 	//fix initial and animate
 	const rightVariants = isVertical
@@ -46,9 +37,12 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 		>
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
 				<div className="flex justify-between pr-1">
-					<CardTitle className="text-xl">discussion</CardTitle>
-					<CreatePostButton />
+					<CardTitle className="text-xl">
+						books <span className="font-normal text-muted-foreground">| poll</span>
+					</CardTitle>
+					<CreatePollItemButton />
 				</div>
+				<PollItems />
 			</CardHeader>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />

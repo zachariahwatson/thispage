@@ -83,9 +83,10 @@ export function PollPageLeft({ userSpreadIndex }: Props) {
 				<>
 					<PollActionsButton />
 					<CardHeader className="px-4 md:px-6">
-						<CardTitle className="text-xl">poll</CardTitle>
+						<CardTitle className="text-xl">
+							{pollData?.name} <span className="text-muted-foreground font-normal">| poll</span>
+						</CardTitle>
 						<Separator />
-						<CardTitle className="text-xl md:text-2xl">{pollData?.name}</CardTitle>
 						<CardDescription>{pollData?.description}</CardDescription>
 					</CardHeader>
 					<CardFooter className="absolute bottom-4">

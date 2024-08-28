@@ -418,9 +418,12 @@ export type Database = {
       poll_items: {
         Row: {
           book_authors: string[] | null
+          book_cover_image_height: number | null
           book_cover_image_url: string | null
+          book_cover_image_width: number | null
           book_description: string | null
           book_open_library_id: string
+          book_page_count: number
           book_title: string
           created_at: string
           creator_member_id: number | null
@@ -430,9 +433,12 @@ export type Database = {
         }
         Insert: {
           book_authors?: string[] | null
+          book_cover_image_height?: number | null
           book_cover_image_url?: string | null
+          book_cover_image_width?: number | null
           book_description?: string | null
           book_open_library_id: string
+          book_page_count: number
           book_title: string
           created_at?: string
           creator_member_id?: number | null
@@ -442,9 +448,12 @@ export type Database = {
         }
         Update: {
           book_authors?: string[] | null
+          book_cover_image_height?: number | null
           book_cover_image_url?: string | null
+          book_cover_image_width?: number | null
           book_description?: string | null
           book_open_library_id?: string
+          book_page_count?: number
           book_title?: string
           created_at?: string
           creator_member_id?: number | null
@@ -518,6 +527,7 @@ export type Database = {
           is_finished: boolean
           is_locked: boolean
           name: string
+          total_votes_count: number
         }
         Insert: {
           club_id: number
@@ -531,6 +541,7 @@ export type Database = {
           is_finished?: boolean
           is_locked?: boolean
           name: string
+          total_votes_count?: number
         }
         Update: {
           club_id?: number
@@ -544,6 +555,7 @@ export type Database = {
           is_finished?: boolean
           is_locked?: boolean
           name?: string
+          total_votes_count?: number
         }
         Relationships: [
           {

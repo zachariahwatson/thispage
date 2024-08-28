@@ -21,10 +21,12 @@ import {
 	SheetTitle,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
-import { useClubMembership, usePoll, useReading } from "@/contexts"
+import { useClubMembership, usePoll } from "@/contexts"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
-import { EditReadingFormPages, EditReadingFormSections } from "@/components/ui/forms/update"
+import { QueryError } from "@/utils/errors"
+import { buttonVariants } from "@/components/ui/buttons/button"
+import { EditPollForm } from "@/components/ui/forms/update"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -32,61 +34,72 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 
 export function PollActionsButton() {
 	const [editVisible, setEditVisible] = useState<boolean>(false)
-	const [leaveVisible, setLeaveVisible] = useState<boolean>(false)
 	const [deleteVisible, setDeleteVisible] = useState<boolean>(false)
 	const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
-	const readingData = useReading()
 	const pollData = usePoll()
 	const clubMembership = useClubMembership()
 	const queryClient = useQueryClient()
 
 	const deletePollMutation = useMutation({
-		mutationFn: () => {
-			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}`)
-			return fetch(url, {
+		mutationFn: async () => {
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/polls/${pollData?.id}`)
+			const response = await fetch(url, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setDeleteVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("reading successfully deleted")
-			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
+		onSuccess: (body: any) => {
+			toast.success(body.message)
+			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 		},
 	})
 
 	const updatePollMutation = useMutation({
-		mutationFn: (data: {
+		mutationFn: async (data: {
 			editor_member_id: number
-			// start_date: Date
-			interval_page_length?: number
-			interval_section_length?: number
-			book_sections?: number
-			section_name?: string
-			join_in_progress: boolean
-			book_cover_image_url?: string
+			is_locked: boolean
+			name: string
+			description?: string | undefined
 		}) => {
-			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}`)
-			return fetch(url, {
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/polls/${pollData?.id}`)
+			const response = await fetch(url, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setEditVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("successfully updated reading")
-			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
-			queryClient.invalidateQueries(["cover image", readingData?.id])
+		onSuccess: (body: any) => {
+			toast.success(body.message)
+			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})
 
@@ -131,13 +144,9 @@ export function PollActionsButton() {
 					<Sheet open={editVisible && !dropdownVisible} onOpenChange={setEditVisible}>
 						<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4 overflow-scroll">
 							<SheetHeader>
-								<SheetTitle>edit reading</SheetTitle>
+								<SheetTitle>edit poll</SheetTitle>
 							</SheetHeader>
-							{readingData?.increment_type === "pages" ? (
-								<EditReadingFormPages mutation={updatePollMutation} setVisible={setEditVisible} />
-							) : (
-								<EditReadingFormSections mutation={updatePollMutation} setVisible={setEditVisible} />
-							)}
+							<EditPollForm mutation={updatePollMutation} setVisible={setEditVisible} />
 						</SheetContent>
 					</Sheet>
 
@@ -152,7 +161,7 @@ export function PollActionsButton() {
 							<AlertDialogFooter>
 								<AlertDialogCancel disabled={deletePollMutation.isLoading}>cancel</AlertDialogCancel>
 								{deletePollMutation.isLoading ? (
-									<Button disabled className="bg-destructive">
+									<Button disabled variant="destructive">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -171,7 +180,7 @@ export function PollActionsButton() {
 									</Button>
 								) : (
 									<AlertDialogAction
-										className="bg-destructive"
+										className={buttonVariants({ variant: "destructive" })}
 										onClick={(e) => {
 											deletePollMutation.mutate()
 											e.preventDefault()
