@@ -61,7 +61,11 @@ export function Spreads() {
 			)}
 
 			{clubMembership?.role !== "member" ? (
-				<DashboardSpread isVisible={userSpreadIndex === spreadIndex} userSpreadIndex={spreadIndex++} />
+				<DashboardSpread
+					key={spreadIndex}
+					isVisible={userSpreadIndex === spreadIndex}
+					userSpreadIndex={spreadIndex++}
+				/>
 			) : (
 				readings.length === 0 && (
 					<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
