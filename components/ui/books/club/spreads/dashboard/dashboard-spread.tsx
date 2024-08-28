@@ -19,11 +19,8 @@ export function DashboardSpread({ isVisible, userSpreadIndex }: Props) {
 		 * for some reason adding a key fixes it?
 		 */
 		<AnimatePresence mode="popLayout">
-			{isVisible && spreadsCount && (
-				<div
-					className="h-full flex flex-col md:flex-row rounded-lg"
-					key={`${clubMembership?.id} ${spreadsCount.total_spreads}`}
-				>
+			{isVisible && (
+				<div className="h-full flex flex-col md:flex-row rounded-lg">
 					<DashboardPageLeft userSpreadIndex={userSpreadIndex} />
 					<DashboardPageRight userSpreadIndex={userSpreadIndex} />
 				</div>
