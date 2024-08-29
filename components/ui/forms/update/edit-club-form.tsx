@@ -41,8 +41,8 @@ export function EditClubForm({ mutation, setVisible }: Props) {
 	function onSubmit(values: z.infer<typeof editClubFormSchema>) {
 		mutation.mutate({
 			editor_member_id: clubMembership?.id || -1,
-			name: values.name,
-			description: values.description || "",
+			name: values.name || clubMembership?.club.name || "",
+			description: values.description || clubMembership?.club.description || "",
 		})
 	}
 
@@ -57,7 +57,11 @@ export function EditClubForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>name</FormLabel>
 								<FormControl>
-									<Input {...field} />
+									<Input
+										initialCharacterCount={field.value.length}
+										placeholder={clubMembership?.club.name}
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -70,7 +74,12 @@ export function EditClubForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>description</FormLabel>
 								<FormControl>
-									<Textarea className="h-40 md:h-96" {...field}></Textarea>
+									<Textarea
+										className="h-40"
+										placeholder={clubMembership?.club.description || ""}
+										initialCharacterCount={field.value?.length}
+										{...field}
+									></Textarea>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

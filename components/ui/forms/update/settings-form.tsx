@@ -29,19 +29,19 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	: "http://localhost:3000"
 
 export function SettingsForm({ mutation, setVisible }: Props) {
-	// 1. Define your form.
-	const form = useForm<z.infer<typeof settingsFormSchema>>({
-		resolver: zodResolver(settingsFormSchema),
-		defaultValues: {
-			firstName: "",
-			lastName: "",
-		},
-	})
-
 	const { data: user } = useUser()
 
 	const firstName = user?.first_name ? user?.first_name : user?.name.split(" ")[0]
 	const lastName = user?.last_name ? user?.last_name : user?.name.split(" ")[1]
+
+	// 1. Define your form.
+	const form = useForm<z.infer<typeof settingsFormSchema>>({
+		resolver: zodResolver(settingsFormSchema),
+		defaultValues: {
+			firstName: firstName,
+			lastName: lastName,
+		},
+	})
 
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof settingsFormSchema>) {

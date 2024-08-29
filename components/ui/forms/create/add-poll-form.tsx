@@ -79,7 +79,7 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>description</FormLabel>
 								<FormControl>
-									<Textarea className="h-40 md:h-96" placeholder="optional" {...field} />
+									<Textarea className="h-40" placeholder="optional" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

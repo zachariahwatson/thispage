@@ -46,7 +46,7 @@ export function BookSearch({ field }: Props) {
 		<FormItem>
 			<FormLabel>book</FormLabel>
 			<div className="flex w-full items-center space-x-2">
-				<Input ref={input} placeholder="search books" onKeyDown={handleKeyPress} />
+				<Input ref={input} placeholder="search books" onKeyDown={handleKeyPress} showCharacterCount={false} />
 				<Button type="button" variant="secondary" onClick={() => setSearch(input.current?.value || "")}>
 					search
 				</Button>

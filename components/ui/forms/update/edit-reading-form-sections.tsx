@@ -136,7 +136,7 @@ export function EditReadingFormSections({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>section name</FormLabel>
 								<FormControl>
-									<Input {...field} />
+									<Input initialCharacterCount={field?.value?.length} {...field} />
 								</FormControl>
 								<FormDescription>"chapter", "story", "part", etc.</FormDescription>
 								<FormMessage />

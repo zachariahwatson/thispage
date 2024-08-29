@@ -83,7 +83,7 @@ export function EditReadingFormPages({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>custom cover image url</FormLabel>
 								<FormControl>
-									<Input placeholder="optional" {...field} />
+									<Input placeholder="optional" showCharacterCount={false} {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

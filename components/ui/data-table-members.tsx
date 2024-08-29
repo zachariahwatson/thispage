@@ -48,6 +48,7 @@ export function DataTableMembers<TData, TValue>({ columns, data }: DataTableProp
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
 					className="max-w-sm"
+					showCharacterCount={false}
 				/>
 			</div>
 			<div className="rounded-md border">

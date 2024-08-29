@@ -64,7 +64,7 @@ export function EditPollForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>name</FormLabel>
 								<FormControl>
-									<Input {...field} />
+									<Input initialCharacterCount={field.value.length} {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -77,7 +77,12 @@ export function EditPollForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>description</FormLabel>
 								<FormControl>
-									<Textarea className="h-40 md:h-96" placeholder="optional" {...field} />
+									<Textarea
+										className="h-40"
+										initialCharacterCount={field.value?.length}
+										placeholder="optional"
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

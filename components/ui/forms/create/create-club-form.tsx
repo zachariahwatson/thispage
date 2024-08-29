@@ -70,7 +70,7 @@ export function CreateClubForm({ mutation, setVisible }: Props) {
 							<FormItem>
 								<FormLabel>description</FormLabel>
 								<FormControl>
-									<Textarea className="h-40 md:h-96" {...field}></Textarea>
+									<Textarea className="h-40" {...field}></Textarea>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

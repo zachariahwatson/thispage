@@ -57,7 +57,7 @@ export function EditCommentForm({ mutation, setVisible, commentData }: Props) {
 							<FormItem>
 								<FormLabel>content</FormLabel>
 								<FormControl>
-									<Textarea className="h-40 md:h-96" {...field}></Textarea>
+									<Textarea className="h-40 md:h-96" initialCharacterCount={field.value?.length} {...field}></Textarea>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
