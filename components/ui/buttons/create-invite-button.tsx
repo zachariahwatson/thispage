@@ -41,7 +41,7 @@ export function CreateInviteButton() {
 					</TooltipTrigger>
 					<TooltipContent>create invite code</TooltipContent>
 				</Tooltip>
-				<SheetContent className="sm:max-w-2xl max-w-2xl w-full space-y-4 overflow-scroll">
+				<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4 overflow-scroll">
 					<SheetHeader>
 						<SheetTitle>create invite code</SheetTitle>
 					</SheetHeader>

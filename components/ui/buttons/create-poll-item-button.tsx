@@ -67,7 +67,7 @@ export function CreatePollItemButton() {
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})
-	return (
+	return pollData?.is_locked || clubMembership?.role === "admin" ? (
 		<Sheet open={createPollItemVisible} onOpenChange={setCreatePollItemVisible}>
 			<Tooltip>
 				<TooltipTrigger asChild>
@@ -90,12 +90,27 @@ export function CreatePollItemButton() {
 				</TooltipTrigger>
 				<TooltipContent>add a poll item</TooltipContent>
 			</Tooltip>
-			<SheetContent className="sm:max-w-2xl max-w-2xl w-full space-y-4 overflow-scroll">
+			<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4 overflow-scroll">
 				<SheetHeader>
 					<SheetTitle>add a poll item</SheetTitle>
 				</SheetHeader>
 				<AddPollItemForm mutation={pollItemMutation} setVisible={setCreatePollItemVisible} />
 			</SheetContent>
 		</Sheet>
+	) : (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			strokeWidth={1.5}
+			stroke="currentColor"
+			className="size-6"
+		>
+			<path
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+			/>
+		</svg>
 	)
 }

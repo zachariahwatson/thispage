@@ -190,7 +190,7 @@ export function Nav() {
 				<>
 					<Sheet open={createClubVisible} onOpenChange={setCreateClubVisible}>
 						<SheetTrigger ref={createClubRef} />
-						<SheetContent className="space-y-4 w-full overflow-scroll">
+						<SheetContent className="sm:max-w-xl max-w-xl space-y-4 w-full overflow-scroll">
 							<SheetHeader>
 								<SheetTitle>create a club</SheetTitle>
 							</SheetHeader>
@@ -199,7 +199,7 @@ export function Nav() {
 					</Sheet>
 					<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
 						<SheetTrigger ref={settingsRef} />
-						<SheetContent className="space-y-4 w-full overflow-scroll">
+						<SheetContent className="sm:max-w-xl max-w-xl space-y-4 w-full overflow-scroll">
 							<SheetHeader>
 								<SheetTitle>settings</SheetTitle>
 							</SheetHeader>
@@ -211,7 +211,7 @@ export function Nav() {
 				<>
 					<Sheet open={createClubVisible} onOpenChange={setCreateClubVisible}>
 						<SheetTrigger ref={createClubRef} />
-						<SheetContent className="space-y-4 overflow-scroll">
+						<SheetContent className="sm:max-w-xl max-w-xl space-y-4 overflow-scroll">
 							<SheetHeader>
 								<SheetTitle>create a club</SheetTitle>
 							</SheetHeader>
@@ -220,7 +220,7 @@ export function Nav() {
 					</Sheet>
 					<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
 						<SheetTrigger ref={settingsRef} />
-						<SheetContent className="space-y-4 overflow-scroll">
+						<SheetContent className="sm:max-w-xl max-w-xl space-y-4 overflow-scroll">
 							<SheetHeader>
 								<SheetTitle>settings</SheetTitle>
 							</SheetHeader>

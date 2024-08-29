@@ -35,7 +35,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 					<SheetTrigger>
 						<SheetTitle className="text-xl">readers</SheetTitle>
 					</SheetTrigger>
-					<SheetContent className="w-full rounded-lg">
+					<SheetContent className="sm:max-w-xl max-w-xl w-full rounded-lg">
 						<IntervalAvatarList progresses={progresses} />
 					</SheetContent>
 				</Sheet>
@@ -98,7 +98,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 										</AvatarFallback>
 									</Avatar>
 								</SheetTrigger>
-								<SheetContent className="w-full rounded-lg">
+								<SheetContent className="sm:max-w-xl max-w-xl w-full rounded-lg">
 									<IntervalAvatarList progresses={progresses} />
 								</SheetContent>
 							</Sheet>

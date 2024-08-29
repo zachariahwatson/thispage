@@ -107,7 +107,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 									loading="eager"
 								/>
 							</SheetTrigger>
-							<SheetContent className={`space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
+							<SheetContent className={`max-w-xl space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
 								<SheetHeader className="text-left">
 									<SheetTitle>{readingData?.book_title}</SheetTitle>
 									<SheetDescription className="italic">
