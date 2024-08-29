@@ -829,6 +829,20 @@ export type Database = {
         }
         Returns: boolean
       }
+      check_poll_items_count: {
+        Args: {
+          _poll_id: number
+          _creator_member_id: number
+        }
+        Returns: boolean
+      }
+      check_poll_votes_count: {
+        Args: {
+          _poll_item_id: number
+          _member_id: number
+        }
+        Returns: boolean
+      }
       check_reading_count: {
         Args: {
           _club_id: number
@@ -866,6 +880,14 @@ export type Database = {
       cls_member_roles: {
         Args: {
           _id: number
+          _member_id: number
+        }
+        Returns: boolean
+      }
+      cls_poll_votes: {
+        Args: {
+          _id: number
+          _created_at: string
           _member_id: number
         }
         Returns: boolean
@@ -1004,6 +1026,9 @@ export type Database = {
         | "poll_votes.create"
         | "poll_votes.delete.own"
         | "polls.read.all"
+        | "poll_votes.read"
+        | "poll_votes.update.own"
+        | "poll_items.create.many"
       club_role: "member" | "moderator" | "admin"
       reading_increment: "pages" | "sections"
     }
