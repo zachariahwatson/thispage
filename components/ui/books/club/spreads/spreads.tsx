@@ -38,7 +38,7 @@ export function Spreads() {
 		clubMembership?.club.id || -1,
 		clubMembership?.id || -1
 	)
-	const { data: polls, isLoading: pollsLoading } = usePolls(clubMembership?.club.id || -1)
+	const { data: polls, isLoading: pollsLoading } = usePolls(clubMembership?.club.id || -1, clubMembership?.id || -1)
 
 	return readings && polls && spreadsCount ? (
 		<>
