@@ -37,9 +37,10 @@ interface Props {
 		book_cover_image_height: number | null
 		votes_count: number
 	}
+	groupValue: string
 }
 
-export function PollItem({ item }: Props) {
+export function PollItem({ item, groupValue }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const pollData = usePoll()
 	const cardRef = useRef<HTMLDivElement | null>(null)
@@ -58,9 +59,16 @@ export function PollItem({ item }: Props) {
 	// // check if user has already liked the post or comment
 	// const hasLiked = userLikes?.find((like: Like) => like.post_id === Number(id) && id !== undefined)
 	return (
-		<div className="flex flex-row items-center">
-			<RadioGroupItem value={`${item.id}`} id={`${item.id}`} className="mr-2" />
-			<Card ref={cardRef} className="w-full rounded-sm min-w-0 rounded-r-none border-r-0">
+		<div
+			className={`relative flex flex-row items-center rounded-lg border bg-card text-card-foreground shadow-shadow shadow-sm pl-4 transition-all ${
+				groupValue === `${item.id}` && "ring-4 ring-ring"
+			}`}
+		>
+			<RadioGroupItem value={`${item.id}`} id={`${item.id}`} />
+			<p className="absolute bottom-1 text-xs text-muted-foreground left-2">
+				{pollData?.total_votes_count ? (item.votes_count / pollData?.total_votes_count) * 100 : 0}%
+			</p>
+			<Card ref={cardRef} className="w-full min-w-0 rounded-none border-none bg-none shadow-none">
 				<Label htmlFor={`${item.id}`} className="w-full hover:cursor-pointer min-w-0">
 					<CardHeader ref={cardHeaderRef} className="w-16 relative p-2 md:p-4 pb-1 md:pb-2 space-y-0">
 						<CardTitle className="text-md truncate ...">{item.book_title}</CardTitle>
@@ -96,10 +104,7 @@ export function PollItem({ item }: Props) {
 
 			<Sheet>
 				<SheetTrigger>
-					<div
-						ref={imageRef}
-						className="flex items-center relative justify-end py-1 pr-4 border-border border-[1px] border-l-0 rounded-r-md bg-card"
-					>
+					<div ref={imageRef} className="flex items-center relative justify-end py-1 pr-4">
 						{item.book_cover_image_width === 1 && item.book_cover_image_width === 1 ? (
 							<div className="max-h-full h-full w-8 float-right rounded-[4px] flex justify-center items-center text-muted-foreground">
 								<svg
@@ -148,21 +153,19 @@ export function PollItem({ item }: Props) {
 						)}
 						{/* <svg
 							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							stroke="currentColor"
-							className="size-6 absolute text-muted-foreground bg-card rounded-full top-1 right-1"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							className="size-5 absolute text-muted-foreground rounded-full top-1 right-1"
 						>
 							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+								fillRule="evenodd"
+								d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z"
+								clipRule="evenodd"
 							/>
 						</svg> */}
 					</div>
 				</SheetTrigger>
-				<SheetContent className={`space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
+				<SheetContent className={`max-w-xl space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
 					<SheetHeader className="text-left">
 						<SheetTitle>{item?.book_title}</SheetTitle>
 						<SheetDescription className="italic">
