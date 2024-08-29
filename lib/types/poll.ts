@@ -20,5 +20,11 @@ export type Poll = {
 		book_cover_image_width: number | null
 		book_cover_image_height: number | null
 		votes_count: number
+		poll_votes: {
+			id: number
+			poll_item_id: number
+		}[]
 	}[]
+	user_vote_id?: number | null
+	user_vote_poll_item_id?: number | null
 } | null
