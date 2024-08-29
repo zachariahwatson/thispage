@@ -4,7 +4,7 @@ import { NextRequest } from "next/server"
 import probe from "probe-image-size"
 
 /**
- * gets the specified club's polls along with the polls items. rls ensures that the authenticated user is a member of the club.
+ * gets the specified club's polls along with the polls items and the user's vote if they have one. rls ensures that the authenticated user is a member of the club.
  * @param {searchParam} archived - url query that filters readings based on the is_archived value
  */
 export async function GET(request: NextRequest, { params }: { params: { clubId: string } }) {
@@ -12,6 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		const supabase = createClient()
 		const searchParams = request.nextUrl.searchParams
 		const archived: boolean = searchParams.get("archived") === "true"
+		const memberId: number = Number(searchParams.get("memberId"))
 
 		//query
 		const { data, error } = await supabase
@@ -37,19 +38,50 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 					book_cover_image_width,
 					book_cover_image_height,
 					book_page_count,
-                    votes_count
+                    votes_count,
+					poll_votes (
+						id,
+						poll_item_id
+					)
+
                 )
 			`
 			)
 			.eq("club_id", params.clubId)
 			.eq("is_archived", archived)
+			.eq("poll_items.poll_votes.member_id", memberId)
+			.limit(1, { referencedTable: "poll_items.poll_votes" })
 			.order("id", { ascending: true })
 
 		if (error) {
 			throw error
 		}
 
-		return Response.json(data as Poll[], { status: 200 })
+		if (data) {
+			// Transform data to match the Poll type
+			const transformedData: Poll[] = data.map((poll) => {
+				let userVoteId = null
+				let userVotePollItemId = null
+
+				// Find the user's vote from the items
+				poll.items.forEach((item) => {
+					if (item.poll_votes && item.poll_votes.length > 0) {
+						userVoteId = item.poll_votes[0].id
+						userVotePollItemId = item.poll_votes[0].poll_item_id
+					}
+				})
+
+				return {
+					...poll,
+					items: poll.items,
+					user_vote_id: userVoteId,
+					user_vote_poll_item_id: userVotePollItemId,
+				}
+			})
+			return Response.json(transformedData as Poll[], { status: 200 })
+		}
+
+		return Response.json({}, { status: 200 })
 	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while fetching polls in club ${params.clubId}:\n`, error)
 		return Response.json(
