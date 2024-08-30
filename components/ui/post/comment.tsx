@@ -39,14 +39,16 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 						<p className="text-md">
 							{commentData.member?.name || "[deleted]"} •{" "}
 							<span className="text-sm">
-								{new Date(commentData.created_at).toLocaleDateString(undefined, {
-									year: "numeric",
-									month: "long",
-									day: "numeric",
-								})}
+								{new Date(commentData.created_at)
+									.toLocaleDateString(undefined, {
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									})
+									.toLowerCase()}
 							</span>
 						</p>
-						<p className="md:text-md text-sm w-full">{commentData.content}</p>
+						<p className="md:text-md text-sm w-full break-words">{commentData.content}</p>
 						<div className="flex flex-row items-center">
 							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
 								<Badge variant="outline" className="">

@@ -130,11 +130,13 @@ export function Post({ clubId, readingId, postId }: Props) {
 							<p className="text-md">
 								{post.member?.name} •{" "}
 								<span className="text-sm">
-									{createdAt?.toLocaleDateString(undefined, {
-										year: "numeric",
-										month: "long",
-										day: "numeric",
-									})}
+									{createdAt
+										?.toLocaleDateString(undefined, {
+											year: "numeric",
+											month: "long",
+											day: "numeric",
+										})
+										.toLowerCase()}
 								</span>
 							</p>
 							<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
@@ -226,8 +228,8 @@ export function Post({ clubId, readingId, postId }: Props) {
 						)}
 					</div>
 				</div>
-				<h1 className="text-lg md:text-2xl font-bold">{post.title}</h1>
-				<p className="md:text-md text-sm">{post.content}</p>
+				<h1 className="text-lg md:text-2xl font-bold break-words">{post.title}</h1>
+				<p className="md:text-md text-sm break-words">{post.content}</p>
 				<LikeButton
 					likesCount={post.likes_count}
 					clubId={clubId}
