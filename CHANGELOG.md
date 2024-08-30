@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Polls
 - Poll email notifications
 - Poll cron job scheduling
+- Poll item custom synopsis
 - Ability to archive polls once finished
 - Password recovery page
 - Filter book search based on language
@@ -20,11 +21,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Favorite button for clubs and readings(?)
 - Various loading skeletons
 - Human-friendly error messages
+- Choose different edition covers
 
 ### Changed
 
 - Themes
 - Fetching method, should be a smoother experience
+- Better book search experience
 
 ### Fixed
 
