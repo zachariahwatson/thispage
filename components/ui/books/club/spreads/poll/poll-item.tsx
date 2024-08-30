@@ -51,16 +51,24 @@ export function PollItem({ item, groupValue }: Props) {
 	const imageRef = useRef<HTMLDivElement | null>(null)
 
 	useEffect(() => {
-		// Update cardHeight whenever the card is rendered or resized
-		if (cardRef.current && imageRef.current && cardHeaderRef.current) {
-			imageRef.current.style.height = `${cardRef.current.offsetHeight}px`
-			cardHeaderRef.current.style.width = `${cardRef.current.offsetWidth}px`
-		}
-	}, [cardRef, cardHeaderRef, imageRef])
+		const card = cardRef.current
+		const image = imageRef.current
+		const cardHeader = cardHeaderRef.current
 
-	// const { data: userLikes } = useLikes({ memberId: String(clubMembership?.id) })
-	// // check if user has already liked the post or comment
-	// const hasLiked = userLikes?.find((like: Like) => like.post_id === Number(id) && id !== undefined)
+		if (card && image && cardHeader) {
+			const observer = new ResizeObserver(() => {
+				const h = `${Math.floor(card.clientHeight)}px`
+				const w = `${Math.floor(card.clientWidth)}px`
+				image.style.height = h
+				cardHeader.style.width = w
+			})
+
+			observer.observe(card)
+
+			return () => observer.disconnect()
+		}
+	}, [])
+
 	return (
 		<div className="relative">
 			{(clubMembership?.id === item.creator_member_id || clubMembership?.role !== "member") && (
@@ -76,8 +84,8 @@ export function PollItem({ item, groupValue }: Props) {
 					{pollData?.total_votes_count ? Math.trunc((item.votes_count / pollData?.total_votes_count) * 100) : 0}%
 				</p>
 				<Card ref={cardRef} className="w-full min-w-0 rounded-none border-none bg-none shadow-none">
-					<Label htmlFor={`${item.id}`} className="w-full hover:cursor-pointer min-w-0">
-						<CardHeader ref={cardHeaderRef} className="w-full relative p-2 md:p-3 pb-1 md:pb-2 space-y-0">
+					<Label htmlFor={`${item.id}`} className="hover:cursor-pointer min-w-0">
+						<CardHeader ref={cardHeaderRef} className="relative p-2 md:p-3 pb-1 md:pb-2 space-y-0">
 							<CardTitle className="text-md truncate ...">{item.book_title}</CardTitle>
 							<CardDescription className="text-xs md:text-sm truncate ...">
 								{item.book_authors

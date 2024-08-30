@@ -33,19 +33,41 @@ export function PollPodiumBook({ flexBoxRef, item, winner }: Props) {
 	const imageRef = useRef<HTMLImageElement | null>(null)
 	const divRef = useRef<HTMLDivElement | null>(null)
 
-	useEffect(() => {
-		// Update cardHeight whenever the card is rendered or resized
-		if (flexBoxRef.current) {
-			const h = `${Math.floor(flexBoxRef.current.clientHeight / 2) - (isVertical ? 8 : 16)}px`
-			const w = `${Math.floor(flexBoxRef.current.clientHeight / 3.33)}px`
-			if (imageRef.current) imageRef.current.style.maxHeight = h
+	// useEffect(() => {
+	// 	// Update cardHeight whenever the card is rendered or resized
+	// 	if (flexBoxRef.current) {
+	// 		const h = `${Math.floor(flexBoxRef.current.clientHeight / 2) - (isVertical ? 8 : 16)}px`
+	// 		const w = `${Math.floor(flexBoxRef.current.clientHeight / 3.33)}px`
+	// 		if (imageRef.current) imageRef.current.style.maxHeight = h
 
-			if (divRef.current) {
-				divRef.current.style.height = h
-				divRef.current.style.width = w
-			}
+	// 		if (divRef.current) {
+	// 			divRef.current.style.height = h
+	// 			divRef.current.style.width = w
+	// 		}
+	// 	}
+	// }, [flexBoxRef, imageRef, divRef])
+
+	useEffect(() => {
+		const flexBox = flexBoxRef.current
+		const image = imageRef.current
+		const div = divRef.current
+
+		if (flexBox) {
+			const observer = new ResizeObserver(() => {
+				const h = `${Math.floor(flexBox.clientHeight / 2) - (isVertical ? 8 : 16)}px`
+				const w = `${Math.floor(flexBox.clientHeight / 3.33)}px`
+				if (image) image.style.maxHeight = h
+				if (div) {
+					div.style.height = h
+					div.style.width = w
+				}
+			})
+
+			observer.observe(flexBox)
+
+			return () => observer.disconnect()
 		}
-	}, [flexBoxRef, imageRef, divRef])
+	}, [])
 
 	return item ? (
 		<Sheet>
