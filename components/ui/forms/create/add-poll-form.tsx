@@ -18,7 +18,7 @@ interface Props {
 		{
 			club_id: number
 			creator_member_id: number
-			end_date: Date
+			end_date: string
 			is_locked: boolean
 			name: string
 			description?: string | undefined
@@ -41,7 +41,7 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof addPollFormSchema>) {
 		const endDate = new Date(values.endDate)
-		endDate.setHours(0, 0, 0, 0)
+		endDate.setHours(24, 0, 0, 0)
 		// Prepare the mutation payload
 		const payload: any = {
 			club_id: clubMembership?.club.id || -1,

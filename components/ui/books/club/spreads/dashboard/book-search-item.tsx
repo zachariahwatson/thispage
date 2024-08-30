@@ -90,7 +90,7 @@ export function BookSearchItem({ item, authors, radioRef }: Props) {
 										width={cover.width}
 										height={cover.height}
 										alt="cover"
-										className="max-h-full w-auto float-right rounded-[4px] shadow-sm shadow-shadow object-contain"
+										className="max-h-full w-auto h-auto float-right rounded-[4px] shadow-sm shadow-shadow object-contain"
 										onLoad={() => setCoverLoading(false)}
 									/>
 								) : (

@@ -29,6 +29,7 @@ import { useIntervals, useUserProgress } from "@/hooks/state"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
+import { PollPodium } from "./poll-podium"
 
 interface Props {
 	userSpreadIndex: number
@@ -82,23 +83,19 @@ export function PollPageLeft({ userSpreadIndex }: Props) {
 			{firstLoad?.firstLoad && (
 				<>
 					<PollActionsButton />
-					<CardHeader className="px-4 md:px-6">
-						<CardTitle className="text-xl">
-							{pollData?.name} <span className="text-muted-foreground font-normal">| poll</span>
+					<CardHeader className="px-4 md:px-6 relative h-full">
+						<CardTitle className="text-xl flex flex-row items-center">
+							poll
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 ml-2">
+								<path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75ZM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 0 1-1.875-1.875V8.625ZM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 0 1 3 19.875v-6.75Z" />
+							</svg>
 						</CardTitle>
 						<Separator />
-						<CardDescription>{pollData?.description}</CardDescription>
+						<CardTitle className="text-sm md:text-lg text-wrap break-words">{pollData?.name}</CardTitle>
+						<CardDescription className="text-xs md:text-sm break-words">{pollData?.description}</CardDescription>
+						<Separator />
+						<PollPodium />
 					</CardHeader>
-					<CardFooter className="absolute bottom-4">
-						<CardDescription className="text-xl">
-							this poll ends on{" "}
-							{endDate.toLocaleDateString(undefined, {
-								year: "numeric",
-								month: "long",
-								day: "numeric",
-							})}
-						</CardDescription>
-					</CardFooter>
 				</>
 			)}
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">

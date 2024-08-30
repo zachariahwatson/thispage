@@ -100,13 +100,32 @@ export async function PUT(request: NextRequest, { params }: { params: { clubId: 
 
 		return Response.json({ message: "poll vote changed!", data: data }, { status: 200 })
 	} catch (error: any) {
-		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while voting in poll ${params.pollId}:\n`, error)
-		return Response.json(
-			{
-				message: "an error occurred while voting in the poll :(",
-				code: error.code,
-			},
-			{ status: 500 }
-		)
+		console.error("\x1b[31m%s\x1b[0m", error)
+		switch (error.code) {
+			case "P0003":
+				return Response.json(
+					{
+						message: "you're not trying to vote twice, are you? refresh the page if the issue persists.",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while voting in the poll :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

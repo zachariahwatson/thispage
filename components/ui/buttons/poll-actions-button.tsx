@@ -107,7 +107,7 @@ export function PollActionsButton() {
 		<>
 			{clubMembership?.role === "admin" && (
 				<>
-					<div className="absolute top-2 right-4">
+					<div className="absolute top-2 right-4 z-10">
 						<DropdownMenu onOpenChange={setDropdownVisible}>
 							<DropdownMenuTrigger>
 								<svg

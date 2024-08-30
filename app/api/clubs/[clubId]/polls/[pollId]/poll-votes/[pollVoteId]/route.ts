@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server"
 import { NextRequest } from "next/server"
 
 /**
- * deletes a poll.
+ * deletes a poll vote.
  */
 export async function DELETE(
 	request: NextRequest,
@@ -19,7 +19,7 @@ export async function DELETE(
 
 		return Response.json({ message: "poll vote cancelled!" }, { status: 200 })
 	} catch (error: any) {
-		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while deleting poll vote ${params.pollId}:\n`, error)
+		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while deleting poll vote ${params.pollVoteId}:\n`, error)
 		return Response.json(
 			{
 				message: "an error occurred while cancelling the poll vote :(",

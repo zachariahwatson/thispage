@@ -67,18 +67,18 @@ export function CreatePollItemButton() {
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})
-	return pollData?.is_locked || clubMembership?.role === "admin" ? (
+	return !pollData?.is_locked || clubMembership?.role === "admin" ? (
 		<Sheet open={createPollItemVisible} onOpenChange={setCreatePollItemVisible}>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<SheetTrigger>
+					<SheetTrigger disabled={pollData?.user_has_poll_item && clubMembership?.role !== "admin"}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
 							strokeWidth={1.5}
 							stroke="currentColor"
-							className="size-6"
+							className={`${pollData?.user_has_poll_item && clubMembership?.role !== "admin" && "text-muted"} size-6`}
 						>
 							<path
 								strokeLinecap="round"
@@ -88,7 +88,11 @@ export function CreatePollItemButton() {
 						</svg>
 					</SheetTrigger>
 				</TooltipTrigger>
-				<TooltipContent>add a poll item</TooltipContent>
+				<TooltipContent>
+					{pollData?.user_has_poll_item && clubMembership?.role !== "admin"
+						? "you have already created a poll item"
+						: "add a poll item"}
+				</TooltipContent>
 			</Tooltip>
 			<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4 overflow-scroll">
 				<SheetHeader>

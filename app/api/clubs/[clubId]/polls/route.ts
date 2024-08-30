@@ -39,6 +39,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 					book_cover_image_height,
 					book_page_count,
                     votes_count,
+					creator_member_id,
 					poll_votes (
 						id,
 						poll_item_id
@@ -52,7 +53,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			.eq("poll_items.poll_votes.member_id", memberId)
 			.limit(1, { referencedTable: "poll_items.poll_votes" })
 			.order("id", { ascending: true })
-			.order("id", { referencedTable: "poll_items", ascending: false })
+			.order("id", { referencedTable: "poll_items", ascending: true })
 
 		if (error) {
 			throw error
@@ -63,12 +64,16 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			const transformedData: Poll[] = data.map((poll) => {
 				let userVoteId = null
 				let userVotePollItemId = null
+				let userHasPollItem = false
 
 				// Find the user's vote from the items
 				poll.items.forEach((item) => {
 					if (item.poll_votes && item.poll_votes.length > 0) {
 						userVoteId = item.poll_votes[0].id
 						userVotePollItemId = item.poll_votes[0].poll_item_id
+					}
+					if (item.creator_member_id === memberId) {
+						userHasPollItem = true
 					}
 				})
 
@@ -77,6 +82,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 					items: poll.items,
 					user_vote_id: userVoteId,
 					user_vote_poll_item_id: userVotePollItemId,
+					user_has_poll_item: userHasPollItem,
 				}
 			})
 			return Response.json(transformedData as Poll[], { status: 200 })

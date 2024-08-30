@@ -65,6 +65,7 @@ export function Spreads() {
 					key={spreadIndex}
 					isVisible={userSpreadIndex === spreadIndex}
 					userSpreadIndex={spreadIndex++}
+					setUserSpreadIndex={setUserSpreadIndex}
 				/>
 			) : (
 				readings.length === 0 && (

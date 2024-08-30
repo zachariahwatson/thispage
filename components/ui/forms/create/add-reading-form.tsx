@@ -29,7 +29,7 @@ interface Props {
 			creator_member_id: number
 			interval_page_length?: number
 			interval_section_length?: number
-			start_date: Date
+			start_date: string
 			join_in_progress: boolean
 			increment_type: "pages" | "sections"
 			book_sections?: number | undefined
@@ -60,7 +60,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 	function onSubmit(values: z.infer<typeof addReadingFormSchema>) {
 		const parsedBook = JSON.parse(values.book)
 		const startDate = new Date(values.startDate)
-		startDate.setHours(0, 0, 0, 0)
+		startDate.setHours(24, 0, 0, 0)
 		// Prepare the mutation payload
 		const payload: any = {
 			book: {

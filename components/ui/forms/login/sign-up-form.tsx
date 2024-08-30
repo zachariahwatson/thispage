@@ -81,7 +81,7 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 							<FormItem>
 								<FormLabel>email</FormLabel>
 								<FormControl>
-									<Input placeholder="you@example.com" showCharacterCount={false} {...field} />
+									<Input type="email" placeholder="you@example.com" showCharacterCount={false} {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

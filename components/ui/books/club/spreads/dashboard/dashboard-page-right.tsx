@@ -14,9 +14,9 @@ import {
 } from "@/components/ui"
 import { useClubMembership } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
-import { useReadings } from "@/hooks/state"
+import { useReadings, useSpreadsCount } from "@/hooks/state"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 import { AddPollForm, AddReadingForm } from "@/components/ui/forms/create"
@@ -28,15 +28,18 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 
 interface Props {
 	userSpreadIndex: number
+	setUserSpreadIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
-export function DashboardPageRight({ userSpreadIndex }: Props) {
+export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const [addReadingVisible, setAddReadingVisible] = useState(false)
 	const [addPollVisible, setAddPollVisible] = useState(false)
 	const MotionCard = motion(Card)
 	const clubMembership = useClubMembership()
 	const { data: readings, isLoading: loading } = useReadings(clubMembership?.club.id || -1, clubMembership?.id || -1)
+	const { data: spreadsCount } = useSpreadsCount(clubMembership?.club.id || -1, clubMembership?.role || "member")
+
 	const queryClient = useQueryClient()
 	const readingMutation = useMutation({
 		mutationFn: (data: {
@@ -52,7 +55,7 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 			creator_member_id: number
 			interval_page_length?: number
 			interval_section_length?: number
-			start_date: Date
+			start_date: string
 			join_in_progress: boolean
 			increment_type: "pages" | "sections"
 			book_sections?: number | undefined
@@ -74,6 +77,13 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 			toast.success("reading successfully created")
 			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
+			if (spreadsCount && spreadsCount?.total_readings) {
+				localStorage.setItem(
+					`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`,
+					(spreadsCount?.total_readings).toString()
+				)
+				setUserSpreadIndex(spreadsCount?.total_readings)
+			}
 		},
 	})
 
@@ -81,7 +91,7 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 		mutationFn: async (data: {
 			club_id: number
 			creator_member_id: number
-			end_date: Date
+			end_date: string
 			is_locked: boolean
 			name: string
 			description?: string | undefined
@@ -111,6 +121,13 @@ export function DashboardPageRight({ userSpreadIndex }: Props) {
 			toast.success(body.message)
 			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
+			if (spreadsCount && spreadsCount?.total_readings && spreadsCount?.total_polls) {
+				localStorage.setItem(
+					`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`,
+					(spreadsCount?.total_readings + spreadsCount?.total_polls).toString()
+				)
+				setUserSpreadIndex(spreadsCount?.total_readings + spreadsCount?.total_polls)
+			}
 		},
 	})
 

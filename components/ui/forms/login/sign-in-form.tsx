@@ -48,7 +48,7 @@ export function SignInForm({ setFormType, email, setEmail, password, setPassword
 							<FormItem>
 								<FormLabel>email</FormLabel>
 								<FormControl>
-									<Input placeholder="you@example.com" {...field} />
+									<Input type="email" placeholder="you@example.com" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

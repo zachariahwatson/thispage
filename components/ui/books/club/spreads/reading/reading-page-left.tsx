@@ -79,7 +79,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 						<Sheet>
 							<SheetTrigger asChild>
 								<Image
-									className="rounded-md max-h-full md:rounded-lg hover:cursor-pointer object-contain"
+									className="rounded-md max-h-full md:rounded-lg hover:cursor-pointer object-contain w-auto h-auto shadow-[4px_4px_6px_-1px_rgba(0,0,0,.1)] shadow-shadow"
 									src={readingData?.book_cover_image_url || ""}
 									width={readingData?.book_cover_image_width || 0}
 									height={readingData?.book_cover_image_height || 0}
@@ -107,7 +107,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 									loading="eager"
 								/>
 							</SheetTrigger>
-							<SheetContent className={`max-w-xl space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
+							<SheetContent className={`max-w-xl md:max-w-xl space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
 								<SheetHeader className="text-left">
 									<SheetTitle>{readingData?.book_title}</SheetTitle>
 									<SheetDescription className="italic">
