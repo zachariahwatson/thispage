@@ -18,6 +18,7 @@ export function PollItems() {
 	const clubMembership = useClubMembership()
 	const [value, setValue] = useState<string | undefined>(`${pollData?.user_vote_poll_item_id}`)
 	const queryClient = useQueryClient()
+	const endDate = new Date(pollData?.end_date || "")
 
 	const deletePollVoteMutation = useMutation({
 		mutationFn: async (data: { poll_vote_id?: number | null }) => {
@@ -75,22 +76,24 @@ export function PollItems() {
 	})
 
 	const handleValueChange = (newValue: string) => {
-		const promise = upsertPollVoteMutation.mutateAsync({
-			member_id: clubMembership?.id || -1,
-			poll_item_id: Number(newValue),
-			poll_vote_id: pollData?.user_vote_id ?? undefined,
-		})
+		if (endDate.getTime() > Date.now()) {
+			const promise = upsertPollVoteMutation.mutateAsync({
+				member_id: clubMembership?.id || -1,
+				poll_item_id: Number(newValue),
+				poll_vote_id: pollData?.user_vote_id ?? undefined,
+			})
 
-		toast.promise(promise, {
-			loading: "voting...",
-			success: (body: any) => {
-				return body.message
-			},
-			error: (error: any) => {
-				console.error(error.message, { code: error.code })
-				return error.message + " code: " + error.code
-			},
-		})
+			toast.promise(promise, {
+				loading: "voting...",
+				success: (body: any) => {
+					return body.message
+				},
+				error: (error: any) => {
+					console.error(error.message, { code: error.code })
+					return error.message + " code: " + error.code
+				},
+			})
+		}
 	}
 
 	return (
@@ -101,6 +104,7 @@ export function PollItems() {
 						{pollData?.items &&
 							pollData?.items.map((item) => <PollItem key={item.id} item={item} groupValue={value} />)}
 						{pollData?.user_vote_id &&
+							endDate.getTime() > Date.now() &&
 							(deletePollVoteMutation.isLoading ? (
 								<Button disabled className="w-full" variant="outline">
 									<svg
