@@ -1,10 +1,10 @@
-import { Work } from "@/lib/types"
+import { Editions } from "@/lib/types"
 import { NextRequest } from "next/server"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
 		if (params.id !== "") {
-			const url = new URL(`https://openlibrary.org/works/${params.id}.json`)
+			const url = new URL(`https://openlibrary.org/works/${params.id}/editions.json`)
 			const response = await fetch(url, {
 				method: "GET",
 				headers: {
@@ -19,9 +19,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 			const body = await response.json()
 
-			return Response.json(body as Work, { status: 200 })
+			return Response.json(body as Editions, { status: 200 })
 		}
 	} catch (error) {
-		return Response.json({ error: "an error occurred while retrieving the book work." }, { status: 500 })
+		return Response.json({ error: "an error occurred while retrieving book editions." }, { status: 500 })
 	}
 }

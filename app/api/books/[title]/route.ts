@@ -1,3 +1,4 @@
+import { BookSearch } from "@/lib/types"
 import { NextRequest } from "next/server"
 
 export async function GET(request: NextRequest, { params }: { params: { title: string } }) {
@@ -7,7 +8,7 @@ export async function GET(request: NextRequest, { params }: { params: { title: s
 			const url = new URL(
 				`https://openlibrary.org/search.json?q=${params.title}&fields=key,title,author_name&limit=5&page=${
 					searchParams.get("page") || 1
-				}`
+				}&language=eng`
 			)
 			const response = await fetch(url, {
 				method: "GET",
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest, { params }: { params: { title: s
 
 			const body = await response.json()
 
-			return Response.json(body, { status: 200 })
+			return Response.json(body as BookSearch, { status: 200 })
 		}
 	} catch (error) {
 		return Response.json({ error: "an error occurred while books." }, { status: 500 })
