@@ -2,6 +2,7 @@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger, Skeleton } from "@/components/ui"
 import { BookSearchItem } from "@/components/ui/books/club/spreads/dashboard"
 import { FormDescription, FormItem, FormLabel } from "@/components/ui/forms"
+import { Editions } from "@/lib/types"
 import { MutableRefObject, useState } from "react"
 import { useQuery } from "react-query"
 
@@ -21,10 +22,10 @@ export function BookSearchCollapsible({ item, radioRef }: Props) {
 		data: editions,
 		isLoading: loading,
 		refetch,
-	} = useQuery({
+	} = useQuery<Editions>({
 		queryKey: ["editions", item],
 		queryFn: async () => {
-			const url = new URL(`${defaultUrl}/api/books${item.key}`)
+			const url = new URL(`${defaultUrl}/api/books${item.key}/editions`)
 			const response = await fetch(url, {
 				method: "GET",
 				headers: {
@@ -40,7 +41,13 @@ export function BookSearchCollapsible({ item, radioRef }: Props) {
 			return await response.json()
 		},
 	})
-	return (
+
+	// Filter the editions to only include those with 'languages' key containing '/languages/eng'
+	const filteredEditions = editions?.entries.filter((entry) =>
+		entry.languages?.some((language) => language.key === "/languages/eng")
+	)
+
+	return filteredEditions && filteredEditions.length > 0 ? (
 		<Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
 			<div className="flex items-center justify-between space-x-4">
 				<CollapsibleTrigger asChild>
@@ -64,60 +71,37 @@ export function BookSearchCollapsible({ item, radioRef }: Props) {
 									: null}
 							</span>
 							<FormDescription className="flex flex-row items-center text-xs">
-								{loading ? (
-									<Skeleton className="w-28 h-4 rounded-[3px] mt-2" />
-								) : (
-									<>
-										view {editions && editions.entries && editions.entries.length} editions{" "}
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
-											viewBox="0 0 24 24"
-											strokeWidth={1.5}
-											stroke="currentColor"
-											className="size-6"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-											/>
-										</svg>
-									</>
-								)}
+								view {filteredEditions.length} editions{" "}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									strokeWidth={1.5}
+									stroke="currentColor"
+									className="size-6"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+									/>
+								</svg>
 							</FormDescription>
 						</FormLabel>
 					</FormItem>
 				</CollapsibleTrigger>
 			</div>
 			<CollapsibleContent className="space-y-2 px-4">
-				{loading ? (
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						strokeWidth={1.5}
-						stroke="currentColor"
-						className="size-6 animate-spin"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-						/>
-					</svg>
-				) : (
-					editions &&
-					editions.entries &&
-					editions.entries.map(
-						(entry: any, i: number) =>
-							(entry.number_of_pages || entry.pagination) && (
-								<BookSearchItem item={entry} authors={item.author_name} key={i} radioRef={radioRef} />
-							)
-					)
+				{filteredEditions.map(
+					(entry: any, i: number) =>
+						(entry.number_of_pages || entry.pagination) && (
+							<BookSearchItem item={entry} authors={item.author_name} key={i} radioRef={radioRef} />
+						)
 				)}
 			</CollapsibleContent>
 		</Collapsible>
+	) : (
+		loading && <BookSearchCollapsibleSkeleton />
 	)
 }
 
