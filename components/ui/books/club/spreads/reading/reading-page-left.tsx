@@ -200,11 +200,13 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 										<div className="w-full h-full flex justify-center items-center pt-8">
 											<p className="text-muted-foreground">
 												🚧this reading will start on{" "}
-												{startDate.toLocaleDateString(undefined, {
-													year: "numeric",
-													month: "long",
-													day: "numeric",
-												})}
+												{startDate
+													.toLocaleDateString(undefined, {
+														year: "numeric",
+														month: "long",
+														day: "numeric",
+													})
+													.toLowerCase()}
 												🚧
 											</p>
 										</div>
