@@ -1,15 +1,10 @@
 "use client"
 
-import { Card, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
-import { ReadingPosts, IntervalAvatarGroup, IntervalAvatarGroupSkeleton } from "@/components/ui/book"
-import { Button, CreatePostButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { Card, CardHeader, CardTitle, Separator } from "@/components/ui"
+import { Button } from "@/components/ui/buttons"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { useQuery } from "react-query"
 
 export function LoginPageRight() {
 	const isVertical = useMediaQuery("(max-width: 768px)")

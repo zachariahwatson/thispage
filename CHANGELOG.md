@@ -13,10 +13,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Password recovery page
 - Filter book search based on language
 - View archived readings
+- Tabs for readings, polls and dashboard
+- Favorite button for clubs and readings(?)
+- Various loading skeletons
+- Human-friendly error messages
 
 ### Changed
 
 - Themes
+- Fetching method, should be a smoother experience
+
+### Fixed
+
+- Post title truncation
+- Reading image alignment issues
 
 ## [0.8.3] - 2024-08-27
 

@@ -2,27 +2,22 @@
 
 import {
 	Avatar,
-	AvatarImage,
 	AvatarFallback,
-	TooltipContent,
-	TooltipTrigger,
-	Dialog,
-	DialogTrigger,
-	DialogContent,
-	Skeleton,
+	AvatarImage,
 	CardTitle,
-	Drawer,
-	DrawerTrigger,
-	DrawerTitle,
-	DrawerContent,
+	Dialog,
+	DialogContent,
+	DialogTrigger,
 	Sheet,
 	SheetContent,
 	SheetTitle,
 	SheetTrigger,
+	Skeleton,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
 } from "@/components/ui"
-import { Tooltip } from "@/components/ui"
-import { DemoIntervalAvatarList } from "./demo-interval-avatar-list"
-import type { Interval, MemberProgress } from "@/lib/types"
+import { DemoIntervalAvatarList } from "@/components/ui/demo"
 import { useMediaQuery } from "@/hooks"
 
 interface Props {

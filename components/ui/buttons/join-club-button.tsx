@@ -1,8 +1,8 @@
 "use client"
 
-import { useMutation, useQueryClient } from "react-query"
-import { Button } from "./button"
+import { Button } from "@/components/ui/buttons"
 import { useRouter } from "next/navigation"
+import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 
 interface Props {

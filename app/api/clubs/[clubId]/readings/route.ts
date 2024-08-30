@@ -12,6 +12,10 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		const supabase = createClient()
 		const searchParams = request.nextUrl.searchParams
 		const archived: boolean = searchParams.get("archived") === "true"
+		const memberId: number = Number(searchParams.get("memberId"))
+		const {
+			data: { user },
+		} = await supabase.auth.getUser()
 
 		//query
 		const { data, error } = await supabase
@@ -34,18 +38,84 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			book_cover_image_height,
 			book_sections,
 			section_name,
-			increment_type
+			increment_type,
+			interval:intervals (
+				id,
+                goal_page,
+				goal_section,
+                created_at,
+                member_interval_progresses (
+					id,
+					is_complete,
+					member:members (
+						id, 
+						user_id,
+						...users (
+							name,
+							first_name,
+							last_name,
+							avatar_url
+						)
+					)
+				)
+			)
 			`
 			)
 			.eq("club_id", params.clubId)
 			.eq("is_archived", archived)
+			.neq("intervals.member_interval_progresses.member.user_id", user?.id)
+			.not("intervals.member_interval_progresses.member", "is", null)
 			.order("id", { ascending: true })
+			.order("id", { referencedTable: "intervals", ascending: false })
+			.limit(1, { referencedTable: "intervals" })
 
 		if (error) {
 			throw error
 		}
 
-		return Response.json(data as Reading[], { status: 200 })
+		const destructuredData: Reading[] = data.map((reading) => ({
+			...reading,
+			interval: reading.interval[0], // Take the first (and only) element from the array
+		}))
+
+		const readingData = await Promise.all(
+			destructuredData.map(async (reading) => {
+				//query for user progress
+				const { data: userProgress, error: userProgressError } = await supabase
+					.from("member_interval_progresses")
+					.select(
+						`
+				id,
+                is_complete,
+				member:members (
+						id, 
+						user_id,
+						...users (
+							name,
+							first_name,
+							last_name,
+							avatar_url
+						)
+					)
+				`
+					)
+					.eq("interval_id", reading?.interval?.id || -1)
+					.eq("member_id", memberId)
+					.maybeSingle()
+
+				if (userProgressError) {
+					throw error
+				}
+
+				if (reading?.interval) {
+					reading.interval.user_progress = userProgress
+				}
+
+				return reading
+			})
+		)
+
+		return Response.json(readingData, { status: 200 })
 	} catch (error) {
 		console.error(
 			"\x1b[31m%s\x1b[0m",

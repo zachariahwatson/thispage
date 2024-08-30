@@ -1,12 +1,11 @@
 "use client"
 
-import type { ClubMembership, Comment as CommentType } from "@/lib/types"
-import { Button, CommentActionsButton, LikeButton, SubCommentButton } from "@/components/ui/buttons"
-import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge } from "@/components/ui"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Button, CommentActionsButton, LikeButton, SubCommentButton } from "@/components/ui/buttons"
 import { useUser } from "@/hooks/state"
-// import { ReplyTextArea } from "./comment-button"
+import type { ClubMembership, Comment as CommentType } from "@/lib/types"
+import Link from "next/link"
+import { useState } from "react"
 
 interface Props {
 	subCommentData: CommentType["comments"][number]
@@ -48,11 +47,13 @@ export function SubComment({
 						<p className="text-md">
 							{subCommentData.member?.name || "[deleted]"} •{" "}
 							<span className="text-sm">
-								{new Date(subCommentData.created_at).toLocaleDateString(undefined, {
-									year: "numeric",
-									month: "long",
-									day: "numeric",
-								})}
+								{new Date(subCommentData.created_at)
+									.toLocaleDateString(undefined, {
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									})
+									.toLowerCase()}
 							</span>{" "}
 							{subCommentData.replying_to && (
 								<span className="text-muted-foreground text-sm">
@@ -62,7 +63,7 @@ export function SubComment({
 								</span>
 							)}
 						</p>
-						<p className="md:text-md text-sm w-full">{subCommentData.content}</p>
+						<p className="md:text-md text-sm w-full break-words">{subCommentData.content}</p>
 						<div className="flex flex-row items-center">
 							<LikeButton
 								likesCount={subCommentData.likes_count}

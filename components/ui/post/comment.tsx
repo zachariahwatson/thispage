@@ -1,13 +1,11 @@
 "use client"
 
-import type { ClubMembership, Comment as CommentType } from "@/lib/types"
-import { Button, CommentActionsButton, LikeButton } from "@/components/ui/buttons"
-import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage, Badge, Skeleton } from "@/components/ui"
-import { useState } from "react"
-import { SubComment } from "./subcomment"
-import { CommentButton } from "../buttons"
+import { Button, CommentActionsButton, CommentButton, LikeButton } from "@/components/ui/buttons"
+import { SubComment } from "@/components/ui/post"
 import { useUser } from "@/hooks/state"
+import type { ClubMembership, Comment as CommentType } from "@/lib/types"
+import { useState } from "react"
 
 interface Props {
 	commentData: CommentType
@@ -41,14 +39,16 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 						<p className="text-md">
 							{commentData.member?.name || "[deleted]"} •{" "}
 							<span className="text-sm">
-								{new Date(commentData.created_at).toLocaleDateString(undefined, {
-									year: "numeric",
-									month: "long",
-									day: "numeric",
-								})}
+								{new Date(commentData.created_at)
+									.toLocaleDateString(undefined, {
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									})
+									.toLowerCase()}
 							</span>
 						</p>
-						<p className="md:text-md text-sm w-full">{commentData.content}</p>
+						<p className="md:text-md text-sm w-full break-words">{commentData.content}</p>
 						<div className="flex flex-row items-center">
 							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
 								<Badge variant="outline" className="">

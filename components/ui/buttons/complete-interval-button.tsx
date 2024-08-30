@@ -1,32 +1,25 @@
 "use client"
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui"
-import { Button } from "@/components/ui/buttons"
-import { useClubMembership } from "@/contexts"
-import { MemberProgress } from "@/lib/types"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useClubMembership, useReading } from "@/contexts"
+import { Reading } from "@/lib/types"
+import { AnimatePresence, motion } from "framer-motion"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
-import { motion } from "framer-motion"
-import { useUserProgress } from "@/hooks/state"
-
-interface Props {
-	readingId: number | null
-	intervalId: number | null
-}
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function CompleteIntervalButton({ readingId, intervalId }: Props) {
+export function CompleteIntervalButton() {
 	const clubMembership = useClubMembership()
+	const readingData = useReading()
 	const queryClient = useQueryClient()
-	const { data: userProgress } = useUserProgress(intervalId, clubMembership?.id || null)
 	const mutation = useMutation({
 		mutationFn: (data: { is_complete: boolean }) => {
-			const url = new URL(`${defaultUrl}/api/users/progresses/${clubMembership?.id}/intervals/${intervalId}`)
+			const url = new URL(
+				`${defaultUrl}/api/users/progresses/${clubMembership?.id}/intervals/${readingData?.interval?.id}`
+			)
 			return fetch(url, {
 				method: "PATCH",
 				headers: {
@@ -39,16 +32,29 @@ export function CompleteIntervalButton({ readingId, intervalId }: Props) {
 		onMutate: async (data) => {
 			// Cancel any outgoing refetches
 			// (so they don't overwrite our optimistic update)
-			await queryClient.cancelQueries({ queryKey: ["user progress", intervalId] })
+			await queryClient.cancelQueries({ queryKey: ["readings", clubMembership?.club.id] })
 
 			// Snapshot the previous value
-			const previousProgress = queryClient.getQueryData(["user progress", intervalId])
+			const previousProgress = queryClient.getQueryData(["readings", clubMembership?.club.id])
 
 			// Optimistically update to the new value
-			queryClient.setQueryData(["user progress", intervalId], (old: any) => ({
-				...(old || {}),
-				is_complete: data.is_complete,
-			}))
+			queryClient.setQueryData(["readings", clubMembership?.club.id], (old: any) => {
+				return old.map((reading: Reading) => {
+					if (reading?.id === readingData?.id) {
+						return {
+							...reading,
+							interval: {
+								...reading?.interval,
+								user_progress: {
+									...reading?.interval?.user_progress,
+									is_complete: data.is_complete,
+								},
+							},
+						}
+					}
+					return reading
+				})
+			})
 
 			// Return a context object with the snapshotted value
 			return { previousProgress }
@@ -57,12 +63,12 @@ export function CompleteIntervalButton({ readingId, intervalId }: Props) {
 		// use the context returned from onMutate to roll back
 		onError: (err, data, context) => {
 			if (context) {
-				queryClient.setQueryData(["user progress", intervalId], context.previousProgress)
+				queryClient.setQueryData(["readings", clubMembership?.club.id], context.previousProgress)
 			}
 			toast.error("an error occurred while updating user progress :(")
 		},
 		onSettled: () => {
-			if (!userProgress?.is_complete) {
+			if (!readingData?.interval?.user_progress?.is_complete) {
 				const choices = [
 					`nice work! keep it up! 🔥`,
 					`nice one! was it a good portion?`,
@@ -92,27 +98,18 @@ export function CompleteIntervalButton({ readingId, intervalId }: Props) {
 				]
 				toast.success(choices[Math.floor(Math.random() * choices.length)])
 			}
-			queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingId])
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
-			queryClient.invalidateQueries(["user progress", intervalId])
-			//queryClient.invalidateQueries(["posts", clubMembership?.club.id, readingId])
 		},
 	})
 
-	return (
+	return readingData?.interval?.user_progress ? (
 		<Tooltip>
 			<TooltipTrigger>
-				<motion.div
+				<div
 					className="w-16 md:w-24 h-16 md:h-24 p-0 rounded-full text-primary"
-					onClick={() => mutation.mutate({ is_complete: !userProgress?.is_complete || false })}
-					initial={{
-						scale: 1.1,
-					}}
-					animate={{
-						scale: 1,
-					}}
+					onClick={() => mutation.mutate({ is_complete: !readingData?.interval?.user_progress?.is_complete || false })}
 				>
-					{userProgress?.is_complete ? (
+					{readingData?.interval?.user_progress?.is_complete ? (
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
@@ -141,11 +138,28 @@ export function CompleteIntervalButton({ readingId, intervalId }: Props) {
 							/>
 						</svg>
 					)}
-				</motion.div>
+				</div>
 			</TooltipTrigger>
 			<TooltipContent>
-				<p>{userProgress?.is_complete ? "un-complete reading" : "complete reading"}</p>
+				<p>{readingData?.interval?.user_progress?.is_complete ? "un-complete reading" : "complete reading"}</p>
 			</TooltipContent>
 		</Tooltip>
+	) : (
+		<div className="w-16 md:w-24 h-16 md:h-24 p-0 rounded-full text-secondary">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				strokeWidth={1.5}
+				stroke="currentColor"
+				className="w-16 md:w-24 h-16 md:h-24 animate-spin"
+			>
+				<path
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+				/>
+			</svg>
+		</div>
 	)
 }

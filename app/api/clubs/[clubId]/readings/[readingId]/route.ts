@@ -81,7 +81,6 @@ export async function PATCH(request: NextRequest, { params }: { params: { clubId
 			"\x1b[31m%s\x1b[0m",
 			"\nan error occurred while updating the reading:\n" + JSON.stringify(error, null, 2) + "\n"
 		)
-		console.log(error)
 		return Response.json({ error: "an error occurred while updating the reading." }, { status: 500 })
 	}
 }

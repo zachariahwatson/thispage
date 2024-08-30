@@ -1,9 +1,9 @@
 "use client"
 
-import { SignInForm, SignUpForm } from "@/components/ui/login"
-import { toast } from "sonner"
+import { SignInForm, SignUpForm } from "@/components/ui/forms/login"
+import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { useRouter, usePathname } from "next/navigation"
+import { toast } from "sonner"
 
 interface Props {
 	searchParams: { message?: string; type?: string; redirect: string }
