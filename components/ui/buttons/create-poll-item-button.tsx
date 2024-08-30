@@ -27,6 +27,7 @@ export function CreatePollItemButton() {
 	const clubMembership = useClubMembership()
 	const pollData = usePoll()
 	const queryClient = useQueryClient()
+	const endDate = new Date(pollData?.end_date || "")
 
 	const pollItemMutation = useMutation({
 		mutationFn: async (data: {
@@ -67,7 +68,7 @@ export function CreatePollItemButton() {
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})
-	return !pollData?.is_locked || clubMembership?.role === "admin" ? (
+	return (!pollData?.is_locked || clubMembership?.role === "admin") && endDate.getTime() > Date.now() ? (
 		<Sheet open={createPollItemVisible} onOpenChange={setCreatePollItemVisible}>
 			<Tooltip>
 				<TooltipTrigger asChild>
