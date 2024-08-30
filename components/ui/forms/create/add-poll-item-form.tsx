@@ -1,6 +1,6 @@
 "use client"
 
-import { PollItemBookSearch } from "@/components/ui/books/club/spreads/poll"
+import { BookSearch } from "@/components/ui/books/club/spreads/dashboard"
 import { Button } from "@/components/ui/buttons"
 import { Form, FormField } from "@/components/ui/forms"
 import { useClubMembership, usePoll } from "@/contexts"
@@ -66,7 +66,7 @@ export function AddPollItemForm({ mutation, setVisible }: Props) {
 		<>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-					<FormField control={form.control} name="book" render={({ field }) => <PollItemBookSearch field={field} />} />
+					<FormField control={form.control} name="book" render={({ field }) => <BookSearch field={field} />} />
 					<div className="flex flex-col md:flex-row-reverse float-right w-full space-y-2 md:space-y-0">
 						{mutation.isLoading ? (
 							<Button disabled>

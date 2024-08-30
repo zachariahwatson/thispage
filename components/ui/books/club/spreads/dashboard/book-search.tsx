@@ -4,32 +4,13 @@ import { BookSearchList } from "@/components/ui/books/club/spreads/dashboard"
 import { Button } from "@/components/ui/buttons"
 import { FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
 import { useRef, useState } from "react"
-import { ControllerRenderProps } from "react-hook-form"
+import { ControllerRenderProps, FieldValues } from "react-hook-form"
 
-interface Props {
-	field: ControllerRenderProps<
-		(
-			| {
-					incrementType?: "pages" | undefined
-					intervalPageLength: string
-			  }
-			| {
-					incrementType: "sections"
-					bookSections: string
-					intervalSectionLength: string
-					sectionName?: string | undefined
-			  }
-		) & {
-			book: string
-			startDate: string
-			joinInProgress: boolean
-			bookCoverImageURL?: string | undefined
-		},
-		"book"
-	>
+interface Props<TFieldValues extends FieldValues> {
+	field: ControllerRenderProps<TFieldValues, any>
 }
 
-export function BookSearch({ field }: Props) {
+export function BookSearch<TFieldValues extends FieldValues>({ field }: Props<TFieldValues>) {
 	const [search, setSearch] = useState<string>("")
 	const input = useRef<HTMLInputElement | null>(null)
 	const button = useRef<HTMLButtonElement | null>(null)
