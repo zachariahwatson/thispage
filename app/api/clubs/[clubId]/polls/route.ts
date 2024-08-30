@@ -52,6 +52,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			.eq("poll_items.poll_votes.member_id", memberId)
 			.limit(1, { referencedTable: "poll_items.poll_votes" })
 			.order("id", { ascending: true })
+			.order("id", { referencedTable: "poll_items", ascending: false })
 
 		if (error) {
 			throw error

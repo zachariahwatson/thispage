@@ -16,11 +16,11 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 export function PollItems() {
 	const pollData = usePoll()
 	const clubMembership = useClubMembership()
-	const [value, setValue] = useState<string>(`${pollData?.user_vote_poll_item_id}`)
+	const [value, setValue] = useState<string | undefined>(`${pollData?.user_vote_poll_item_id}`)
 	const queryClient = useQueryClient()
 
 	const upsertPollVoteMutation = useMutation({
-		mutationFn: async (data: { member_id: number; poll_item_id: number; poll_vote_id?: number | null }) => {
+		mutationFn: async (data: { member_id: number; poll_item_id: number; poll_vote_id: number | undefined }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${pollData?.club_id}/polls/${pollData?.id}`)
 			const response = await fetch(url, {
 				method: "PUT",
@@ -42,15 +42,19 @@ export function PollItems() {
 		onSuccess: (body: any) => {
 			toast.success(body.message)
 			queryClient.invalidateQueries(["polls", pollData?.club_id])
-			setValue(body.data.poll_item_id)
+			if (body.data) {
+				setValue(body.data.poll_item_id)
+			}
 		},
 	})
 
 	const deletePollVoteMutation = useMutation({
 		mutationFn: async (data: { poll_vote_id?: number | null }) => {
-			const url = new URL(`${defaultUrl}/api/clubs/${pollData?.club_id}/polls/${pollData?.id}`)
+			const url = new URL(
+				`${defaultUrl}/api/clubs/${pollData?.club_id}/polls/${pollData?.id}/poll-votes/${pollData?.user_vote_id}`
+			)
 			const response = await fetch(url, {
-				method: "PUT",
+				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -69,7 +73,7 @@ export function PollItems() {
 		onSuccess: (body: any) => {
 			toast.success(body.message)
 			queryClient.invalidateQueries(["polls", pollData?.club_id])
-			setValue(body.data.poll_item_id)
+			setValue(undefined)
 		},
 	})
 
@@ -77,7 +81,7 @@ export function PollItems() {
 		upsertPollVoteMutation.mutate({
 			member_id: clubMembership?.id || -1,
 			poll_item_id: Number(newValue),
-			poll_vote_id: pollData?.user_vote_id || null,
+			poll_vote_id: pollData?.user_vote_id ?? undefined,
 		})
 	}
 
@@ -88,9 +92,34 @@ export function PollItems() {
 					<div className="p-3 md:p-4 w-auto h-auto space-y-2">
 						{pollData?.items &&
 							pollData?.items.map((item) => <PollItem key={item.id} item={item} groupValue={value} />)}
-						<Button className="w-full" variant="secondary">
-							cancel vote
-						</Button>
+						{pollData?.user_vote_id &&
+							(deletePollVoteMutation.isLoading ? (
+								<Button disabled className="w-full" variant="secondary">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth={1.5}
+										stroke="currentColor"
+										className="size-6 animate-spin mr-2"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+										/>
+									</svg>
+									cancelling...
+								</Button>
+							) : (
+								<Button
+									className="w-full"
+									variant="secondary"
+									onClick={() => deletePollVoteMutation.mutate({ poll_vote_id: pollData.user_vote_id })}
+								>
+									cancel vote
+								</Button>
+							))}
 					</div>
 				</ScrollArea>
 			</RadioGroup>

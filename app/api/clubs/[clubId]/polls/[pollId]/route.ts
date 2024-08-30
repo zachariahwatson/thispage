@@ -72,22 +72,33 @@ export async function PUT(request: NextRequest, { params }: { params: { clubId: 
 		const supabase = createClient()
 
 		const body = await request.json()
-		console.log(body)
 
-		const { data, error } = await supabase
-			.from("poll_votes")
-			.upsert({
-				id: body.poll_vote_id,
+		//insert if no poll vote
+		if (!body.poll_vote_id) {
+			const { error } = await supabase.from("poll_votes").insert({
 				member_id: body.member_id,
 				poll_item_id: body.poll_item_id,
 			})
-			.select()
+
+			if (error) {
+				throw error
+			}
+
+			return Response.json({ message: "poll voted!" }, { status: 200 })
+		}
+
+		const { data, error } = await supabase
+			.from("poll_votes")
+			.update({
+				poll_item_id: body.poll_item_id,
+			})
+			.eq("id", body.poll_vote_id)
 
 		if (error) {
 			throw error
 		}
 
-		return Response.json({ message: "poll voted!", data: data }, { status: 200 })
+		return Response.json({ message: "poll vote changed!", data: data }, { status: 200 })
 	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while voting in poll ${params.pollId}:\n`, error)
 		return Response.json(

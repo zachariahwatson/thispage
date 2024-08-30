@@ -37,7 +37,7 @@ interface Props {
 		book_cover_image_height: number | null
 		votes_count: number
 	}
-	groupValue: string
+	groupValue: string | undefined
 }
 
 export function PollItem({ item, groupValue }: Props) {

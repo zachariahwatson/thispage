@@ -11,7 +11,6 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
 	({ className, type, showCharacterCount = true, initialCharacterCount = 0, ...props }, ref) => {
 		const [characterCount, setCharacterCount] = React.useState<number>(initialCharacterCount)
-		console.log(showCharacterCount)
 
 		const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 			setCharacterCount(event.target.value.length)
