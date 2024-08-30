@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Polls
+- Poll email notifications
+- Poll cron job scheduling
 - Password recovery page
 - Filter book search based on language
 - View archived readings
