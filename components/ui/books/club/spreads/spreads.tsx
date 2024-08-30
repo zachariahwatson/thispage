@@ -68,7 +68,8 @@ export function Spreads() {
 					setUserSpreadIndex={setUserSpreadIndex}
 				/>
 			) : (
-				readings.length === 0 && (
+				readings.length === 0 &&
+				polls.length === 0 && (
 					<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
 						<EmptyPageLeft userSpreadIndex={0} />
 						<EmptyPageRight userSpreadIndex={0} />

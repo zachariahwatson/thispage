@@ -49,7 +49,7 @@ export function EmptyPageLeft({ userSpreadIndex }: Props) {
 			}}
 		>
 			<div className="p-4 flex justify-center items-center w-full h-full">
-				<p className="text-muted-foreground">hmm... no readings... a lil empty in here...</p>
+				<p className="text-muted-foreground">hmm... no pages... a lil empty in here...</p>
 			</div>
 			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
 				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
