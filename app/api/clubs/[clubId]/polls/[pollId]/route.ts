@@ -51,6 +51,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { clubId
 			throw error
 		}
 
+		if (body.is_archived) {
+			return Response.json({ message: "poll archived!" }, { status: 200 })
+		}
 		return Response.json({ message: "poll updated!" }, { status: 200 })
 	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while updating poll ${params.pollId}:\n`, error)

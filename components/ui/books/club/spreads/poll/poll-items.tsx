@@ -99,7 +99,7 @@ export function PollItems() {
 	return (
 		<div className="h-full">
 			<RadioGroup defaultValue={value} value={value} onValueChange={handleValueChange}>
-				<ScrollArea className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner">
+				<ScrollArea className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner relative">
 					<div className="p-3 md:p-4 w-auto h-auto space-y-2">
 						{pollData?.items &&
 							pollData?.items.map((item) => <PollItem key={item.id} item={item} groupValue={value} />)}
@@ -132,6 +132,9 @@ export function PollItems() {
 									cancel vote
 								</Button>
 							))}
+						{pollData?.is_finished && (
+							<div className="backdrop-blur-[2px] bg-background/40 w-full h-full absolute z-10 top-0 left-0"></div>
+						)}
 					</div>
 				</ScrollArea>
 			</RadioGroup>
