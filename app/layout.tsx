@@ -65,7 +65,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							</Button>{" "}
 							|{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.9.0</Link>
+								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.9.1</Link>
 							</Button>{" "}
 						</div>
 					</footer>
