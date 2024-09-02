@@ -71,9 +71,8 @@ export function PollItem({ item, groupValue }: Props) {
 
 	return (
 		<div className="relative">
-			{(clubMembership?.id === item.creator_member_id || clubMembership?.role !== "member") && (
-				<PollItemActionsButton name={item.book_title} pollItemId={item.id} />
-			)}
+			{(clubMembership?.id === item.creator_member_id || clubMembership?.role !== "member") &&
+				!pollData?.is_finished && <PollItemActionsButton name={item.book_title} pollItemId={item.id} />}
 			<div
 				className={`relative flex flex-row items-center rounded-lg border bg-card text-card-foreground shadow-shadow shadow-sm pl-4 transition-all ${
 					groupValue === `${item.id}` && "ring-4 ring-ring"
