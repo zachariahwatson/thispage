@@ -52,7 +52,8 @@ export function DemoPageLeft1({
 						<span className="font-black text-primary">complete</span> group page goals with automatic increments.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
-						once all readers have completed the page goal, it will be automatically incremented by a custom amount.
+						once all readers have completed the page/section goal, it will be automatically incremented by a custom
+						amount.
 					</CardDescription>
 				</div>
 				<div className="flex justify-center relative pt-4">
@@ -62,8 +63,8 @@ export function DemoPageLeft1({
 							<CardDescription className="text-xs md:text-sm">read to...</CardDescription>
 							<div className="flex flex-row">
 								<p className="font-bold italic md:text-xl">
-									p.
-									<span className="text-6xl md:text-8xl not-italic">{demoClicked ? "140" : "120"}</span>
+									chapter.
+									<span className="text-6xl md:text-8xl not-italic">{demoClicked ? "8" : "7"}</span>
 								</p>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"

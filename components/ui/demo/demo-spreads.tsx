@@ -2,7 +2,7 @@
 
 import { Skeleton } from "@/components/ui/"
 import { NextReading } from "@/components/ui/buttons"
-import { DemoReadingSpread, DemoSpread1, DemoSpread2 } from "@/components/ui/demo"
+import { DemoPollSpread, DemoReadingSpread, DemoSpread1, DemoSpread2 } from "@/components/ui/demo"
 import { useState } from "react"
 
 /**
@@ -22,8 +22,9 @@ export function DemoSpreads() {
 					<LoginPageRight />
 				</div>
 			)} */}
+			<DemoPollSpread isVisible={userSpreadIndex === 3} userSpreadIndex={userSpreadIndex} />
 
-			<NextReading userSpreadIndex={userSpreadIndex} setUserSpreadIndex={setUserSpreadIndex} len={3} />
+			<NextReading userSpreadIndex={userSpreadIndex} setUserSpreadIndex={setUserSpreadIndex} len={4} />
 		</>
 	)
 }
