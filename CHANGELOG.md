@@ -9,30 +9,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Polls
 - Poll email notifications
-- Poll cron job scheduling
 - Poll item custom synopsis
-- Ability to archive polls once finished
 - Password recovery page
 - Filter book search based on language
 - View archived readings
 - Tabs for readings, polls and dashboard
 - Favorite button for clubs and readings(?)
-- Various loading skeletons
 - Human-friendly error messages
 - Choose different edition covers
 
 ### Changed
 
 - Themes
-- Fetching method, should be a smoother experience
 - Better book search experience
 
 ### Fixed
 
 - Post title truncation
 - Reading image alignment issues
+
+## [0.9.0] - 2024-09-01
+
+### Added
+
+- Polls
+- Ability to archive polls once finished
+- Various loading skeletons
+
+### Changed
+
+- Fetching method, should be a smoother experience
+- Finished demo page
+- Book search only fetches english books for now
 
 ## [0.8.3] - 2024-08-27
 
@@ -109,8 +118,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
-[0.8.1]: https://github.com/zachariahwatson/thispage/compare/0.8.2...0.8.3
-[0.8.1]: https://github.com/zachariahwatson/thispage/compare/0.8.1...0.8.2
+[0.9.0]: https://github.com/zachariahwatson/thispage/compare/0.8.3...0.9.0
+[0.8.3]: https://github.com/zachariahwatson/thispage/compare/0.8.2...0.8.3
+[0.8.2]: https://github.com/zachariahwatson/thispage/compare/0.8.1...0.8.2
 [0.8.1]: https://github.com/zachariahwatson/thispage/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/zachariahwatson/thispage/compare/0.7.0...0.8.0
 [0.7.0]: https://github.com/zachariahwatson/thispage/compare/0.6.1...0.7.0

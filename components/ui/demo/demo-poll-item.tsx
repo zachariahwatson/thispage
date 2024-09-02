@@ -38,14 +38,13 @@ interface Props {
 		book_cover_image_height: number | null
 		votes_count: number
 		creator_member_id: number | null
+		percent: number
 	}
 	groupValue: string | undefined
 }
 
-export function PollItem({ item, groupValue }: Props) {
+export function DemoPollItem({ item, groupValue }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
-	const pollData = usePoll()
-	const clubMembership = useClubMembership()
 	const cardRef = useRef<HTMLDivElement | null>(null)
 	const cardHeaderRef = useRef<HTMLDivElement | null>(null)
 	const imageRef = useRef<HTMLDivElement | null>(null)
@@ -71,17 +70,13 @@ export function PollItem({ item, groupValue }: Props) {
 
 	return (
 		<div className="relative">
-			{(clubMembership?.id === item.creator_member_id || clubMembership?.role !== "member") &&
-				!pollData?.is_finished && <PollItemActionsButton name={item.book_title} pollItemId={item.id} />}
 			<div
 				className={`relative flex flex-row items-center rounded-lg border bg-card text-card-foreground shadow-shadow shadow-sm pl-4 transition-all ${
 					groupValue === `${item.id}` && "ring-4 ring-ring"
 				}`}
 			>
 				<RadioGroupItem value={`${item.id}`} id={`${item.id}`} />
-				<p className="absolute bottom-1 text-xs text-muted-foreground left-2">
-					{pollData?.total_votes_count ? Math.trunc((item.votes_count / pollData?.total_votes_count) * 100) : 0}%
-				</p>
+				<p className="absolute bottom-1 text-xs text-muted-foreground left-2">{item.percent}%</p>
 				<Card ref={cardRef} className="w-full min-w-0 rounded-none border-none bg-none shadow-none">
 					<Label htmlFor={`${item.id}`} className="hover:cursor-pointer min-w-0">
 						<CardHeader ref={cardHeaderRef} className="relative p-2 md:p-3 pb-1 md:pb-2 space-y-0">
@@ -109,10 +104,7 @@ export function PollItem({ item, groupValue }: Props) {
 								{item.book_page_count || "?"} pages
 							</CardDescription>
 						</CardHeader>
-						<Progress
-							value={pollData?.total_votes_count && (item.votes_count / pollData?.total_votes_count) * 100}
-							className="h-2 mb-2 ml-4 w-[calc(100%-1.5rem)]"
-						/>
+						<Progress value={item.percent} className="h-2 mb-2 ml-4 w-[calc(100%-1.5rem)]" />
 					</Label>
 				</Card>
 				<Sheet>

@@ -29,7 +29,7 @@ import { useIntervals, useUserProgress } from "@/hooks/state"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
-import { PollPodium } from "./poll-podium"
+import { PollPodium } from "@/components/ui/books/club/spreads/poll"
 
 interface Props {
 	userSpreadIndex: number

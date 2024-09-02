@@ -5,25 +5,43 @@ import {
 	CardContent,
 	CardDescription,
 	CardFooter,
+	CardHeader,
 	CardTitle,
-	RadioGroup,
-	ScrollArea,
+	Progress,
 	Separator,
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
 } from "@/components/ui"
-import { DemoPollItems } from "@/components/ui/demo/demo-poll-items"
-import { DemoPollItem } from "@/components/ui/demo/demo-poll-item"
+import {
+	ArchiveButton,
+	CompleteIntervalButton,
+	JoinReadingButton,
+	PollActionsButton,
+	ReadingActionsButton,
+} from "@/components/ui/buttons"
+import { useClubMembership, useFirstLoadAnimation, usePoll, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
+import { useIntervals, useUserProgress } from "@/hooks/state"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useState } from "react"
+import { DemoPollPodium } from "@/components/ui/demo"
 
 interface Props {
 	userSpreadIndex: number
-	demoIsComplete: boolean
 }
 
-export function DemoPageRight2({ userSpreadIndex }: Props) {
-	const isVertical = useMediaQuery("(max-width: 768px)")
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
+	: "http://localhost:3000"
+
+export function DemoPollPageLeft({ userSpreadIndex }: Props) {
 	const MotionCard = motion(Card)
+	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const pollData = {
 		id: -1,
 		created_at: "2024-08-30T09:54:18.723348+00:00",
@@ -107,65 +125,51 @@ export function DemoPageRight2({ userSpreadIndex }: Props) {
 		user_vote_poll_item_id: -2,
 		user_has_poll_item: true,
 	}
-	//console.log(interval)
+	const isVertical = useMediaQuery("(max-width: 768px)")
 
-	//fix initial and animate
-	const rightVariants = isVertical
+	//framer motion responsive animation (turns book page flip into notepad page flip)
+	const leftVariants = isVertical
 		? {
-				initial: { rotateX: 0, originY: 0, zIndex: 2 },
-				animate: { rotateX: 90, originY: 0, zIndex: 2 },
-				exit: { rotateX: 90, originY: 0, zIndex: 2 },
+				initial: { rotateX: flipOnce ? 0 : -90, originY: 1, zIndex: 2 },
+				animate: { rotateX: 0, originY: 1, zIndex: 2 },
 		  }
 		: {
-				initial: { rotateY: 0, originX: 0, zIndex: 2 },
-				animate: { rotateY: -90, originX: 0, zIndex: 2 },
-				exit: { rotateY: -90, originX: 0, zIndex: 2 },
+				initial: { rotateY: flipOnce ? 0 : 90, originX: 1, zIndex: 2 },
+				animate: { rotateY: 0, originX: 1, zIndex: 2 },
 		  }
 
 	return (
 		<MotionCard
-			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow shadow-md"
-			variants={rightVariants}
-			exit="exit"
-			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
+			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow shadow-md"
+			variants={leftVariants}
+			initial="initial"
+			animate="animate"
+			transition={{ type: "tween", duration: 0.1, delay: 0.1, ease: "easeIn" }}
 			style={{ transformPerspective: 2500 }}
+			onAnimationComplete={() => setFlipOnce(true)}
 		>
-			<CardContent className="md:space-y-4 pt-4">
-				<div className="space-y-2">
-					<CardTitle className="text-md md:text-xl">
-						<span className="font-black text-primary">poll</span> your members for the next book to read.
+			<>
+				<CardHeader className="px-4 md:px-6 relative h-full">
+					<CardTitle className="text-xl flex flex-row items-center">
+						poll
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 ml-2">
+							<path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75ZM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 0 1-1.875-1.875V8.625ZM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 0 1 3 19.875v-6.75Z" />
+						</svg>
 					</CardTitle>
-					<CardDescription className="text-xs md:text-sm">
-						the top selection will be added as a reading.
-					</CardDescription>
-					<div className="h-full">
-						<RadioGroup
-							defaultValue={`${pollData?.user_vote_poll_item_id}`}
-							value={`${pollData?.user_vote_poll_item_id}`}
-						>
-							<ScrollArea className="border rounded-lg min-h-[130px] h-[calc(50svh-212px)] md:h-[412px] shadow-shadow shadow-inner relative">
-								<div className="p-3 md:p-4 w-auto h-auto space-y-2">
-									{pollData?.items &&
-										pollData?.items.map((item) => (
-											<DemoPollItem key={item.id} item={item} groupValue={`${pollData?.user_vote_poll_item_id}`} />
-										))}
-								</div>
-							</ScrollArea>
-						</RadioGroup>
-					</div>
-				</div>
-			</CardContent>
-
-			<CardFooter className="absolute bottom-0 right-12 flex-col items-center space-y-2 md:p-6 p-4 pb-6">
-				<CardTitle className="flex flex-row text-md md:text-xl">view a demo reading & poll 👉</CardTitle>
-			</CardFooter>
-			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
-				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
+					<Separator />
+					<CardTitle className="text-sm md:text-lg text-wrap break-words">{pollData?.name}</CardTitle>
+					<CardDescription className="text-xs md:text-sm break-words">{pollData?.description}</CardDescription>
+					<Separator />
+					<DemoPollPodium />
+				</CardHeader>
+			</>
+			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
+				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<div className="bg-gradient-to-b from-shadow to-background px-2 block md:hidden absolute w-full top-0 right-0">
-				<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
+			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
+				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{userSpreadIndex + 1}</p>
+			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>
 	)
 }

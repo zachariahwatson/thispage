@@ -132,9 +132,9 @@ export function PollItems() {
 									cancel vote
 								</Button>
 							))}
-						{pollData?.is_finished && (
+						{/* {pollData?.is_finished && (
 							<div className="backdrop-blur-[2px] bg-background/40 w-full h-full absolute z-10 top-0 left-0"></div>
-						)}
+						)} */}
 					</div>
 				</ScrollArea>
 			</RadioGroup>

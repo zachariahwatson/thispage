@@ -1,27 +1,19 @@
 "use client"
 
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardTitle,
-	RadioGroup,
-	ScrollArea,
-	Separator,
-} from "@/components/ui"
-import { DemoPollItems } from "@/components/ui/demo/demo-poll-items"
-import { DemoPollItem } from "@/components/ui/demo/demo-poll-item"
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
+import { CreatePollItemButton } from "@/components/ui/buttons"
 import { useMediaQuery } from "@/hooks"
 import { motion } from "framer-motion"
-import Image from "next/image"
+import { PollItems } from "@/components/ui/books/club/spreads/poll"
+import { usePoll } from "@/contexts"
+import Countdown from "react-countdown"
+import { DemoPollItems } from "@/components/ui/demo"
 
 interface Props {
 	userSpreadIndex: number
-	demoIsComplete: boolean
 }
 
-export function DemoPageRight2({ userSpreadIndex }: Props) {
+export function DemoPollPageRight({ userSpreadIndex }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const MotionCard = motion(Card)
 	const pollData = {
@@ -107,7 +99,7 @@ export function DemoPageRight2({ userSpreadIndex }: Props) {
 		user_vote_poll_item_id: -2,
 		user_has_poll_item: true,
 	}
-	//console.log(interval)
+	const endDate = new Date(pollData?.end_date || "")
 
 	//fix initial and animate
 	const rightVariants = isVertical
@@ -130,34 +122,44 @@ export function DemoPageRight2({ userSpreadIndex }: Props) {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardContent className="md:space-y-4 pt-4">
-				<div className="space-y-2">
-					<CardTitle className="text-md md:text-xl">
-						<span className="font-black text-primary">poll</span> your members for the next book to read.
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
+				<div className="flex justify-between pr-1">
+					<CardTitle className="text-xl">
+						books <span className="font-normal text-muted-foreground">| poll</span>
 					</CardTitle>
-					<CardDescription className="text-xs md:text-sm">
-						the top selection will be added as a reading.
-					</CardDescription>
-					<div className="h-full">
-						<RadioGroup
-							defaultValue={`${pollData?.user_vote_poll_item_id}`}
-							value={`${pollData?.user_vote_poll_item_id}`}
-						>
-							<ScrollArea className="border rounded-lg min-h-[130px] h-[calc(50svh-212px)] md:h-[412px] shadow-shadow shadow-inner relative">
-								<div className="p-3 md:p-4 w-auto h-auto space-y-2">
-									{pollData?.items &&
-										pollData?.items.map((item) => (
-											<DemoPollItem key={item.id} item={item} groupValue={`${pollData?.user_vote_poll_item_id}`} />
-										))}
-								</div>
-							</ScrollArea>
-						</RadioGroup>
-					</div>
+					<CreatePollItemButton />
 				</div>
-			</CardContent>
+				<DemoPollItems />
+			</CardHeader>
+			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
+				<CardDescription className="flex flex-row items-center justify-center space-x-2">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-6"
+					>
+						<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+					</svg>
 
+					<span>
+						{/* {endDate
+							.toLocaleDateString(undefined, {
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							})
+							.toLowerCase()} */}
+						<Countdown date={endDate}>
+							<span>poll ended!</span>
+						</Countdown>
+					</span>
+				</CardDescription>
+			</CardFooter>
 			<CardFooter className="absolute bottom-0 right-12 flex-col items-center space-y-2 md:p-6 p-4 pb-6">
-				<CardTitle className="flex flex-row text-md md:text-xl">view a demo reading & poll 👉</CardTitle>
+				<CardTitle className="flex flex-row text-md md:text-xl">back to start 👉</CardTitle>
 			</CardFooter>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
 				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />

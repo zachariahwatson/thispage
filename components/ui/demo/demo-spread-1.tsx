@@ -23,7 +23,7 @@ export function DemoSpread1({ isVisible, userSpreadIndex }: Props) {
 						demoClicked={demoClicked}
 						setDemoClicked={setDemoClicked}
 					/>
-					<DemoPageRight1 userSpreadIndex={userSpreadIndex} demoIsComplete={demoIsComplete} />
+					<DemoPageRight1 userSpreadIndex={userSpreadIndex} demoIsComplete={demoClicked} />
 				</div>
 			)}
 		</AnimatePresence>

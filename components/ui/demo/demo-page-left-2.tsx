@@ -214,8 +214,8 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 											<CardDescription className="text-xs md:text-sm">read to...</CardDescription>
 											<div className="flex flex-row">
 												<p className="font-bold italic md:text-xl">
-													p.
-													<span className="text-5xl md:text-8xl not-italic">50</span>
+													book.
+													<span className="text-5xl md:text-8xl not-italic">12</span>
 												</p>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
