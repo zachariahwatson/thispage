@@ -1,19 +1,9 @@
 "use client"
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui"
-import { Button } from "@/components/ui/buttons"
-import { useClubMembership } from "@/contexts"
-import { MemberProgress } from "@/lib/types"
-import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction, useEffect } from "react"
-import { useMutation, useQueryClient } from "react-query"
-import { toast } from "sonner"
 import { motion } from "framer-motion"
-import { useUserProgress } from "@/hooks/state"
-
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-	: "http://localhost:3000"
+import { Dispatch, SetStateAction } from "react"
+import { toast } from "sonner"
 
 interface Props {
 	isComplete: boolean
@@ -24,15 +14,15 @@ interface Props {
 
 export function DemoCompleteIntervalButton({ isComplete, setIsComplete, clicked, setClicked }: Props) {
 	const choices = [
-		`oooo you're on go mode! keep it up! 🔥`,
-		`nice one! was it a good interval?`,
-		`reading interval completed! 🎉`,
+		`nice work! keep it up! 🔥`,
+		`nice one! was it a good portion?`,
+		`goal completed! 🎉`,
 		`justkeepreadingjustkeepreadingjustkeepreading`,
-		`#slayedthatinterval 💅`,
+		`#slayedthatgoal 💅`,
 		`i saw how hard you read that. nice.`,
 		`nice! if you read one more page i'll give you a dollar 😏`,
 		`breaking news: super reader on the loose! 🚨`,
-		`this just in: reader smashes interval! 📰`,
+		`this just in: reader smashes goal! 📰`,
 		`oh. you didn't have to read it THAT fast 💨`,
 		`dang. i wish i could read like you 😔`,
 		`wow... way to show everyone how to actually read!`,
@@ -40,24 +30,20 @@ export function DemoCompleteIntervalButton({ isComplete, setIsComplete, clicked,
 		`pfft... what a nerd! reading??? a book??? 🤣`,
 		`let me guess... you're on page ${Math.floor(Math.random() * 500)}. was i close?`,
 		`nice one. now go take a break and frolic in a field.`,
-		`interval completed! go drink some water now. you seem parched.`,
-		`beep boop. interval completed. beep boop. congratulations. beep boop.`,
-		`has anyone ever told you that you look like a cutie patootie when you read?`,
-		`omg same, i loved that part. totally. i've read the book like 20 times soooo`,
-		`it's exhausting coming up with these. sometimes i just want to say nice and be done with it, yaknow?`,
-		`people keep telling me it's weird i watch you read? anyways nice completion!`,
+		`beep boop. goal completed. beep boop. congratulations. beep boop.`,
+		`omg same, i loved that part. totally. i've read the book like 20 times.`,
 		`when's the last time you did the macarena? just a thought. nice one!`,
 		`when's the last time you square danced? just a thought. nice one!`,
 		`nice! don't go too hard celebrating this completion! 🎉`,
 		`hmmm. very interesting part of the book. hmmm yes. indeed.`,
-		`is it just me or is it hotter in here since you completed the interval? 🥵`,
-		`SLUG BUG! trust me, i saw it right out my window. anyways nice completion!`,
-		`go reader! go reader! goooooo reader! 👏`,
+		`is it just me or is it hotter in here since you completed the goal? 🥵`,
 		`niiiiiiiiiiiiiiiiiiiiiiiice`,
+		`i think you just earned yourself a spot in the reading hall of fame.`,
 	]
+
 	const handleClick = () => {
+		setClicked && setClicked(true)
 		if (setClicked && setIsComplete) {
-			setClicked(true)
 			clicked && setIsComplete(!isComplete)
 			if (!isComplete || !clicked) {
 				toast.success(choices[Math.floor(Math.random() * choices.length)])

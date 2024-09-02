@@ -1,6 +1,5 @@
 "use client"
 
-import { useRef, useState } from "react"
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -10,25 +9,25 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "../alert-dialog"
-import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "../dropdown-menu"
-import { useClubMembership, useReading } from "@/contexts"
-import { useIntervals, useUser, useUserProgress } from "@/hooks/state"
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+} from "@/components/ui"
+import { Button } from "@/components/ui/buttons"
+import { useUser } from "@/hooks/state"
+import { ClubMembership, Comment as CommentType } from "@/lib/types"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../sheet"
-import { EditClubForm } from "../edit-club-form"
-import { ClubMembership, Post, Comment as CommentType } from "@/lib/types"
-import { useRouter } from "next/navigation"
-import { EditPostForm } from "../edit-post-form"
-import { EditCommentForm } from "../edit-comment-form"
+import { EditCommentForm } from "@/components/ui/forms/update"
+import { buttonVariants } from "@/components/ui/buttons/button"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -63,6 +62,9 @@ export function CommentActionsButton({ commentData, clubId, readingId, postId, c
 				},
 			})
 		},
+		onSettled: () => {
+			setDeleteVisible(false)
+		},
 		onSuccess: () => {
 			toast.success("comment deleted!")
 			queryClient.invalidateQueries(["comments", clubId, readingId, postId])
@@ -81,6 +83,9 @@ export function CommentActionsButton({ commentData, clubId, readingId, postId, c
 				},
 				body: JSON.stringify(data),
 			})
+		},
+		onSettled: () => {
+			setEditVisible(false)
 		},
 		onSuccess: () => {
 			toast.success("comment updated!")
@@ -145,10 +150,36 @@ export function CommentActionsButton({ commentData, clubId, readingId, postId, c
 						<AlertDialogDescription>this action cannot be undone.</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
-						<AlertDialogCancel>cancel</AlertDialogCancel>
-						<AlertDialogAction className="bg-destructive" onClick={() => deleteCommentMutation.mutate()}>
-							delete
-						</AlertDialogAction>
+						<AlertDialogCancel disabled={deleteCommentMutation.isLoading}>cancel</AlertDialogCancel>
+						{deleteCommentMutation.isLoading ? (
+							<Button disabled variant="destructive">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									strokeWidth={1.5}
+									stroke="currentColor"
+									className="size-6 animate-spin mr-2"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+									/>
+								</svg>
+								deleting...
+							</Button>
+						) : (
+							<AlertDialogAction
+								className={buttonVariants({ variant: "destructive" })}
+								onClick={(e) => {
+									deleteCommentMutation.mutate()
+									e.preventDefault()
+								}}
+							>
+								delete
+							</AlertDialogAction>
+						)}
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialog>

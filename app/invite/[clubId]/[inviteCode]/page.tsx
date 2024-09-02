@@ -1,15 +1,6 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, InvitePage } from "@/components/ui"
-import { Button, JoinClubButton } from "@/components/ui/buttons"
-import { createClient } from "@/utils/supabase/client"
-import { redirect } from "next/navigation"
-import { useQuery } from "react-query"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
-import { User } from "@supabase/supabase-js"
-import { Metadata, ResolvingMetadata } from "next"
-import { useClubs } from "@/hooks/state"
-import { ClubMembership, Database } from "@/lib/types"
-import Link from "next/link"
+import { InvitePage } from "@/components/ui/invite"
+import { Database } from "@/lib/types"
+import { Metadata } from "next"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`

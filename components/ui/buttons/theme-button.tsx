@@ -1,11 +1,9 @@
 "use client"
 
-import * as React from "react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Separator } from "@/components/ui"
+import { Button } from "@/components/ui/buttons"
 import { useTheme } from "next-themes"
-
-import { Button } from "@/components/ui/buttons/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Separator } from "../separator"
+import * as React from "react"
 
 export function ThemeButton() {
 	const { setTheme } = useTheme()

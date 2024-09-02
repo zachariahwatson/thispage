@@ -12,28 +12,21 @@ import {
 	CarouselItem,
 	Progress,
 	Separator,
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
 } from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton, DemoCompleteIntervalButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { Button } from "@/components/ui/buttons"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
+import AutoScroll from "embla-carousel-auto-scroll"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { useQuery } from "react-query"
-import AutoScroll from "embla-carousel-auto-scroll"
+import { Dispatch, SetStateAction, useState } from "react"
 
 interface Props {
-	readingIndex: number
+	userSpreadIndex: number
 	demoIsComplete: boolean
 	setDemoIsComplete: Dispatch<SetStateAction<boolean>>
 }
 
-export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete }: Props) {
+export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComplete }: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -221,8 +214,8 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 											<CardDescription className="text-xs md:text-sm">read to...</CardDescription>
 											<div className="flex flex-row">
 												<p className="font-bold italic md:text-xl">
-													p.
-													<span className="text-5xl md:text-8xl not-italic">50</span>
+													book.
+													<span className="text-5xl md:text-8xl not-italic">12</span>
 												</p>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -320,7 +313,7 @@ export function DemoPageLeft2({ readingIndex, demoIsComplete, setDemoIsComplete 
 			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
 				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{readingIndex + 1}</p>
+			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>
 	)
 }

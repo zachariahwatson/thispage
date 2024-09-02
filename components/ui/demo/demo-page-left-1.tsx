@@ -1,37 +1,26 @@
 "use client"
 
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-	Progress,
-	Separator,
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton, DemoCompleteIntervalButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { Card, CardContent, CardDescription, CardFooter, CardTitle, Progress, Separator } from "@/components/ui"
+import { DemoCompleteIntervalButton } from "@/components/ui/buttons"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
-import Image from "next/image"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { useQuery } from "react-query"
+import { Dispatch, SetStateAction, useState } from "react"
 
 interface Props {
-	readingIndex: number
+	userSpreadIndex: number
 	demoIsComplete: boolean
 	setDemoIsComplete: Dispatch<SetStateAction<boolean>>
 	demoClicked: boolean
 	setDemoClicked: Dispatch<SetStateAction<boolean>>
 }
 
-export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete, demoClicked, setDemoClicked }: Props) {
+export function DemoPageLeft1({
+	userSpreadIndex,
+	demoIsComplete,
+	setDemoIsComplete,
+	demoClicked,
+	setDemoClicked,
+}: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -63,7 +52,8 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete,
 						<span className="font-black text-primary">complete</span> group page goals with automatic increments.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
-						once all readers have completed the page goal, it will be automatically incremented by a custom amount.
+						once all readers have completed the page/section goal, it will be automatically incremented by a custom
+						amount.
 					</CardDescription>
 				</div>
 				<div className="flex justify-center relative pt-4">
@@ -73,8 +63,8 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete,
 							<CardDescription className="text-xs md:text-sm">read to...</CardDescription>
 							<div className="flex flex-row">
 								<p className="font-bold italic md:text-xl">
-									p.
-									<span className="text-6xl md:text-8xl not-italic">{demoClicked ? "140" : "120"}</span>
+									chapter.
+									<span className="text-6xl md:text-8xl not-italic">{demoClicked ? "8" : "7"}</span>
 								</p>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +102,7 @@ export function DemoPageLeft1({ readingIndex, demoIsComplete, setDemoIsComplete,
 			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
 				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{readingIndex + 1}</p>
+			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>
 	)
 }

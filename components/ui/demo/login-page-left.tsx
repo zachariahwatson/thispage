@@ -1,33 +1,15 @@
 "use client"
 
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-	Progress,
-	Separator,
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { Card, Separator } from "@/components/ui"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { useQuery } from "react-query"
+import { useState } from "react"
 
 interface Props {
-	readingIndex: number
+	userSpreadIndex: number
 }
 
-export function LoginPageLeft({ readingIndex }: Props) {
+export function LoginPageLeft({ userSpreadIndex }: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -60,7 +42,7 @@ export function LoginPageLeft({ readingIndex }: Props) {
 			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
 				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{readingIndex + 1}</p>
+			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>
 	)
 }

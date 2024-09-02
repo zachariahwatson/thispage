@@ -1,14 +1,18 @@
 "use client"
 
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui"
+import { CreateInviteForm } from "@/components/ui/forms/create"
 import { useMediaQuery } from "@/hooks"
-import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../drawer"
-import { Tooltip, TooltipTrigger, TooltipContent } from "../tooltip"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../sheet"
-import { CreatePostForm } from "../create-post-form"
 import { useState } from "react"
-import { Reading } from "@/lib/types"
-import { useReading } from "@/contexts"
-import { CreateInviteForm } from "../create-invite-form"
 
 export function CreateInviteButton() {
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -37,7 +41,7 @@ export function CreateInviteButton() {
 					</TooltipTrigger>
 					<TooltipContent>create invite code</TooltipContent>
 				</Tooltip>
-				<SheetContent className="sm:max-w-2xl max-w-2xl w-full space-y-4 overflow-scroll">
+				<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4 overflow-scroll">
 					<SheetHeader>
 						<SheetTitle>create invite code</SheetTitle>
 					</SheetHeader>

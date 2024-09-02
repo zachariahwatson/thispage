@@ -4,15 +4,6 @@ import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
-	Badge,
-	Drawer,
-	DrawerContent,
-	DrawerDescription,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
-	PostComments,
-	ScrollArea,
 	Separator,
 	Sheet,
 	SheetContent,
@@ -21,19 +12,19 @@ import {
 	SheetTitle,
 	SheetTrigger,
 	Skeleton,
-	Textarea,
 } from "@/components/ui"
 import { Button, LikeButton, PostActionsButton, RootCommentButton } from "@/components/ui/buttons"
-import { useQuery } from "react-query"
+import { PostComments } from "@/components/ui/post"
+import { useMediaQuery } from "@/hooks"
+import { useClubs, useUser } from "@/hooks/state"
+import type { Post } from "@/lib/types"
 import Image from "next/image"
 import Link from "next/link"
-import type { ClubMembership, Post } from "@/lib/types"
-import { useMediaQuery } from "@/hooks"
-import { useSearchParams, redirect } from "next/navigation"
-import { useClubs, useUser } from "@/hooks/state"
-import { toast } from "sonner"
-import { useEffect, useState } from "react"
+import { redirect } from "next/navigation"
 import { ProbeResult } from "probe-image-size"
+import { useEffect } from "react"
+import { useQuery } from "react-query"
+import { toast } from "sonner"
 
 interface Props {
 	clubId: string
@@ -139,11 +130,13 @@ export function Post({ clubId, readingId, postId }: Props) {
 							<p className="text-md">
 								{post.member?.name} •{" "}
 								<span className="text-sm">
-									{createdAt?.toLocaleDateString(undefined, {
-										year: "numeric",
-										month: "long",
-										day: "numeric",
-									})}
+									{createdAt
+										?.toLocaleDateString(undefined, {
+											year: "numeric",
+											month: "long",
+											day: "numeric",
+										})
+										.toLowerCase()}
 								</span>
 							</p>
 							<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
@@ -179,7 +172,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 										}
 									/>
 								</SheetTrigger>
-								<SheetContent className={`space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
+								<SheetContent className={`max-w-xl md:max-w-xl space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
 									<SheetHeader className="text-left">
 										<SheetTitle>{post.reading.book_title}</SheetTitle>
 										<SheetDescription className="italic">
@@ -235,8 +228,8 @@ export function Post({ clubId, readingId, postId }: Props) {
 						)}
 					</div>
 				</div>
-				<h1 className="text-lg md:text-2xl font-bold">{post.title}</h1>
-				<p className="md:text-md text-sm">{post.content}</p>
+				<h1 className="text-lg md:text-2xl font-bold break-words">{post.title}</h1>
+				<p className="md:text-md text-sm break-words">{post.content}</p>
 				<LikeButton
 					likesCount={post.likes_count}
 					clubId={clubId}

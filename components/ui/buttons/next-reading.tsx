@@ -5,17 +5,20 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 
 interface Props {
-	readingIndex: number
-	setReadingIndex: React.Dispatch<React.SetStateAction<number>>
+	userSpreadIndex: number
+	setUserSpreadIndex: React.Dispatch<React.SetStateAction<number>>
 	len: number
 }
 
-export function NextReading({ readingIndex, setReadingIndex, len }: Props) {
+export function NextReading({ userSpreadIndex, setUserSpreadIndex, len }: Props) {
 	const clubMembership = useClubMembership()
 
 	const nextReading = () => {
-		localStorage.setItem(`club-${clubMembership?.club.id}-tab-index`, ((readingIndex + 1) % len).toString())
-		setReadingIndex((readingIndex + 1) % len)
+		localStorage.setItem(
+			`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`,
+			((userSpreadIndex + 1) % len).toString()
+		)
+		setUserSpreadIndex((userSpreadIndex + 1) % len)
 	}
 
 	const [isHovered, setIsHovered] = useState(false)

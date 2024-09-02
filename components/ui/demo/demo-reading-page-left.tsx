@@ -9,27 +9,20 @@ import {
 	CardTitle,
 	Progress,
 	Separator,
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
 } from "@/components/ui"
-import { Button, JoinReadingButton, CompleteIntervalButton, DemoCompleteIntervalButton } from "@/components/ui/buttons"
-import { useClubMembership, useReading } from "@/contexts"
+import { DemoCompleteIntervalButton } from "@/components/ui/buttons"
 import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { Interval, MemberProgress, Reading } from "@/lib/types"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { useQuery } from "react-query"
+import { Dispatch, SetStateAction, useState } from "react"
 
 interface Props {
-	readingIndex: number
+	userSpreadIndex: number
 	isComplete: boolean
 	setIsComplete: Dispatch<SetStateAction<boolean>>
 }
 
-export function DemoReadingPageLeft({ readingIndex, isComplete, setIsComplete }: Props) {
+export function DemoReadingPageLeft({ userSpreadIndex, isComplete, setIsComplete }: Props) {
 	const MotionCard = motion(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
@@ -78,8 +71,8 @@ export function DemoReadingPageLeft({ readingIndex, isComplete, setIsComplete }:
 					<CardDescription>read to...</CardDescription>
 					<div className="flex flex-row">
 						<p className="font-bold italic md:text-xl">
-							p.
-							<span className="text-6xl md:text-8xl not-italic">50</span>
+							book.
+							<span className="text-6xl md:text-8xl not-italic">12</span>
 						</p>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +100,7 @@ export function DemoReadingPageLeft({ readingIndex, isComplete, setIsComplete }:
 			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
 				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{readingIndex + 1}</p>
+			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>
 	)
 }

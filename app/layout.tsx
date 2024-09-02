@@ -1,14 +1,12 @@
-import { GeistSans } from "geist/font/sans"
-import "@/styles/globals.css"
-import Providers from "./providers"
-import { Nav } from "@/components/ui"
-import { createClient } from "@/utils/supabase/server"
-import Link from "next/link"
 import { Button } from "@/components/ui/buttons"
-import { useQuery } from "react-query"
+import { Nav } from "@/components/ui/nav"
+import "@/styles/globals.css"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Metadata, Viewport } from "next"
+import { GeistSans } from "geist/font/sans"
+import Link from "next/link"
+import Providers from "./providers"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -48,7 +46,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			<body className="bg-background text-foreground">
 				<Providers>
 					<Nav />
-					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-6 md:p-12 md:pt-12 space-y-8">
+					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-4 md:p-12 md:pt-12 space-y-8">
 						{children}
 					</main>
 					<footer className="flex flex-col justify-center items-center md:text-sm text-xs">
@@ -67,7 +65,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							</Button>{" "}
 							|{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.8.3</Link>
+								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v 0.9.0</Link>
 							</Button>{" "}
 						</div>
 					</footer>

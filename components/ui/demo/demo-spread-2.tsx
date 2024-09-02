@@ -1,29 +1,26 @@
 "use client"
 
-import { ReadingPageLeft, ReadingPageRight } from "@/components/ui/book"
+import { DemoPageLeft2, DemoPageRight2 } from "@/components/ui/demo"
 import { AnimatePresence } from "framer-motion"
+import { useState } from "react"
 
 interface Props {
 	isVisible: boolean
-	readingIndex: number
+	userSpreadIndex: number
 }
-import { useReading } from "@/contexts"
-import { DemoPageLeft2 } from "./demo-page-left-2"
-import { DemoPageRight2 } from "./demo-page-right-2"
-import { useState } from "react"
 
-export function DemoSpread2({ isVisible, readingIndex }: Props) {
+export function DemoSpread2({ isVisible, userSpreadIndex }: Props) {
 	const [demoIsComplete, setDemoIsComplete] = useState<boolean>(false)
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
 				<div id={`demo-spread`} className="h-full w-full flex flex-col md:flex-row rounded-lg bg-background">
 					<DemoPageLeft2
-						readingIndex={readingIndex}
+						userSpreadIndex={userSpreadIndex}
 						demoIsComplete={demoIsComplete}
 						setDemoIsComplete={setDemoIsComplete}
 					/>
-					<DemoPageRight2 readingIndex={readingIndex} demoIsComplete={demoIsComplete} />
+					<DemoPageRight2 userSpreadIndex={userSpreadIndex} demoIsComplete={demoIsComplete} />
 				</div>
 			)}
 		</AnimatePresence>

@@ -1,27 +1,23 @@
 "use client"
 
-import { useMutation, useQueryClient } from "react-query"
-import { Button } from "./button"
+import { Button } from "@/components/ui/buttons"
+import { useClubMembership, useReading } from "@/contexts"
 import { useRouter } from "next/navigation"
+import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
-import { useClubMembership } from "@/contexts"
-
-interface Props {
-	readingId: number | null
-	intervalId: number | null
-}
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function JoinReadingButton({ readingId, intervalId }: Props) {
+export function JoinReadingButton() {
 	const clubMembership = useClubMembership()
+	const readingData = useReading()
 	const queryClient = useQueryClient()
 	const mutation = useMutation({
 		mutationFn: (newProgress: { member_id: number; interval_id: number }) => {
 			const url = new URL(
-				`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingId}/intervals/${intervalId}/member-interval-progresses`
+				`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}/intervals/${readingData?.interval?.id}/member-interval-progresses`
 			)
 			return fetch(url, {
 				method: "POST",
@@ -33,13 +29,11 @@ export function JoinReadingButton({ readingId, intervalId }: Props) {
 		},
 		onSuccess: () => {
 			toast.success("reading joined!")
-			queryClient.invalidateQueries(["intervals", clubMembership?.club.id, readingId])
-			queryClient.invalidateQueries(["user progress", intervalId])
+			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 		},
 	})
-	const router = useRouter()
 	return mutation.isLoading ? (
-		<Button disabled className="mt-4">
+		<Button disabled className="mt-4 mx-1">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -59,11 +53,11 @@ export function JoinReadingButton({ readingId, intervalId }: Props) {
 	) : (
 		<Button
 			onClick={() => {
-				if (intervalId !== null) {
-					mutation.mutate({ member_id: clubMembership?.id || -1, interval_id: intervalId })
+				if (readingData?.interval?.id !== null) {
+					mutation.mutate({ member_id: clubMembership?.id || -1, interval_id: readingData?.interval?.id || -1 })
 				}
 			}}
-			className="mt-4"
+			className="mt-4 mx-1"
 		>
 			join reading
 		</Button>

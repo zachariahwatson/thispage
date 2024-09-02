@@ -4,7 +4,7 @@ import { useQuery } from "react-query"
 /**
  * retrieves the club's readings.
  */
-export function useReadings(clubId: number) {
+export function useReadings(clubId: number, memberId: number | null) {
 	const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 		? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 		: "http://localhost:3000"
@@ -12,7 +12,7 @@ export function useReadings(clubId: number) {
 	return useQuery<Reading[]>({
 		queryKey: ["readings", clubId],
 		queryFn: async () => {
-			const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings`)
+			const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings?memberId=${memberId}`)
 			url.searchParams.append("archived", "false")
 			const response = await fetch(url, {
 				method: "GET",
