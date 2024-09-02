@@ -1,5 +1,6 @@
 import { Post } from "@/components/ui/post"
 import { createClient } from "@/utils/supabase/server"
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 interface Props {
