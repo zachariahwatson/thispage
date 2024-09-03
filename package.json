@@ -4,7 +4,7 @@
 	"name": "thispage",
 	"scripts": {
 		"dev": "next dev",
-		"build": "genversion lib/version.js && next build",
+		"build": "genversion --esm lib/version.js && next build",
 		"start": "next start"
 	},
 	"dependencies": {
