@@ -4,7 +4,7 @@ import { Card, Separator, Skeleton } from "@/components/ui/"
 import { EmptyPageLeft, EmptyPageRight } from "@/components/ui/books/club/spreads"
 import { DashboardSpread } from "@/components/ui/books/club/spreads/dashboard"
 import { ReadingSpread } from "@/components/ui/books/club/spreads/reading"
-import { NextReading } from "@/components/ui/buttons"
+import { NextReading, Tabs } from "@/components/ui/buttons"
 import { PollProvider, ReadingProvider, useClubMembership } from "@/contexts"
 import { usePolls, useReadings, useSpreadsCount, useUserProgress } from "@/hooks/state"
 import { useEffect, useState } from "react"
@@ -82,6 +82,8 @@ export function Spreads() {
 				setUserSpreadIndex={setUserSpreadIndex}
 				len={spreadsCount?.total_spreads || spreadIndex}
 			/>
+
+			<Tabs spreadsCount={spreadsCount} userSpreadIndex={userSpreadIndex} setUserSpreadIndex={setUserSpreadIndex} />
 		</>
 	) : (
 		(pollsLoading || readingsLoading || spreadsCountLoading) && <SpreadSkeleton />
