@@ -112,28 +112,32 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 						})}` && "ring-4 ring-ring"
 				}`}
 			>
-				<FormControl>
-					<RadioGroupItem
-						value={JSON.stringify({
-							openLibraryId: item.key.split("/")[2],
-							title: item.title || work.title,
-							description:
-								(item.description &&
-									(typeof item.description === "object" && "value" in item.description
-										? item.description.value
-										: item.description)) ||
-								(work.description &&
-									(typeof work.description === "object" && "value" in work.description
-										? work.description.value
-										: work.description)),
-							authors: authors,
-							pageCount: Number(item.number_of_pages || item.pagination),
-							coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
-							coverImageWidth: !loading && cover && cover.width,
-							coverImageHeight: !loading && cover && cover.height,
-						})}
-					/>
-				</FormControl>
+				{!loading ? (
+					<FormControl>
+						<RadioGroupItem
+							value={JSON.stringify({
+								openLibraryId: item.key.split("/")[2],
+								title: item.title || work.title,
+								description:
+									(item.description &&
+										(typeof item.description === "object" && "value" in item.description
+											? item.description.value
+											: item.description)) ||
+									(work.description &&
+										(typeof work.description === "object" && "value" in work.description
+											? work.description.value
+											: work.description)),
+								authors: authors,
+								pageCount: Number(item.number_of_pages || item.pagination),
+								coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
+								coverImageWidth: !loading && cover && cover.width,
+								coverImageHeight: !loading && cover && cover.height,
+							})}
+						/>
+					</FormControl>
+				) : (
+					<div className="w-5" />
+				)}
 
 				<Card ref={cardRef} className="w-full min-w-0 rounded-none border-none bg-none shadow-none">
 					<FormLabel className="hover:cursor-pointer min-w-0">
