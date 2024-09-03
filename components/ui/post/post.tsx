@@ -4,6 +4,7 @@ import {
 	Avatar,
 	AvatarFallback,
 	AvatarImage,
+	BookDetails,
 	Separator,
 	Sheet,
 	SheetContent,
@@ -172,54 +173,14 @@ export function Post({ clubId, readingId, postId }: Props) {
 										}
 									/>
 								</SheetTrigger>
-								<SheetContent className={`max-w-xl md:max-w-xl space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
-									<SheetHeader className="text-left">
-										<SheetTitle>{post.reading.book_title}</SheetTitle>
-										<SheetDescription className="italic">
-											by{" "}
-											{post.reading.book_authors?.length === 2
-												? post.reading.book_authors.join(" and ")
-												: post.reading.book_authors
-														?.map((author: string, i: number) => {
-															if (
-																i === (post.reading.book_authors ? post.reading.book_authors.length - 1 : 0) &&
-																post.reading.book_authors?.length !== 1
-															) {
-																return "and " + author
-															} else {
-																return author
-															}
-														})
-														.join(", ")}
-										</SheetDescription>
-									</SheetHeader>
-									<Image
-										className="rounded-lg w-full max-h-full shadow-shadow shadow-md"
-										src={post.reading.book_cover_image_url || ""}
-										width={post.reading.book_cover_image_width || 0}
-										height={post.reading.book_cover_image_height || 0}
-										alt={
-											"Cover photo of " +
-											post.reading.book_title +
-											" by " +
-											(post.reading.book_authors?.length === 2
-												? post.reading.book_authors.join(" and ")
-												: post.reading.book_authors
-														?.map((author: string, i: number) => {
-															if (
-																i === (post.reading.book_authors ? post.reading.book_authors.length - 1 : 0) &&
-																post.reading.book_authors?.length !== 1
-															) {
-																return "and " + author
-															} else {
-																return author
-															}
-														})
-														.join(", "))
-										}
-									/>
-									<SheetDescription className="italic">{post.reading.book_description}</SheetDescription>
-								</SheetContent>
+								<BookDetails
+									bookTitle={post.reading.book_title}
+									coverUrl={post.reading.book_cover_image_url || ""}
+									coverWidth={post.reading.book_cover_image_width || 0}
+									coverHeight={post.reading.book_cover_image_height || 0}
+									authors={post.reading.book_authors ?? undefined}
+									description={post.reading.book_description ?? undefined}
+								/>
 							</Sheet>
 						</div>
 

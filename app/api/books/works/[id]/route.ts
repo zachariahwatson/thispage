@@ -1,4 +1,5 @@
 import { Work } from "@/lib/types"
+import { version } from "@/lib/version"
 import { NextRequest } from "next/server"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -9,6 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
+					"User-Agent": `thispage/${version} (watsonzachariah@gmail.com)`,
 				},
 			})
 

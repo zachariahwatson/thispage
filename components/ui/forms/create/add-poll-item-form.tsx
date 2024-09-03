@@ -50,7 +50,7 @@ export function AddPollItemForm({ mutation, setVisible }: Props) {
 			book: {
 				open_library_id: parsedBook.openLibraryId,
 				title: parsedBook.title,
-				description: parsedBook.description.value,
+				description: parsedBook.description,
 				authors: parsedBook.authors,
 				page_count: parsedBook.pageCount,
 				cover_image_url: parsedBook.coverImageUrl,

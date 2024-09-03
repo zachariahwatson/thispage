@@ -61,6 +61,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 			book_sections?: number | undefined
 			section_name?: string | undefined
 		}) => {
+			console.log(data)
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings`)
 			return fetch(url, {
 				method: "POST",
@@ -77,13 +78,12 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 			toast.success("reading successfully created")
 			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
-			if (spreadsCount && spreadsCount?.total_readings) {
-				localStorage.setItem(
-					`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`,
-					(spreadsCount?.total_readings).toString()
-				)
-				setUserSpreadIndex(spreadsCount?.total_readings)
+			let index = 0
+			if (spreadsCount) {
+				if (spreadsCount.total_readings) index += spreadsCount.total_readings
 			}
+			localStorage.setItem(`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`, index.toString())
+			setUserSpreadIndex(index)
 		},
 	})
 
@@ -121,13 +121,13 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 			toast.success(body.message)
 			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
-			if (spreadsCount && spreadsCount?.total_readings && spreadsCount?.total_polls) {
-				localStorage.setItem(
-					`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`,
-					(spreadsCount?.total_readings + spreadsCount?.total_polls).toString()
-				)
-				setUserSpreadIndex(spreadsCount?.total_readings + spreadsCount?.total_polls)
+			let index = 0
+			if (spreadsCount) {
+				if (spreadsCount.total_readings) index += spreadsCount.total_readings
+				if (spreadsCount.total_polls) index += spreadsCount.total_polls
 			}
+			localStorage.setItem(`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`, index.toString())
+			setUserSpreadIndex(index)
 		},
 	})
 
