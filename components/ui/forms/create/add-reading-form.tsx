@@ -66,7 +66,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 			book: {
 				open_library_id: parsedBook.openLibraryId,
 				title: parsedBook.title,
-				description: parsedBook.description.value,
+				description: parsedBook.description,
 				authors: parsedBook.authors,
 				page_count: parsedBook.pageCount,
 				cover_image_url: values.bookCoverImageURL || parsedBook.coverImageUrl,
@@ -75,7 +75,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 			creator_member_id: clubMembership?.id || -1,
 			start_date: startDate,
 			join_in_progress: values.joinInProgress,
-			increment_type: values.incrementType,
+			increment_type: values.incrementType ?? "pages",
 		}
 		// Add fields conditionally based on incrementType
 		if (values.incrementType === "pages" || values.incrementType === undefined) {

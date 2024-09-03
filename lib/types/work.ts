@@ -3,7 +3,7 @@ export type Work = {
 	key: string
 	authors: Author2[]
 	type: Type
-	description: string
+	description: Description | string
 	covers: number[]
 	subject_places: string[]
 	subjects: string[]
@@ -32,4 +32,9 @@ type Author = {
 
 type Type = {
 	key: string
+}
+
+type Description = {
+	type: string
+	value: string
 }

@@ -9,6 +9,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
+					"User-Agent": "thispage/0.9.1 (watsonzachariah@gmail.com)",
 				},
 			})
 
