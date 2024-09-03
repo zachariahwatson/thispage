@@ -32,8 +32,10 @@ export function ReadingPost({ disabled, children, likes, id }: Props) {
 						!disabled ? "hover:font-medium transition-all" : ""
 					}`}
 				>
-					<p className={`min-h-5 text-xs md:text-sm truncate ...`}>{children}</p>
-					<Badge variant={hasLiked ? "default" : "outline"} className="px-1 md:px-2.5 cursor-default">
+					<p className={`min-h-5 text-xs md:text-sm truncate ...`} title={`${children}`}>
+						{children}
+					</p>
+					<Badge variant={hasLiked ? "default" : "outline"} className="px-1 md:px-2.5 cursor-default ml-2">
 						<span className="mr-1">{likes}</span>👍
 					</Badge>
 				</div>
