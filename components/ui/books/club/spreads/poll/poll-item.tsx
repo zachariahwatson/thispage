@@ -79,7 +79,23 @@ export function PollItem({ item, groupValue }: Props) {
 					groupValue === `${item.id}` && "ring-4 ring-ring"
 				}`}
 			>
-				<RadioGroupItem value={`${item.id}`} id={`${item.id}`} />
+				{clubMembership?.id === item.creator_member_id ? (
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 16 16"
+						fill="currentColor"
+						className="size-4 text-muted-foreground"
+					>
+						<path
+							fillRule="evenodd"
+							d="M3.05 3.05a7 7 0 1 1 9.9 9.9 7 7 0 0 1-9.9-9.9Zm1.627.566 7.707 7.707a5.501 5.501 0 0 0-7.707-7.707Zm6.646 8.768L3.616 4.677a5.501 5.501 0 0 0 7.707 7.707Z"
+							clipRule="evenodd"
+						/>
+					</svg>
+				) : (
+					<RadioGroupItem value={`${item.id}`} id={`${item.id}`} />
+				)}
+
 				<p className="absolute bottom-1 text-xs text-muted-foreground left-2">
 					{pollData?.total_votes_count ? Math.trunc((item.votes_count / pollData?.total_votes_count) * 100) : 0}%
 				</p>
