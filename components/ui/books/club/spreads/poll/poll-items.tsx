@@ -90,7 +90,7 @@ export function PollItems() {
 				},
 				error: (error: any) => {
 					console.error(error.message, { code: error.code })
-					return error.message + " code: " + error.code
+					return error.message + "\ncode: " + error.code
 				},
 			})
 		}
@@ -99,7 +99,8 @@ export function PollItems() {
 	return (
 		<div className="h-full">
 			<RadioGroup defaultValue={value} value={value} onValueChange={handleValueChange}>
-				<ScrollArea className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner relative">
+				{/* <ScrollArea className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner relative"> */}
+				<div className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner relative overflow-y-scroll w-full">
 					<div className="p-3 md:p-4 w-auto h-auto space-y-2">
 						{pollData?.items &&
 							pollData?.items.map((item) => <PollItem key={item.id} item={item} groupValue={value} />)}
@@ -136,7 +137,8 @@ export function PollItems() {
 							<div className="backdrop-blur-[2px] bg-background/40 w-full h-full absolute z-10 top-0 left-0"></div>
 						)} */}
 					</div>
-				</ScrollArea>
+				</div>
+				{/* </ScrollArea> */}
 			</RadioGroup>
 		</div>
 	)
