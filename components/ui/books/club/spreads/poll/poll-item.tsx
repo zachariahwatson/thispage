@@ -68,7 +68,7 @@ export function PollItem({ item, groupValue }: Props) {
 
 			return () => observer.disconnect()
 		}
-	}, [cardRef.current, imageRef.current])
+	}, [cardRef, imageRef])
 
 	return (
 		<div className="relative">
@@ -79,7 +79,7 @@ export function PollItem({ item, groupValue }: Props) {
 					groupValue === `${item.id}` && "ring-4 ring-ring"
 				}`}
 			>
-				{clubMembership?.id === item.creator_member_id ? (
+				{clubMembership?.id === item.creator_member_id || pollData?.is_finished ? (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 16 16"
@@ -102,8 +102,31 @@ export function PollItem({ item, groupValue }: Props) {
 				<Card ref={cardRef} className="w-full min-w-0 rounded-none border-none bg-none shadow-none">
 					<Label htmlFor={`${item.id}`} className="hover:cursor-pointer min-w-0">
 						<CardHeader ref={cardHeaderRef} className="relative p-2 md:p-3 pb-1 md:pb-2 space-y-0">
-							<CardTitle className="text-md truncate ...">{item.book_title}</CardTitle>
-							<CardDescription className="text-xs md:text-sm truncate ...">
+							<CardTitle className="text-md truncate ..." title={item.book_title}>
+								{item.book_title}
+							</CardTitle>
+							<CardDescription
+								className="text-xs md:text-sm truncate ..."
+								title={
+									item.book_authors
+										? " by " +
+										  (item.book_authors.length === 2
+												? item.book_authors.join(" and ")
+												: item.book_authors
+														.map((author: string, i: number) => {
+															if (
+																i === (item.book_authors ? item.book_authors?.length - 1 : 0) &&
+																item.book_authors?.length !== 1
+															) {
+																return "and " + author
+															} else {
+																return author
+															}
+														})
+														.join(", "))
+										: undefined
+								}
+							>
 								{item.book_authors
 									? " by " +
 									  (item.book_authors.length === 2
