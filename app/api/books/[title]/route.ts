@@ -1,5 +1,6 @@
 import { BookSearch } from "@/lib/types"
 import { NextRequest } from "next/server"
+import { version } from "@/lib/version"
 
 export async function GET(request: NextRequest, { params }: { params: { title: string } }) {
 	try {
@@ -14,7 +15,7 @@ export async function GET(request: NextRequest, { params }: { params: { title: s
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
-					"User-Agent": "thispage/0.9.1 (watsonzachariah@gmail.com)",
+					"User-Agent": `thispage/${version} (watsonzachariah@gmail.com)`,
 				},
 			})
 
