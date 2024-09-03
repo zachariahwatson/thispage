@@ -47,8 +47,9 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 		 * @todo - figure out why it's becoming display: table
 		 */
 		<div className="h-full">
-			<ScrollArea className="border rounded-lg min-h-[124px] h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner">
-				<div className="p-3 md:p-4 w-auto h-auto">
+			{/* <ScrollArea className="border rounded-lg min-h-[124px] h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner"> */}
+			<div className="border rounded-lg min-h-[124px] h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner w-full overflow-y-scroll">
+				<div className="p-3 md:p-4 w-full h-auto">
 					{posts
 						? posts.map((post) =>
 								readingData?.interval?.user_progress ? (
@@ -79,7 +80,8 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 								</>
 						  )}
 				</div>
-			</ScrollArea>
+			</div>
+			{/* </ScrollArea> */}
 		</div>
 	)
 }
