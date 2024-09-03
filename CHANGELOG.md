@@ -9,11 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Poll email notifications
-- Poll item custom synopsis
 - Password recovery page
-- Filter book search based on language
-- View archived readings
+- View archived readings and polls
 - Tabs for readings, polls and dashboard
 - Favorite button for clubs and readings(?)
 - Human-friendly error messages
@@ -23,11 +20,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Themes
 - Better book search experience
+- Ranked choice poll
+
+### Fixed
+
+- Reading image alignment issues
+
+## [0.9.2] - 2024-09-03
+
+### Added
+
+- Filter book search based on language
+- Poll email notifications
+
+### Changed
+
+- Replaced all scroll areas with default scroll
 
 ### Fixed
 
 - Post title truncation
-- Reading image alignment issues
 
 ## [0.9.0] - 2024-09-01
 
@@ -118,6 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.9.2]: https://github.com/zachariahwatson/thispage/compare/0.9.0...0.9.2
 [0.9.0]: https://github.com/zachariahwatson/thispage/compare/0.8.3...0.9.0
 [0.8.3]: https://github.com/zachariahwatson/thispage/compare/0.8.2...0.8.3
 [0.8.2]: https://github.com/zachariahwatson/thispage/compare/0.8.1...0.8.2
