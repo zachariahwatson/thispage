@@ -45,6 +45,12 @@ export function WhatsNewDialog() {
 								is a mini book podium for the winners. duh.
 							</DialogDescription>
 						</div>
+						<DialogTitle>filter books by language</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- filter books by (literally) every language when creating a reading or poll item!
+							</DialogDescription>
+						</div>
 					</TabsContent>
 					<TabsContent value="0.8.0" className="space-y-3">
 						<DialogTitle>email notifications</DialogTitle>
