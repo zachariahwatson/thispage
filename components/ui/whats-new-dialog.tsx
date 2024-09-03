@@ -51,6 +51,12 @@ export function WhatsNewDialog() {
 								- filter books by (literally) every language when creating a reading or poll item!
 							</DialogDescription>
 						</div>
+						<DialogTitle>book club tabs</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- there are now tabs at the bottom of every book club for easy pagination.
+							</DialogDescription>
+						</div>
 					</TabsContent>
 					<TabsContent value="0.8.0" className="space-y-3">
 						<DialogTitle>email notifications</DialogTitle>
