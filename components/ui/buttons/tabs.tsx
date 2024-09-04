@@ -135,8 +135,8 @@ function Bookmark({ id, value, className, children, groupValue }: BookmarkProps)
 
 	return (
 		<div
-			className={`bg-background w-12 md:w-16 rounded-b-md shadow-md ${
-				isSelected ? "h-10 shadow-xl shadow-primary/15" : "h-8 shadow-shadow"
+			className={`bg-background w-16 shadow-xl ${
+				isSelected ? "h-10 shadow-primary/15" : "h-8 shadow-shadow"
 			} hover:h-10 transition-all ${className}`}
 		>
 			<RadioGroupItem value={value} id={id} hidden />
@@ -148,6 +148,21 @@ function Bookmark({ id, value, className, children, groupValue }: BookmarkProps)
 			>
 				{children}
 			</Label>
+
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 24 24"
+				fill="currentColor"
+				className="size-16 text-background"
+			>
+				{/* <path fillRule="evenodd" d="M 0 0 H 24 V 4 L 12 0 L 0 4 Z" clipRule="evenodd" stroke-linejoin="round" /> */}
+				<path
+					fillRule="evenodd"
+					d="M 0 0 H 24 C 24 4 24 4 12 0 C 0 4 0 4 0 0 Z"
+					clipRule="evenodd"
+					stroke-linejoin="round"
+				/>
+			</svg>
 		</div>
 	)
 }
