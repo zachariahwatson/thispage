@@ -69,9 +69,13 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 								day: "numeric",
 							})
 							.toLowerCase()} */}
-						<Countdown date={endDate}>
-							<span>poll ended!</span>
-						</Countdown>
+						{pollData?.end_date ? (
+							<Countdown date={endDate}>
+								<span>poll ended!</span>
+							</Countdown>
+						) : (
+							["selection", "voting"].includes(pollData?.status ?? "") && pollData?.status + " phase"
+						)}
 					</span>
 				</CardDescription>
 			</CardFooter>

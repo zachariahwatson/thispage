@@ -94,7 +94,7 @@ export function PollPageLeft({ userSpreadIndex }: Props) {
 						<CardTitle className="text-sm md:text-lg text-wrap break-words">{pollData?.name}</CardTitle>
 						<CardDescription className="text-xs md:text-sm break-words">{pollData?.description}</CardDescription>
 						<Separator />
-						<PollPodium />
+						{/* <PollPodium /> */}
 					</CardHeader>
 				</>
 			)}
