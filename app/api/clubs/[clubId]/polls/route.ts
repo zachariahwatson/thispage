@@ -22,12 +22,11 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
                 created_at,
                 club_id,
                 end_date,
+				voting_length_days,
                 is_locked,
                 name,
                 description,
-                is_finished,
-                is_archived,
-				total_votes_count,
+                status,
                 items:poll_items (
                     id,
                     created_at,
@@ -38,7 +37,6 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 					book_cover_image_width,
 					book_cover_image_height,
 					book_page_count,
-                    votes_count,
 					creator_member_id,
 					poll_votes (
 						id,
@@ -49,9 +47,8 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			`
 			)
 			.eq("club_id", params.clubId)
-			.eq("is_archived", archived)
+			.eq("status", archived ? "archived" : "selection" || "voting" || "finished")
 			.eq("poll_items.poll_votes.member_id", memberId)
-			.limit(1, { referencedTable: "poll_items.poll_votes" })
 			.order("id", { ascending: true })
 			.order("id", { referencedTable: "poll_items", ascending: true })
 
@@ -60,18 +57,20 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		}
 
 		if (data) {
-			// Transform data to match the Poll type
+			// Transform data to match the Poll type, handling multiple votes
 			const transformedData: Poll[] = data.map((poll) => {
-				let userVoteId = null
-				let userVotePollItemId = null
+				const userVotes: { poll_item_id: number; vote_id: number }[] = []
 				let userHasPollItem = false
 
-				// Find the user's vote from the items
+				// Process poll items and track votes
 				poll.items.forEach((item) => {
 					if (item.poll_votes && item.poll_votes.length > 0) {
-						userVoteId = item.poll_votes[0].id
-						userVotePollItemId = item.poll_votes[0].poll_item_id
+						userVotes.push({
+							poll_item_id: item.poll_votes[0].poll_item_id,
+							vote_id: item.poll_votes[0].id,
+						})
 					}
+
 					if (item.creator_member_id === memberId) {
 						userHasPollItem = true
 					}
@@ -80,8 +79,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 				return {
 					...poll,
 					items: poll.items,
-					user_vote_id: userVoteId,
-					user_vote_poll_item_id: userVotePollItemId,
+					user_votes: userVotes, // List of votes by the user for each poll item
 					user_has_poll_item: userHasPollItem,
 				}
 			})
@@ -113,7 +111,7 @@ export async function POST(request: NextRequest, { params }: { params: { clubId:
 		const { error } = await supabase.from("polls").insert({
 			club_id: body.club_id,
 			creator_member_id: body.creator_member_id,
-			end_date: body.end_date,
+			voting_length_days: body.voting_length_days,
 			is_locked: body.is_locked,
 			name: body.name,
 			description: body.description,
