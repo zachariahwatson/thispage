@@ -54,7 +54,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 						<div className="h-8">
 							© 2024 ❤️ Zachariah Watson |{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage">github</Link>
+								<Link href="https://github.com/zachariahwatson/thispage" target="_blank" rel="noopener noreferrer">
+									github
+								</Link>
 							</Button>{" "}
 							|{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
@@ -66,7 +68,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							</Button>{" "}
 							|{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v {version}</Link>
+								<Link
+									href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									v {version}
+								</Link>
 							</Button>{" "}
 						</div>
 					</footer>

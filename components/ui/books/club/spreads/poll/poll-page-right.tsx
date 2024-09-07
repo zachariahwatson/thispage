@@ -298,6 +298,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 										insertPollVotesMutation.mutate(pollVotes)
 									}
 								}}
+								disabled={!values || values.length === 0}
 							>
 								vote
 							</Button>

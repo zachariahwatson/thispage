@@ -25,6 +25,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reading image alignment issues
 
+## [0.10.0] - 2024-09-06
+
+### Added
+
+- Email notifications for new readings and polls
+
+### Changed
+
+- Rewrote polls to function like an [approval voting system](https://en.wikipedia.org/wiki/Approval_voting)
+
 ## [0.9.3] - 2024-09-03
 
 ### Added
@@ -135,6 +145,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.10.0]: https://github.com/zachariahwatson/thispage/compare/0.9.3...0.10.0
 [0.9.3]: https://github.com/zachariahwatson/thispage/compare/0.9.2...0.9.3
 [0.9.2]: https://github.com/zachariahwatson/thispage/compare/0.9.0...0.9.2
 [0.9.0]: https://github.com/zachariahwatson/thispage/compare/0.8.3...0.9.0
