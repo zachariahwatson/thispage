@@ -156,7 +156,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-118px)] pt-4 md:pt-6">
 				<div className="flex flex-row justify-between">
 					<CardTitle className="text-xl">
 						{pollData?.status === "selection"
@@ -200,7 +200,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 				</div>
 				<PollItems values={values} setValues={setValues} />
 			</CardHeader>
-			<CardFooter className="absolute bottom-0 flex flex-col w-full items-center space-y-2 md:p-6 p-4 pb-6">
+			<CardFooter className="absolute bottom-0 flex flex-col w-full items-center space-y-2 md:p-6 p-4 pb-4 md:pb-4">
 				{pollData?.status === "selection" && clubMembership?.role === "admin" && (
 					<AlertDialog open={continueVisible} onOpenChange={setContinueVisible}>
 						<AlertDialogTrigger asChild>

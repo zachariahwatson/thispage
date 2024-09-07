@@ -53,7 +53,7 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 			}}
 		>
 			{firstLoad?.firstLoad && (
-				<CardHeader className="px-4 md:px-6 h-full">
+				<CardHeader className="px-4 md:px-6 h-full pt-4 md:pt-6">
 					<CardTitle className="text-xl flex flex-row items-center">
 						dashboard
 						<svg

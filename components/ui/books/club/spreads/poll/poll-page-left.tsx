@@ -83,7 +83,7 @@ export function PollPageLeft({ userSpreadIndex }: Props) {
 			{firstLoad?.firstLoad && (
 				<>
 					<PollActionsButton />
-					<CardHeader className="px-4 md:px-6 relative h-full">
+					<CardHeader className="px-4 md:px-6 relative h-full pt-4 md:pt-6">
 						<CardTitle className="text-xl flex flex-row items-center">
 							poll
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 ml-2">

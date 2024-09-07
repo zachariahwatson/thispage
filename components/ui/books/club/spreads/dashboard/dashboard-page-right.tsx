@@ -151,7 +151,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader className="px-4 md:px-6 h-full">
+			<CardHeader className="px-4 md:px-6 h-full pt-4 md:pt-6">
 				<Separator className="mt-8 hidden md:block" />
 				<div className="pr-1 h-1/2">
 					<CardTitle className="text-lg">add a reading</CardTitle>

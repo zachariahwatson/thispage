@@ -43,7 +43,7 @@ export function ReadingPageRight({ userSpreadIndex }: Props) {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-118px)] pt-4 md:pt-6">
 				<div className="flex justify-between pr-1">
 					<CardTitle className="text-xl">discussion</CardTitle>
 					<CreatePostButton />
