@@ -103,7 +103,7 @@ export function PollItem({ item, groupValues }: Props) {
 					<>
 						<ToggleGroupItem value={`${item.id}`} id={`${item.id}`} hidden className="bg-none p-0 m-0" />
 
-						<Checkbox className="w-4 h-4 p-0" checked={groupValues?.includes(item.id.toString())} />
+						<Checkbox className="w-4 h-4 p-0 rounded-[4px]" checked={groupValues?.includes(item.id.toString())} />
 					</>
 				)}
 
