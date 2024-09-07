@@ -8,25 +8,21 @@
 import { createClient } from "jsr:@supabase/supabase-js@2"
 import { Database } from "./types.ts"
 
-type IntervalRecord = Database["public"]["Tables"]["intervals"]["Row"]
+type ReadingRecord = Database["public"]["Tables"]["readings"]["Row"]
 
 interface WebHookPayload {
 	type: "INSERT" | "UPDATE" | "DELETE"
 	table: string
-	record: IntervalRecord
+	record: ReadingRecord
 	schema: "public"
-	old_record: IntervalRecord | null
+	old_record: ReadingRecord | null
 }
 
 Deno.serve(async (req) => {
 	try {
 		const payload: WebHookPayload = await req.json()
 
-		if (
-			(payload.old_record?.is_complete === false || payload.old_record?.is_complete === null) &&
-			payload.record.is_complete === true &&
-			payload.type === "UPDATE"
-		) {
+		if (payload.type === "INSERT") {
 			const supabase = createClient(
 				Deno.env.get("SUPABASE_URL") ?? "",
 				Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
@@ -36,22 +32,21 @@ Deno.serve(async (req) => {
 			)
 
 			//query
-			const { data: memberIntervalProgresses, error: memberIntervalProgressesError } = await supabase
-				.from("member_interval_progresses")
+			const { data: members, error: membersError } = await supabase
+				.from("members")
 				.select(
-					`
-				...members (
-						user_id
-					)
+					`id,
+				user_id
 				`
 				)
-				.eq("interval_id", payload.record.id)
-				.order("updated_at", { ascending: true }) //get most recent updated_at, aka the last member to complete the reading
+				.eq("club_id", payload.record.club_id)
+				.neq("id", payload.record.creator_member_id)
 
-			// Remove the most recent member interval so they don't receive the email
-			memberIntervalProgresses?.pop()
+			if (membersError) {
+				throw membersError
+			}
 
-			const userIDs = memberIntervalProgresses?.map((member: { user_id: string }) => member?.user_id) || []
+			const userIDs = members?.map((member: { id: number; user_id: string }) => member?.user_id) || []
 
 			// Fetch user data for each user_id and store in emails array
 			const emails = await Promise.all(
@@ -64,25 +59,15 @@ Deno.serve(async (req) => {
 				})
 			)
 
-			if (memberIntervalProgressesError) {
-				throw memberIntervalProgressesError
-			}
-
 			//get necessary data for email body
 			const { data: emailData, error: emailDataError } = await supabase
-				.from("intervals")
+				.from("readings")
 				.select(
 					`
-				goal_page,
-        goal_section,
-        ...readings (
           book_title,
-          increment_type,
-          section_name,
-          ...clubs (
+				  ...clubs (
             club_name:name
           )
-        )
 				`
 				)
 				.eq("id", payload.record.id)
@@ -103,16 +88,12 @@ Deno.serve(async (req) => {
 					body: JSON.stringify({
 						from: "thispage <notifications@thispa.ge>",
 						to: emails,
-						subject: "reading goal completed!",
+						subject: "new reading!",
 						html: `
           <div>
             <p>hey!</p>
             <p>
-              all readers have read <strong>${emailData.book_title}</strong> to ${
-							emailData.increment_type === "pages" ? "page" : emailData.section_name
-						} ${emailData.increment_type === "pages" ? emailData.goal_page : emailData.goal_section} in ${
-							emailData.club_name
-						}. discuss what you thought!
+              there's a new reading for <strong>${emailData.book_title}</strong> in ${emailData.club_name}. join and get a head start!
             </p>
             <p style="margin:0px;">sincerely,</p>
             <a style="margin:0px;" href="https://thispa.ge"><strong>this</strong>page</p>

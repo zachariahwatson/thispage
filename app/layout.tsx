@@ -47,14 +47,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			<body className="bg-background text-foreground">
 				<Providers>
 					<Nav />
-					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-4 md:p-12 md:pt-12 space-y-8">
+					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-4 md:p-12 md:pt-12 space-y-8 pb-12">
 						{children}
 					</main>
 					<footer className="flex flex-col justify-center items-center md:text-sm text-xs">
 						<div className="h-8">
 							© 2024 ❤️ Zachariah Watson |{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage">github</Link>
+								<Link href="https://github.com/zachariahwatson/thispage" target="_blank" rel="noopener noreferrer">
+									github
+								</Link>
 							</Button>{" "}
 							|{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
@@ -66,7 +68,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							</Button>{" "}
 							|{" "}
 							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md">v {version}</Link>
+								<Link
+									href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									v {version}
+								</Link>
 							</Button>{" "}
 						</div>
 					</footer>

@@ -18,7 +18,7 @@ interface Props {
 		{
 			club_id: number
 			creator_member_id: number
-			end_date: string
+			voting_length_days: number
 			is_locked: boolean
 			name: string
 			description?: string | undefined
@@ -35,18 +35,17 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 		resolver: zodResolver(addPollFormSchema),
 		defaultValues: {
 			isLocked: false,
+			votingPeriodLength: "7",
 		},
 	})
 
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof addPollFormSchema>) {
-		const endDate = new Date(values.endDate)
-		endDate.setHours(24, 0, 0, 0)
 		// Prepare the mutation payload
 		const payload: any = {
 			club_id: clubMembership?.club.id || -1,
 			creator_member_id: clubMembership?.id || -1,
-			end_date: endDate,
+			voting_length_days: Number(values.votingPeriodLength),
 			is_locked: values.isLocked,
 			name: values.name,
 			description: values.description,
@@ -87,13 +86,14 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 					/>
 					<FormField
 						control={form.control}
-						name="endDate"
+						name="votingPeriodLength"
 						render={({ field }) => (
-							<FormItem className="flex flex-col">
-								<FormLabel>end date</FormLabel>
-								<FormControl className="flex justify-center">
-									<Input type="date" placeholder="mm / dd / yyyy" {...field} />
+							<FormItem>
+								<FormLabel>voting period length (days)</FormLabel>
+								<FormControl>
+									<Input type="number" placeholder="7" {...field} />
 								</FormControl>
+								<FormDescription>how many days your poll will last after the selection period.</FormDescription>
 								<FormMessage />
 							</FormItem>
 						)}

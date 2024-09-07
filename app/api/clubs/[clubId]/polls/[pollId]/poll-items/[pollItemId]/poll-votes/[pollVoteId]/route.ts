@@ -6,12 +6,16 @@ import { NextRequest } from "next/server"
  */
 export async function DELETE(
 	request: NextRequest,
-	{ params }: { params: { clubId: string; pollId: string; pollVoteId: string } }
+	{ params }: { params: { clubId: string; pollId: string; pollItemId: string; pollVoteId: string } }
 ) {
 	try {
 		const supabase = createClient()
 
-		const { error } = await supabase.from("poll_votes").delete().eq("id", params.pollVoteId)
+		const { error } = await supabase
+			.from("poll_votes")
+			.delete()
+			.eq("id", params.pollVoteId)
+			.eq("poll_item_id", params.pollItemId)
 
 		if (error) {
 			throw error

@@ -11,7 +11,11 @@ export async function DELETE(
 	try {
 		const supabase = createClient()
 
-		const { error } = await supabase.from("poll_items").delete().eq("id", params.pollItemId)
+		const { error } = await supabase
+			.from("poll_items")
+			.delete()
+			.eq("id", params.pollItemId)
+			.eq("poll_id", params.pollId)
 
 		if (error) {
 			throw error

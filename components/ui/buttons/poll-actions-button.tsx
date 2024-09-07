@@ -71,7 +71,7 @@ export function PollActionsButton() {
 	})
 
 	const archivePollMutation = useMutation({
-		mutationFn: async (data: { is_archived: boolean }) => {
+		mutationFn: async (data: { status: "archived" }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/polls/${pollData?.id}`)
 			const response = await fetch(url, {
 				method: "PATCH",
@@ -157,7 +157,7 @@ export function PollActionsButton() {
 								</svg>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
-								{!pollData?.is_finished && (
+								{pollData?.status !== "finished" && (
 									<>
 										<DropdownMenuItem className="cursor-pointer" onSelect={() => setEditVisible(true)}>
 											edit
@@ -165,7 +165,7 @@ export function PollActionsButton() {
 										<DropdownMenuSeparator />
 									</>
 								)}
-								{!pollData?.is_archived && (
+								{pollData?.status !== "archived" && (
 									<>
 										<DropdownMenuItem
 											className="text-destructive cursor-pointer"
@@ -268,7 +268,7 @@ export function PollActionsButton() {
 									<AlertDialogAction
 										className={buttonVariants({ variant: "destructive" })}
 										onClick={(e) => {
-											archivePollMutation.mutate({ is_archived: true })
+											archivePollMutation.mutate({ status: "archived" })
 											e.preventDefault()
 										}}
 									>

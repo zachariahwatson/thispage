@@ -93,10 +93,10 @@ Deno.serve(async (req) => {
           <div>
             <p>hey!</p>
             <p>
-              there's a new poll titled <strong>${emailData.name}</strong> in ${emailData.club_name}. vote for the next book!
+              there's a new poll titled <strong>${emailData.name}</strong> in ${emailData.club_name}. add a book before the voting phase begins!
             </p>
             <p style="margin:0px;">sincerely,</p>
-            <p style="margin:0px;"><strong>this</strong>page</p>
+            <a style="margin:0px;" href="https://thispa.ge"><strong>this</strong>page</p>
           </div>
         `,
 					}),

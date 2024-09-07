@@ -13,15 +13,21 @@ import {
 	TabsTrigger,
 } from "@/components/ui/"
 import { useEffect, useState } from "react"
+import { version } from "@/lib/version"
+import Link from "next/link"
 
-const version = "0.9.0"
+function trimVersion(version: string) {
+	const parts = version.split(".")
+	parts.pop()
+	return parts.join(".")
+}
 
 export function WhatsNewDialog() {
 	const [visible, setVisible] = useState<boolean>(false)
 	useEffect(() => {
-		if (localStorage.getItem("whats-new") !== version) {
+		if (localStorage.getItem("whats-new") !== trimVersion(version)) {
 			setVisible(true)
-			localStorage.setItem("whats-new", version)
+			localStorage.setItem("whats-new", trimVersion(version))
 		}
 	}, [])
 	return (
@@ -30,13 +36,37 @@ export function WhatsNewDialog() {
 				<DialogHeader>
 					<DialogTitle className="text-3xl">what's new?</DialogTitle>
 				</DialogHeader>
-				<Tabs defaultValue="0.9.0">
+				<Tabs defaultValue="0.10.0">
 					<TabsList>
+						<TabsTrigger value="0.10.0">0.10.0</TabsTrigger>
 						<TabsTrigger value="0.9.0">0.9.0</TabsTrigger>
 						<TabsTrigger value="0.8.0">0.8.0</TabsTrigger>
-						<TabsTrigger value="0.7.0">0.7.0</TabsTrigger>
+						{/* <TabsTrigger value="0.7.0">0.7.0</TabsTrigger> */}
 					</TabsList>
 					<Separator className="my-4" />
+					<TabsContent value="0.10.0" className="space-y-3">
+						<DialogTitle>polls v2</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- polls have been reworked to adhere to the{" "}
+								<Link
+									href="https://en.wikipedia.org/wiki/Approval_voting"
+									className="underline text-primary"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									approval voting system
+								</Link>
+								. members can now vote for multiple books that they would be okay with reading.
+							</DialogDescription>
+						</div>
+						<DialogTitle>more notification emails</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- added notifications for new polls, readings, and poll status updates.
+							</DialogDescription>
+						</div>
+					</TabsContent>
 					<TabsContent value="0.9.0" className="space-y-3">
 						<DialogTitle>polls</DialogTitle>
 						<div className="pl-4">
@@ -67,7 +97,7 @@ export function WhatsNewDialog() {
 							</DialogDescription>
 						</div>
 					</TabsContent>
-					<TabsContent value="0.7.0" className="space-y-3">
+					{/* <TabsContent value="0.7.0" className="space-y-3">
 						<DialogTitle>read books by custom sections instead of pages</DialogTitle>
 						<div className="pl-4">
 							<DialogDescription>
@@ -79,7 +109,7 @@ export function WhatsNewDialog() {
 						<div className="pl-4">
 							<DialogDescription>- admins can change the reading's cover to any image link.</DialogDescription>
 						</div>
-					</TabsContent>
+					</TabsContent> */}
 				</Tabs>
 
 				<div className="mt-4">
