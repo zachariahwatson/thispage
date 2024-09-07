@@ -8,25 +8,21 @@
 import { createClient } from "jsr:@supabase/supabase-js@2"
 import { Database } from "./types.ts"
 
-type IntervalRecord = Database["public"]["Tables"]["intervals"]["Row"]
+type PollRecord = Database["public"]["Tables"]["polls"]["Row"]
 
 interface WebHookPayload {
 	type: "INSERT" | "UPDATE" | "DELETE"
 	table: string
-	record: IntervalRecord
+	record: PollRecord
 	schema: "public"
-	old_record: IntervalRecord | null
+	old_record: PollRecord | null
 }
 
 Deno.serve(async (req) => {
 	try {
 		const payload: WebHookPayload = await req.json()
 
-		if (
-			(payload.old_record?.is_complete === false || payload.old_record?.is_complete === null) &&
-			payload.record.is_complete === true &&
-			payload.type === "UPDATE"
-		) {
+		if (payload.type === "UPDATE" && payload.old_record?.status === "selection" && payload.record.status === "voting") {
 			const supabase = createClient(
 				Deno.env.get("SUPABASE_URL") ?? "",
 				Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
@@ -36,22 +32,21 @@ Deno.serve(async (req) => {
 			)
 
 			//query
-			const { data: memberIntervalProgresses, error: memberIntervalProgressesError } = await supabase
-				.from("member_interval_progresses")
+			const { data: members, error: membersError } = await supabase
+				.from("members")
 				.select(
-					`
-				...members (
-						user_id
-					)
+					`id,
+				user_id
 				`
 				)
-				.eq("interval_id", payload.record.id)
-				.order("updated_at", { ascending: true }) //get most recent updated_at, aka the last member to complete the reading
+				.eq("club_id", payload.record.club_id)
+				.neq("id", payload.record.editor_member_id)
 
-			// Remove the most recent member interval so they don't receive the email
-			memberIntervalProgresses?.pop()
+			if (membersError) {
+				throw membersError
+			}
 
-			const userIDs = memberIntervalProgresses?.map((member: { user_id: string }) => member?.user_id) || []
+			const userIDs = members?.map((member: { id: number; user_id: string }) => member?.user_id) || []
 
 			// Fetch user data for each user_id and store in emails array
 			const emails = await Promise.all(
@@ -64,25 +59,15 @@ Deno.serve(async (req) => {
 				})
 			)
 
-			if (memberIntervalProgressesError) {
-				throw memberIntervalProgressesError
-			}
-
 			//get necessary data for email body
 			const { data: emailData, error: emailDataError } = await supabase
-				.from("intervals")
+				.from("polls")
 				.select(
 					`
-				goal_page,
-        goal_section,
-        ...readings (
-          book_title,
-          increment_type,
-          section_name,
-          ...clubs (
+          name,
+				  ...clubs (
             club_name:name
           )
-        )
 				`
 				)
 				.eq("id", payload.record.id)
@@ -103,16 +88,12 @@ Deno.serve(async (req) => {
 					body: JSON.stringify({
 						from: "thispage <notifications@thispa.ge>",
 						to: emails,
-						subject: "reading goal completed!",
+						subject: "poll is open for voting!",
 						html: `
           <div>
             <p>hey!</p>
             <p>
-              all readers have read <strong>${emailData.book_title}</strong> to ${
-							emailData.increment_type === "pages" ? "page" : emailData.section_name
-						} ${emailData.increment_type === "pages" ? emailData.goal_page : emailData.goal_section} in ${
-							emailData.club_name
-						}. discuss what you thought!
+              the poll titled <strong>${emailData.name}</strong> in ${emailData.club_name} is open for voting. vote for your favorites!
             </p>
             <p style="margin:0px;">sincerely,</p>
             <a style="margin:0px;" href="https://thispa.ge"><strong>this</strong>page</p>
@@ -142,3 +123,10 @@ Deno.serve(async (req) => {
 		return new Response(String(err?.message ?? err), { status: 500 })
 	}
 })
+
+/* 
+curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/send-new-poll-notification'
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU'
+--header 'Content-Type: application/json'
+--data '{"type":"INSERT","table":"polls","record":{"club_id":10,"created_at":"blah","end_date":"2024-09-01 05:00:00+00","creator_member_id":12,"id":32,"is_locked":false,"name":"test","description":"test","is_finished":false,"is_archived":false,"editor_member_id":12,"total_votes_count":17},"schema":"public","old_record":null}'
+*/

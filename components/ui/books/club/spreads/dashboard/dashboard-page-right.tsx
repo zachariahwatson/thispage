@@ -91,7 +91,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 		mutationFn: async (data: {
 			club_id: number
 			creator_member_id: number
-			end_date: string
+			voting_length_days: number
 			is_locked: boolean
 			name: string
 			description?: string | undefined

@@ -2,13 +2,12 @@ export type Poll = {
 	id: number
 	created_at: string
 	club_id: number
-	end_date: string
+	end_date: string | null
+	voting_length_days: number
 	is_locked: boolean
 	name: string
 	description: string | null
-	is_finished: boolean
-	is_archived: boolean
-	total_votes_count: number
+	status: "selection" | "voting" | "finished" | "archived"
 	items: {
 		id: number
 		created_at: string
@@ -19,14 +18,16 @@ export type Poll = {
 		book_cover_image_url: string | null
 		book_cover_image_width: number | null
 		book_cover_image_height: number | null
-		votes_count: number
 		creator_member_id: number | null
 		poll_votes: {
 			id: number
+			member_id: number
 			poll_item_id: number
 		}[]
 	}[]
-	user_vote_id?: number | null
-	user_vote_poll_item_id?: number | null
+	user_votes: {
+		poll_item_id: number
+		vote_id: number
+	}[]
 	user_has_poll_item: boolean
 } | null

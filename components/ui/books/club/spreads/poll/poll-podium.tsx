@@ -9,29 +9,28 @@ import { useEffect, useRef } from "react"
 
 export function PollPodium() {
 	const pollData = usePoll()
-	const topThree = pollData?.items.toSorted((a, b) => b.votes_count - a.votes_count).slice(0, 3) ?? []
+	const topThree = pollData?.items.toSorted((a, b) => b.poll_votes.length - a.poll_votes.length).slice(0, 3) ?? []
+	const totalVotes = pollData?.items.reduce((total, item) => total + item.poll_votes.length, 0)
 	const flexBoxRef = useRef<HTMLDivElement | null>(null)
 
 	return (
 		<div ref={flexBoxRef} className="flex flex-row flex-grow items-end max-h-1/4">
 			<div className="bg-secondary flex-1 h-1/3 rounded-l-sm md:rounded-l-md border-border border-[1px] border-r-secondary flex justify-center items-start md:pt-2 relative">
 				<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[1]} />
-				<p className="text-muted-foreground">
-					{pollData?.total_votes_count
-						? Math.trunc((topThree[1]?.votes_count / pollData?.total_votes_count) * 100) || 0
-						: 0}
-					%
-				</p>
+				{topThree[1]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
+					<p className="text-muted-foreground">
+						{totalVotes ? Math.trunc((topThree[1]?.poll_votes.length / totalVotes) * 100) : 0}%
+					</p>
+				)}
 			</div>
 			<div className="flex flex-col flex-1 h-1/2">
 				<div className="bg-secondary h-1/3 rounded-t-sm md:rounded-t-md border-border border-[1px] border-b-secondary flex justify-center items-start md:pt-2 relative">
 					<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[0]} winner />
-					<p className="text-muted-foreground">
-						{pollData?.total_votes_count
-							? Math.trunc((topThree[0]?.votes_count / pollData?.total_votes_count) * 100) || 0
-							: 0}
-						%
-					</p>
+					{topThree[0]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
+						<p className="text-muted-foreground">
+							{totalVotes ? Math.trunc((topThree[0]?.poll_votes.length / totalVotes) * 100) : 0}%
+						</p>
+					)}
 				</div>
 				<div className="flex flex-row h-2/3">
 					<div className="bg-secondary border-border border-b-[1px] w-1/2"></div>
@@ -43,12 +42,11 @@ export function PollPodium() {
 			</div>
 			<div className="bg-secondary flex-1 h-1/4 rounded-r-sm md:rounded-r-md border-border border-[1px] border-l-secondary flex justify-center items-start md:pt-2 relative">
 				<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[2]} />
-				<p className="text-muted-foreground">
-					{pollData?.total_votes_count
-						? Math.trunc((topThree[2]?.votes_count / pollData?.total_votes_count) * 100) || 0
-						: 0}
-					%
-				</p>
+				{topThree[2]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
+					<p className="text-muted-foreground">
+						{totalVotes ? Math.trunc((topThree[2]?.poll_votes.length / totalVotes) * 100) : 0}%
+					</p>
+				)}
 			</div>
 		</div>
 	)

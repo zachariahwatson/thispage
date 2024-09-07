@@ -68,7 +68,7 @@ export function CreatePollItemButton() {
 			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
 		},
 	})
-	return (!pollData?.is_locked || clubMembership?.role === "admin") && endDate.getTime() > Date.now() ? (
+	return (!pollData?.is_locked || clubMembership?.role === "admin") && pollData?.status === "selection" ? (
 		<Sheet open={createPollItemVisible} onOpenChange={setCreatePollItemVisible}>
 			<Tooltip>
 				<TooltipTrigger asChild>

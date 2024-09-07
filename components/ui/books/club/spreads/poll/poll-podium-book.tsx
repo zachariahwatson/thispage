@@ -26,10 +26,10 @@ interface Props {
 		book_cover_image_url: string | null
 		book_cover_image_width: number | null
 		book_cover_image_height: number | null
-		votes_count: number
 		creator_member_id: number | null
 		poll_votes: {
 			id: number
+			member_id: number
 			poll_item_id: number
 		}[]
 	} | null
@@ -40,6 +40,7 @@ export function PollPodiumBook({ flexBoxRef, item, winner }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const imageRef = useRef<HTMLImageElement | null>(null)
 	const divRef = useRef<HTMLDivElement | null>(null)
+	const pollData = usePoll()
 
 	// useEffect(() => {
 	// 	// Update cardHeight whenever the card is rendered or resized
@@ -77,7 +78,7 @@ export function PollPodiumBook({ flexBoxRef, item, winner }: Props) {
 		}
 	}, [])
 
-	return item ? (
+	return item && item.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 ? (
 		<Sheet>
 			<SheetTrigger asChild>
 				{item?.book_cover_image_width === 1 && item?.book_cover_image_width === 1 ? (
