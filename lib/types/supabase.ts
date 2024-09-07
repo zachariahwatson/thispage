@@ -863,6 +863,13 @@ export type Database = {
         }
         Returns: boolean
       }
+      check_poll_items_count: {
+        Args: {
+          _poll_id: number
+          _creator_member_id: number
+        }
+        Returns: boolean
+      }
       check_reading_count: {
         Args: {
           _club_id: number

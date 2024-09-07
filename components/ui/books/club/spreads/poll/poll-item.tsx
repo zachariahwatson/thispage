@@ -6,6 +6,7 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
+	Checkbox,
 	Label,
 	Progress,
 	RadioGroupItem,
@@ -17,6 +18,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 	Skeleton,
+	ToggleGroupItem,
 } from "@/components/ui"
 import { PollItemActionsButton } from "@/components/ui/buttons"
 import { useClubMembership, usePoll, useReading } from "@/contexts"
@@ -37,15 +39,20 @@ interface Props {
 		book_cover_image_url: string | null
 		book_cover_image_width: number | null
 		book_cover_image_height: number | null
-		votes_count: number
 		creator_member_id: number | null
+		poll_votes: {
+			id: number
+			member_id: number
+			poll_item_id: number
+		}[]
 	}
-	groupValue: string | undefined
+	groupValues: string[] | undefined
 }
 
-export function PollItem({ item, groupValue }: Props) {
+export function PollItem({ item, groupValues }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const pollData = usePoll()
+	const totalVotes = pollData?.items.reduce((total, item) => total + item.poll_votes.length, 0)
 	const clubMembership = useClubMembership()
 	const cardRef = useRef<HTMLDivElement>(null)
 	const cardHeaderRef = useRef<HTMLDivElement>(null)
@@ -73,18 +80,18 @@ export function PollItem({ item, groupValue }: Props) {
 	return (
 		<div className="relative">
 			{(clubMembership?.id === item.creator_member_id || clubMembership?.role !== "member") &&
-				!pollData?.is_finished && <PollItemActionsButton name={item.book_title} pollItemId={item.id} />}
+				pollData?.status === "selection" && <PollItemActionsButton name={item.book_title} pollItemId={item.id} />}
 			<div
 				className={`relative flex flex-row items-center rounded-lg border bg-card text-card-foreground shadow-shadow shadow-sm pl-4 transition-all ${
-					groupValue === `${item.id}` && "ring-4 ring-ring"
+					groupValues?.includes(item.id.toString()) && "ring-2 ring-ring"
 				}`}
 			>
-				{clubMembership?.id === item.creator_member_id || pollData?.is_finished ? (
+				{pollData?.status !== "voting" || pollData.user_votes.length > 0 ? (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 16 16"
 						fill="currentColor"
-						className="size-4 text-muted-foreground"
+						className="size-5 text-muted-foreground"
 					>
 						<path
 							fillRule="evenodd"
@@ -93,11 +100,17 @@ export function PollItem({ item, groupValue }: Props) {
 						/>
 					</svg>
 				) : (
-					<RadioGroupItem value={`${item.id}`} id={`${item.id}`} />
+					<>
+						<ToggleGroupItem value={`${item.id}`} id={`${item.id}`} hidden className="bg-none p-0 m-0" />
+
+						<Checkbox className="w-4 h-4 p-0" checked={groupValues?.includes(item.id.toString())} />
+					</>
 				)}
 
 				<p className="absolute bottom-1 text-xs text-muted-foreground left-2">
-					{pollData?.total_votes_count ? Math.trunc((item.votes_count / pollData?.total_votes_count) * 100) : 0}%
+					{pollData?.user_votes.length === 0
+						? "?%"
+						: `${totalVotes ? Math.trunc((item?.poll_votes.length / totalVotes) * 100) : 0}%`}
 				</p>
 				<Card ref={cardRef} className="w-full min-w-0 rounded-none border-none bg-none shadow-none">
 					<Label htmlFor={`${item.id}`} className="hover:cursor-pointer min-w-0">
@@ -150,7 +163,7 @@ export function PollItem({ item, groupValue }: Props) {
 							</CardDescription>
 						</CardHeader>
 						<Progress
-							value={pollData?.total_votes_count && (item.votes_count / pollData?.total_votes_count) * 100}
+							value={pollData?.user_votes.length === 0 ? 0 : totalVotes && (item?.poll_votes.length / totalVotes) * 100}
 							className="h-2 mb-2 ml-4 w-[calc(100%-1.5rem)]"
 						/>
 					</Label>

@@ -40,6 +40,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 					creator_member_id,
 					poll_votes (
 						id,
+						member_id,
 						poll_item_id
 					)
 
@@ -47,8 +48,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			`
 			)
 			.eq("club_id", params.clubId)
-			.eq("status", archived ? "archived" : "selection" || "voting" || "finished")
-			.eq("poll_items.poll_votes.member_id", memberId)
+			.in("status", archived ? ["archived"] : ["selection", "voting", "finished"])
 			.order("id", { ascending: true })
 			.order("id", { referencedTable: "poll_items", ascending: true })
 
@@ -65,10 +65,12 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 				// Process poll items and track votes
 				poll.items.forEach((item) => {
 					if (item.poll_votes && item.poll_votes.length > 0) {
-						userVotes.push({
-							poll_item_id: item.poll_votes[0].poll_item_id,
-							vote_id: item.poll_votes[0].id,
-						})
+						if (item.poll_votes.some((vote) => vote.member_id === memberId)) {
+							userVotes.push({
+								poll_item_id: item.poll_votes[0].poll_item_id,
+								vote_id: item.poll_votes[0].id,
+							})
+						}
 					}
 
 					if (item.creator_member_id === memberId) {

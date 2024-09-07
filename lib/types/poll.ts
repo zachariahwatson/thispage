@@ -21,6 +21,7 @@ export type Poll = {
 		creator_member_id: number | null
 		poll_votes: {
 			id: number
+			member_id: number
 			poll_item_id: number
 		}[]
 	}[]
