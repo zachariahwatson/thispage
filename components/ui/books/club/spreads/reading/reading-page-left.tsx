@@ -118,9 +118,9 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 					<ReadingActionsButton />
 
 					<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
-						<CardHeader className="pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4">
-							<CardTitle className="text-xl md:text-2xl">{readingData?.book_title}</CardTitle>
-							<CardDescription className="italic">
+						<CardHeader className="pb-4 md:pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4 space-y-0">
+							<CardTitle className="text-xl md:text-2xl truncate ...">{readingData?.book_title}</CardTitle>
+							<CardDescription className="italic truncate ...">
 								{readingData?.book_authors
 									? " by " +
 									  (readingData?.book_authors.length === 2
@@ -141,11 +141,11 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 							</CardDescription>
 						</CardHeader>
 
-						<div className="px-4">
+						<div className="px-4 pt-2 md:pt-0">
 							<Separator />
 						</div>
 
-						<CardContent className="pr-0 pt-6 md:pt-2 md:px-6 px-4">
+						<CardContent className="pr-0 pt-5 md:pt-2 md:px-6 px-4">
 							{readingData?.interval?.user_progress &&
 								(!readingData?.is_finished ? (
 									startDate.getTime() > Date.now() ? (

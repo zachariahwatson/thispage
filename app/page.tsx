@@ -25,7 +25,7 @@ export default async function Page() {
 				</h1>
 				<h1 className="text-lg md:text-3xl pl-1 truncate ...">a simple site for book clubs.</h1>
 			</div>
-			<Card className="h-[calc(100svh-64px)] min-h-[624px] md:h-[624px] p-4 rounded-3xl relative shadow-shadow shadow-sm bg-card">
+			<Card className="h-[calc(100svh-56px)] min-h-[624px] md:h-[624px] p-4 rounded-3xl relative shadow-shadow shadow-sm bg-card">
 				<DemoSpreads />
 			</Card>
 			<h1 className="text-md md:text-2xl pl-1 truncate ... float-right">

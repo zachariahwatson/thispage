@@ -48,7 +48,7 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 		 */
 		<div className="h-full">
 			{/* <ScrollArea className="border rounded-lg min-h-[124px] h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner"> */}
-			<div className="border rounded-lg min-h-[124px] h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner w-full overflow-y-scroll">
+			<div className="border rounded-lg h-full shadow-shadow shadow-inner w-full overflow-y-scroll">
 				<div className="p-3 md:p-4 w-full h-auto">
 					{posts
 						? posts.map((post) =>

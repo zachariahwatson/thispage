@@ -18,12 +18,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Themes
-- Better book search experience
-- Ranked choice poll
 
 ### Fixed
 
 - Reading image alignment issues
+
+## [0.10.1] - 2024-09-03
+
+### Added
+
+- Poll phase indicator
+
+### Changed
+
+- Tighter spacing on mobile
 
 ## [0.10.0] - 2024-09-06
 
@@ -145,6 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.10.1]: https://github.com/zachariahwatson/thispage/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/zachariahwatson/thispage/compare/0.9.3...0.10.0
 [0.9.3]: https://github.com/zachariahwatson/thispage/compare/0.9.2...0.9.3
 [0.9.2]: https://github.com/zachariahwatson/thispage/compare/0.9.0...0.9.2
