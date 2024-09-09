@@ -21,7 +21,7 @@ export function ClubBooks() {
 				</FirstLoadAnimationProvider>
 			))
 		) : (
-			<div className="space-y-4 text-center w-full p-x-6">
+			<div className="space-y-4 text-center w-full">
 				<h1 className="text-2xl md:text-4xl">
 					welcome to <span className=" font-normal">this</span>
 					<span className="font-bold">page</span>!

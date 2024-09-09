@@ -26,14 +26,14 @@ interface Props {
 }
 
 export function IntervalAvatarGroup({ progresses }: Props) {
-	const previewProgresses = progresses?.slice(0, 5)
+	const previewProgresses = progresses?.slice(0, 7)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	return (
 		<>
 			{isVertical ? (
 				<Sheet>
 					<SheetTrigger>
-						<SheetTitle className="text-xl">readers</SheetTitle>
+						<SheetTitle className="text-md md:text-xl">readers</SheetTitle>
 					</SheetTrigger>
 					<SheetContent className="sm:max-w-xl max-w-xl w-full rounded-lg">
 						<IntervalAvatarList progresses={progresses} />
@@ -42,7 +42,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 			) : (
 				<Dialog>
 					<DialogTrigger>
-						<CardTitle className="text-xl">readers</CardTitle>
+						<CardTitle className="text-md md:text-xl">readers</CardTitle>
 					</DialogTrigger>
 					<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
 						<IntervalAvatarList progresses={progresses} />
@@ -56,7 +56,11 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 						progress && (
 							<Tooltip key={index}>
 								<TooltipTrigger className="cursor-default">
-									<Avatar className={`${progress?.is_complete ? "ring-ring ring-4" : "ring-background ring-4"}`}>
+									<Avatar
+										className={`${
+											progress?.is_complete ? "ring-ring ring-4" : "ring-background ring-4"
+										} size-8 md:size-10`}
+									>
 										<AvatarImage src={progress?.member?.avatar_url || ""} loading="eager" />
 										<AvatarFallback>
 											{progress?.member?.first_name && progress?.member?.last_name
@@ -79,7 +83,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 						{isVertical ? (
 							<Sheet>
 								<SheetTrigger>
-									<Avatar className="ring-background ring-4">
+									<Avatar className="ring-background ring-4 size-8 md:size-10">
 										<AvatarFallback>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +111,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 								<Tooltip>
 									<TooltipTrigger>
 										<DialogTrigger>
-											<Avatar className="ring-background ring-4">
+											<Avatar className="ring-background ring-4 size-8 md:size-10">
 												<AvatarFallback>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"

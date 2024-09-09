@@ -103,9 +103,9 @@ export function PollItems({ values, setValues }: Props) {
 	return (
 		<div className="h-full">
 			{/* <RadioGroup defaultValue={value} value={value} onValueChange={handleValueChange}> */}
-			<ToggleGroup type="multiple" value={values} defaultValue={values} onValueChange={setValues}>
+			<ToggleGroup type="multiple" value={values} defaultValue={values} onValueChange={setValues} className="h-full">
 				{/* <ScrollArea className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner relative"> */}
-				<div className="border rounded-lg min-h-[124px] h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner relative overflow-y-scroll w-full">
+				<div className="border rounded-lg h-full shadow-shadow shadow-inner relative overflow-y-scroll w-full">
 					<div className="p-3 md:p-4 w-auto h-auto space-y-2">
 						{pollData?.items &&
 							pollData?.items.map((item) => <PollItem key={item.id} item={item} groupValues={values} />)}

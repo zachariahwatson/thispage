@@ -53,8 +53,8 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 			}}
 		>
 			{firstLoad?.firstLoad && (
-				<CardHeader className="px-4 md:px-6 h-full">
-					<CardTitle className="text-xl flex flex-row items-center">
+				<CardHeader className="px-4 md:px-6 h-full pt-4 md:pt-6">
+					<CardTitle className="text-md md:text-xl flex flex-row items-center">
 						dashboard
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -81,13 +81,13 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 							</TabsList>
 							<TabsContent value="invites">
 								<div className="flex justify-between pr-1">
-									<CardTitle className="text-lg">invites</CardTitle>
+									<CardTitle className="text-md md:text-lg">invites</CardTitle>
 									{clubMembership?.role === "admin" && <CreateInviteButton />}
 								</div>
 								<InviteCodes />
 							</TabsContent>
 							<TabsContent value="members">
-								<CardTitle className="text-lg">members</CardTitle>
+								<CardTitle className="text-md md:text-lg">members</CardTitle>
 								<MemberList />
 							</TabsContent>
 						</Tabs>
