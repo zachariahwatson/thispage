@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/buttons"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
 import { useClubMembership, useReading } from "@/contexts"
 import { createInviteFormSchema } from "@/lib/zod"
+import { QueryError } from "@/utils/errors"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
@@ -27,21 +28,30 @@ export function CreateInviteForm({ setVisible }: Props) {
 	const router = useRouter()
 	const queryClient = useQueryClient()
 	const inviteMutation = useMutation({
-		mutationFn: (data: { club_id: number; uses: number; creator_member_id: number }) => {
+		mutationFn: async (data: { club_id: number; uses: number; creator_member_id: number }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/invite-codes`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("invite code created!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["invite codes", clubMembership?.club.id])
 		},
 	})

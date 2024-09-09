@@ -27,12 +27,25 @@ export async function GET(
 		}
 
 		return Response.json(data, { status: 200 })
-	} catch (error) {
-		console.error(error)
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while fetching club spreads count:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while fetching club spreads count." }, { status: 500 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching club spreads count:\n", error)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while fetching club spreads count :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

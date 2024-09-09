@@ -18,9 +18,26 @@ export async function DELETE(
 		}
 		// revalidatePath("/", "layout")
 		return Response.json({ message: "successfully deleted like" }, { status: 200 })
-	} catch (error) {
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while deleting a like:\n", error)
 
-		return Response.json({ error: "an error occurred while deleting a like." }, { status: 500 })
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while unliking the post :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

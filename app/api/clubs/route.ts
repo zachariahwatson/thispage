@@ -41,12 +41,26 @@ export async function GET() {
 		}
 
 		return Response.json(null, { status: 200 })
-	} catch (error) {
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while fetching club memberships:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while fetching club memberships." }, { status: 500 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching club memberships:\n", error)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while fetching clubs :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }
 
@@ -69,10 +83,35 @@ export async function POST(request: NextRequest) {
 			throw error
 		}
 		// revalidatePath("/", "layout")
-		return Response.json({ message: "successfully created club" }, { status: 200 })
-	} catch (error) {
+		return Response.json({ message: "club created!" }, { status: 200 })
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a club:\n", error)
 
-		return Response.json({ error: "an error occurred while creating a club." }, { status: 500 })
+		switch (error.code) {
+			case "P0003":
+				return Response.json(
+					{
+						message: "you've exceeded the maximum amount of clubs. delete one and try again.",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while creating the club :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

@@ -116,12 +116,26 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		)
 
 		return Response.json(readingData, { status: 200 })
-	} catch (error) {
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while fetching club readings:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while fetching club readings." }, { status: 500 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching club readings:\n", error)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while fetching the club's readings :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }
 
@@ -159,10 +173,35 @@ export async function POST(request: NextRequest) {
 			throw error
 		}
 		// revalidatePath("/", "layout")
-		return Response.json({ message: "successfully created reading" }, { status: 200 })
-	} catch (error) {
+		return Response.json({ message: "reading created!" }, { status: 200 })
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a reading:\n", error)
 
-		return Response.json({ error: "an error occurred while creating a reading." }, { status: 500 })
+		switch (error.code) {
+			case "P0003":
+				return Response.json(
+					{
+						message: "you've exceeded the maximum amount of readings. archive or delete one and try again.",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while creating the reading :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

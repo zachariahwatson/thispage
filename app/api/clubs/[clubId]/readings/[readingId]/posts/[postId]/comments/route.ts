@@ -73,12 +73,26 @@ export async function GET(request: NextRequest, { params }: Props) {
 		}
 
 		return Response.json(data as unknown as Comment[], { status: 200 })
-	} catch (error) {
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while fetching the post's comments:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while fetching the post's comments." }, { status: 500 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching the post's comments:\n", error)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while fetching the post's comments :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }
 
@@ -104,10 +118,27 @@ export async function POST(request: NextRequest) {
 			throw error
 		}
 		// revalidatePath("/", "layout")
-		return Response.json({ message: "successfully created comment" }, { status: 200 })
-	} catch (error) {
+		return Response.json({ message: "comment created!" }, { status: 200 })
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a comment:\n", error)
 
-		return Response.json({ error: "an error occurred while creating a comment." }, { status: 500 })
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while creating the comment :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

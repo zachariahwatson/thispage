@@ -14,10 +14,27 @@ export async function DELETE(request: NextRequest, { params }: { params: { clubI
 			throw error
 		}
 		// revalidatePath("/", "layout")
-		return Response.json({ message: "successfully deleted member" }, { status: 200 })
-	} catch (error) {
+		return Response.json({ message: "member kicked!" }, { status: 200 })
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while deleting a member:\n", error)
 
-		return Response.json({ error: "an error occurred while deleting a member." }, { status: 500 })
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while kicking the member :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

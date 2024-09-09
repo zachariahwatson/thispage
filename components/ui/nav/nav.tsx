@@ -21,6 +21,7 @@ import { CreateClubForm } from "@/components/ui/forms/create"
 import { SettingsForm } from "@/components/ui/forms/update"
 import { useMediaQuery } from "@/hooks"
 import { useUser } from "@/hooks/state"
+import { QueryError } from "@/utils/errors"
 import Link from "next/link"
 import { useRef, useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
@@ -40,41 +41,59 @@ export function Nav() {
 	const { data: user, isLoading: loading } = useUser()
 
 	const createClubMutation = useMutation({
-		mutationFn: (data: { creator_user_id: string; name: string; description: string }) => {
+		mutationFn: async (data: { creator_user_id: string; name: string; description: string }) => {
 			const url = new URL(`${defaultUrl}/api/clubs`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setCreateClubVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("club created!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["clubs"])
 		},
 	})
 
 	const settingsMutation = useMutation({
-		mutationFn: (data: { first_name: string; last_name: string }) => {
+		mutationFn: async (data: { first_name: string; last_name: string }) => {
 			const url = new URL(`${defaultUrl}/api/users`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setSettingsVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("user updated!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["user"])
 			queryClient.invalidateQueries(["posts"])
 			queryClient.invalidateQueries(["comments"])

@@ -23,12 +23,26 @@ export async function PATCH(request: NextRequest, { params }: { params: { clubId
 			throw error
 		}
 
-		return Response.json({ message: "successfully updated member role" }, { status: 200 })
-	} catch (error) {
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while updating the member's role:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while updating the member's role." }, { status: 500 })
+		return Response.json({ message: "member role updated!" }, { status: 200 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while updating the member's role:\n", error)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while updating the member's role :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

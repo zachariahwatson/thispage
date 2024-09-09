@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/buttons"
+import { QueryError } from "@/utils/errors"
 import { useRouter } from "next/navigation"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
@@ -19,18 +20,27 @@ export function JoinClubButton({ clubId, inviteCode, len }: Props) {
 	const queryClient = useQueryClient()
 	const router = useRouter()
 	const mutation = useMutation({
-		mutationFn: (newMember: { club_id: number; used_club_invite_code: string }) => {
+		mutationFn: async (newMember: { club_id: number; used_club_invite_code: string }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubId}/members/invite/${inviteCode}`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(newMember),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
 		},
-		onSuccess: () => {
-			toast.success("club joined!")
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
+		},
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["clubs"])
 			router.push("/")
 		},

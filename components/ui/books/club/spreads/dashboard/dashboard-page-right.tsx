@@ -42,7 +42,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 
 	const queryClient = useQueryClient()
 	const readingMutation = useMutation({
-		mutationFn: (data: {
+		mutationFn: async (data: {
 			book: {
 				open_library_id: string
 				title?: string | undefined
@@ -63,19 +63,28 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 		}) => {
 			console.log(data)
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setAddReadingVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("reading successfully created")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 			let index = 0
