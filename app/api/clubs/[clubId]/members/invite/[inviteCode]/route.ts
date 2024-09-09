@@ -26,11 +26,28 @@ export async function POST(request: NextRequest) {
 				throw error
 			}
 			revalidatePath("/", "layout")
-			return Response.json({ message: "successfully created member" }, { status: 200 })
+			return Response.json({ message: "club joined!" }, { status: 200 })
 		}
-	} catch (error) {
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a member:\n", error)
 
-		return Response.json({ error: "an error occurred while creating a member." }, { status: 500 })
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while joining the club :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

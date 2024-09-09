@@ -23,11 +23,28 @@ export async function DELETE(request: NextRequest, { params }: Props) {
 			throw error
 		}
 		// revalidatePath("/", "layout")
-		return Response.json({ message: "successfully deleted comment" }, { status: 200 })
-	} catch (error) {
+		return Response.json({ message: "comment deleted!" }, { status: 200 })
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while deleting a comment:\n", error)
 
-		return Response.json({ error: "an error occurred while deleting a comment." }, { status: 500 })
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while deleting the comment :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }
 
@@ -53,12 +70,27 @@ export async function PATCH(request: NextRequest, { params }: Props) {
 			throw error
 		}
 
-		return Response.json({ message: "successfully updated comment" }, { status: 200 })
-	} catch (error) {
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while updating a comment:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while updating a comment." }, { status: 500 })
+		return Response.json({ message: "comment updated!" }, { status: 200 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while updating a comment:\n", error)
+
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while updating the comment :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

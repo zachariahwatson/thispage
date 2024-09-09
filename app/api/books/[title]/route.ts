@@ -29,6 +29,7 @@ export async function GET(request: NextRequest, { params }: { params: { title: s
 			return Response.json(body as BookSearch, { status: 200 })
 		}
 	} catch (error) {
-		return Response.json({ error: "an error occurred while books." }, { status: 500 })
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching books:\n", error)
+		return Response.json({ error: "an error occurred while fetching books." }, { status: 500 })
 	}
 }

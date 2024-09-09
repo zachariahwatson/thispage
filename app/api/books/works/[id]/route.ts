@@ -24,6 +24,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 			return Response.json(body as Work, { status: 200 })
 		}
 	} catch (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while retrieving the book work:\n", error)
 		return Response.json({ error: "an error occurred while retrieving the book work." }, { status: 500 })
 	}
 }

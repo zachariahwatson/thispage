@@ -16,12 +16,25 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		}
 
 		return Response.json(data, { status: 200 })
-	} catch (error) {
-		console.error(error)
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while fetching club:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while fetching club." }, { status: 500 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching club:\n", error)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while fetching the club :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

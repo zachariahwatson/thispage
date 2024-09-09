@@ -26,12 +26,26 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		}
 
 		return Response.json(data as ReadingPost[], { status: 200 })
-	} catch (error) {
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while fetching the reading's posts:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while fetching the reading's posts." }, { status: 500 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching the reading's posts:\n", error)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while fetching the reading's posts :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }
 
@@ -56,10 +70,27 @@ export async function POST(request: NextRequest) {
 			throw error
 		}
 		// revalidatePath("/", "layout")
-		return Response.json({ message: "successfully created post" }, { status: 200 })
-	} catch (error) {
+		return Response.json({ message: "post created!" }, { status: 200 })
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating a post:\n", error)
 
-		return Response.json({ error: "an error occurred while creating a post." }, { status: 500 })
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while creating the post :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

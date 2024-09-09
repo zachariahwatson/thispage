@@ -24,12 +24,23 @@ export async function DELETE(
 		return Response.json({ message: "poll vote cancelled!" }, { status: 200 })
 	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while deleting poll vote ${params.pollVoteId}:\n`, error)
-		return Response.json(
-			{
-				message: "an error occurred while cancelling the poll vote :(",
-				code: error.code,
-			},
-			{ status: 500 }
-		)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while canceling the poll vote :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

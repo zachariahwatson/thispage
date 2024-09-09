@@ -91,13 +91,24 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		return Response.json({}, { status: 200 })
 	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while fetching polls in club ${params.clubId}:\n`, error)
-		return Response.json(
-			{
-				message: "an error occurred while fetching polls :(",
-				code: error.code,
-			},
-			{ status: 500 }
-		)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while fetching polls :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }
 
@@ -126,12 +137,31 @@ export async function POST(request: NextRequest, { params }: { params: { clubId:
 		return Response.json({ message: "poll created!" }, { status: 200 })
 	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", `\nan error occurred while creating a poll in club ${params.clubId}:\n`, error)
-		return Response.json(
-			{
-				message: "an error occurred while creating the poll :(",
-				code: error.code,
-			},
-			{ status: 500 }
-		)
+		switch (error.code) {
+			case "P0003":
+				return Response.json(
+					{
+						message: "you've exceeded the maximum amount of polls. archive or delete one and try again.",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while creating the poll :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }
