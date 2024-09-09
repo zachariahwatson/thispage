@@ -156,9 +156,9 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-118px)] pt-4 md:pt-6">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-114px)] md:h-[calc(100%-118px)] pt-4 md:pt-6">
 				<div className="flex flex-row justify-between">
-					<CardTitle className="text-xl">
+					<CardTitle className="text-md md:text-xl">
 						{pollData?.status === "selection"
 							? "add books"
 							: pollData?.status === "voting"
