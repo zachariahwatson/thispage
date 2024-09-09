@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/buttons"
 import { useClubMembership } from "@/contexts"
 import { Member } from "@/lib/types"
+import { QueryError } from "@/utils/errors"
 import { ColumnDef } from "@tanstack/react-table"
 import { useState } from "react"
 import { useMutation, useQuery, useQueryClient } from "react-query"
@@ -39,37 +40,55 @@ export function MemberList() {
 	const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
 
 	const updateRoleMutation = useMutation({
-		mutationFn: (data: { editor_member_id: number; member_id: number; role: string }) => {
+		mutationFn: async (data: { editor_member_id: number; member_id: number; role: string }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/member-roles/${data.member_id}`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setPromoteVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("member role updated!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["members", clubMembership?.club.id])
 		},
 	})
 
 	const kickMemberMutation = useMutation({
-		mutationFn: (data: { member_id: number }) => {
+		mutationFn: async (data: { member_id: number }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/members/${data.member_id}`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
 		},
-		onSuccess: () => {
-			toast.success("member kicked!")
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
+		},
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["members", clubMembership?.club.id])
 		},
 	})

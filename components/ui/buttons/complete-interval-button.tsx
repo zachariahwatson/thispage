@@ -3,6 +3,7 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui"
 import { useClubMembership, useReading } from "@/contexts"
 import { Reading } from "@/lib/types"
+import { QueryError } from "@/utils/errors"
 import { AnimatePresence, motion } from "framer-motion"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
@@ -16,17 +17,23 @@ export function CompleteIntervalButton() {
 	const readingData = useReading()
 	const queryClient = useQueryClient()
 	const mutation = useMutation({
-		mutationFn: (data: { is_complete: boolean }) => {
+		mutationFn: async (data: { is_complete: boolean }) => {
 			const url = new URL(
 				`${defaultUrl}/api/users/progresses/${clubMembership?.id}/intervals/${readingData?.interval?.id}`
 			)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
 		},
 		// When mutate is called:
 		onMutate: async (data) => {
@@ -61,11 +68,11 @@ export function CompleteIntervalButton() {
 		},
 		// If the mutation fails,
 		// use the context returned from onMutate to roll back
-		onError: (err, data, context) => {
+		onError: (error: any, data, context) => {
 			if (context) {
 				queryClient.setQueryData(["readings", clubMembership?.club.id], context.previousProgress)
 			}
-			toast.error("an error occurred while updating user progress :(")
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			if (!readingData?.interval?.user_progress?.is_complete) {

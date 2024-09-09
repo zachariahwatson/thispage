@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/buttons"
 import { useClubMembership, useReading } from "@/contexts"
+import { QueryError } from "@/utils/errors"
 import { useRouter } from "next/navigation"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
@@ -15,20 +16,29 @@ export function JoinReadingButton() {
 	const readingData = useReading()
 	const queryClient = useQueryClient()
 	const mutation = useMutation({
-		mutationFn: (newProgress: { member_id: number; interval_id: number }) => {
+		mutationFn: async (newProgress: { member_id: number; interval_id: number }) => {
 			const url = new URL(
 				`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}/intervals/${readingData?.interval?.id}/member-interval-progresses`
 			)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(newProgress),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
 		},
-		onSuccess: () => {
-			toast.success("reading joined!")
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
+		},
+		onSuccess: (body: any) => {
+			toast.success(body.messsage)
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 		},
 	})
