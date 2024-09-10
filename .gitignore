@@ -39,3 +39,6 @@ next-env.d.ts
 #snaplet
 seed.ts
 seed.config.ts
+
+#genversion
+/lib/version.js
