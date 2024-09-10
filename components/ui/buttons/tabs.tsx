@@ -156,12 +156,7 @@ function Bookmark({ id, value, className, children, groupValue }: BookmarkProps)
 				className="size-16 text-background"
 			>
 				{/* <path fillRule="evenodd" d="M 0 0 H 24 V 4 L 12 0 L 0 4 Z" clipRule="evenodd" stroke-linejoin="round" /> */}
-				<path
-					fillRule="evenodd"
-					d="M 0 0 H 24 C 24 4 24 4 12 0 C 0 4 0 4 0 0 Z"
-					clipRule="evenodd"
-					stroke-linejoin="round"
-				/>
+				<path fillRule="evenodd" d="M 0 0 H 24 C 24 4 24 4 12 0 C 0 4 0 4 0 0 Z" clipRule="evenodd" />
 			</svg>
 		</div>
 	)
