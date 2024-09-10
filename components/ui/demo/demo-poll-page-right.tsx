@@ -125,7 +125,7 @@ export function DemoPollPageRight({ userSpreadIndex }: Props) {
 		>
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-114px)] md:h-[calc(100%-118px)] pt-4 md:pt-6">
 				<div className="flex flex-row justify-between">
-					<CardTitle className="text-md md:text-xl">vote books</CardTitle>
+					<CardTitle className="text-md md:text-xl">voting phase</CardTitle>
 					{pollData?.end_date && (
 						<CardDescription className="flex flex-row items-center justify-center space-x-2">
 							<span>
