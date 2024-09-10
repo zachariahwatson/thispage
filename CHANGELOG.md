@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - View archived readings and polls
 - Favorite button for clubs and readings(?)
 - Help message explaining that you can edit books on openlibrary.org
+- Logging
 
 ### Changed
 
