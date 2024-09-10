@@ -27,6 +27,7 @@ import { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 import { buttonVariants } from "@/components/ui/buttons/button"
+import { QueryError } from "@/utils/errors"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -43,59 +44,86 @@ export function ClubActionsButton() {
 	const queryClient = useQueryClient()
 
 	const deleteClubMutation = useMutation({
-		mutationFn: () => {
+		mutationFn: async () => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setDeleteVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("club deleted!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["clubs"])
 		},
 	})
 
 	const leaveClubMutation = useMutation({
-		mutationFn: () => {
+		mutationFn: async () => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/members/${clubMembership?.id}`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setLeaveVisible(false)
 		},
-		onSuccess: () => {
+		onSuccess: (body: any) => {
 			toast.success("club left!")
 			queryClient.invalidateQueries(["clubs"])
 		},
 	})
 
 	const updateClubMutation = useMutation({
-		mutationFn: (data: { editor_member_id: number; name: string; description: string }) => {
+		mutationFn: async (data: { editor_member_id: number; name: string; description: string }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setEditVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("club updated!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["clubs"])
 		},
 	})

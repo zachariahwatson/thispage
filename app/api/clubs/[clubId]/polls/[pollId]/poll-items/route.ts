@@ -37,12 +37,31 @@ export async function POST(request: NextRequest, { params }: { params: { clubId:
 			`\nan error occurred while creating a poll item in poll ${params.pollId}:\n`,
 			error
 		)
-		return Response.json(
-			{
-				message: "an error occurred while adding the poll item :(",
-				code: error.code,
-			},
-			{ status: 500 }
-		)
+		switch (error.code) {
+			case "P0003":
+				return Response.json(
+					{
+						message: "you've exceeded the maximum amount of poll items. delete one and try again.",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while creating the poll item :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

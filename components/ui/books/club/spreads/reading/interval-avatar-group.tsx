@@ -109,8 +109,8 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 						) : (
 							<Dialog>
 								<Tooltip>
-									<TooltipTrigger>
-										<DialogTrigger>
+									<DialogTrigger asChild>
+										<TooltipTrigger>
 											<Avatar className="ring-background ring-4 size-8 md:size-10">
 												<AvatarFallback>
 													<svg
@@ -129,8 +129,8 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 													</svg>
 												</AvatarFallback>
 											</Avatar>
-										</DialogTrigger>
-									</TooltipTrigger>
+										</TooltipTrigger>
+									</DialogTrigger>
 									<TooltipContent>view all readers</TooltipContent>
 								</Tooltip>
 								<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/buttons"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
 import { useClubMembership, useReading } from "@/contexts"
 import { createPostFormSchema } from "@/lib/zod"
+import { QueryError } from "@/utils/errors"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
@@ -27,7 +28,7 @@ export function CreatePostForm({ setVisible }: Props) {
 	const router = useRouter()
 	const queryClient = useQueryClient()
 	const postMutation = useMutation({
-		mutationFn: (data: {
+		mutationFn: async (data: {
 			reading_id: number | null
 			author_member_id: number | null
 			title: string
@@ -35,19 +36,28 @@ export function CreatePostForm({ setVisible }: Props) {
 			is_spoiler: boolean
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}/posts`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("post created!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["posts", clubMembership?.club.id, readingData?.id])
 		},
 	})

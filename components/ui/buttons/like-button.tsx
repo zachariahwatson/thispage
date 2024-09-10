@@ -4,7 +4,9 @@ import { Badge } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { useLikes } from "@/hooks/state"
 import { Like } from "@/lib/types"
+import { QueryError } from "@/utils/errors"
 import { useMutation, useQueryClient } from "react-query"
+import { toast } from "sonner"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -29,7 +31,7 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 
 	const queryClient = useQueryClient()
 	const mutation = useMutation({
-		mutationFn: (newLike: { member_id: number }) => {
+		mutationFn: async (newLike: { member_id: number }) => {
 			const url = new URL(
 				hasLiked
 					? commentId
@@ -40,20 +42,35 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 					: `${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/likes`
 			)
 			if (hasLiked) {
-				return fetch(url, {
+				const response = await fetch(url, {
 					method: "DELETE",
 					headers: {
 						"Content-Type": "application/json",
 					},
 				})
+				if (!response.ok) {
+					const body = await response.json()
+					throw new QueryError(body.message, body.code)
+				}
+
+				return await response.json()
 			}
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(newLike),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries(["post", clubId, readingId, postId])

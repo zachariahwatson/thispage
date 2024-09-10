@@ -36,13 +36,26 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 		}
 
 		return Response.json(data as unknown as InviteCode[], { status: 200 })
-	} catch (error) {
-		console.error(error)
-		console.error(
-			"\x1b[31m%s\x1b[0m",
-			"\nan error occurred while fetching club invite codes:\n" + JSON.stringify(error, null, 2) + "\n"
-		)
-		return Response.json({ error: "an error occurred while fetching club invite codes." }, { status: 500 })
+	} catch (error: any) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching club invite codes:\n", error)
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while fetching the club's invite codes :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }
 
@@ -66,10 +79,27 @@ export async function POST(request: NextRequest) {
 			throw error
 		}
 		// revalidatePath("/", "layout")
-		return Response.json({ message: "successfully created invite code" }, { status: 200 })
-	} catch (error) {
+		return Response.json({ message: "invite code created!" }, { status: 200 })
+	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while creating an invite code:\n", error)
 
-		return Response.json({ error: "an error occurred while creating an invite code." }, { status: 500 })
+		switch (error.code) {
+			case "42501":
+				return Response.json(
+					{
+						message: "you don't have permission to do that :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+			default:
+				return Response.json(
+					{
+						message: "an error occurred while creating the club invite code :(",
+						code: error.code,
+					},
+					{ status: 500 }
+				)
+		}
 	}
 }

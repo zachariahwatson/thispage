@@ -3,8 +3,10 @@
 import { Textarea } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import type { Comment as CommentType } from "@/lib/types"
+import { QueryError } from "@/utils/errors"
 import { Dispatch, SetStateAction, useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
+import { toast } from "sonner"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -32,7 +34,7 @@ export function CommentButton({
 	const queryClient = useQueryClient()
 	const [content, setContent] = useState<string>("")
 	const mutation = useMutation({
-		mutationFn: (newComment: {
+		mutationFn: async (newComment: {
 			post_id: number
 			author_member_id: number
 			content: string
@@ -40,13 +42,22 @@ export function CommentButton({
 			replying_to_comment_id: null
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubId}/readings/${readingId}/posts/${postId}/comments`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(newComment),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries(["comments", clubId, readingId, postId])

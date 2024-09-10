@@ -1,4 +1,5 @@
 import { MemberProgress, Reading } from "@/lib/types"
+import { QueryError } from "@/utils/errors"
 import { useQuery } from "react-query"
 
 /**
@@ -23,7 +24,7 @@ export function useUserProgress(intervalId: number | null, memberId: number | nu
 
 			if (!response.ok) {
 				const body = await response.json()
-				throw new Error(body.error)
+				throw new QueryError(body.message, body.code)
 			}
 
 			return await response.json()

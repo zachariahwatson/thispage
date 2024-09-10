@@ -82,7 +82,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { clubI
 			default:
 				return Response.json(
 					{
-						message: "an error occurred while canceling votes in the poll :(",
+						message: "an error occurred while canceling the poll votes :(",
 						code: error.code,
 					},
 					{ status: 500 }

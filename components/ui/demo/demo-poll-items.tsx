@@ -1,6 +1,6 @@
 "use client"
 
-import { RadioGroup, ScrollArea } from "@/components/ui"
+import { RadioGroup, ScrollArea, ToggleGroup } from "@/components/ui"
 import { DemoPollItem } from "@/components/ui/demo/demo-poll-item"
 import { useClubMembership, usePoll } from "@/contexts"
 import { PollItem } from "@/components/ui/books/club/spreads/poll"
@@ -101,16 +101,16 @@ export function DemoPollItems() {
 
 	return (
 		<div className="h-full">
-			<RadioGroup defaultValue={`${pollData?.user_vote_poll_item_id}`} value={`${pollData?.user_vote_poll_item_id}`}>
-				<ScrollArea className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner relative">
+			<ToggleGroup type="multiple" className="h-full">
+				{/* <ScrollArea className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner relative"> */}
+				<div className="border rounded-lg h-full shadow-shadow shadow-inner relative overflow-y-scroll w-full">
 					<div className="p-3 md:p-4 w-auto h-auto space-y-2">
 						{pollData?.items &&
-							pollData?.items.map((item) => (
-								<DemoPollItem key={item.id} item={item} groupValue={`${pollData?.user_vote_poll_item_id}`} />
-							))}
+							pollData?.items.map((item) => <DemoPollItem key={item.id} item={item} groupValues={["-2", "-4"]} />)}
 					</div>
-				</ScrollArea>
-			</RadioGroup>
+				</div>
+				{/* </ScrollArea> */}
+			</ToggleGroup>
 		</div>
 	)
 }

@@ -40,7 +40,7 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 	const {
 		data: cover,
 		isLoading: loading,
-		isError: error,
+		error,
 		refetch,
 	} = useQuery({
 		queryKey: ["covers", item.key.split("/")[2]],
@@ -112,40 +112,57 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 						})}` && "ring-4 ring-ring"
 				}`}
 			>
-				{!loading ? (
-					<FormControl>
-						<RadioGroupItem
-							value={JSON.stringify({
-								openLibraryId: item.key.split("/")[2],
-								title: item.title || work.title,
-								description:
-									(item.description &&
-										(typeof item.description === "object" && "value" in item.description
-											? item.description.value
-											: item.description)) ||
-									(work.description &&
-										(typeof work.description === "object" && "value" in work.description
-											? work.description.value
-											: work.description)),
-								authors: authors,
-								pageCount: Number(item.number_of_pages || item.pagination),
-								coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
-								coverImageWidth: !loading && cover && cover.width,
-								coverImageHeight: !loading && cover && cover.height,
-							})}
-						/>
-					</FormControl>
+				{!error ? (
+					!loading ? (
+						<FormControl>
+							<RadioGroupItem
+								value={JSON.stringify({
+									openLibraryId: item.key.split("/")[2],
+									title: item.title || work.title,
+									description:
+										(item.description &&
+											(typeof item.description === "object" && "value" in item.description
+												? item.description.value
+												: item.description)) ||
+										(work.description &&
+											(typeof work.description === "object" && "value" in work.description
+												? work.description.value
+												: work.description)),
+									authors: authors,
+									pageCount: Number(item.number_of_pages || item.pagination),
+									coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
+									coverImageWidth: !loading && cover && cover.width,
+									coverImageHeight: !loading && cover && cover.height,
+								})}
+							/>
+						</FormControl>
+					) : (
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 16 16"
+							fill="currentColor"
+							className="size-4 text-muted-foreground"
+						>
+							<path
+								fillRule="evenodd"
+								d="M3.05 3.05a7 7 0 1 1 9.9 9.9 7 7 0 0 1-9.9-9.9Zm1.627.566 7.707 7.707a5.501 5.501 0 0 0-7.707-7.707Zm6.646 8.768L3.616 4.677a5.501 5.501 0 0 0 7.707 7.707Z"
+								clipRule="evenodd"
+							/>
+						</svg>
+					)
 				) : (
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 16 16"
-						fill="currentColor"
-						className="size-4 text-muted-foreground"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-4 text-destructive"
 					>
 						<path
-							fillRule="evenodd"
-							d="M3.05 3.05a7 7 0 1 1 9.9 9.9 7 7 0 0 1-9.9-9.9Zm1.627.566 7.707 7.707a5.501 5.501 0 0 0-7.707-7.707Zm6.646 8.768L3.616 4.677a5.501 5.501 0 0 0 7.707 7.707Z"
-							clipRule="evenodd"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
 						/>
 					</svg>
 				)}
@@ -173,60 +190,89 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 				<Sheet>
 					<div ref={imageRef} className="flex items-center relative justify-end py-1 pl-0 pr-4">
 						<SheetTrigger asChild>
-							{(loading && coverLoading) || !cardRef ? (
-								<div className="max-h-full h-full w-8 float-right rounded-[4px] flex justify-center items-center text-muted-foreground">
+							{!error ? (
+								(loading && coverLoading) || !cardRef ? (
+									<div className="max-h-full h-full w-8 float-right rounded-[4px] flex justify-center items-center text-muted-foreground">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											strokeWidth={1.5}
+											stroke="currentColor"
+											className="size-6 animate-spin"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+											/>
+										</svg>
+									</div>
+								) : cover && cover.id && cover.width && cover.height ? (
+									<Image
+										src={`https://covers.openlibrary.org/b/id/${cover.id}-M.jpg`}
+										width={cover.width}
+										height={cover.height}
+										alt={
+											"Cover photo of " + item.title ||
+											"Unknown" +
+												(authors
+													? " by " +
+													  (authors.length === 2
+															? authors.join(" and ")
+															: authors
+																	.map((author: string, i: number) => {
+																		if (i === authors.length - 1 && authors.length !== 1) {
+																			return "and " + author
+																		} else {
+																			return author
+																		}
+																	})
+																	.join(", "))
+													: null)
+										}
+										onLoad={() => setCoverLoading(false)}
+										className="max-h-full w-auto h-auto float-right rounded-[4px] shadow-sm shadow-shadow object-contain hover:ring-4 hover:ring-ring transition-all hover:cursor-pointer"
+									/>
+								) : (
+									<div className="max-h-full h-full w-8 float-right rounded-[4px] flex justify-center items-center text-muted-foreground hover:cursor-pointer">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											strokeWidth={1.5}
+											stroke="currentColor"
+											className="size-6 hover:ring-4 hover:ring-ring transition-all rounded-[4px]"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
+											/>
+										</svg>
+									</div>
+								)
+							) : (
+								<div
+									className="max-h-full h-full w-8 float-right rounded-[4px] flex justify-center items-center text-muted-foreground hover:cursor-pointer"
+									onClick={(e) => {
+										e.preventDefault()
+										refetch()
+									}}
+								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
 										strokeWidth={1.5}
 										stroke="currentColor"
-										className="size-6 animate-spin"
+										className="size-6 hover:ring-4 hover:ring-ring transition-all rounded-[4px] text-destructive"
 									>
 										<path
 											strokeLinecap="round"
 											strokeLinejoin="round"
-											d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+											d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
 										/>
-									</svg>
-								</div>
-							) : cover && cover.id && cover.width && cover.height ? (
-								<Image
-									src={`https://covers.openlibrary.org/b/id/${cover.id}-M.jpg`}
-									width={cover.width}
-									height={cover.height}
-									alt={
-										"Cover photo of " + item.title ||
-										"Unknown" +
-											(authors
-												? " by " +
-												  (authors.length === 2
-														? authors.join(" and ")
-														: authors
-																.map((author: string, i: number) => {
-																	if (i === authors.length - 1 && authors.length !== 1) {
-																		return "and " + author
-																	} else {
-																		return author
-																	}
-																})
-																.join(", "))
-												: null)
-									}
-									onLoad={() => setCoverLoading(false)}
-									className="max-h-full w-auto h-auto float-right rounded-[4px] shadow-sm shadow-shadow object-contain hover:ring-4 hover:ring-ring transition-all hover:cursor-pointer"
-								/>
-							) : (
-								<div className="max-h-full h-full w-8 float-right rounded-[4px] flex justify-center items-center text-muted-foreground hover:cursor-pointer">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										strokeWidth={1.5}
-										stroke="currentColor"
-										className="size-6 hover:ring-4 hover:ring-ring transition-all rounded-[4px]"
-									>
-										<path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
 									</svg>
 								</div>
 							)}

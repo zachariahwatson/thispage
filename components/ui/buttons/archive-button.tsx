@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/buttons"
 import { useState } from "react"
 import { buttonVariants } from "@/components/ui/buttons/button"
+import { QueryError } from "@/utils/errors"
 
 interface Props {
 	readingId: number | null
@@ -32,21 +33,30 @@ export function ArchiveButton() {
 	const readingData = useReading()
 	const [archiveVisible, setArchiveVisible] = useState<boolean>(false)
 	const mutation = useMutation({
-		mutationFn: (data: { editor_member_id: number; is_archived: boolean }) => {
+		mutationFn: async (data: { editor_member_id: number; is_archived: boolean }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}`)
-			return fetch(url, {
+			const response = await fetch(url, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
 			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
 		},
 		onSettled: () => {
 			setArchiveVisible(false)
 		},
-		onSuccess: () => {
-			toast.success("reading archived!")
+		onSuccess: (body: any) => {
+			toast.success(body.message)
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 		},
 	})
