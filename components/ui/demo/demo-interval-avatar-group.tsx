@@ -31,16 +31,16 @@ export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 			{isVertical ? (
 				<Sheet>
 					<SheetTrigger>
-						<SheetTitle className="text-xl">readers</SheetTitle>
+						<SheetTitle className="text-md md:text-xl">readers</SheetTitle>
 					</SheetTrigger>
-					<SheetContent className="w-full rounded-lg">
+					<SheetContent className="sm:max-w-xl max-w-xl w-full rounded-lg">
 						<DemoIntervalAvatarList isComplete={isComplete} />
 					</SheetContent>
 				</Sheet>
 			) : (
 				<Dialog>
 					<DialogTrigger>
-						<CardTitle className="text-xl">readers</CardTitle>
+						<CardTitle className="text-md md:text-xl">readers</CardTitle>
 					</DialogTrigger>
 					<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">
 						<DemoIntervalAvatarList isComplete={isComplete} />
@@ -51,7 +51,7 @@ export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 			<div className="flex flex-row -space-x-1">
 				<Tooltip>
 					<TooltipTrigger className="cursor-default">
-						<Avatar className={`${isComplete ? "ring-ring" : "ring-background"} ring-4`}>
+						<Avatar className={`${isComplete ? "ring-ring" : "ring-background"} ring-4 size-8 md:size-10`}>
 							<AvatarImage src="/images/default-avatar.png" loading="eager" />
 						</Avatar>
 					</TooltipTrigger>
@@ -59,7 +59,7 @@ export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger className="cursor-default">
-						<Avatar className={`ring-ring ring-4`}>
+						<Avatar className={`ring-ring ring-4 size-8 md:size-10`}>
 							<AvatarImage src="/images/demo-avatar-1.png" loading="eager" />
 						</Avatar>
 					</TooltipTrigger>
@@ -67,7 +67,7 @@ export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger className="cursor-default">
-						<Avatar className={`ring-background ring-4`}>
+						<Avatar className={`ring-background ring-4 size-8 md:size-10`}>
 							<AvatarImage src="/images/demo-avatar-2.png" loading="eager" />
 						</Avatar>
 					</TooltipTrigger>
@@ -75,7 +75,7 @@ export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 				</Tooltip>
 				<Tooltip>
 					<TooltipTrigger className="cursor-default">
-						<Avatar className={`ring-ring ring-4`}>
+						<Avatar className={`ring-ring ring-4 size-8 md:size-10`}>
 							<AvatarImage src="/images/demo-avatar-3.png" loading="eager" />
 						</Avatar>
 					</TooltipTrigger>
@@ -84,7 +84,7 @@ export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 				{isVertical ? (
 					<Sheet>
 						<SheetTrigger>
-							<Avatar className="ring-background ring-4">
+							<Avatar className="ring-background ring-4 size-8 md:size-10">
 								<AvatarFallback>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -103,16 +103,16 @@ export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 								</AvatarFallback>
 							</Avatar>
 						</SheetTrigger>
-						<SheetContent className="w-full rounded-lg">
+						<SheetContent className="sm:max-w-xl max-w-xl w-full rounded-lg">
 							<DemoIntervalAvatarList isComplete={isComplete} />
 						</SheetContent>
 					</Sheet>
 				) : (
 					<Dialog>
 						<Tooltip>
-							<TooltipTrigger>
-								<DialogTrigger>
-									<Avatar className="ring-background ring-4">
+							<DialogTrigger asChild>
+								<TooltipTrigger>
+									<Avatar className="ring-background ring-4 size-8 md:size-10">
 										<AvatarFallback>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -130,8 +130,8 @@ export function DemoIntervalAvatarGroup({ isComplete }: Props) {
 											</svg>
 										</AvatarFallback>
 									</Avatar>
-								</DialogTrigger>
-							</TooltipTrigger>
+								</TooltipTrigger>
+							</DialogTrigger>
 							<TooltipContent>view all readers</TooltipContent>
 						</Tooltip>
 						<DialogContent className="max-w-sm md:max-w-4xl w-full rounded-lg">

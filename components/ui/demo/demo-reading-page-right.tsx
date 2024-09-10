@@ -36,9 +36,9 @@ export function DemoReadingPageRight({ userSpreadIndex, isComplete }: Props) {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-6.25rem)] md:h-[calc(100%-118px)] pt-4 md:pt-6">
 				<div className="flex justify-between pr-1">
-					<CardTitle className="text-xl">discussion</CardTitle>
+					<CardTitle className="text-md md:text-xl">discussion</CardTitle>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

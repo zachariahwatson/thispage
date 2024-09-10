@@ -9,6 +9,7 @@ import {
 	RadioGroup,
 	ScrollArea,
 	Separator,
+	ToggleGroup,
 } from "@/components/ui"
 import { DemoPollItems } from "@/components/ui/demo/demo-poll-items"
 import { DemoPollItem } from "@/components/ui/demo/demo-poll-item"
@@ -130,8 +131,8 @@ export function DemoPageRight2({ userSpreadIndex }: Props) {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardContent className="md:space-y-4 pt-4">
-				<div className="space-y-2">
+			<CardContent className="md:space-y-4 pt-4 h-[calc(100%-116px)]">
+				<div className="space-y-2 h-full">
 					<CardTitle className="text-md md:text-xl">
 						<span className="font-black text-primary">poll</span> your members for the next book to read.
 					</CardTitle>
@@ -139,19 +140,18 @@ export function DemoPageRight2({ userSpreadIndex }: Props) {
 						the top selection will be added as a reading.
 					</CardDescription>
 					<div className="h-full">
-						<RadioGroup
-							defaultValue={`${pollData?.user_vote_poll_item_id}`}
-							value={`${pollData?.user_vote_poll_item_id}`}
-						>
-							<ScrollArea className="border rounded-lg min-h-[130px] h-[calc(50svh-212px)] md:h-[412px] shadow-shadow shadow-inner relative">
+						<ToggleGroup type="multiple" className="h-full">
+							{/* <ScrollArea className="border rounded-lg min-h-[168px] h-[calc(50svh-176px)] md:h-[456px] shadow-shadow shadow-inner relative"> */}
+							<div className="border rounded-lg h-full shadow-shadow shadow-inner relative overflow-y-scroll w-full">
 								<div className="p-3 md:p-4 w-auto h-auto space-y-2">
 									{pollData?.items &&
 										pollData?.items.map((item) => (
-											<DemoPollItem key={item.id} item={item} groupValue={`${pollData?.user_vote_poll_item_id}`} />
+											<DemoPollItem key={item.id} item={item} groupValues={["-2", "-4"]} />
 										))}
 								</div>
-							</ScrollArea>
-						</RadioGroup>
+							</div>
+							{/* </ScrollArea> */}
+						</ToggleGroup>
 					</div>
 				</div>
 			</CardContent>

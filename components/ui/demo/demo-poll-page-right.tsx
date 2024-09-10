@@ -99,7 +99,8 @@ export function DemoPollPageRight({ userSpreadIndex }: Props) {
 		user_vote_poll_item_id: -2,
 		user_has_poll_item: true,
 	}
-	const endDate = new Date(pollData?.end_date || "")
+	let endDate = new Date()
+	endDate.setHours(24)
 
 	//fix initial and animate
 	const rightVariants = isVertical
@@ -122,43 +123,39 @@ export function DemoPollPageRight({ userSpreadIndex }: Props) {
 			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
 			style={{ transformPerspective: 2500 }}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-116px)]">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-114px)] md:h-[calc(100%-118px)] pt-4 md:pt-6">
+				<div className="flex flex-row justify-between">
+					<CardTitle className="text-md md:text-xl">vote books</CardTitle>
+					{pollData?.end_date && (
+						<CardDescription className="flex flex-row items-center justify-center space-x-2">
+							<span>
+								<Countdown date={endDate} />
+							</span>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="size-6"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+								/>
+							</svg>
+						</CardDescription>
+					)}
+				</div>
+				<Separator />
 				<div className="flex justify-between pr-1">
-					<CardTitle className="text-xl">
-						books <span className="font-normal text-muted-foreground">| poll</span>
-					</CardTitle>
+					<CardDescription className="md:text-sm text-xs">which books would you be okay with reading?</CardDescription>
 					<CreatePollItemButton />
 				</div>
 				<DemoPollItems />
 			</CardHeader>
-			<CardFooter className="absolute bottom-0 flex-col w-full items-start space-y-2 md:p-6 p-4 pb-6">
-				<CardDescription className="flex flex-row items-center justify-center space-x-2">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						strokeWidth={1.5}
-						stroke="currentColor"
-						className="size-6"
-					>
-						<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-					</svg>
-
-					<span>
-						{/* {endDate
-							.toLocaleDateString(undefined, {
-								year: "numeric",
-								month: "long",
-								day: "numeric",
-							})
-							.toLowerCase()} */}
-						<Countdown date={endDate}>
-							<span>poll ended!</span>
-						</Countdown>
-					</span>
-				</CardDescription>
-			</CardFooter>
-			<CardFooter className="absolute bottom-0 right-12 flex-col items-center space-y-2 md:p-6 p-4 pb-6">
+			<CardFooter className="absolute bottom-0 flex flex-col w-full items-center space-y-2 md:p-6 p-4 pb-4 md:pb-4">
 				<CardTitle className="flex flex-row text-md md:text-xl">back to start 👉</CardTitle>
 			</CardFooter>
 			<div className="bg-gradient-to-r from-shadow to-background py-2 hidden md:block absolute h-full top-0 left-0">
