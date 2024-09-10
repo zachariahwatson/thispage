@@ -268,7 +268,7 @@ export function BookSearchCollapsible({ item, groupValue, language }: Props) {
 							group &&
 							group.entries
 								.filter((entry: Editions["entries"][number]) =>
-									entry.languages?.some((l) => !language || (l.key === language?.key && entry.number_of_pages))
+									entry.languages?.some((l) => !language || l.key === language?.key)
 								)
 								.map((entry: Editions["entries"][number]) => (
 									<BookSearchItem

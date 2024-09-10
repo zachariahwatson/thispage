@@ -105,7 +105,7 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 										? work.description.value
 										: work.description)),
 							authors: authors,
-							pageCount: Number(item.number_of_pages),
+							pageCount: item.number_of_pages ? Number(item.number_of_pages) : 0,
 							coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
 							coverImageWidth: !loading && cover && cover.width,
 							coverImageHeight: !loading && cover && cover.height,
@@ -129,7 +129,7 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 												? work.description.value
 												: work.description)),
 									authors: authors,
-									pageCount: Number(item.number_of_pages),
+									pageCount: item.number_of_pages ? Number(item.number_of_pages) : 0,
 									coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
 									coverImageWidth: !loading && cover && cover.width,
 									coverImageHeight: !loading && cover && cover.height,

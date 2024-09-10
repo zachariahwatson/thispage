@@ -7,7 +7,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useClubMembership } from "@/contexts"
 import { addReadingFormSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { UseMutationResult } from "react-query"
 import { z } from "zod"
@@ -46,6 +46,7 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 
 export function AddReadingForm({ mutation, setVisible }: Props) {
 	const clubMembership = useClubMembership()
+	const [tabsValue, setTabsValue] = useState<"pages" | "sections" | undefined>()
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof addReadingFormSchema>>({
 		resolver: zodResolver(addReadingFormSchema),
@@ -89,11 +90,22 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 		mutation.mutate(payload)
 	}
 
+	const selectedBook = form.watch("book") ? JSON.parse(form.watch("book")) : null
+	const hasPageCount = selectedBook?.pageCount !== 0
+
+	// Set incrementType depending on hasPageCount when the book is selected
+	useEffect(() => {
+		if (!hasPageCount) {
+			setTabsValue("sections")
+		}
+	}, [hasPageCount])
+
 	return (
 		<>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 					<FormField control={form.control} name="book" render={({ field }) => <BookSearch field={field} />} />
+
 					<FormField
 						control={form.control}
 						name="bookCoverImageURL"
@@ -106,6 +118,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 								<FormMessage />
 							</FormItem>
 						)}
+						disabled={!selectedBook}
 					/>
 					<FormField
 						control={form.control}
@@ -119,6 +132,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 								<FormMessage />
 							</FormItem>
 						)}
+						disabled={!selectedBook}
 					/>
 
 					<div className="flex flex-row items-center space-x-4">
@@ -136,17 +150,24 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 									<FormMessage />
 								</FormItem>
 							)}
+							disabled={!selectedBook}
 						/>
 					</div>
 
 					<div className="space-y-2">
 						<FormLabel>increment type</FormLabel>
 						<Tabs
-							defaultValue="pages"
-							onValueChange={(value) => form.setValue("incrementType", value as "pages" | "sections")}
+							defaultValue={hasPageCount ? "pages" : "sections"}
+							value={tabsValue}
+							onValueChange={(value) => {
+								setTabsValue(value as "pages" | "sections")
+								form.setValue("incrementType", value as "pages" | "sections")
+							}}
 						>
 							<TabsList>
-								<TabsTrigger value="pages">pages</TabsTrigger>
+								<TabsTrigger value="pages" disabled={!hasPageCount}>
+									pages
+								</TabsTrigger>
 								<TabsTrigger value="sections">sections</TabsTrigger>
 							</TabsList>
 							<TabsContent value="pages" className="space-y-8">
@@ -166,6 +187,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 											<FormMessage />
 										</FormItem>
 									)}
+									disabled={!selectedBook}
 								/>
 							</TabsContent>
 							<TabsContent value="sections" className="space-y-8">
@@ -183,6 +205,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 											<FormMessage />
 										</FormItem>
 									)}
+									disabled={!selectedBook}
 								/>
 								<FormField
 									control={form.control}
@@ -199,6 +222,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 											<FormMessage />
 										</FormItem>
 									)}
+									disabled={!selectedBook}
 								/>
 								<FormField
 									control={form.control}
@@ -213,6 +237,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 											<FormMessage />
 										</FormItem>
 									)}
+									disabled={!selectedBook}
 								/>
 							</TabsContent>
 						</Tabs>
