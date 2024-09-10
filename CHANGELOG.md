@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Password recovery page
 - View archived readings and polls
 - Favorite button for clubs and readings(?)
-- Human-friendly error messages
 - Choose different edition covers
 
 ### Changed
@@ -23,7 +22,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reading image alignment issues
 
-## [0.10.1] - 2024-09-03
+## [0.10.2] - 2024-09-09
+
+### Added
+
+- Human-friendly error messages
+
+### Changed
+
+- Updated demo pages to reflect ui changes
+
+### Fixed
+
+- Demo poll list width was greater than its container
+
+## [0.10.1] - 2024-09-09
 
 ### Added
 
@@ -153,6 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.10.2]: https://github.com/zachariahwatson/thispage/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/zachariahwatson/thispage/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/zachariahwatson/thispage/compare/0.9.3...0.10.0
 [0.9.3]: https://github.com/zachariahwatson/thispage/compare/0.9.2...0.9.3

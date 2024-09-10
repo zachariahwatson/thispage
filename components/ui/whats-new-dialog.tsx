@@ -66,6 +66,10 @@ export function WhatsNewDialog() {
 								- added notifications for new polls, readings, and poll status updates.
 							</DialogDescription>
 						</div>
+						<DialogTitle>human-friendly errors</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>- errors are now more verbose with error codes.</DialogDescription>
+						</div>
 					</TabsContent>
 					<TabsContent value="0.9.0" className="space-y-3">
 						<DialogTitle>polls</DialogTitle>
