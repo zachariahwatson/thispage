@@ -21,6 +21,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reading image alignment issues
 
+## [0.10.4] - 2024-09-10
+
+### Changed
+
+- Minor tweaks
+
+### Fixed
+
+- Scroll resetting when voting for items in polls
+
 ## [0.10.3] - 2024-09-10
 
 ### Added
@@ -177,6 +187,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.10.4]: https://github.com/zachariahwatson/thispage/compare/0.10.3...0.10.4
 [0.10.3]: https://github.com/zachariahwatson/thispage/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/zachariahwatson/thispage/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/zachariahwatson/thispage/compare/0.10.0...0.10.1
