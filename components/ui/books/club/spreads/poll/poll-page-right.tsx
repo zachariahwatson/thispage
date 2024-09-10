@@ -159,11 +159,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-114px)] md:h-[calc(100%-118px)] pt-4 md:pt-6">
 				<div className="flex flex-row justify-between">
 					<CardTitle className="text-md md:text-xl">
-						{pollData?.status === "selection"
-							? "add books"
-							: pollData?.status === "voting"
-							? "vote books"
-							: "poll finished!"}
+						{["selection", "voting"].includes(pollData?.status || "") ? `${pollData?.status} phase` : "poll finished!"}
 					</CardTitle>
 					{pollData?.end_date && (
 						<CardDescription className="flex flex-row items-center justify-center space-x-2">

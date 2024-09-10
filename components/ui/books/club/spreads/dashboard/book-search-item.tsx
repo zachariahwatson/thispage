@@ -105,7 +105,7 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 										? work.description.value
 										: work.description)),
 							authors: authors,
-							pageCount: Number(item.number_of_pages || item.pagination),
+							pageCount: item.number_of_pages ? Number(item.number_of_pages) : 0,
 							coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
 							coverImageWidth: !loading && cover && cover.width,
 							coverImageHeight: !loading && cover && cover.height,
@@ -129,7 +129,7 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 												? work.description.value
 												: work.description)),
 									authors: authors,
-									pageCount: Number(item.number_of_pages || item.pagination),
+									pageCount: item.number_of_pages ? Number(item.number_of_pages) : 0,
 									coverImageUrl: !loading && cover && `https://covers.openlibrary.org/b/id/${cover.id}-L.jpg`,
 									coverImageWidth: !loading && cover && cover.width,
 									coverImageHeight: !loading && cover && cover.height,
@@ -174,7 +174,7 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 							<CardDescription>
 								{item.publishers && item.publishers[0]}, {item.publish_date && item.publish_date}
 							</CardDescription>
-							<CardDescription>{item.number_of_pages || item.pagination || "?"} pages</CardDescription>
+							<CardDescription>{item.number_of_pages || "?"} pages</CardDescription>
 							<div className="flex flex-row items-center space-x-2">
 								{item.languages &&
 									item.languages.map((language: any, i: number) => (

@@ -61,7 +61,6 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 			book_sections?: number | undefined
 			section_name?: string | undefined
 		}) => {
-			console.log(data)
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings`)
 			const response = await fetch(url, {
 				method: "POST",
