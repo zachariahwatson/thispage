@@ -70,6 +70,10 @@ export function WhatsNewDialog() {
 						<div className="pl-4">
 							<DialogDescription>- errors are now more verbose with error codes.</DialogDescription>
 						</div>
+						<DialogTitle>book search sort</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>- you can now sort by publication date in the book search.</DialogDescription>
+						</div>
 					</TabsContent>
 					<TabsContent value="0.9.0" className="space-y-3">
 						<DialogTitle>polls</DialogTitle>

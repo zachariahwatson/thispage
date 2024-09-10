@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Password recovery page
 - View archived readings and polls
 - Favorite button for clubs and readings(?)
-- Choose different edition covers
 
 ### Changed
 
@@ -21,6 +20,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Reading image alignment issues
+
+## [0.10.3] - 2024-09-10
+
+### Added
+
+- Sort books by publish date
+
+### Changed
+
+- Reading form logic
+- Poll status location
+- Only fetch editions when the book work collapsible is open
 
 ## [0.10.2] - 2024-09-09
 
@@ -166,6 +177,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.10.3]: https://github.com/zachariahwatson/thispage/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/zachariahwatson/thispage/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/zachariahwatson/thispage/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/zachariahwatson/thispage/compare/0.9.3...0.10.0
