@@ -80,7 +80,10 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 
 				return {
 					...poll,
-					items: poll.items,
+					items:
+						userVotes.length > 0
+							? poll.items.sort((a, b) => b.poll_votes.length - a.poll_votes.length)
+							: shuffleArray(poll.items),
 					user_votes: userVotes, // List of votes by the user for each poll item
 					user_has_poll_item: userHasPollItem,
 				}
@@ -164,4 +167,34 @@ export async function POST(request: NextRequest, { params }: { params: { clubId:
 				)
 		}
 	}
+}
+
+function shuffleArray(
+	array: {
+		id: number
+		created_at: string
+		book_title: string
+		book_description: string | null
+		book_authors: string[] | null
+		book_page_count: number
+		book_cover_image_url: string | null
+		book_cover_image_width: number | null
+		book_cover_image_height: number | null
+		creator_member_id: number | null
+		poll_votes: {
+			id: number
+			member_id: number
+			poll_item_id: number
+		}[]
+	}[]
+) {
+	// Create a copy of the array
+	const arr = array.slice()
+
+	for (let i = arr.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1))
+		;[arr[i], arr[j]] = [arr[j], arr[i]]
+	}
+
+	return arr
 }
