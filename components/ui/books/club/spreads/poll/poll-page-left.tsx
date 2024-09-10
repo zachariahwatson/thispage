@@ -61,6 +61,7 @@ export function PollPageLeft({ userSpreadIndex }: Props) {
 
 	return (
 		<MotionCard
+			id={`club-${pollData?.club_id}-poll-${pollData?.id}-page-left`}
 			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow shadow-md"
 			variants={leftVariants}
 			initial="initial"

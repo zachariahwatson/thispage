@@ -153,6 +153,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 
 	return (
 		<MotionCard
+			id={`club-${clubMembership?.club.id}-dashboard-page-right`}
 			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow shadow-md relative"
 			variants={rightVariants}
 			exit="exit"
