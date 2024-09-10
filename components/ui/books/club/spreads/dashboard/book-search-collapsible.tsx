@@ -1,6 +1,14 @@
 import React from "react"
 import { useEffect, useState, useCallback } from "react"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger, Skeleton } from "@/components/ui"
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+	Label,
+	RadioGroup,
+	RadioGroupItem,
+	Skeleton,
+} from "@/components/ui"
 import { BookSearchItem } from "@/components/ui/books/club/spreads/dashboard"
 import { Button } from "@/components/ui/buttons"
 import { FormDescription, FormItem, FormLabel } from "@/components/ui/forms"
@@ -22,6 +30,8 @@ interface Props {
 
 export function BookSearchCollapsible({ item, groupValue, language }: Props) {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [sort, setSort] = useState<string | undefined>()
+	const [sortedEditions, setSortedEditions] = useState<Editions[] | undefined>()
 	const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 		? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 		: "http://localhost:3000"
@@ -53,6 +63,7 @@ export function BookSearchCollapsible({ item, groupValue, language }: Props) {
 		},
 		getNextPageParam: (lastPage, pages) =>
 			lastPage && lastPage.links.next ? lastPage.links.next.split("&")[1] : undefined,
+		enabled: isOpen,
 	})
 
 	// Fetch the work info
@@ -80,6 +91,43 @@ export function BookSearchCollapsible({ item, groupValue, language }: Props) {
 		},
 	})
 
+	// Sort function for editions
+	const sortEditions = (entries: Editions["entries"]): Editions["entries"] => {
+		if (!sort) return entries
+
+		return entries.sort((a, b) => {
+			const dateA = new Date(a.publish_date?.slice(-4) ?? "").getTime()
+			const dateB = new Date(b.publish_date?.slice(-4) ?? "").getTime()
+
+			const validDateA = isNaN(dateA) ? 0 : dateA
+			const validDateB = isNaN(dateB) ? 0 : dateB
+
+			if (sort === "publisher date (newest)") {
+				return validDateB - validDateA // Descending order (newest first)
+			}
+			if (sort === "publisher date (oldest)") {
+				return validDateA - validDateB // Ascending order (oldest first)
+			}
+			return 0
+		})
+	}
+
+	useEffect(() => {
+		if (!sort) {
+			setSortedEditions(editions?.pages)
+		} else if (editions?.pages) {
+			const allEntries = editions?.pages.flatMap((page) => page.entries) || []
+
+			setSortedEditions([
+				{
+					links: editions?.pages[editions?.pages.length - 1].links,
+					size: editions?.pages.length,
+					entries: sortEditions(allEntries),
+				},
+			])
+		}
+	}, [sort, editions?.pages])
+
 	// Function to continue fetching pages if no results after filtering
 	const handleFetchNextPage = useCallback(async () => {
 		let currentPage = 0
@@ -90,9 +138,7 @@ export function BookSearchCollapsible({ item, groupValue, language }: Props) {
 
 			if (
 				nextPage.data?.pages[currentPage].entries.some((entry) =>
-					entry.languages?.some(
-						(l) => !language || (l.key === language?.key && (entry.number_of_pages || entry.pagination))
-					)
+					entry.languages?.some((l) => !language || (l.key === language?.key && entry.number_of_pages))
 				)
 			) {
 				resultsFound = true
@@ -112,12 +158,12 @@ export function BookSearchCollapsible({ item, groupValue, language }: Props) {
 		setIsOpen(false)
 	}, [language])
 
-	return editions && editions.pages.length > 0 && work ? (
+	return work ? (
 		<Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
 			<div className="flex items-center justify-between space-x-4">
-				<CollapsibleTrigger asChild>
-					<FormItem className="flex flex-row items-center space-x-3 space-y-0 w-full">
-						<FormLabel className="w-full h-full cursor-pointer rounded-md border p-4 space-y-2">
+				<FormItem className="flex flex-row items-center justify-between space-x-3 space-y-0 w-full rounded-md border ">
+					<CollapsibleTrigger asChild>
+						<FormLabel className="w-full h-full cursor-pointer p-4 space-y-2">
 							{item.title}{" "}
 							<span className="italic text-muted-foreground">
 								{item.author_name
@@ -137,49 +183,103 @@ export function BookSearchCollapsible({ item, groupValue, language }: Props) {
 							</span>
 							<FormDescription className="flex flex-row items-center text-xs">
 								view editions{" "}
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									strokeWidth={1.5}
-									stroke="currentColor"
-									className="size-6"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-									/>
-								</svg>
+								{!loading ? (
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth={1.5}
+										stroke="currentColor"
+										className="size-6"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+										/>
+									</svg>
+								) : (
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth={1.5}
+										stroke="currentColor"
+										className="size-6 animate-spin ml-2"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+										/>
+									</svg>
+								)}
 							</FormDescription>
 						</FormLabel>
-					</FormItem>
-				</CollapsibleTrigger>
+					</CollapsibleTrigger>
+					<RadioGroup className="flex flex-row space-x-2 pr-4" value={sort} onValueChange={setSort}>
+						<RadioGroupItem value="publisher date (oldest)" id={`publisher date (oldest) ${item.key}`} hidden />
+						<Label
+							htmlFor={`publisher date (oldest) ${item.key}`}
+							className={`${sort === "publisher date (oldest)" && "text-primary"} hover:cursor-pointer`}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="size-6"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12"
+								/>
+							</svg>
+						</Label>
+						<RadioGroupItem value="publisher date (newest)" id={`publisher date (newest) ${item.key}`} hidden />
+						<Label
+							htmlFor={`publisher date (newest) ${item.key}`}
+							className={`${sort === "publisher date (newest)" && "text-primary"} hover:cursor-pointer`}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="size-6"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25"
+								/>
+							</svg>
+						</Label>
+					</RadioGroup>
+				</FormItem>
 			</div>
 			<CollapsibleContent className="space-y-2 pl-4">
-				{editions.pages.map((group: Editions, i: number) => (
-					<React.Fragment key={i}>
-						{group &&
+				{editions &&
+					sortedEditions?.map(
+						(group: Editions) =>
+							group &&
 							group.entries
 								.filter((entry: Editions["entries"][number]) =>
-									entry.languages?.some(
-										(l) => !language || (l.key === language?.key && (entry.number_of_pages || entry.pagination))
-									)
+									entry.languages?.some((l) => !language || (l.key === language?.key && entry.number_of_pages))
 								)
-								.map(
-									(entry: Editions["entries"][number], i: number) =>
-										(entry.number_of_pages || entry.pagination) && (
-											<BookSearchItem
-												work={work}
-												item={entry}
-												authors={item.author_name}
-												key={i}
-												groupValue={groupValue}
-											/>
-										)
-								)}
-					</React.Fragment>
-				))}
+								.map((entry: Editions["entries"][number]) => (
+									<BookSearchItem
+										work={work}
+										item={entry}
+										authors={item.author_name}
+										key={entry.key}
+										groupValue={groupValue}
+									/>
+								))
+					)}
 				{hasNextPage &&
 					(loadingNext ? (
 						<Button disabled className="w-full">
@@ -204,13 +304,15 @@ export function BookSearchCollapsible({ item, groupValue, language }: Props) {
 							load more
 						</Button>
 					))}
-				<Button className="w-full" variant="outline" onClick={() => setIsOpen(false)}>
-					collapse
-				</Button>
+				{editions && (
+					<Button className="w-full" variant="outline" onClick={() => setIsOpen(false)}>
+						collapse
+					</Button>
+				)}
 			</CollapsibleContent>
 		</Collapsible>
 	) : (
-		(loading || workLoading) && <BookSearchCollapsibleSkeleton />
+		workLoading && <BookSearchCollapsibleSkeleton />
 	)
 }
 
