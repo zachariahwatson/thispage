@@ -9,24 +9,17 @@ import {
 	Checkbox,
 	Label,
 	Progress,
-	RadioGroupItem,
 	Separator,
 	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
 	SheetTrigger,
 	Skeleton,
 	ToggleGroupItem,
 } from "@/components/ui"
 import { PollItemActionsButton } from "@/components/ui/buttons"
-import { useClubMembership, usePoll, useReading } from "@/contexts"
+import { useClubMembership, usePoll } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
-import { useClubs } from "@/hooks/state"
-import { Poll } from "@/lib/types"
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 interface Props {
 	item: {
@@ -50,7 +43,6 @@ interface Props {
 }
 
 export function PollItem({ item, groupValues }: Props) {
-	const isVertical = useMediaQuery("(max-width: 768px)")
 	const pollData = usePoll()
 	const totalVotes = pollData?.items.reduce((total, item) => total + item.poll_votes.length, 0)
 	const clubMembership = useClubMembership()
