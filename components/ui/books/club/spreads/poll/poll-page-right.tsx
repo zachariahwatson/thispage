@@ -23,10 +23,11 @@ import { motion } from "framer-motion"
 import { PollItems } from "@/components/ui/books/club/spreads/poll"
 import { useClubMembership, usePoll } from "@/contexts"
 import Countdown from "react-countdown"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { QueryError } from "@/utils/errors"
 import { toast } from "sonner"
+import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
 
 interface Props {
 	userSpreadIndex: number
@@ -41,12 +42,11 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 	const MotionCard = motion(Card)
 	const pollData = usePoll()
 	const endDate = new Date(pollData?.end_date || "")
-	const [values, setValues] = useState<string[] | undefined>(
-		pollData?.user_votes.map((vote) => vote.poll_item_id.toString())
-	)
 	const clubMembership = useClubMembership()
 	const [continueVisible, setContinueVisible] = useState<boolean>(false)
 	const queryClient = useQueryClient()
+	const toggleGroupRef = useRef<React.ElementRef<typeof ToggleGroupPrimitive.Root> | null>(null)
+	console.log(toggleGroupRef.current)
 
 	const updatePollStatusMutation = useMutation({
 		mutationFn: async (data: { editor_member_id: number; status: "voting" }) => {
@@ -193,7 +193,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 					</CardDescription>
 					<CreatePollItemButton />
 				</div>
-				<PollItems values={values} setValues={setValues} />
+				<PollItems toggleGroupRef={toggleGroupRef} />
 			</CardHeader>
 			<CardFooter className="absolute bottom-0 flex flex-col w-full items-center space-y-2 md:p-6 p-4 pb-4 md:pb-4">
 				{pollData?.status === "selection" && clubMembership?.role === "admin" && (
@@ -285,15 +285,18 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 								className="w-40"
 								onClick={(e) => {
 									e.preventDefault()
-									if (values && clubMembership?.id) {
+									if (toggleGroupRef.current && clubMembership?.id) {
+										const values = Array.from(toggleGroupRef.current?.querySelectorAll('[data-state="on"]'))
+											.filter((item) => (item as HTMLElement).hasAttribute("id"))
+											.map((item) => (item as HTMLElement).getAttribute("id"))
 										const pollVotes = values.map((pollItemId) => ({
 											member_id: clubMembership.id,
-											poll_item_id: parseInt(pollItemId),
+											poll_item_id: parseInt(pollItemId ?? "-1"),
 										}))
 										insertPollVotesMutation.mutate(pollVotes)
 									}
 								}}
-								disabled={!values || values.length === 0}
+								//disabled={!values || values.length === 0}
 							>
 								vote
 							</Button>
@@ -322,9 +325,13 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 							variant="outline"
 							onClick={(e) => {
 								e.preventDefault()
-								if (values) {
-									const pollItemIds = values.map((pollItemId) => parseInt(pollItemId))
-									deletePollVotesMutation.mutate({ member_id: clubMembership?.id ?? -1, poll_item_ids: pollItemIds })
+								if (toggleGroupRef.current && clubMembership?.id) {
+									const values = Array.from(toggleGroupRef.current?.querySelectorAll('[data-state="on"]'))
+										.filter((item) => (item as HTMLElement).hasAttribute("id"))
+										.map((item) => (item as HTMLElement).getAttribute("id"))
+									console.log(values)
+									const pollItemIds = values.map((pollItemId) => parseInt(pollItemId ?? "-1"))
+									deletePollVotesMutation.mutate({ member_id: clubMembership.id, poll_item_ids: pollItemIds })
 								}
 							}}
 						>
