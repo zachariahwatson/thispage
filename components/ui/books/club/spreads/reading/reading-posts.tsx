@@ -95,16 +95,22 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 											new Date(post.created_at).getTime() > new Date(intervalDate).getTime()) ||
 										!post.is_spoiler ||
 										(post.is_spoiler && new Date(post.created_at).getTime() < new Date(intervalDate).getTime()) ? (
-											<ReadingPost key={post.id} likes={post.likes_count} id={post.id}>
+											<ReadingPost key={post.id} likes={post.likes_count} comments={post.comments_count} id={post.id}>
 												{post.title}
 											</ReadingPost>
 										) : (
-											<ReadingPost disabled key={post.id} likes={post.likes_count} id={-1}>
+											<ReadingPost
+												disabled
+												key={post.id}
+												likes={post.likes_count}
+												comments={post.comments_count}
+												id={-1}
+											>
 												⚠️spoiler⚠️complete the reading!
 											</ReadingPost>
 										)
 									) : (
-										<ReadingPost disabled key={post.id} likes={post.likes_count} id={-1}>
+										<ReadingPost disabled key={post.id} likes={post.likes_count} comments={post.comments_count} id={-1}>
 											join the reading to view!
 										</ReadingPost>
 									)

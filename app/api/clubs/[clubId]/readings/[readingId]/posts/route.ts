@@ -17,7 +17,8 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
                 title,
                 likes_count,
                 is_spoiler,
-                created_at`
+                created_at,
+				comments(count)`
 			)
 			.eq("reading_id", params.readingId)
 
@@ -25,7 +26,16 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			throw error
 		}
 
-		return Response.json(data as ReadingPost[], { status: 200 })
+		const transformedData: ReadingPost[] = data.map((post) => ({
+			id: post.id,
+			title: post.title,
+			likes_count: post.likes_count,
+			is_spoiler: post.is_spoiler,
+			created_at: post.created_at,
+			comments_count: post.comments[0].count,
+		}))
+
+		return Response.json(transformedData, { status: 200 })
 	} catch (error: any) {
 		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while fetching the reading's posts:\n", error)
 		switch (error.code) {
