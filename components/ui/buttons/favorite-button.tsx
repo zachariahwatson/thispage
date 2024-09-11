@@ -1,27 +1,9 @@
 "use client"
 
-import { useClubMembership, useReading } from "@/contexts"
+import { useClubMembership } from "@/contexts"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@/components/ui"
-import { Button } from "@/components/ui/buttons"
-import { useState } from "react"
-import { buttonVariants } from "@/components/ui/buttons/button"
 import { QueryError } from "@/utils/errors"
-
-interface Props {
-	readingId: number | null
-}
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -69,9 +51,8 @@ export function FavoriteButton() {
 			viewBox="0 0 24 24"
 			fill="currentColor"
 			className="size-6 hover:cursor-pointer"
-			onClick={(e) => {
+			onClick={() => {
 				mutation.mutate({ is_favorite: false })
-				e.preventDefault()
 			}}
 		>
 			<path
@@ -88,9 +69,8 @@ export function FavoriteButton() {
 			strokeWidth={1.5}
 			stroke="currentColor"
 			className="size-6 hover:cursor-pointer"
-			onClick={(e) => {
+			onClick={() => {
 				mutation.mutate({ is_favorite: true })
-				e.preventDefault()
 			}}
 		>
 			<path
