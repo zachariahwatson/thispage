@@ -293,7 +293,9 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 											member_id: clubMembership.id,
 											poll_item_id: parseInt(pollItemId ?? "-1"),
 										}))
-										insertPollVotesMutation.mutate(pollVotes)
+										if (pollVotes.length > 0) {
+											insertPollVotesMutation.mutate(pollVotes)
+										}
 									}
 								}}
 								//disabled={!values || values.length === 0}
@@ -329,7 +331,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 									const values = Array.from(toggleGroupRef.current?.querySelectorAll('[data-state="on"]'))
 										.filter((item) => (item as HTMLElement).hasAttribute("id"))
 										.map((item) => (item as HTMLElement).getAttribute("id"))
-									console.log(values)
+
 									const pollItemIds = values.map((pollItemId) => parseInt(pollItemId ?? "-1"))
 									deletePollVotesMutation.mutate({ member_id: clubMembership.id, poll_item_ids: pollItemIds })
 								}
