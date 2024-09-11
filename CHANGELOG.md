@@ -25,13 +25,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Favorite button for clubs and readings(?)
+- Favorite button for clubs
 - Help message explaining that you can edit books on openlibrary.org
 
 ### Changed
 
 - Minor tweaks
 - Shuffle poll items to mitigate serial-position effect
+
+### Removed
+
+- Ability to change book cover url - use Open Library!
 
 ### Fixed
 
