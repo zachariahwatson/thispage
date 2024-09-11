@@ -22,7 +22,6 @@ interface Props {
 			book_sections?: number
 			section_name?: string
 			join_in_progress: boolean
-			book_cover_image_url?: string
 		},
 		unknown
 	>
@@ -55,7 +54,6 @@ export function EditReadingFormPages({ mutation, setVisible }: Props) {
 			// start_date: startDate,
 			interval_page_length: Number(values.intervalPageLength),
 			join_in_progress: values.joinInProgress,
-			book_cover_image_url: values.bookCoverImageURL,
 		})
 	}
 
@@ -76,19 +74,6 @@ export function EditReadingFormPages({ mutation, setVisible }: Props) {
 							</FormItem>
 						)}
 					/> */}
-					<FormField
-						control={form.control}
-						name="bookCoverImageURL"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>custom cover image url</FormLabel>
-								<FormControl>
-									<Input placeholder="optional" showCharacterCount={false} {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
 					<div className="flex flex-row items-center space-x-4">
 						<FormField
 							control={form.control}

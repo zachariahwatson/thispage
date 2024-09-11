@@ -2,14 +2,17 @@
 
 import { Card, Skeleton } from "@/components/ui"
 import { Spreads } from "@/components/ui/books/club/spreads"
-import { ClubActionsButton } from "@/components/ui/buttons"
+import { ClubActionsButton, FavoriteButton } from "@/components/ui/buttons"
 import { useClubMembership } from "@/contexts"
 
 export function ClubBook() {
 	const clubMembership = useClubMembership()
 	return (
-		<div id={`club-${clubMembership?.club.id}`} className="max-w-sm md:max-w-4xl w-full space-y-3 relative">
-			<h1 id={`club-${clubMembership?.club.id}-title`} className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-8">
+		<div id={`club-${clubMembership?.club.id}-wrapper`} className="max-w-sm md:max-w-4xl w-full space-y-3 relative">
+			<h1
+				id={`club-${clubMembership?.club.id}-title`}
+				className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-16"
+			>
 				{clubMembership?.club.name}
 			</h1>
 			<Card
@@ -18,7 +21,10 @@ export function ClubBook() {
 			>
 				<Spreads />
 			</Card>
-			<ClubActionsButton />
+			<div className="absolute flex flex-row items-end -top-2 md:top-0 right-1">
+				<ClubActionsButton />
+				<FavoriteButton />
+			</div>
 		</div>
 	)
 }

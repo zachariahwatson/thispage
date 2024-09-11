@@ -16,7 +16,10 @@ export function PollSpread({ isVisible, userSpreadIndex }: Props) {
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
-				<div id={`club-${pollData?.club_id}-spread`} className="h-full flex flex-col md:flex-row rounded-lg">
+				<div
+					id={`club-${pollData?.club_id}-poll-${pollData?.id}-spread`}
+					className="h-full flex flex-col md:flex-row rounded-lg"
+				>
 					<PollPageLeft userSpreadIndex={userSpreadIndex} />
 					<PollPageRight userSpreadIndex={userSpreadIndex} />
 				</div>

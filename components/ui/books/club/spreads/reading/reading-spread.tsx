@@ -18,7 +18,10 @@ export function ReadingSpread({ isVisible, userSpreadIndex }: Props) {
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
-				<div id={`club-${readingData?.club_id}-spread`} className="h-full flex flex-col md:flex-row rounded-lg">
+				<div
+					id={`club-${readingData?.club_id}-reading-${readingData?.id}-spread`}
+					className="h-full flex flex-col md:flex-row rounded-lg"
+				>
 					<ReadingPageLeft userSpreadIndex={userSpreadIndex} />
 					<ReadingPageRight userSpreadIndex={userSpreadIndex} />
 				</div>

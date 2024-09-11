@@ -11,9 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Password recovery page
 - View archived readings and polls
-- Favorite button for clubs and readings(?)
-- Help message explaining that you can edit books on openlibrary.org
 - Logging
+- Comments badge
 
 ### Changed
 
@@ -22,6 +21,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Reading image alignment issues
+- Padding between club books
+
+## [0.10.4] - 2024-09-10
+
+### Added
+
+- Favorite button for clubs
+- Help message explaining that you can edit books on openlibrary.org
+
+### Changed
+
+- Minor tweaks
+- Shuffle poll items to mitigate serial-position effect
+
+### Removed
+
+- Ability to change book cover url - use Open Library!
+
+### Fixed
+
+- Scroll resetting when voting for items in polls
 
 ## [0.10.3] - 2024-09-10
 
@@ -179,6 +199,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[0.10.4]: https://github.com/zachariahwatson/thispage/compare/0.10.3...0.10.4
 [0.10.3]: https://github.com/zachariahwatson/thispage/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/zachariahwatson/thispage/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/zachariahwatson/thispage/compare/0.10.0...0.10.1

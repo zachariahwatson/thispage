@@ -57,7 +57,8 @@ export function WhatsNewDialog() {
 								>
 									approval voting system
 								</Link>
-								. members can now vote for multiple books that they would be okay with reading.
+								. members can now vote for multiple books that they would be okay with reading. items are also shuffled
+								to mitigate the serial-position effect.
 							</DialogDescription>
 						</div>
 						<DialogTitle>more notification emails</DialogTitle>
@@ -73,6 +74,10 @@ export function WhatsNewDialog() {
 						<DialogTitle>book search sort</DialogTitle>
 						<div className="pl-4">
 							<DialogDescription>- you can now sort by publication date in the book search.</DialogDescription>
+						</div>
+						<DialogTitle>favorite button</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>- put the clubs that you frequent most at the top of your list!</DialogDescription>
 						</div>
 					</TabsContent>
 					<TabsContent value="0.9.0" className="space-y-3">
