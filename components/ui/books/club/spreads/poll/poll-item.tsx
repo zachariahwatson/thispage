@@ -84,6 +84,7 @@ export function PollItem({ item, groupValues }: Props) {
 					hidden
 					className="bg-none p-0 m-0 "
 					disabled={pollData?.user_votes && pollData?.user_votes.length > 0}
+					asChild
 				>
 					{pollData?.status !== "voting" || pollData.user_votes.length > 0 ? (
 						<svg
@@ -99,7 +100,10 @@ export function PollItem({ item, groupValues }: Props) {
 							/>
 						</svg>
 					) : (
-						<Checkbox className="w-4 h-4 p-0 rounded-[4px]" checked={groupValues?.includes(item.id.toString())} />
+						<Checkbox
+							className="w-4 h-4 p-0 rounded-[4px] data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-none"
+							checked={groupValues?.includes(item.id.toString())}
+						/>
 					)}
 				</ToggleGroupItem>
 
