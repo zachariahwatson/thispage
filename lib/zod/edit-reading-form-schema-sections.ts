@@ -2,8 +2,6 @@ import { z } from "zod"
 
 export const editReadingFormSchemaSections = (bookSections: number) =>
 	z.object({
-		bookCoverImageURL: z.string().url({ message: "invalid url" }).optional(),
-		// startDate: z.string().date().optional(),
 		bookSections: z
 			.string()
 			.refine(

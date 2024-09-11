@@ -109,7 +109,6 @@ export function ReadingActionsButton() {
 			book_sections?: number
 			section_name?: string
 			join_in_progress: boolean
-			book_cover_image_url?: string
 		}) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings/${readingData?.id}`)
 			const response = await fetch(url, {

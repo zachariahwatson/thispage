@@ -1,8 +1,6 @@
 import { z } from "zod"
 
 export const editReadingFormSchemaPages = z.object({
-	bookCoverImageURL: z.string().url({ message: "invalid url" }).optional(),
-	// startDate: z.string().date().optional(),
 	intervalPageLength: z
 		.string()
 		.refine(
