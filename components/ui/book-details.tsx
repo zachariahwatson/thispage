@@ -36,6 +36,7 @@ export function BookDetails({ bookTitle, coverUrl, coverWidth, coverHeight, auth
 				</SheetDescription>
 			</SheetHeader>
 			<Separator />
+			<SheetDescription className="italic">{description}</SheetDescription>
 
 			{coverUrl && coverWidth && coverWidth > 1 && coverHeight && coverHeight > 1 && (
 				<Image
@@ -60,11 +61,9 @@ export function BookDetails({ bookTitle, coverUrl, coverWidth, coverHeight, auth
 												.join(", "))
 								: null)
 					}
-					className="rounded-lg w-1/2 max-h-full shadow-shadow shadow-md object-contain float-left mr-4 mb-4"
+					className="rounded-lg w-full max-h-full shadow-shadow shadow-md object-contain md:mr-4 md:mb-4"
 				/>
 			)}
-
-			<SheetDescription className="italic">{description}</SheetDescription>
 		</SheetContent>
 	)
 }
