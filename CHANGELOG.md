@@ -12,16 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Password recovery page
 - View archived readings and polls
 - Logging
-- Comments badge
 
 ### Changed
 
 - Themes
+- Count things with supabase js 'table(count)'
 
 ### Fixed
 
 - Reading image alignment issues
-- Padding between club books
 
 ## [0.10.4] - 2024-09-10
 
@@ -29,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Favorite button for clubs
 - Help message explaining that you can edit books on openlibrary.org
+- Comments count badge
 
 ### Changed
 
@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Scroll resetting when voting for items in polls
+- - Padding between club books
 
 ## [0.10.3] - 2024-09-10
 

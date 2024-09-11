@@ -120,8 +120,31 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 
 					<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
 						<CardHeader className="pb-4 md:pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4 space-y-0">
-							<CardTitle className="text-xl md:text-2xl truncate ...">{readingData?.book_title}</CardTitle>
-							<CardDescription className="italic truncate ...">
+							<CardTitle className="text-xl md:text-2xl truncate ..." title={readingData?.book_title}>
+								{readingData?.book_title}
+							</CardTitle>
+							<CardDescription
+								className="italic truncate ..."
+								title={
+									readingData?.book_authors
+										? " by " +
+										  (readingData?.book_authors.length === 2
+												? readingData?.book_authors.join(" and ")
+												: readingData?.book_authors
+														.map((author: string, i: number) => {
+															if (
+																i === (readingData?.book_authors ? readingData.book_authors?.length - 1 : 0) &&
+																readingData.book_authors?.length !== 1
+															) {
+																return "and " + author
+															} else {
+																return author
+															}
+														})
+														.join(", "))
+										: undefined
+								}
+							>
 								{readingData?.book_authors
 									? " by " +
 									  (readingData?.book_authors.length === 2

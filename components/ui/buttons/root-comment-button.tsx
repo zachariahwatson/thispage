@@ -74,16 +74,16 @@ export function RootCommentButton({ clubId, readingId, postId, memberId }: Props
 	}
 
 	return (
-		<div className="-space-y-2 w-full relative">
+		<div className="w-full relative">
 			<Textarea
-				className="mb-4 h-48 md:h-full"
+				className="h-48 md:h-full"
 				placeholder="type your comment here"
 				onChange={(e) => setContent(e.target.value)}
 				value={content}
 				onKeyDown={handleKeyDown}
 			/>
 			{mutation.isLoading ? (
-				<Button disabled className="float-right">
+				<Button disabled className="float-right" size="sm">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -101,7 +101,7 @@ export function RootCommentButton({ clubId, readingId, postId, memberId }: Props
 					commenting...
 				</Button>
 			) : (
-				<Button onClick={handleSubmit} className="float-right">
+				<Button onClick={handleSubmit} className="float-right" size="sm">
 					comment
 				</Button>
 			)}
