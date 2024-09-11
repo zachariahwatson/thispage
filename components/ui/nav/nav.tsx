@@ -34,6 +34,7 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 export function Nav() {
 	const [settingsVisible, setSettingsVisible] = useState<boolean>(false)
 	const [createClubVisible, setCreateClubVisible] = useState<boolean>(false)
+	const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const settingsRef = useRef<HTMLButtonElement>(null)
 	const createClubRef = useRef<HTMLButtonElement>(null)
@@ -113,7 +114,7 @@ export function Nav() {
 
 				{!loading ? (
 					user ? (
-						<DropdownMenu>
+						<DropdownMenu onOpenChange={setDropdownVisible}>
 							<DropdownMenuTrigger>
 								{!loading ? (
 									<Avatar className="self-end hover:ring-4 hover:ring-ring transition-all">
@@ -129,7 +130,7 @@ export function Nav() {
 								)}
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end" sideOffset={16}>
-								<DropdownMenuItem className="cursor-pointer" onSelect={() => createClubRef?.current?.click()}>
+								<DropdownMenuItem className="cursor-pointer" onClick={() => setCreateClubVisible(true)}>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
@@ -144,7 +145,7 @@ export function Nav() {
 									</svg>
 									create a club
 								</DropdownMenuItem>
-								<DropdownMenuItem className="cursor-pointer" onSelect={() => settingsRef?.current?.click()}>
+								<DropdownMenuItem className="cursor-pointer" onClick={() => setSettingsVisible(true)}>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
@@ -207,7 +208,7 @@ export function Nav() {
 			</div>
 			{isVertical ? (
 				<>
-					<Sheet open={createClubVisible} onOpenChange={setCreateClubVisible}>
+					<Sheet open={createClubVisible && !dropdownVisible} onOpenChange={setCreateClubVisible}>
 						<SheetTrigger ref={createClubRef} />
 						<SheetContent className="sm:max-w-xl max-w-xl space-y-4 w-full overflow-scroll">
 							<SheetHeader>
@@ -216,7 +217,7 @@ export function Nav() {
 							<CreateClubForm mutation={createClubMutation} setVisible={setCreateClubVisible} />
 						</SheetContent>
 					</Sheet>
-					<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
+					<Sheet open={settingsVisible && !dropdownVisible} onOpenChange={setSettingsVisible}>
 						<SheetTrigger ref={settingsRef} />
 						<SheetContent className="sm:max-w-xl max-w-xl space-y-4 w-full overflow-scroll">
 							<SheetHeader>
@@ -228,7 +229,7 @@ export function Nav() {
 				</>
 			) : (
 				<>
-					<Sheet open={createClubVisible} onOpenChange={setCreateClubVisible}>
+					<Sheet open={createClubVisible && !dropdownVisible} onOpenChange={setCreateClubVisible}>
 						<SheetTrigger ref={createClubRef} />
 						<SheetContent className="sm:max-w-xl max-w-xl space-y-4 overflow-scroll">
 							<SheetHeader>
@@ -237,7 +238,7 @@ export function Nav() {
 							<CreateClubForm mutation={createClubMutation} setVisible={setCreateClubVisible} />
 						</SheetContent>
 					</Sheet>
-					<Sheet open={settingsVisible} onOpenChange={setSettingsVisible}>
+					<Sheet open={settingsVisible && !dropdownVisible} onOpenChange={setSettingsVisible}>
 						<SheetTrigger ref={settingsRef} />
 						<SheetContent className="sm:max-w-xl max-w-xl space-y-4 overflow-scroll">
 							<SheetHeader>

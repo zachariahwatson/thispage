@@ -4,4 +4,5 @@ export type ReadingPost = {
 	likes_count: number
 	is_spoiler: boolean
 	created_at: string
+	comments_count: number
 }

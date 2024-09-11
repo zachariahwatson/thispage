@@ -175,7 +175,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 								)}
 						</div>
 					</div>
-					<h1 className="text-lg md:text-2xl font-bold break-words">{post.title}</h1>
+					<h1 className="text-lg md:text-2xl font-bold break-words pr-16">{post.title}</h1>
 					<p className="md:text-md text-sm break-words">{post.content}</p>
 					<LikeButton
 						likesCount={post.likes_count}
@@ -255,7 +255,7 @@ export function PostSkeleton() {
 						</div>
 					</div>
 				</div>
-				<Skeleton className="h-6 md:h-8 w-64" />
+				<Skeleton className="h-6 md:h-8 w-3/4" />
 				<Skeleton className="h-6 w-80 md:w-96" />
 				<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
 					<Skeleton className="rounded-lg h-5 w-12" />

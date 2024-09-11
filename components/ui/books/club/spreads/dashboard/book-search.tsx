@@ -14,9 +14,10 @@ import {
 } from "@/components/ui"
 import { BookSearchLanguages, BookSearchList } from "@/components/ui/books/club/spreads/dashboard"
 import { Button } from "@/components/ui/buttons"
-import { FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
+import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
 import { useMediaQuery } from "@/hooks"
 import { Checkbox, CheckedState } from "@radix-ui/react-checkbox"
+import Link from "next/link"
 import { useRef, useState } from "react"
 import { ControllerRenderProps, FieldValues } from "react-hook-form"
 import { useQueryClient } from "react-query"
@@ -109,6 +110,34 @@ export function BookSearch<TFieldValues extends FieldValues>({ field }: Props<TF
 					<BookSearchList search={search} groupValue={value} language={language} />
 				</RadioGroup>
 			</FormControl>
+			<FormDescription className="flex flex-row">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					strokeWidth={1.5}
+					stroke="currentColor"
+					className="size-6 mr-1"
+				>
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+					/>
+				</svg>
+				<span>
+					not satisfied with the results? edit and create books on{" "}
+					<Link
+						href={`https://openlibrary.org/search?q=${search.replaceAll(" ", "+")}`}
+						className="underline text-primary"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						openlibrary.org
+					</Link>{" "}
+					and they'll show up here!
+				</span>
+			</FormDescription>
 			<FormMessage />
 		</FormItem>
 	)

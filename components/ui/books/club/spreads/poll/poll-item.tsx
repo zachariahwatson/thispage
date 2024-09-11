@@ -9,24 +9,17 @@ import {
 	Checkbox,
 	Label,
 	Progress,
-	RadioGroupItem,
 	Separator,
 	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
 	SheetTrigger,
 	Skeleton,
 	ToggleGroupItem,
 } from "@/components/ui"
 import { PollItemActionsButton } from "@/components/ui/buttons"
-import { useClubMembership, usePoll, useReading } from "@/contexts"
+import { useClubMembership, usePoll } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
-import { useClubs } from "@/hooks/state"
-import { Poll } from "@/lib/types"
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 interface Props {
 	item: {
@@ -50,7 +43,6 @@ interface Props {
 }
 
 export function PollItem({ item, groupValues }: Props) {
-	const isVertical = useMediaQuery("(max-width: 768px)")
 	const pollData = usePoll()
 	const totalVotes = pollData?.items.reduce((total, item) => total + item.poll_votes.length, 0)
 	const clubMembership = useClubMembership()
@@ -86,26 +78,34 @@ export function PollItem({ item, groupValues }: Props) {
 					groupValues?.includes(item.id.toString()) && "ring-2 ring-ring"
 				}`}
 			>
-				{pollData?.status !== "voting" || pollData.user_votes.length > 0 ? (
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 16 16"
-						fill="currentColor"
-						className="size-5 text-muted-foreground"
-					>
-						<path
-							fillRule="evenodd"
-							d="M3.05 3.05a7 7 0 1 1 9.9 9.9 7 7 0 0 1-9.9-9.9Zm1.627.566 7.707 7.707a5.501 5.501 0 0 0-7.707-7.707Zm6.646 8.768L3.616 4.677a5.501 5.501 0 0 0 7.707 7.707Z"
-							clipRule="evenodd"
+				<ToggleGroupItem
+					value={`${item.id}`}
+					id={`${item.id}`}
+					hidden
+					className="bg-none p-0 m-0 "
+					disabled={pollData?.user_votes && pollData?.user_votes.length > 0}
+					asChild
+				>
+					{pollData?.status !== "voting" || pollData.user_votes.length > 0 ? (
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 16 16"
+							fill="currentColor"
+							className="size-4 text-muted-foreground"
+						>
+							<path
+								fillRule="evenodd"
+								d="M3.05 3.05a7 7 0 1 1 9.9 9.9 7 7 0 0 1-9.9-9.9Zm1.627.566 7.707 7.707a5.501 5.501 0 0 0-7.707-7.707Zm6.646 8.768L3.616 4.677a5.501 5.501 0 0 0 7.707 7.707Z"
+								clipRule="evenodd"
+							/>
+						</svg>
+					) : (
+						<Checkbox
+							className="w-4 h-4 p-0 rounded-[4px] data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-none"
+							checked={groupValues?.includes(item.id.toString())}
 						/>
-					</svg>
-				) : (
-					<>
-						<ToggleGroupItem value={`${item.id}`} id={`${item.id}`} hidden className="bg-none p-0 m-0" />
-
-						<Checkbox className="w-4 h-4 p-0 rounded-[4px]" checked={groupValues?.includes(item.id.toString())} />
-					</>
-				)}
+					)}
+				</ToggleGroupItem>
 
 				<p className="absolute bottom-1 text-xs text-muted-foreground left-2">
 					{pollData?.user_votes.length === 0

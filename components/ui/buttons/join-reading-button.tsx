@@ -38,7 +38,7 @@ export function JoinReadingButton() {
 			toast.error(error.message, { description: error.code })
 		},
 		onSuccess: (body: any) => {
-			toast.success(body.messsage)
+			toast.success(body.message)
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
 		},
 	})
