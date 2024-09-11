@@ -46,7 +46,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 	const [continueVisible, setContinueVisible] = useState<boolean>(false)
 	const queryClient = useQueryClient()
 	const toggleGroupRef = useRef<React.ElementRef<typeof ToggleGroupPrimitive.Root> | null>(null)
-	console.log(toggleGroupRef.current)
+	//console.log(toggleGroupRef.current)
 
 	const updatePollStatusMutation = useMutation({
 		mutationFn: async (data: { editor_member_id: number; status: "voting" }) => {
