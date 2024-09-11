@@ -130,45 +130,43 @@ export function ClubActionsButton() {
 
 	return (
 		<>
-			<div className="absolute top-0 md:top-2 right-0">
-				<DropdownMenu onOpenChange={setDropdownVisible}>
-					<DropdownMenuTrigger>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							stroke="currentColor"
-							className="size-6"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-							/>
-						</svg>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						{clubMembership?.role === "admin" && (
-							<>
-								<DropdownMenuItem className="cursor-pointer" onSelect={() => setEditVisible(true)}>
-									edit
-								</DropdownMenuItem>
-								<DropdownMenuSeparator />
-							</>
-						)}
-
-						<DropdownMenuItem className="text-destructive cursor-pointer" onSelect={() => setLeaveVisible(true)}>
-							leave
-						</DropdownMenuItem>
-						{!loading && user && clubMembership?.club.creator_user_id === user.id && (
-							<DropdownMenuItem className="text-destructive cursor-pointer" onSelect={() => setDeleteVisible(true)}>
-								delete
+			<DropdownMenu onOpenChange={setDropdownVisible}>
+				<DropdownMenuTrigger>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-6"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+						/>
+					</svg>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align="end">
+					{clubMembership?.role === "admin" && (
+						<>
+							<DropdownMenuItem className="cursor-pointer" onSelect={() => setEditVisible(true)}>
+								edit
 							</DropdownMenuItem>
-						)}
-					</DropdownMenuContent>
-				</DropdownMenu>
-			</div>
+							<DropdownMenuSeparator />
+						</>
+					)}
+
+					<DropdownMenuItem className="text-destructive cursor-pointer" onSelect={() => setLeaveVisible(true)}>
+						leave
+					</DropdownMenuItem>
+					{!loading && user && clubMembership?.club.creator_user_id === user.id && (
+						<DropdownMenuItem className="text-destructive cursor-pointer" onSelect={() => setDeleteVisible(true)}>
+							delete
+						</DropdownMenuItem>
+					)}
+				</DropdownMenuContent>
+			</DropdownMenu>
 
 			<Sheet open={editVisible && !dropdownVisible} onOpenChange={setEditVisible}>
 				<SheetContent className="sm:max-w-xl max-w-xl w-full space-y-4 overflow-scroll">
