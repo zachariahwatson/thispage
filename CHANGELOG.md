@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Password recovery page
 - View archived readings and polls
 - Logging
+- Comments badge
 
 ### Changed
 
@@ -20,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Reading image alignment issues
+- Padding between club books
 
 ## [0.10.4] - 2024-09-10
 
