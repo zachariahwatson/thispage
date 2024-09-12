@@ -82,7 +82,7 @@ export function PollItem({ item, groupValues }: Props) {
 					value={`${item.id}`}
 					id={`${item.id}`}
 					hidden
-					className="bg-none p-0 m-0 "
+					className="!bg-transparent p-0 m-0"
 					disabled={pollData?.user_votes && pollData?.user_votes.length > 0}
 					asChild
 				>
@@ -91,7 +91,7 @@ export function PollItem({ item, groupValues }: Props) {
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 16 16"
 							fill="currentColor"
-							className="size-4 text-muted-foreground"
+							className="size-4 text-muted-foreground bg-transparent"
 						>
 							<path
 								fillRule="evenodd"
