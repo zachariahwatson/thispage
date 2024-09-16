@@ -1,7 +1,15 @@
+"use client"
+
 import { Post } from "@/components/ui/post"
 import { createClient } from "@/utils/supabase/server"
+import { User } from "@supabase/supabase-js"
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
+	: "http://localhost:3000"
 
 interface Props {
 	params: {
@@ -21,15 +29,25 @@ export const metadata: Metadata = {
 }
 
 export default async function Page({ params }: Props) {
+	const router = useRouter()
 	const supabase = createClient()
+	const [user, setUser] = useState<User>()
 
-	const {
-		data: { user },
-	} = await supabase.auth.getUser()
-
-	if (!user) {
-		return redirect("/login")
-	}
+	useEffect(() => {
+		const fetchUser = async () => {
+			const {
+				data: { user },
+			} = await supabase.auth.getUser()
+			if (user) {
+				setUser(user)
+			} else {
+				router.push(
+					`/login?redirect=${defaultUrl}/club/${params.clubId}/reading/${params.readingId}/comments/${params.postId}`
+				)
+			}
+		}
+		fetchUser()
+	}, [supabase])
 
 	return <Post clubId={params.clubId} readingId={params.readingId} postId={params.postId} />
 }

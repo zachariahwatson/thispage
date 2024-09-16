@@ -31,7 +31,7 @@ export function InvitePage({ params }: { params: { clubId: string; inviteCode: s
 			if (user) {
 				setUser(user)
 			} else {
-				router.push(`/login?redirect=/invite/${params.clubId}/${params.inviteCode}`)
+				router.push(`/login?redirect=${defaultUrl}/invite/${params.clubId}/${params.inviteCode}`)
 			}
 		}
 		fetchUser()
