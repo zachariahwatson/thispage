@@ -7,23 +7,18 @@ import {
 	BookDetails,
 	Separator,
 	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
 	SheetTrigger,
 	Skeleton,
 } from "@/components/ui"
 import { Button, LikeButton, PostActionsButton, RootCommentButton } from "@/components/ui/buttons"
 import { PostComments } from "@/components/ui/post"
-import { useMediaQuery } from "@/hooks"
 import { useClubs, useUser } from "@/hooks/state"
 import type { Post } from "@/lib/types"
 import { QueryError } from "@/utils/errors"
+import { createClient } from "@/utils/supabase/client"
 import Image from "next/image"
 import Link from "next/link"
-import { redirect } from "next/navigation"
-import { ProbeResult } from "probe-image-size"
+import { redirect, useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useQuery } from "react-query"
 import { toast } from "sonner"
@@ -43,16 +38,30 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
  * @todo do something about the member id being exposed, dont like that
  */
 export function Post({ clubId, readingId, postId }: Props) {
+	const { data: user, isLoading: userLoading } = useUser()
 	const { data: clubMemberships, isLoading: clubsLoading } = useClubs()
 	const clubMembership = clubMemberships?.find((clubMembership) => String(clubMembership.club.id) === clubId)
-	const { data: user, isLoading: userLoading } = useUser()
+	const router = useRouter()
+	const supabase = createClient()
 
 	useEffect(() => {
-		if (!clubMembership && !clubsLoading) {
+		const fetchUser = async () => {
+			const {
+				data: { user },
+			} = await supabase.auth.getUser()
+			if (!user) {
+				router.push(`/login?redirect=${defaultUrl}/club/${clubId}/reading/${readingId}/comments/${postId}`)
+			}
+		}
+		fetchUser()
+	}, [supabase])
+
+	useEffect(() => {
+		if (clubMemberships && !clubMembership) {
 			toast.error("oops! you don't have access to that page.")
 			redirect("/")
 		}
-	}, [])
+	}, [clubMemberships, clubMembership])
 
 	const memberId = String(clubMembership?.id)
 	//fetch post
@@ -83,7 +92,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 	const createdAt = post && new Date(post.created_at)
 
 	return !error ? (
-		!loading && post ? (
+		!loading && post && user && !userLoading ? (
 			<div className="flex flex-col justify-center max-w-4xl w-full space-y-4">
 				<div className="space-y-2">
 					<div className="flex flex-row items-center relative">

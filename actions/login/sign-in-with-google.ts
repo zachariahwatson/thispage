@@ -12,8 +12,10 @@ export async function signInWithGoogle() {
 	if (referer) {
 		const refUrl = new URL(referer)
 		const next = refUrl.searchParams.get("redirect")
+		// Make sure next is just the path (without origin)
 		if (next) {
-			redirectTo += `?next=${next}`
+			const nextUrl = new URL(next, referer) // This will parse the next param
+			redirectTo += `?next=${nextUrl.pathname}${nextUrl.search}` // Only use the path + query part
 		}
 	}
 	const supabase = createClient()
