@@ -15,7 +15,7 @@ export function PollPodium() {
 
 	return (
 		<div ref={flexBoxRef} className="flex flex-row flex-grow items-end max-h-1/4">
-			<div className="bg-secondary flex-1 h-1/3 rounded-l-sm md:rounded-l-md border-border border-[1px] border-r-secondary flex justify-center items-start md:pt-2 relative">
+			<div className="bg-accent flex-1 h-1/3 rounded-l-sm md:rounded-l-md border-border border-[1px] border-r-accent flex justify-center items-start md:pt-2 relative">
 				<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[1]} />
 				{topThree[1]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
 					<p className="text-muted-foreground">
@@ -24,7 +24,7 @@ export function PollPodium() {
 				)}
 			</div>
 			<div className="flex flex-col flex-1 h-1/2">
-				<div className="bg-secondary h-1/3 rounded-t-sm md:rounded-t-md border-border border-[1px] border-b-secondary flex justify-center items-start md:pt-2 relative">
+				<div className="bg-accent h-1/3 rounded-t-sm md:rounded-t-md border-border border-[1px] border-b-accent flex justify-center items-start md:pt-2 relative">
 					<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[0]} winner />
 					{topThree[0]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
 						<p className="text-muted-foreground">
@@ -33,14 +33,14 @@ export function PollPodium() {
 					)}
 				</div>
 				<div className="flex flex-row h-2/3">
-					<div className="bg-secondary border-border border-b-[1px] w-1/2"></div>
+					<div className="bg-accent border-border border-b-[1px] w-1/2"></div>
 					<div className="flex flex-col w-1/2">
-						<div className="bg-secondary border-border border-r-[1px] h-1/4 w-full"></div>
-						<div className="bg-secondary border-border border-b-[1px] h-3/4 w-full"></div>
+						<div className="bg-accent border-border border-r-[1px] h-1/4 w-full"></div>
+						<div className="bg-accent border-border border-b-[1px] h-3/4 w-full"></div>
 					</div>
 				</div>
 			</div>
-			<div className="bg-secondary flex-1 h-1/4 rounded-r-sm md:rounded-r-md border-border border-[1px] border-l-secondary flex justify-center items-start md:pt-2 relative">
+			<div className="bg-accent flex-1 h-1/4 rounded-r-sm md:rounded-r-md border-border border-[1px] border-l-accent flex justify-center items-start md:pt-2 relative">
 				<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[2]} />
 				{topThree[2]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
 					<p className="text-muted-foreground">

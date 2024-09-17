@@ -29,7 +29,7 @@ export function EmptyPageLeft({ userSpreadIndex }: Props) {
 
 	return (
 		<MotionCard
-			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow shadow-md"
+			className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow-dark shadow-md"
 			variants={leftVariants}
 			initial="initial"
 			animate="animate"
@@ -51,10 +51,10 @@ export function EmptyPageLeft({ userSpreadIndex }: Props) {
 			<div className="p-4 flex justify-center items-center w-full h-full">
 				<p className="text-muted-foreground">hmm... no pages... a lil empty in here...</p>
 			</div>
-			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
+			<div className="bg-gradient-to-l from-shadow to-page py-2 hidden md:block absolute h-full top-0 right-0">
 				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
+			<div className="bg-gradient-to-t from-shadow to-page px-2 block md:hidden absolute w-full bottom-0 right-0">
 				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>

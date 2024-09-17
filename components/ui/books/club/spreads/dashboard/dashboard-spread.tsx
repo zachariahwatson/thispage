@@ -21,10 +21,7 @@ export function DashboardSpread({ isVisible, userSpreadIndex, setUserSpreadIndex
 		 */
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
-				<div
-					id={`club-${clubMembership?.club.id}-dashboard-spread`}
-					className="h-full flex flex-col md:flex-row rounded-lg"
-				>
+				<div id={`club-${clubMembership?.club.id}-dashboard-spread`} className="h-full flex flex-col md:flex-row">
 					<DashboardPageLeft userSpreadIndex={userSpreadIndex} />
 					<DashboardPageRight userSpreadIndex={userSpreadIndex} setUserSpreadIndex={setUserSpreadIndex} />
 				</div>

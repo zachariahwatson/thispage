@@ -15,7 +15,7 @@ export function ThemeReadingSpread({ isVisible, userSpreadIndex }: Props) {
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
-				<div className="h-full flex flex-col md:flex-row rounded-lg bg-background">
+				<div className="h-full flex flex-col md:flex-row rounded-3xl bg-page">
 					<ThemeReadingPageLeft
 						userSpreadIndex={userSpreadIndex}
 						isComplete={isComplete}

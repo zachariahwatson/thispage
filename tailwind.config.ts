@@ -15,9 +15,16 @@ const config = {
 		extend: {
 			colors: {
 				border: "hsl(var(--border))",
+				book: {
+					DEFAULT: "hsl(var(--book))",
+					border: "hsl(var(--book-border))",
+				},
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
-				background: "hsl(var(--background))",
+				background: {
+					DEFAULT: "hsl(var(--background))",
+					dark: "hsl(var(--background-dark))",
+				},
 				foreground: "hsl(var(--foreground))",
 				primary: {
 					DEFAULT: "hsl(var(--primary))",
@@ -47,12 +54,20 @@ const config = {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
+				page: {
+					DEFAULT: "hsl(var(--page))",
+					foreground: "hsl(var(--page-foreground))",
+					fold: "hsl(var(--page-fold))",
+				},
 				shadow: {
 					DEFAULT: "hsl(var(--shadow))",
 					dark: "hsl(var(--shadow-dark))",
 				},
 			},
 			borderRadius: {
+				"3xl": "calc(var(--radius) + 6px)",
+				"2xl": "calc(var(--radius) + 4px)",
+				xl: "calc(var(--radius) + 2px)",
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
@@ -70,6 +85,10 @@ const config = {
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
+			},
+			fontFamily: {
+				epilogue: "var(--font-epilogue)",
+				"plus-jakarta-sans": "var(--font-plus-jakarta-sans)",
 			},
 		},
 	},

@@ -8,6 +8,7 @@ import { GeistSans } from "geist/font/sans"
 import Link from "next/link"
 import Providers from "./providers"
 import { version } from "@/lib/version"
+import localFont from "next/font/local"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -41,10 +42,26 @@ export const viewport: Viewport = {
 	userScalable: false,
 }
 
+const Epilogue = localFont({
+	variable: "--font-epilogue",
+	src: [
+		{ path: "./../public/fonts/Epilogue-Variable.ttf", style: "normal" },
+		{ path: "./../public/fonts/Epilogue-VariableItalic.ttf", style: "italic" },
+	],
+})
+
+const PlusJakartaSans = localFont({
+	variable: "--font-plus-jakarta-sans",
+	src: [
+		{ path: "./../public/fonts/PlusJakartaSans-Variable.ttf", style: "normal" },
+		{ path: "./../public/fonts/PlusJakartaSans-VariableItalic.ttf", style: "italic" },
+	],
+})
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className={GeistSans.className}>
-			<body className="bg-background text-foreground">
+		<html lang="en" className={`${PlusJakartaSans.variable} ${Epilogue.variable}`}>
+			<body className="bg-background text-foreground font-plus-jakarta-sans">
 				<Providers>
 					<Nav />
 					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-2 md:p-12 md:pt-12 space-y-12 pb-12">

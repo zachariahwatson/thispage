@@ -20,7 +20,7 @@ export function ReadingSpread({ isVisible, userSpreadIndex }: Props) {
 			{isVisible && (
 				<div
 					id={`club-${readingData?.club_id}-reading-${readingData?.id}-spread`}
-					className="h-full flex flex-col md:flex-row rounded-lg"
+					className="h-full flex flex-col md:flex-row"
 				>
 					<ReadingPageLeft userSpreadIndex={userSpreadIndex} />
 					<ReadingPageRight userSpreadIndex={userSpreadIndex} />

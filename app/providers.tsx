@@ -70,6 +70,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 				position="top-right"
 				duration={2500}
 				visibleToasts={1}
+				toastOptions={{
+					className: "bg-page text-page-foreground",
+				}}
 				icons={{
 					success: (
 						<svg

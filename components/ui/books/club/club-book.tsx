@@ -11,13 +11,13 @@ export function ClubBook() {
 		<div id={`club-${clubMembership?.club.id}-wrapper`} className="max-w-sm md:max-w-4xl w-full space-y-3 relative">
 			<h1
 				id={`club-${clubMembership?.club.id}-title`}
-				className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-16"
+				className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-16 font-epilogue text-primary"
 			>
 				{clubMembership?.club.name}
 			</h1>
 			<Card
 				id={`club-${clubMembership?.club.id}-content`}
-				className="h-[calc(100svh-56px)] min-h-[624px] md:h-[624px] p-3 md:p-4 rounded-3xl relative shadow-shadow shadow-sm bg-card"
+				className="h-[calc(100svh-56px)] min-h-[624px] md:h-[624px] p-3 md:p-4 rounded-3xl relative shadow-shadow shadow-sm bg-book border-book-border"
 			>
 				<Spreads />
 			</Card>
