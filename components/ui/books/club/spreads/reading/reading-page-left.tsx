@@ -287,11 +287,11 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 					</Card>
 				</>
 			)}
-			<div className="bg-gradient-to-l from-shadow to-page py-2 hidden md:block absolute h-full top-0 right-0">
-				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
+			<div className="bg-gradient-to-l from-shadow to-page py-2 hidden md:block absolute h-full top-0 right-0 w-4">
+				{/* <Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" /> */}
 			</div>
-			<div className="bg-gradient-to-t from-shadow to-page px-2 block md:hidden absolute w-full bottom-0 right-0">
-				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
+			<div className="bg-gradient-to-t from-shadow to-page px-2 block md:hidden absolute w-full bottom-0 right-0 h-4">
+				{/* <Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" /> */}
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>

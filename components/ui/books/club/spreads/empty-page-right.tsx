@@ -36,11 +36,11 @@ export function EmptyPageRight({ userSpreadIndex }: Props) {
 			<div className="p-4 flex justify-center items-center w-full h-full">
 				<p className="text-muted-foreground">🦗*crickets*🦗</p>
 			</div>
-			<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0">
-				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
+			<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0 w-4">
+				{/* <Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" /> */}
 			</div>
-			<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0">
-				<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
+			<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0 h-4">
+				{/* <Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" /> */}
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>

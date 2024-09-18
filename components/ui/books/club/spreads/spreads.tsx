@@ -136,7 +136,7 @@ export function Spreads() {
 				</div>
 			</div>
 			<Button
-				variant="secondary"
+				variant="accent"
 				onClick={(e) => {
 					e.preventDefault()
 					pollsRefetch()
@@ -152,7 +152,7 @@ export function Spreads() {
 
 export function SpreadSkeleton() {
 	return (
-		<div className="h-full flex flex-col md:flex-row rounded-lg">
+		<div className="h-full flex flex-col md:flex-row">
 			<div className="h-1/2 md:h-full w-full md:w-1/2" />
 			<Card className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow-dark shadow-md animate-pulse">
 				<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0">

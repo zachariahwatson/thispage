@@ -24,7 +24,7 @@ export default function Page() {
 	return (
 		<>
 			<div className="max-w-sm md:max-w-4xl w-full space-y-3">
-				<h1 className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-16 font-epilogue text-primary">club name</h1>
+				<h1 className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-16 font-epilogue">club name</h1>
 				<Card className="h-[calc(100svh-56px)] min-h-[624px] md:h-[624px] p-4 rounded-3xl relative shadow-shadow shadow-sm bg-book border-book-border">
 					<ThemeSpreads />
 				</Card>

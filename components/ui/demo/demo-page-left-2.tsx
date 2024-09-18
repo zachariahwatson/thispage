@@ -45,7 +45,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 
 	return (
 		<MotionCard
-			className="bg-background flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow shadow-md"
+			className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow-dark shadow-md"
 			variants={leftVariants}
 			initial="initial"
 			animate="animate"
@@ -64,7 +64,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 					<Carousel opts={{ loop: true }} plugins={[AutoScroll({ startDelay: 200, stopOnInteraction: false })]}>
 						<CarouselContent className="rounded-md">
 							<CarouselItem>
-								<Card className="bg-background relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
+								<Card className="bg-page relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
 									<div className="flex justify-center px-12 pb-16 pt-2 md:pt-4 h-full w-full">
 										<Image
 											className="rounded-[8px] md:rounded-md h-full w-auto"
@@ -76,7 +76,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 										/>
 									</div>
 
-									<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80">
+									<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-page/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-page/80">
 										{!isLong && (
 											<>
 												<CardHeader className="pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4">
@@ -151,7 +151,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 							</CarouselItem>
 
 							<CarouselItem>
-								<Card className="bg-background relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
+								<Card className="bg-page relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
 									<div className="flex justify-center px-12 pb-16 pt-2 md:pt-4 h-full w-full">
 										<Image
 											className="rounded-[8px] md:rounded-md h-full w-auto"
@@ -163,7 +163,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 										/>
 									</div>
 
-									<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80">
+									<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-page/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-page/80">
 										{!isLong && (
 											<>
 												<CardHeader className="pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4">
@@ -185,7 +185,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 								</Card>
 							</CarouselItem>
 							<CarouselItem>
-								<Card className="bg-background relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
+								<Card className="bg-page relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
 									<div className="flex justify-center px-12 pb-16 pt-2 md:pt-4 h-full w-full">
 										<Image
 											className="rounded-[8px] md:rounded-md h-full w-auto"
@@ -197,7 +197,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 										/>
 									</div>
 
-									<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80">
+									<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-page/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-page/80">
 										{!isLong && (
 											<>
 												<CardHeader className="pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4">
@@ -270,7 +270,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 							</CarouselItem>
 
 							<CarouselItem>
-								<Card className="bg-background relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
+								<Card className="bg-page relative shadow-shadow shadow-md min-h-[158px] h-[calc(50svh-184px)] md:h-[calc(100%-68px)]">
 									<div className="flex justify-center px-12 pb-16 pt-2 md:pt-4 h-full w-full">
 										<Image
 											className="rounded-[8px] md:rounded-md h-full w-auto"
@@ -282,7 +282,7 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 										/>
 									</div>
 
-									<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-background/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-background/80">
+									<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-page/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-page/80">
 										{!isLong && (
 											<>
 												<CardHeader className="pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4">
@@ -307,10 +307,10 @@ export function DemoPageLeft2({ userSpreadIndex, demoIsComplete, setDemoIsComple
 					</Carousel>
 				</div>
 			</CardContent>
-			<div className="bg-gradient-to-l from-shadow to-background py-2 hidden md:block absolute h-full top-0 right-0">
+			<div className="bg-gradient-to-l from-shadow to-page py-2 hidden md:block absolute h-full top-0 right-0">
 				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
-			<div className="bg-gradient-to-t from-shadow to-background px-2 block md:hidden absolute w-full bottom-0 right-0">
+			<div className="bg-gradient-to-t from-shadow to-page px-2 block md:hidden absolute w-full bottom-0 right-0">
 				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-foreground/30">{userSpreadIndex + 1}</p>

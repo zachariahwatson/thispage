@@ -143,7 +143,7 @@ export function InviteCodes() {
 				</div>
 			</div>
 			<Button
-				variant="secondary"
+				variant="accent"
 				onClick={(e) => {
 					e.preventDefault()
 					refetch()

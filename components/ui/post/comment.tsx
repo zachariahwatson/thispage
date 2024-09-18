@@ -50,7 +50,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 						</p>
 						<p className="md:text-md text-sm w-full break-words">{commentData.content}</p>
 						<div className="flex flex-row items-center">
-							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 								<Badge variant="outline" className="">
 									{commentData.likes_count} 👍
 								</Badge>
@@ -65,7 +65,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 							/>
 							<Button
 								className="p-0 bg-background hover:bg-background mr-2 justify-start"
-								variant="secondary"
+								variant="accent"
 								onClick={() => setReplyBoxVisible(!replyBoxVisible)}
 							>
 								<Badge variant="outline" className="">
@@ -152,10 +152,10 @@ export function CommentSkeleton() {
 						<Skeleton className="h-6 w-48" />
 						<Skeleton className="h-12 md:h-6 w-64 md:w-96" />
 						<div className="flex flex-row">
-							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 								<Skeleton className="rounded-lg h-5 w-12" />
 							</Button>
-							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 								<Skeleton className="rounded-lg h-5 w-[72px]" />
 							</Button>
 						</div>

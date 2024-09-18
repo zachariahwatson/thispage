@@ -11,7 +11,7 @@ export function ClubBook() {
 		<div id={`club-${clubMembership?.club.id}-wrapper`} className="max-w-sm md:max-w-4xl w-full space-y-3 relative">
 			<h1
 				id={`club-${clubMembership?.club.id}-title`}
-				className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-16 font-epilogue text-primary"
+				className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-16 font-epilogue"
 			>
 				{clubMembership?.club.name}
 			</h1>

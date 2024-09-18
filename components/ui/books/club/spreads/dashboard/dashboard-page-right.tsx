@@ -176,7 +176,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 												viewBox="0 0 24 24"
 												strokeWidth={1.5}
 												stroke="currentColor"
-												className="size-28 text-secondary"
+												className="size-28 text-accent"
 											>
 												<path
 													strokeLinecap="round"
@@ -188,7 +188,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 												xmlns="http://www.w3.org/2000/svg"
 												viewBox="0 0 16 16"
 												fill="currentColor"
-												className="size-16 text-secondary absolute -top-7 right-[calc(50%-5.5rem)]"
+												className="size-16 text-accent absolute -top-7 right-[calc(50%-5.5rem)]"
 											>
 												<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
 											</svg>
@@ -224,7 +224,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 										viewBox="0 0 24 24"
 										strokeWidth={1.5}
 										stroke="currentColor"
-										className="size-28 text-secondary"
+										className="size-28 text-accent"
 									>
 										<path
 											strokeLinecap="round"
@@ -236,7 +236,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 16 16"
 										fill="currentColor"
-										className="size-16 text-secondary absolute -top-8 right-[calc(50%-5.5rem)]"
+										className="size-16 text-accent absolute -top-8 right-[calc(50%-5.5rem)]"
 									>
 										<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
 									</svg>
@@ -252,11 +252,11 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 					</div>
 				</div>
 			</CardHeader>
-			<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0">
-				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
+			<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0 w-4">
+				{/* <Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" /> */}
 			</div>
-			<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0">
-				<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
+			<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0 h-4">
+				{/* <Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" /> */}
 			</div>
 			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{userSpreadIndex + 1}</p>
 		</MotionCard>

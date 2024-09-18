@@ -111,7 +111,7 @@ export function EditPostForm({ mutation, setVisible, post, clubMembership }: Pro
 							<Button type="submit">save</Button>
 						)}
 						<Button
-							variant="secondary"
+							variant="accent"
 							className="md:mr-2"
 							onClick={(event) => {
 								event.preventDefault()

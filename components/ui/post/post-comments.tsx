@@ -89,7 +89,7 @@ export function PostComments({ clubId, readingId, postId, memberId, clubMembersh
 						</div>
 					</div>
 					<Button
-						variant="secondary"
+						variant="accent"
 						onClick={(e) => {
 							e.preventDefault()
 							refetch()

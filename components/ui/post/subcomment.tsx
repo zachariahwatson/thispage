@@ -75,7 +75,7 @@ export function SubComment({
 							/>
 							<Button
 								className="p-0 bg-background hover:bg-background mr-2 justify-start"
-								variant="secondary"
+								variant="accent"
 								onClick={() => setReplyBoxVisible(!replyBoxVisible)}
 							>
 								<Badge variant="outline" className="">

@@ -234,7 +234,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 				</div>
 			</div>
 			<Button
-				variant="secondary"
+				variant="accent"
 				onClick={(e) => {
 					e.preventDefault()
 					refetch()
@@ -266,7 +266,7 @@ export function PostSkeleton() {
 				</div>
 				<Skeleton className="h-6 md:h-8 w-3/4" />
 				<Skeleton className="h-6 w-80 md:w-96" />
-				<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+				<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 					<Skeleton className="rounded-lg h-5 w-12" />
 				</Button>
 			</div>

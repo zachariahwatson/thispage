@@ -97,7 +97,7 @@ export function CommentButton({
 				onKeyDown={handleKeyDown}
 			/>
 			<div className="float-right space-x-1">
-				<Button size="sm" variant="secondary" onClick={() => setReplyBoxVisible(false)}>
+				<Button size="sm" variant="accent" onClick={() => setReplyBoxVisible(false)}>
 					cancel
 				</Button>
 				{mutation.isLoading ? (
