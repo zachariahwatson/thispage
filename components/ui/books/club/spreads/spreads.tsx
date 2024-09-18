@@ -155,11 +155,11 @@ export function SpreadSkeleton() {
 		<div className="h-full flex flex-col md:flex-row">
 			<div className="h-1/2 md:h-full w-full md:w-1/2" />
 			<Card className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow-dark shadow-md animate-pulse">
-				<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0">
-					<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
+				<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0 w-4">
+					{/* <Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" /> */}
 				</div>
-				<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0">
-					<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
+				<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0 h-4">
+					{/* <Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" /> */}
 				</div>
 			</Card>
 		</div>
