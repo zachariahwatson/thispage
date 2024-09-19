@@ -151,7 +151,7 @@ export function WhatsNewDialog() {
 
 				<div className="mt-4">
 					<p>love,</p>
-					<p>
+					<p className="font-epilogue">
 						<span className="font-normal">this</span>
 						<span className="font-bold">page</span>
 					</p>
