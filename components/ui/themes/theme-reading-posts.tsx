@@ -1,13 +1,8 @@
 "use client"
 
-// import { ReadingType, ReadingPostType } from "@/utils/types"
 import { ScrollArea } from "@/components/ui"
 import { useState } from "react"
 import { ThemeReadingPost } from "."
-
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-	: "http://localhost:3000"
 
 interface Props {
 	clicked: boolean

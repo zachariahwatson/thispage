@@ -1,47 +1,14 @@
 "use client"
 
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-	Progress,
-	Separator,
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui"
-import {
-	ArchiveButton,
-	CompleteIntervalButton,
-	JoinReadingButton,
-	PollActionsButton,
-	ReadingActionsButton,
-} from "@/components/ui/buttons"
-import { useClubMembership, useFirstLoadAnimation, usePoll, useReading } from "@/contexts"
-import { useMediaQuery } from "@/hooks"
-import { useIntervals, useUserProgress } from "@/hooks/state"
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { useState } from "react"
+import { CardDescription, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { ThemePollPodium } from "@/components/ui/themes"
+import { PageLeft } from "@/components/ui/books"
 
 interface Props {
 	userSpreadIndex: number
 }
 
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-	: "http://localhost:3000"
-
 export function ThemePollPageLeft({ userSpreadIndex }: Props) {
-	const MotionCard = motion(Card)
-	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const pollData = {
 		id: -1,
 		created_at: "2024-08-30T09:54:18.723348+00:00",
@@ -125,29 +92,9 @@ export function ThemePollPageLeft({ userSpreadIndex }: Props) {
 		user_vote_poll_item_id: -2,
 		user_has_poll_item: true,
 	}
-	const isVertical = useMediaQuery("(max-width: 768px)")
-
-	//framer motion responsive animation (turns book page flip into notepad page flip)
-	const leftVariants = isVertical
-		? {
-				initial: { rotateX: flipOnce ? 0 : -90, originY: 1, zIndex: 2 },
-				animate: { rotateX: 0, originY: 1, zIndex: 2 },
-		  }
-		: {
-				initial: { rotateY: flipOnce ? 0 : 90, originX: 1, zIndex: 2 },
-				animate: { rotateY: 0, originX: 1, zIndex: 2 },
-		  }
 
 	return (
-		<MotionCard
-			className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow-dark shadow-md"
-			variants={leftVariants}
-			initial="initial"
-			animate="animate"
-			transition={{ type: "tween", duration: 0.1, delay: 0.1, ease: "easeIn" }}
-			style={{ transformPerspective: 2500 }}
-			onAnimationComplete={() => setFlipOnce(true)}
-		>
+		<PageLeft userSpreadIndex={userSpreadIndex}>
 			<>
 				<CardHeader className="px-4 md:px-6 relative h-full pt-4 md:pt-6">
 					<CardTitle className="text-md md:text-xl flex flex-row items-center">
@@ -168,13 +115,6 @@ export function ThemePollPageLeft({ userSpreadIndex }: Props) {
 					<ThemePollPodium />
 				</CardHeader>
 			</>
-			<div className="bg-gradient-to-l from-shadow to-page py-2 hidden md:block absolute h-full top-0 right-0">
-				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
-			</div>
-			<div className="bg-gradient-to-t from-shadow to-page px-2 block md:hidden absolute w-full bottom-0 right-0">
-				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
-			</div>
-			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-page-foreground/30">{userSpreadIndex + 1}</p>
-		</MotionCard>
+		</PageLeft>
 	)
 }

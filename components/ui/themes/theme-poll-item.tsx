@@ -9,24 +9,15 @@ import {
 	Checkbox,
 	Label,
 	Progress,
-	RadioGroupItem,
 	Separator,
 	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
 	SheetTrigger,
 	Skeleton,
 	ToggleGroupItem,
 } from "@/components/ui"
-import { PollItemActionsButton } from "@/components/ui/buttons"
-import { useClubMembership, usePoll, useReading } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
-import { useClubs } from "@/hooks/state"
-import { Poll } from "@/lib/types"
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 interface Props {
 	item: {

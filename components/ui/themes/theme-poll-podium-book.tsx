@@ -1,7 +1,6 @@
 "use client"
 
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui"
-import { usePoll } from "@/contexts"
 import { useMediaQuery } from "@/hooks"
 import Image from "next/image"
 import { MutableRefObject, useEffect, useRef } from "react"

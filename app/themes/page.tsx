@@ -4,6 +4,7 @@ import { ColorPicker, ThemeSpreads } from "@/components/ui/themes"
 import { Card } from "@/components/ui"
 import { useEffect, useState } from "react"
 import { Slider } from "@/components/ui/slider"
+import { FirstLoadAnimationProvider } from "@/contexts"
 
 export default function Page() {
 	const [radius, setRadius] = useState(0)
@@ -22,12 +23,10 @@ export default function Page() {
 		setRadius(parseFloat(currentRadius) || 0)
 	}, [])
 	return (
-		<>
+		<FirstLoadAnimationProvider key="themes">
 			<div className="max-w-sm md:max-w-4xl w-full space-y-3">
 				<h1 className="font-bold text-lg md:text-3xl pl-1 truncate ... pr-16 font-epilogue">club name</h1>
-				<Card className="h-[calc(100svh-56px)] min-h-[624px] md:h-[624px] p-4 rounded-3xl relative shadow-shadow shadow-sm bg-book border-book-border">
-					<ThemeSpreads />
-				</Card>
+				<ThemeSpreads />
 			</div>
 			<div className="flex flex-row flex-wrap bg-white rounded-md p-4 shadow-lg max-w-5xl justify-center">
 				<ColorPicker name="background">
@@ -95,6 +94,6 @@ export default function Page() {
 					<p className="text-gray-500 mt-1">Current Radius: {radius}rem</p>
 				</div>
 			</div>
-		</>
+		</FirstLoadAnimationProvider>
 	)
 }

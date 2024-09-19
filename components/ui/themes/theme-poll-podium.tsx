@@ -1,11 +1,7 @@
 "use client"
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui"
 import { ThemePollPodiumBook } from "@/components/ui/themes"
-import { usePoll } from "@/contexts"
-import { useMediaQuery } from "@/hooks"
-import Image from "next/image"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 
 export function ThemePollPodium() {
 	const pollData = {

@@ -1,21 +1,16 @@
 "use client"
 
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
+import { CardDescription, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { CreatePollItemButton } from "@/components/ui/buttons"
-import { useMediaQuery } from "@/hooks"
-import { motion } from "framer-motion"
-import { PollItems } from "@/components/ui/books/club/spreads/poll"
-import { usePoll } from "@/contexts"
 import Countdown from "react-countdown"
 import { ThemePollItems } from "@/components/ui/themes"
+import { PageRight } from "@/components/ui/books"
 
 interface Props {
 	userSpreadIndex: number
 }
 
 export function ThemePollPageRight({ userSpreadIndex }: Props) {
-	const isVertical = useMediaQuery("(max-width: 768px)")
-	const MotionCard = motion(Card)
 	const pollData = {
 		id: -1,
 		created_at: "2024-08-30T09:54:18.723348+00:00",
@@ -102,27 +97,8 @@ export function ThemePollPageRight({ userSpreadIndex }: Props) {
 	let endDate = new Date()
 	endDate.setHours(24)
 
-	//fix initial and animate
-	const rightVariants = isVertical
-		? {
-				initial: { rotateX: 0, originY: 0, zIndex: 2 },
-				animate: { rotateX: 90, originY: 0, zIndex: 2 },
-				exit: { rotateX: 90, originY: 0, zIndex: 2 },
-		  }
-		: {
-				initial: { rotateY: 0, originX: 0, zIndex: 2 },
-				animate: { rotateY: -90, originX: 0, zIndex: 2 },
-				exit: { rotateY: -90, originX: 0, zIndex: 2 },
-		  }
-
 	return (
-		<MotionCard
-			className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow-dark shadow-md"
-			variants={rightVariants}
-			exit="exit"
-			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
-			style={{ transformPerspective: 2500 }}
-		>
+		<PageRight userSpreadIndex={userSpreadIndex}>
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-114px)] md:h-[calc(100%-118px)] pt-4 md:pt-6">
 				<div className="flex flex-row justify-between">
 					<CardTitle className="text-md md:text-xl">voting phase</CardTitle>
@@ -158,13 +134,6 @@ export function ThemePollPageRight({ userSpreadIndex }: Props) {
 			<CardFooter className="absolute bottom-0 flex flex-col w-full items-center space-y-2 md:p-6 p-4 pb-4 md:pb-4">
 				<CardTitle className="flex flex-row text-md md:text-xl">back to start 👉</CardTitle>
 			</CardFooter>
-			<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0">
-				<Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" />
-			</div>
-			<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0">
-				<Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" />
-			</div>
-			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-page-foreground/30">{userSpreadIndex + 1}</p>
-		</MotionCard>
+		</PageRight>
 	)
 }

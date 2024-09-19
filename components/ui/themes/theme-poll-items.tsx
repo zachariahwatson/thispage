@@ -1,18 +1,7 @@
 "use client"
 
-import { RadioGroup, ScrollArea, ToggleGroup } from "@/components/ui"
+import { ToggleGroup } from "@/components/ui"
 import { ThemePollItem } from "@/components/ui/themes"
-import { useClubMembership, usePoll } from "@/contexts"
-import { PollItem } from "@/components/ui/books/club/spreads/poll"
-import { useState } from "react"
-import { useMutation, useQueryClient } from "react-query"
-import { QueryError } from "@/utils/errors"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
-
-const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-	: "http://localhost:3000"
 
 export function ThemePollItems() {
 	const pollData = {

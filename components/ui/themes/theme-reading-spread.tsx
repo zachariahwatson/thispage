@@ -1,8 +1,8 @@
 "use client"
 
 import { ThemeReadingPageLeft, ThemeReadingPageRight } from "@/components/ui/themes"
-import { AnimatePresence } from "framer-motion"
 import { useState } from "react"
+import { Spread } from "@/components/ui/books"
 
 interface Props {
 	isVisible: boolean
@@ -11,19 +11,10 @@ interface Props {
 
 export function ThemeReadingSpread({ isVisible, userSpreadIndex }: Props) {
 	const [isComplete, setIsComplete] = useState<boolean>(false)
-	const [clicked, setClicked] = useState<boolean>(false)
 	return (
-		<AnimatePresence mode="popLayout">
-			{isVisible && (
-				<div className="h-full flex flex-col md:flex-row rounded-3xl bg-page">
-					<ThemeReadingPageLeft
-						userSpreadIndex={userSpreadIndex}
-						isComplete={isComplete}
-						setIsComplete={setIsComplete}
-					/>
-					<ThemeReadingPageRight userSpreadIndex={userSpreadIndex} isComplete={isComplete} />
-				</div>
-			)}
-		</AnimatePresence>
+		<Spread isVisible={isVisible}>
+			<ThemeReadingPageLeft userSpreadIndex={userSpreadIndex} isComplete={isComplete} setIsComplete={setIsComplete} />
+			<ThemeReadingPageRight userSpreadIndex={userSpreadIndex} isComplete={isComplete} />
+		</Spread>
 	)
 }

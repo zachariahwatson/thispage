@@ -11,10 +11,9 @@ import {
 	Separator,
 } from "@/components/ui"
 import { ThemeCompleteIntervalButton } from "@/components/ui/buttons"
-import { useMediaQuery } from "@/hooks"
-import { motion } from "framer-motion"
 import Image from "next/image"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
+import { PageLeft } from "@/components/ui/books"
 
 interface Props {
 	userSpreadIndex: number
@@ -23,31 +22,8 @@ interface Props {
 }
 
 export function ThemeReadingPageLeft({ userSpreadIndex, isComplete, setIsComplete }: Props) {
-	const MotionCard = motion(Card)
-	const [flipOnce, setFlipOnce] = useState<boolean>(false)
-	const isVertical = useMediaQuery("(max-width: 768px)")
-
-	//framer motion responsive animation (turns book page flip into notepad page flip)
-	const leftVariants = isVertical
-		? {
-				initial: { rotateX: flipOnce ? 0 : -90, originY: 1, zIndex: 2 },
-				animate: { rotateX: 0, originY: 1, zIndex: 2 },
-		  }
-		: {
-				initial: { rotateY: flipOnce ? 0 : 90, originX: 1, zIndex: 2 },
-				animate: { rotateY: 0, originX: 1, zIndex: 2 },
-		  }
-
 	return (
-		<MotionCard
-			className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 relative border-b-0 rounded-b-none md:border-b md:rounded-b-lg md:border-r-0 md:rounded-tr-none md:rounded-br-none shadow-shadow-dark shadow-md"
-			variants={leftVariants}
-			initial="initial"
-			animate="animate"
-			transition={{ type: "tween", duration: 0.1, delay: 0.1, ease: "easeIn" }}
-			style={{ transformPerspective: 2500 }}
-			onAnimationComplete={() => setFlipOnce(true)}
-		>
+		<PageLeft userSpreadIndex={userSpreadIndex}>
 			<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
 				<Image
 					className="rounded-lg h-full w-auto"
@@ -59,7 +35,7 @@ export function ThemeReadingPageLeft({ userSpreadIndex, isComplete, setIsComplet
 				/>
 			</div>
 
-			<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-page/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_rgba(0,0,0,0.1)] backdrop-blur-md bg-page/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
+			<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-page/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_hsl(var(--shadow))] backdrop-blur-md bg-page/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
 				<CardHeader className="pb-4 md:pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4 space-y-0">
 					<CardTitle className="text-xl md:text-2xl">Theme Reading</CardTitle>
 					<CardDescription className="italic">by Homer</CardDescription>
@@ -94,13 +70,6 @@ export function ThemeReadingPageLeft({ userSpreadIndex, isComplete, setIsComplet
 					<Progress value={Math.floor((40 / 348) * 100)} className="h-2 md:h-4" />
 				</CardFooter>
 			</Card>
-			<div className="bg-gradient-to-l from-shadow to-page py-2 hidden md:block absolute h-full top-0 right-0">
-				<Separator orientation="vertical" className="ml-4 border-shadow-dark border-[.5px] border-dashed" />
-			</div>
-			<div className="bg-gradient-to-t from-shadow to-page px-2 block md:hidden absolute w-full bottom-0 right-0">
-				<Separator orientation="horizontal" className="mt-4 border-shadow-dark border-[.5px] border-dashed" />
-			</div>
-			<p className="absolute bottom-2 left-3 text-xs hidden md:block text-page-foreground/30">{userSpreadIndex + 1}</p>
-		</MotionCard>
+		</PageLeft>
 	)
 }
