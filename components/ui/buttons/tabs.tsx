@@ -47,7 +47,7 @@ export function Tabs({ spreadsCount, userSpreadIndex, setUserSpreadIndex }: Prop
 		) {
 			setValue((spreadsCount?.total_spreads - 1).toString())
 		}
-	}, [userSpreadIndex])
+	}, [userSpreadIndex, spreadsCount])
 
 	return (
 		<RadioGroup
