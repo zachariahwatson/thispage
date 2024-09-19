@@ -12,12 +12,9 @@ import {
 	SheetTrigger,
 } from "@/components/ui"
 import { useClubMembership } from "@/contexts"
-import { useReadings, useSpreadsCount } from "@/hooks/state"
+import { useReadings } from "@/hooks/state"
 import { useState } from "react"
-import { useMutation, useQueryClient } from "react-query"
-import { toast } from "sonner"
 import { AddPollForm, AddReadingForm } from "@/components/ui/forms/create"
-import { QueryError } from "@/utils/errors"
 import { PageRight } from "@/components/ui/books"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
@@ -34,106 +31,6 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 	const [addPollVisible, setAddPollVisible] = useState(false)
 	const clubMembership = useClubMembership()
 	const { data: readings, isLoading: loading } = useReadings(clubMembership?.club.id || -1, clubMembership?.id || -1)
-	const { data: spreadsCount } = useSpreadsCount(clubMembership?.club.id || -1, clubMembership?.role || "member")
-
-	const queryClient = useQueryClient()
-	const readingMutation = useMutation({
-		mutationFn: async (data: {
-			book: {
-				open_library_id: string
-				title?: string | undefined
-				description?: string | undefined
-				authors?: string[] | undefined
-				page_count?: number | undefined
-				cover_image_url?: string | undefined
-			}
-			club_id: number
-			creator_member_id: number
-			interval_page_length?: number
-			interval_section_length?: number
-			start_date: string
-			join_in_progress: boolean
-			increment_type: "pages" | "sections"
-			book_sections?: number | undefined
-			section_name?: string | undefined
-		}) => {
-			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings`)
-			const response = await fetch(url, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			})
-			if (!response.ok) {
-				const body = await response.json()
-				throw new QueryError(body.message, body.code)
-			}
-
-			return await response.json()
-		},
-		onError: (error: any) => {
-			toast.error(error.message, { description: error.code })
-		},
-		onSettled: () => {
-			setAddReadingVisible(false)
-		},
-		onSuccess: (body: any) => {
-			toast.success(body.message)
-			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
-			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
-			let index = 0
-			if (spreadsCount) {
-				if (spreadsCount.total_readings) index += spreadsCount.total_readings
-			}
-			localStorage.setItem(`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`, index.toString())
-			setUserSpreadIndex(index)
-		},
-	})
-
-	const pollMutation = useMutation({
-		mutationFn: async (data: {
-			club_id: number
-			creator_member_id: number
-			voting_length_days: number
-			is_locked: boolean
-			name: string
-			description?: string | undefined
-		}) => {
-			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/polls`)
-			const response = await fetch(url, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			})
-			if (!response.ok) {
-				const body = await response.json()
-				throw new QueryError(body.message, body.code)
-			}
-
-			return await response.json()
-		},
-		onError: (error: any) => {
-			toast.error(error.message, { description: error.code })
-		},
-		onSettled: () => {
-			setAddPollVisible(false)
-		},
-		onSuccess: (body: any) => {
-			toast.success(body.message)
-			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
-			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
-			let index = 0
-			if (spreadsCount) {
-				if (spreadsCount.total_readings) index += spreadsCount.total_readings
-				if (spreadsCount.total_polls) index += spreadsCount.total_polls
-			}
-			localStorage.setItem(`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`, index.toString())
-			setUserSpreadIndex(index)
-		},
-	})
 
 	return (
 		<PageRight userSpreadIndex={userSpreadIndex} id={`club-${clubMembership?.club.id}-dashboard-page-right`}>
@@ -175,7 +72,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 										<SheetHeader>
 											<SheetTitle>add a reading</SheetTitle>
 										</SheetHeader>
-										<AddReadingForm mutation={readingMutation} setVisible={setAddReadingVisible} />
+										<AddReadingForm setVisible={setAddReadingVisible} setUserSpreadIndex={setUserSpreadIndex} />
 									</SheetContent>
 								</Sheet>
 							</>
@@ -223,7 +120,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 								<SheetHeader>
 									<SheetTitle>add a poll</SheetTitle>
 								</SheetHeader>
-								<AddPollForm mutation={pollMutation} setVisible={setAddPollVisible} />
+								<AddPollForm setVisible={setAddPollVisible} setUserSpreadIndex={setUserSpreadIndex} />
 							</SheetContent>
 						</Sheet>
 					</div>
