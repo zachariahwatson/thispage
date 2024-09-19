@@ -10,7 +10,6 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-	Card,
 	CardDescription,
 	CardFooter,
 	CardHeader,
@@ -18,16 +17,15 @@ import {
 	Separator,
 } from "@/components/ui"
 import { Button, CreatePollItemButton } from "@/components/ui/buttons"
-import { useMediaQuery } from "@/hooks"
-import { motion } from "framer-motion"
 import { PollItems } from "@/components/ui/books/club/spreads/poll"
 import { useClubMembership, usePoll } from "@/contexts"
 import Countdown from "react-countdown"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { QueryError } from "@/utils/errors"
 import { toast } from "sonner"
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
+import { PageRight } from "@/components/ui/books"
 
 interface Props {
 	userSpreadIndex: number
@@ -38,15 +36,12 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	: "http://localhost:3000"
 
 export function PollPageRight({ userSpreadIndex }: Props) {
-	const isVertical = useMediaQuery("(max-width: 768px)")
-	const MotionCard = motion(Card)
 	const pollData = usePoll()
 	const endDate = new Date(pollData?.end_date || "")
 	const clubMembership = useClubMembership()
 	const [continueVisible, setContinueVisible] = useState<boolean>(false)
 	const queryClient = useQueryClient()
 	const toggleGroupRef = useRef<React.ElementRef<typeof ToggleGroupPrimitive.Root> | null>(null)
-	//console.log(toggleGroupRef.current)
 
 	const updatePollStatusMutation = useMutation({
 		mutationFn: async (data: { editor_member_id: number; status: "voting" }) => {
@@ -135,28 +130,8 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 		},
 	})
 
-	//fix initial and animate
-	const rightVariants = isVertical
-		? {
-				initial: { rotateX: 0, originY: 0, zIndex: 2 },
-				animate: { rotateX: 90, originY: 0, zIndex: 2 },
-				exit: { rotateX: 90, originY: 0, zIndex: 2 },
-		  }
-		: {
-				initial: { rotateY: 0, originX: 0, zIndex: 2 },
-				animate: { rotateY: -90, originX: 0, zIndex: 2 },
-				exit: { rotateY: -90, originX: 0, zIndex: 2 },
-		  }
-
 	return (
-		<MotionCard
-			id={`club-${pollData?.club_id}-poll-${pollData?.id}-page-right`}
-			className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 relative border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow-dark shadow-md"
-			variants={rightVariants}
-			exit="exit"
-			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
-			style={{ transformPerspective: 2500 }}
-		>
+		<PageRight userSpreadIndex={userSpreadIndex}>
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-114px)] md:h-[calc(100%-118px)] pt-4 md:pt-6">
 				<div className="flex flex-row justify-between">
 					<CardTitle className="text-md md:text-xl">
@@ -341,13 +316,6 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 						</Button>
 					))}
 			</CardFooter>
-			<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0 w-4">
-				{/* <Separator orientation="vertical" className="mr-4 border-shadow-dark " /> */}
-			</div>
-			<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0 h-4">
-				{/* <Separator orientation="horizontal" className="mb-4 border-shadow-dark " /> */}
-			</div>
-			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{userSpreadIndex + 1}</p>
-		</MotionCard>
+		</PageRight>
 	)
 }

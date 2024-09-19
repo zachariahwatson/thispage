@@ -1,7 +1,6 @@
 "use client"
 
 import {
-	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
@@ -13,14 +12,13 @@ import {
 	SheetTrigger,
 } from "@/components/ui"
 import { useClubMembership } from "@/contexts"
-import { useMediaQuery } from "@/hooks"
 import { useReadings, useSpreadsCount } from "@/hooks/state"
-import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
 import { toast } from "sonner"
 import { AddPollForm, AddReadingForm } from "@/components/ui/forms/create"
 import { QueryError } from "@/utils/errors"
+import { PageRight } from "@/components/ui/books"
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
@@ -32,10 +30,8 @@ interface Props {
 }
 
 export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Props) {
-	const isVertical = useMediaQuery("(max-width: 768px)")
 	const [addReadingVisible, setAddReadingVisible] = useState(false)
 	const [addPollVisible, setAddPollVisible] = useState(false)
-	const MotionCard = motion(Card)
 	const clubMembership = useClubMembership()
 	const { data: readings, isLoading: loading } = useReadings(clubMembership?.club.id || -1, clubMembership?.id || -1)
 	const { data: spreadsCount } = useSpreadsCount(clubMembership?.club.id || -1, clubMembership?.role || "member")
@@ -139,27 +135,8 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 		},
 	})
 
-	const rightVariants = isVertical
-		? {
-				initial: { rotateX: 0, originY: 0, zIndex: 2 },
-				animate: { rotateX: 90, originY: 0, zIndex: 2 },
-				exit: { rotateX: 90, originY: 0, zIndex: 2 },
-		  }
-		: {
-				initial: { rotateY: 0, originX: 0, zIndex: 2 },
-				animate: { rotateY: -90, originX: 0, zIndex: 2 },
-				exit: { rotateY: -90, originX: 0, zIndex: 2 },
-		  }
-
 	return (
-		<MotionCard
-			id={`club-${clubMembership?.club.id}-dashboard-page-right`}
-			className="bg-page flex-1 h-1/2 md:h-full md:w-1/2 border-t-0 rounded-t-none md:border-t md:rounded-t-lg md:border-l-0 md:rounded-tl-none md:rounded-bl-none shadow-shadow-dark shadow-md relative"
-			variants={rightVariants}
-			exit="exit"
-			transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
-			style={{ transformPerspective: 2500 }}
-		>
+		<PageRight userSpreadIndex={userSpreadIndex} id={`club-${clubMembership?.club.id}-dashboard-page-right`}>
 			<CardHeader className="px-4 md:px-6 h-full pt-4 md:pt-6">
 				<Separator className="mt-8 hidden md:block" />
 				<div className="pr-1 h-1/2">
@@ -252,13 +229,6 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 					</div>
 				</div>
 			</CardHeader>
-			<div className="bg-gradient-to-r from-shadow to-page py-2 hidden md:block absolute h-full top-0 left-0 w-4">
-				{/* <Separator orientation="vertical" className="mr-4 border-shadow-dark border-[.5px] border-dashed" /> */}
-			</div>
-			<div className="bg-gradient-to-b from-shadow to-page px-2 block md:hidden absolute w-full top-0 right-0 h-4">
-				{/* <Separator orientation="horizontal" className="mb-4 border-shadow-dark border-[.5px] border-dashed" /> */}
-			</div>
-			<p className="absolute bottom-2 left-3 text-xs block md:hidden text-foreground/30">{userSpreadIndex + 1}</p>
-		</MotionCard>
+		</PageRight>
 	)
 }

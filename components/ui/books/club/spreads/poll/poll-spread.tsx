@@ -1,8 +1,8 @@
 "use client"
 
 import { PollPageLeft, PollPageRight } from "@/components/ui/books/club/spreads/poll"
-import { useClubMembership, usePoll } from "@/contexts"
-import { AnimatePresence } from "framer-motion"
+import { usePoll } from "@/contexts"
+import { Spread } from "@/components/ui/books/"
 
 interface Props {
 	isVisible: boolean
@@ -11,16 +11,11 @@ interface Props {
 
 export function PollSpread({ isVisible, userSpreadIndex }: Props) {
 	const pollData = usePoll()
-	const clubMembership = useClubMembership()
 
 	return (
-		<AnimatePresence mode="popLayout">
-			{isVisible && (
-				<div id={`club-${pollData?.club_id}-poll-${pollData?.id}-spread`} className="h-full flex flex-col md:flex-row">
-					<PollPageLeft userSpreadIndex={userSpreadIndex} />
-					<PollPageRight userSpreadIndex={userSpreadIndex} />
-				</div>
-			)}
-		</AnimatePresence>
+		<Spread id={`club-${pollData?.club_id}-poll-${pollData?.id}-spread`} isVisible={isVisible}>
+			<PollPageLeft userSpreadIndex={userSpreadIndex} />
+			<PollPageRight userSpreadIndex={userSpreadIndex} />
+		</Spread>
 	)
 }
