@@ -81,11 +81,7 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 	})
 
 	return (
-		<Button
-			className="p-0 bg-background hover:bg-background mr-2"
-			variant="ghost"
-			onClick={() => mutation.mutate({ member_id: Number(memberId) })}
-		>
+		<button className="mr-2" onClick={() => mutation.mutate({ member_id: Number(memberId) })}>
 			<Badge variant={hasLiked ? "default" : "outline"}>
 				{mutation.isLoading ? (
 					<svg
@@ -107,6 +103,6 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 				)}{" "}
 				👍
 			</Badge>
-		</Button>
+		</button>
 	)
 }
