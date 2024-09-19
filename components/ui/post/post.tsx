@@ -92,7 +92,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 	const createdAt = post && new Date(post.created_at)
 
 	return (
-		<div className="flex flex-col items-center max-w-5xl w-full space-y-4 p-2 md:px-12 pb-12 bg-page rounded-b-3xl shadow-md shadow-shadow">
+		<div className="flex flex-col items-center max-w-5xl w-full space-y-4 px-2 md:px-12 pb-12 bg-page rounded-b-3xl shadow-md shadow-shadow -mt-6">
 			<div className="absolute top-[73px] bg-page max-w-5xl w-[calc(100%-1rem)] h-12"></div>
 			{!error ? (
 				!loading && post && user && !userLoading ? (

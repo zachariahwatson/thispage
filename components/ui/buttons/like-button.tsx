@@ -81,7 +81,7 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 	})
 
 	return (
-		<button className="mr-2" onClick={() => mutation.mutate({ member_id: Number(memberId) })}>
+		<button className="mr-2 -mt-1.5" onClick={() => mutation.mutate({ member_id: Number(memberId) })}>
 			<Badge variant={hasLiked ? "default" : "outline"}>
 				{mutation.isLoading ? (
 					<svg
