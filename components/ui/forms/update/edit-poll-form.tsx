@@ -129,7 +129,7 @@ export function EditPollForm({ mutation, setVisible }: Props) {
 							<Button type="submit">edit</Button>
 						)}
 						<Button
-							variant="secondary"
+							variant="accent"
 							className="md:mr-2"
 							onClick={(event) => {
 								event.preventDefault()

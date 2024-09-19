@@ -103,9 +103,9 @@ export function Nav() {
 	})
 
 	return (
-		<header className="flex justify-center border-b bg-card">
+		<header className="flex justify-center border-b bg-background-dark">
 			<div className="px-6 md:px-8 py-4 flex flex-row items-center w-full justify-between max-w-5xl">
-				<div className="flex flex-row space-x-4 items-center ">
+				<div className="flex flex-row space-x-4 items-center font-epilogue w-full justify-between pr-2">
 					<Link href="/" className="text-2xl">
 						this<span className="font-bold">page</span>
 					</Link>

@@ -74,8 +74,8 @@ export function PollItem({ item, groupValues }: Props) {
 			{(clubMembership?.id === item.creator_member_id || clubMembership?.role !== "member") &&
 				pollData?.status === "selection" && <PollItemActionsButton name={item.book_title} pollItemId={item.id} />}
 			<div
-				className={`relative flex flex-row items-center rounded-lg border bg-card text-card-foreground shadow-shadow shadow-sm pl-4 transition-all ${
-					groupValues?.includes(item.id.toString()) && "ring-2 ring-ring"
+				className={`relative flex flex-row items-center border rounded-md bg-card text-card-foreground shadow-shadow shadow-sm pl-4 transition-all ${
+					groupValues?.includes(item.id.toString()) && "ring-2 ring-ring border-ring"
 				}`}
 			>
 				<ToggleGroupItem
@@ -84,7 +84,6 @@ export function PollItem({ item, groupValues }: Props) {
 					hidden
 					className="!bg-transparent p-0 m-0"
 					disabled={pollData?.user_votes && pollData?.user_votes.length > 0}
-					asChild
 				>
 					{pollData?.status !== "voting" || pollData.user_votes.length > 0 ? (
 						<svg

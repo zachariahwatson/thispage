@@ -108,7 +108,7 @@ export function EditClubForm({ mutation, setVisible }: Props) {
 							<Button type="submit">save</Button>
 						)}
 						<Button
-							variant="secondary"
+							variant="accent"
 							className="md:mr-2"
 							onClick={(event) => {
 								event.preventDefault()

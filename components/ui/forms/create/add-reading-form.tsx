@@ -262,7 +262,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 							<Button type="submit">add</Button>
 						)}
 						<Button
-							variant="secondary"
+							variant="accent"
 							className="md:mr-2"
 							onClick={(event) => {
 								event.preventDefault()

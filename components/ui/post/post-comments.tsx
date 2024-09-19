@@ -48,17 +48,23 @@ export function PostComments({ clubId, readingId, postId, memberId, clubMembersh
 		<div className="space-y-4">
 			{!error ? (
 				!loading && comments ? (
-					comments?.map((comment) => (
-						<Comment
-							key={comment.id}
-							commentData={comment}
-							clubId={clubId}
-							readingId={readingId}
-							postId={postId}
-							memberId={memberId}
-							clubMembership={clubMembership}
-						/>
-					))
+					comments.length > 0 ? (
+						comments?.map((comment) => (
+							<Comment
+								key={comment.id}
+								commentData={comment}
+								clubId={clubId}
+								readingId={readingId}
+								postId={postId}
+								memberId={memberId}
+								clubMembership={clubMembership}
+							/>
+						))
+					) : (
+						<div className="flex justify-center w-full">
+							<p className="text-muted-foreground">🦗*crickets*🦗</p>
+						</div>
+					)
 				) : (
 					<>
 						<CommentSkeleton />
@@ -89,7 +95,7 @@ export function PostComments({ clubId, readingId, postId, memberId, clubMembersh
 						</div>
 					</div>
 					<Button
-						variant="secondary"
+						variant="accent"
 						onClick={(e) => {
 							e.preventDefault()
 							refetch()

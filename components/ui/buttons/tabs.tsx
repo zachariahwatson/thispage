@@ -51,7 +51,7 @@ export function Tabs({ spreadsCount, userSpreadIndex, setUserSpreadIndex }: Prop
 
 	return (
 		<RadioGroup
-			className="flex flex-row justify-center md:justify-end md:pl-[calc(50%)] md:pr-8"
+			className="flex flex-row justify-center md:pl-[calc(50%)]"
 			value={value}
 			onValueChange={handleValue}
 			key={clubMembership?.club.id}
@@ -132,32 +132,37 @@ interface BookmarkProps {
 
 function Bookmark({ id, value, className, children, groupValue }: BookmarkProps) {
 	const isSelected = value === groupValue
+	// const radius = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--radius"))
+	const radius = 0
+
+	// const path = `M 0 -1 H 24 C ${23} ${6} ${27} 4 12 1 C ${-3} 4 ${1} ${6} 0 -1 Z`
+	const path = `M 0 -1 H 24 C ${24 - radius} ${4 + radius * 2} ${24 + radius * 3} 4 12 1 C ${radius * -3} 4 ${radius} ${
+		4 + radius * 2
+	} 0 -1 Z`
 
 	return (
 		<div
-			className={`bg-background w-16 shadow-xl ${
-				isSelected ? "h-10 shadow-primary/15" : "h-8 shadow-shadow"
-			} hover:h-10 transition-all ${className}`}
+			className={`bg-page-fold w-16 drop-shadow-md ${
+				isSelected ? "h-12 shadow-xl shadow-ring/50" : "h-10 shadow-shadow"
+			} hover:h-12 transition-all ${className} border rounded-b-lg`}
 		>
 			<RadioGroupItem value={value} id={id} hidden />
 			<Label
 				htmlFor={id}
-				className={`w-full h-full flex items-end justify-center pb-1 hover:cursor-pointer ${
-					isSelected ? "text-primary" : "text-muted-foreground"
+				className={`w-full h-full flex items-end justify-center pb-2 hover:cursor-pointer ${
+					isSelected ? "text-ring" : "text-muted-foreground"
 				}`}
 			>
 				{children}
 			</Label>
-
-			<svg
+			{/* <svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
-				fill="currentColor"
-				className="size-16 text-background"
+				strokeWidth=".5"
+				className="size-16 stroke-border fill-page-fold -mx-[1px]"
 			>
-				{/* <path fillRule="evenodd" d="M 0 0 H 24 V 4 L 12 0 L 0 4 Z" clipRule="evenodd" stroke-linejoin="round" /> */}
-				<path fillRule="evenodd" d="M 0 0 H 24 C 24 4 24 4 12 0 C 0 4 0 4 0 0 Z" clipRule="evenodd" />
-			</svg>
+				<path fillRule="evenodd" d={path} clipRule="evenodd" />
+			</svg> */}
 		</div>
 	)
 }

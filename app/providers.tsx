@@ -47,19 +47,30 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 				<ThemeProvider
 					attribute="class"
 					disableTransitionOnChange
+					defaultTheme="industrial"
 					themes={[
-						"light",
-						"terminal",
-						"kiss",
-						"cherry",
-						"depths",
-						"lilac",
-						"tokyo",
-						"cyber",
-						"mainframe",
+						"industrial",
+						"supertoy",
+						"wireframe",
+						"blueprint",
+						"sticky-note",
+						"old-salt",
+						"terminal-orange",
+						"terminal-green",
 						"dawn",
-						"note",
-						"sky",
+						"cherry",
+						"cyber",
+						// "terminal",
+						// "kiss",
+						// "cherry",
+						// "depths",
+						// "lilac",
+						// "tokyo",
+						// "cyber",
+						// "mainframe",
+						// "dawn",
+						// "note",
+						// "sky",
 					]}
 				>
 					{children}
@@ -70,6 +81,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 				position="top-right"
 				duration={2500}
 				visibleToasts={1}
+				toastOptions={{
+					className: "bg-page text-page-foreground border-border",
+				}}
 				icons={{
 					success: (
 						<svg

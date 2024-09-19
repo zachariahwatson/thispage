@@ -32,7 +32,13 @@ export function PollItems({ toggleGroupRef }: Props) {
 			<div className="border rounded-lg h-full shadow-shadow shadow-inner relative overflow-y-scroll w-full">
 				<div className="p-3 md:p-4 w-auto h-auto space-y-2">
 					{pollData?.items &&
-						pollData?.items.map((item) => <PollItem key={item.id} item={item} groupValues={values} />)}
+						(pollData.items.length > 0 ? (
+							pollData?.items.map((item) => <PollItem key={item.id} item={item} groupValues={values} />)
+						) : (
+							<div className="w-full h-full flex justify-center items-center">
+								<p className="text-muted-foreground">🦗*crickets*🦗</p>
+							</div>
+						))}
 				</div>
 			</div>
 		</ToggleGroup>

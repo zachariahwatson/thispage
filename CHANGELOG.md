@@ -12,15 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Password recovery page
 - View archived readings and polls
 - Logging
+- Poll ending soon notification
+- Theme creation tool
 
 ### Changed
 
 - Themes
 - Count things with supabase js 'table(count)'
+- Styling tweaks
 
 ### Fixed
 
 - Reading image alignment issues
+- Reading and poll creation form re-rendering upon submit
 
 ## [0.10.4] - 2024-09-10
 

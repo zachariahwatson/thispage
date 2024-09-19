@@ -1,6 +1,14 @@
 "use client"
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Separator } from "@/components/ui"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+	Separator,
+} from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { useTheme } from "next-themes"
 import * as React from "react"
@@ -30,20 +38,54 @@ export function ThemeButton() {
 					<span className="sr-only">toggle theme</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="center" sideOffset={16}>
-				<DropdownMenuItem onClick={() => setTheme("light")}>light</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("note")}>note</DropdownMenuItem>
+			<DropdownMenuContent align="end" sideOffset={16}>
+				<DropdownMenuLabel className="flex justify-center">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-6"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+						/>
+					</svg>
+				</DropdownMenuLabel>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem onClick={() => setTheme("industrial")}>industrial</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("supertoy")}>supertoy</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("old-salt")}>old salt</DropdownMenuItem>
 				<DropdownMenuItem onClick={() => setTheme("dawn")}>dawn</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("sticky-note")}>sticky note</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("wireframe")}>wireframe</DropdownMenuItem>
+				{/*
 				<DropdownMenuItem onClick={() => setTheme("kiss")}>kiss</DropdownMenuItem>
 				<DropdownMenuItem onClick={() => setTheme("lilac")}>lilac</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("sky")}>sky</DropdownMenuItem>
-				<Separator />
-				<DropdownMenuItem onClick={() => setTheme("terminal")}>terminal</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("sky")}>sky</DropdownMenuItem> */}
+				<DropdownMenuSeparator />
+				<DropdownMenuLabel className="flex justify-center">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+						<path
+							fillRule="evenodd"
+							d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"
+							clipRule="evenodd"
+						/>
+					</svg>
+				</DropdownMenuLabel>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem onClick={() => setTheme("cherry")}>cherry</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("cyber")}>cyber</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("terminal-green")}>terminal - green</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("terminal-orange")}>terminal - orange</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("blueprint")}>blueprint</DropdownMenuItem>
+				{/*
 				<DropdownMenuItem onClick={() => setTheme("tokyo")}>tokyo</DropdownMenuItem>
 				<DropdownMenuItem onClick={() => setTheme("cyber")}>cyber</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("mainframe")}>mainframe</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("cherry")}>cherry</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("depths")}>depths</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme("depths")}>depths</DropdownMenuItem> */}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

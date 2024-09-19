@@ -90,7 +90,7 @@ export default function Page() {
 				</div>
 				<h1 className="text-lg md:text-2xl font-bold">what do you guys think so far?</h1>
 				<p className="md:text-md text-sm">it's a slow burn for me. also when does homer simpson come into play? HA</p>
-				<Button className="p-0 bg-background hover:bg-background mr-2" variant="secondary">
+				<Button className="p-0 bg-background hover:bg-background mr-2" variant="accent">
 					<Badge variant="outline">3 👍</Badge>
 				</Button>
 			</div>
@@ -112,7 +112,7 @@ export default function Page() {
 								</p>
 								<p className="md:text-md text-sm w-full">i'm liking it!</p>
 								<div className="flex flex-row">
-									<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+									<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 										<Badge variant="outline" className="">
 											2 👍
 										</Badge>
@@ -137,7 +137,7 @@ export default function Page() {
 													<div className="flex flex-row">
 														<Button
 															className="p-0 bg-background hover:bg-background mr-2 justify-start"
-															variant="secondary"
+															variant="accent"
 														>
 															<Badge variant="outline" className="">
 																1 👍
@@ -164,7 +164,7 @@ export default function Page() {
 													<div className="flex flex-row">
 														<Button
 															className="p-0 bg-background hover:bg-background mr-2 justify-start"
-															variant="secondary"
+															variant="accent"
 														>
 															<Badge variant="outline" className="">
 																0 👍
@@ -201,7 +201,7 @@ export default function Page() {
 								</p>
 								<p className="md:text-md text-sm w-full">I HATE IT! I HATE IT! I HATE IT!</p>
 								<div className="flex flex-row">
-									<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+									<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 										<Badge variant="outline" className="">
 											20 👍
 										</Badge>

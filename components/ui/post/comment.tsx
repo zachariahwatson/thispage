@@ -49,8 +49,8 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 							</span>
 						</p>
 						<p className="md:text-md text-sm w-full break-words">{commentData.content}</p>
-						<div className="flex flex-row items-center">
-							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+						<div className="flex flex-row items-center w-full">
+							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 								<Badge variant="outline" className="">
 									{commentData.likes_count} 👍
 								</Badge>
@@ -63,12 +63,8 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 								commentId={String(commentData.id)}
 								memberId={String(clubMembership?.id)}
 							/>
-							<Button
-								className="p-0 bg-background hover:bg-background mr-2 justify-start"
-								variant="secondary"
-								onClick={() => setReplyBoxVisible(!replyBoxVisible)}
-							>
-								<Badge variant="outline" className="">
+							<button className="mr-2" onClick={() => setReplyBoxVisible(!replyBoxVisible)}>
+								<Badge variant="outline">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
@@ -85,7 +81,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 									</svg>{" "}
 									reply
 								</Badge>
-							</Button>
+							</button>
 							{clubMembership &&
 								(clubMembership.role !== "member" || (!loading && user.id === commentData.member?.id)) && (
 									<CommentActionsButton
@@ -152,10 +148,10 @@ export function CommentSkeleton() {
 						<Skeleton className="h-6 w-48" />
 						<Skeleton className="h-12 md:h-6 w-64 md:w-96" />
 						<div className="flex flex-row">
-							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 								<Skeleton className="rounded-lg h-5 w-12" />
 							</Button>
-							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="secondary">
+							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 								<Skeleton className="rounded-lg h-5 w-[72px]" />
 							</Button>
 						</div>
