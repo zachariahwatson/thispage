@@ -25,7 +25,7 @@ export function DemoPageLeft1({
 			<CardContent className="md:space-y-4 pt-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black text-primary">complete</span> group page goals with automatic increments.
+						<span className="font-black text-ring">complete</span> group page goals with automatic increments.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
 						once all readers have completed the page/section goal, it will be automatically incremented by a custom
@@ -67,12 +67,12 @@ export function DemoPageLeft1({
 								</CardDescription>
 							</CardContent>
 							<CardFooter className="md:px-6 px-4 pb-2">
-								<Progress value={Math.floor(((demoClicked ? 546 : 434) / 640) * 100)} className="h-2 md:h-4" />
+								<Progress value={Math.floor(((demoClicked ? 306 : 243) / 640) * 100)} className="h-2 md:h-4" />
 							</CardFooter>
 						</Card>
 					</div>
 					<div className="justify-center absolute pt-4 hidden top-[55%] left-12 md:flex">
-						<div className="absolute w-16 h-8 bg-primary/80 z-10 top-1 -rotate-2 shadow-md rounded-[4px]" />
+						<div className="absolute w-16 h-8 bg-primary/80 z-10 top-1 rotate-1 shadow-md rounded-[4px]" />
 						<Card className="w-full border-border -space-y-4 md:space-y-0 shadow-shadow shadow-md backdrop-blur-md bg-page/80 rounded-lg -rotate-2 pb-0">
 							<CardContent className="pr-0 pt-2 md:px-6 px-4">
 								<CardDescription className="text-xs md:text-sm">read to...</CardDescription>

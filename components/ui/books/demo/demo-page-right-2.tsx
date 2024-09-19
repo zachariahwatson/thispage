@@ -98,7 +98,7 @@ export function DemoPageRight2({ userSpreadIndex }: Props) {
 			<CardContent className="md:space-y-4 pt-4 h-[calc(100%-132px)]">
 				<div className="space-y-2 h-full">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black text-primary">poll</span> your members for the next book to read.
+						<span className="font-black text-ring">poll</span> your members for the next book to read.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
 						the top selection will be added as a reading.
