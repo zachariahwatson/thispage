@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Password recovery page
 - View archived readings and polls
 - Logging
+- Poll ending soon notification
 
 ### Changed
 
