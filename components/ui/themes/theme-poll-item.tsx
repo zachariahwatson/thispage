@@ -66,7 +66,7 @@ export function ThemePollItem({ item, groupValues }: Props) {
 		<div className="relative">
 			<div
 				className={`relative flex flex-row items-center rounded-lg border bg-card text-card-foreground shadow-shadow shadow-sm pl-4 transition-all ${
-					groupValues?.includes(item.id.toString()) && "ring-2 ring-ring border-primary"
+					groupValues?.includes(item.id.toString()) && "ring-2 ring-ring border-ring"
 				}`}
 			>
 				<>
