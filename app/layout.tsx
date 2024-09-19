@@ -60,39 +60,48 @@ const PlusJakartaSans = localFont({
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className={`${PlusJakartaSans.variable} ${Epilogue.variable}`}>
-			<body className="bg-background text-foreground font-plus-jakarta-sans">
+		<html lang="en" className={`${PlusJakartaSans.variable} ${Epilogue.variable} h-full`}>
+			<body className="bg-background text-foreground font-plus-jakarta-sans h-full">
 				<Providers>
 					<Nav />
 					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-2 md:p-12 md:pt-12 space-y-12 pb-12">
 						{children}
 					</main>
-					<footer className="flex flex-col justify-center items-center md:text-sm text-xs">
-						<div className="h-8">
-							© 2024 ❤️ Zachariah Watson |{" "}
-							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="https://github.com/zachariahwatson/thispage" target="_blank" rel="noopener noreferrer">
-									github
-								</Link>
-							</Button>{" "}
-							|{" "}
-							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="/privacy">privacy</Link>
-							</Button>{" "}
-							|{" "}
-							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link href="/terms">terms</Link>
-							</Button>{" "}
-							|{" "}
-							<Button variant="link" className="p-0 text-muted-foreground">
-								<Link
-									href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									v {version}
-								</Link>
-							</Button>{" "}
+					<footer className="flex flex-col flex-wrap justify-end items-center md:text-sm text-xs mb-4 px-2">
+						<div>
+							© 2024 ❤️ Zachariah Watson{" "}
+							<span>
+								|{" "}
+								<Button variant="link" className="p-0 text-muted-foreground h-5">
+									<Link href="https://github.com/zachariahwatson/thispage" target="_blank" rel="noopener noreferrer">
+										github
+									</Link>
+								</Button>{" "}
+							</span>
+							<span>
+								|{" "}
+								<Button variant="link" className="p-0 text-muted-foreground h-5">
+									<Link href="/privacy">privacy</Link>
+								</Button>{" "}
+							</span>
+							<span>
+								|{" "}
+								<Button variant="link" className="p-0 text-muted-foreground h-5">
+									<Link href="/terms">terms</Link>
+								</Button>{" "}
+							</span>
+							<span>
+								|{" "}
+								<Button variant="link" className="p-0 text-muted-foreground h-5">
+									<Link
+										href="https://github.com/zachariahwatson/thispage/blob/main/CHANGELOG.md"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										v {version}
+									</Link>
+								</Button>{" "}
+							</span>
 						</div>
 					</footer>
 				</Providers>
