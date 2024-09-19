@@ -25,7 +25,7 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 						viewBox="0 0 24 24"
 						strokeWidth={1.5}
 						stroke="currentColor"
-						className="size-6 ml-2"
+						className="size-5 md:size-6 mx-2"
 					>
 						<path
 							strokeLinecap="round"
