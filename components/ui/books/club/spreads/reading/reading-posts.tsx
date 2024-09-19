@@ -87,8 +87,9 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 					</div>
 				) : (
 					<div className="p-3 md:p-4 w-full h-auto">
-						{posts
-							? posts.map((post) =>
+						{posts ? (
+							posts.length > 0 ? (
+								posts.map((post) =>
 									readingData?.interval?.user_progress ? (
 										(!redactSpoilers &&
 											post.is_spoiler &&
@@ -114,14 +115,21 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 											join the reading to view!
 										</ReadingPost>
 									)
-							  )
-							: loading && (
-									<>
-										<ReadingPostSkeleton />
-										<ReadingPostSkeleton className="w-3/4" />
-										<ReadingPostSkeleton className="w-1/2" />
-									</>
-							  )}
+								)
+							) : (
+								<div className="w-full h-full flex justify-center items-center">
+									<p className="text-muted-foreground">🦗*crickets*🦗</p>
+								</div>
+							)
+						) : (
+							loading && (
+								<>
+									<ReadingPostSkeleton />
+									<ReadingPostSkeleton className="w-3/4" />
+									<ReadingPostSkeleton className="w-1/2" />
+								</>
+							)
+						)}
 					</div>
 				)}
 			</div>
