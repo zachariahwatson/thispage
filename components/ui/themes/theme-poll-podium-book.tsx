@@ -122,7 +122,7 @@ export function ThemePollPodiumBook({ flexBoxRef, item, winner }: Props) {
 									: null)
 						}
 						className={`absolute max-w-[calc(100%-1rem)] w-auto h-auto bottom-[calc(100%+.5rem)] md:bottom-[calc(100%+1rem)] rounded-[4px] md:rounded-sm object-contain  ${
-							winner ? "shadow-xl shadow-primary" : "shadow-lg shadow-shadow-dark"
+							winner ? "shadow-xl shadow-primary" : "shadow-lg shadow-shadow"
 						} hover:cursor-pointer`}
 					/>
 				)}
