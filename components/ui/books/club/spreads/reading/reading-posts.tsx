@@ -118,8 +118,8 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 							: loading && (
 									<>
 										<ReadingPostSkeleton />
-										<ReadingPostSkeleton />
-										<ReadingPostSkeleton />
+										<ReadingPostSkeleton className="w-3/4" />
+										<ReadingPostSkeleton className="w-1/2" />
 									</>
 							  )}
 					</div>
