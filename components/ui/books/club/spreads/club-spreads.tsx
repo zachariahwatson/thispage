@@ -53,10 +53,10 @@ export function ClubSpreads() {
 	return (
 		<Card
 			id={`club-${clubMembership?.club.id}-content`}
-			className="h-[calc(100svh-56px)] min-h-[624px] md:h-[624px] p-3 md:p-4 rounded-3xl relative shadow-shadow shadow-sm bg-book border-book-border"
+			className="h-[calc(100svh-56px)] min-h-[624px] md:h-[624px] p-3 md:p-4 rounded-3xl relative shadow-shadow shadow-md bg-book border-book-border"
 		>
-			<div className="absolute w-full h-full top-0 left-0 flex justify-center items-center font-epilogue pl-[calc(50%)]">
-				<p className="text-2xl text-black/20">
+			<div className="absolute w-full h-full top-0 left-0 flex justify-center items-center font-epilogue pt-[calc(50svh-1.75rem)] md:pl-[calc(50%)] md:pt-0">
+				<p className="text-2xl text-shadow-dark">
 					this<span className="font-bold">page</span>
 				</p>
 			</div>
