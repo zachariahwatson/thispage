@@ -30,9 +30,9 @@ export default function Login({ searchParams }: Props) {
 	return (
 		<div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
 			{searchParams.redirect && (
-				<h1 className="w-full text-center font-medium text-2xl mb-4">log in to view that page ;)</h1>
+				<h1 className="w-full text-center font-medium text-2xl mb-4 font-epilogue">log in to view that page ;)</h1>
 			)}
-			<h1 className="w-full text-center font-medium text-2xl mb-4">{message}</h1>
+			<h1 className="w-full text-center font-medium text-2xl mb-4 font-epilogue">{message}</h1>
 			{formType === "signin" ? (
 				<SignInForm
 					setFormType={setFormType}
