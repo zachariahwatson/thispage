@@ -37,7 +37,27 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 			userSpreadIndex={userSpreadIndex}
 			id={`club-${readingData?.club_id}-reading-${readingData?.id}-page-left`}
 		>
-			<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
+			<CardHeader className="px-4 md:px-6 relative pt-4 md:pt-6">
+				<CardTitle className="text-md md:text-xl flex flex-row items-center">
+					reading
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-5 md:size-6 mx-2"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+						/>
+					</svg>
+				</CardTitle>
+				<Separator />
+			</CardHeader>
+			<div className="flex justify-center px-12 pb-16 h-[calc(100%-4.5rem)] md:h-auto w-full object-contain">
 				<Sheet>
 					<SheetTrigger asChild>
 						<Image
