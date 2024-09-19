@@ -143,14 +143,14 @@ function Bookmark({ id, value, className, children, groupValue }: BookmarkProps)
 	return (
 		<div
 			className={`bg-page-fold w-16 drop-shadow-md ${
-				isSelected ? "h-12 shadow-xl shadow-primary/50" : "h-10 shadow-shadow"
+				isSelected ? "h-12 shadow-xl shadow-ring/50" : "h-10 shadow-shadow"
 			} hover:h-12 transition-all ${className} border rounded-b-lg`}
 		>
 			<RadioGroupItem value={value} id={id} hidden />
 			<Label
 				htmlFor={id}
 				className={`w-full h-full flex items-end justify-center pb-2 hover:cursor-pointer ${
-					isSelected ? "text-primary" : "text-muted-foreground"
+					isSelected ? "text-ring" : "text-muted-foreground"
 				}`}
 			>
 				{children}
