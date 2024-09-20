@@ -1,15 +1,17 @@
 "use client"
 
 import { Button, SubmitButton } from "@/components/ui/buttons"
+import { Checkbox, Separator } from "@/components/ui"
 import { signUp, signInWithGoogle } from "@/actions/login"
 import { signUpFormSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
 import { Input } from "@/components/ui/input"
 import { Dispatch, SetStateAction } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 interface Props {
 	setFormType: Dispatch<SetStateAction<string>>
@@ -29,6 +31,7 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 			email: email,
 			password: password,
 			confirmPassword: "",
+			acceptTerms: false,
 		},
 	})
 
@@ -46,82 +49,121 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 
 	return (
 		<>
+			<h3 className="text-2xl font-semibold leading-none tracking-tight break-words font-epilogue text-center">
+				sign up
+			</h3>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex justify-center flex-col">
+					<div>
+						<FormField
+							control={form.control}
+							name="firstName"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>first name</FormLabel>
+									<FormControl>
+										<Input {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="lastName"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>last name</FormLabel>
+									<FormControl>
+										<Input {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="email"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>email</FormLabel>
+									<FormControl>
+										<Input type="email" placeholder="you@example.com" showCharacterCount={false} {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="password"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>password</FormLabel>
+									<FormControl>
+										<Input type="password" placeholder="••••••••" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="confirmPassword"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>confirm password</FormLabel>
+									<FormControl>
+										<Input type="password" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
 					<FormField
 						control={form.control}
-						name="firstName"
+						name="acceptTerms"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>first name</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
+								<div className="flex flex-row items-start space-x-3 space-y-0">
+									<FormControl>
+										<Checkbox checked={field.value} onCheckedChange={field.onChange} />
+									</FormControl>
+									<FormLabel>accept terms and conditions</FormLabel>
+								</div>
+								<FormDescription>
+									you agree to our{" "}
+									<Link
+										href="/terms"
+										className="hover:underline text-primary"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										terms of service
+									</Link>{" "}
+									and{" "}
+									<Link
+										href="/privacy"
+										className="hover:underline text-primary"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										privacy policy
+									</Link>
+									.
+								</FormDescription>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-					<FormField
-						control={form.control}
-						name="lastName"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>last name</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="email"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>email</FormLabel>
-								<FormControl>
-									<Input type="email" placeholder="you@example.com" showCharacterCount={false} {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="password"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>password</FormLabel>
-								<FormControl>
-									<Input type="password" placeholder="••••••••" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="confirmPassword"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>confirm password</FormLabel>
-								<FormControl>
-									<Input type="password" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+
 					<SubmitButton pendingText="signing up...">sign up</SubmitButton>
 
-					<div className="relative">
-						<div className="absolute inset-0 flex items-center">
-							<span className="w-full border-t" />
-						</div>
-						<div className="relative flex justify-center text-xs">
-							<span className="bg-background px-2 text-muted-foreground">or</span>
-						</div>
+					<div className="flex flex-row justify-center items-center text-xs">
+						<Separator className="bg-muted-foreground w-5/12" />
+						<span className="bg-background px-2 text-muted-foreground">or</span>
+						<Separator className="bg-muted-foreground w-5/12" />
 					</div>
 				</form>
 			</Form>
@@ -150,7 +192,7 @@ export function SignUpForm({ setFormType, email, setEmail, password, setPassword
 			</form>
 			<div className="flex flex-row justify-center items-center">
 				have an account?
-				<Button onClick={handleFormChange} variant="link" className="underline text-md" size="sm">
+				<Button onClick={handleFormChange} variant="link" className="text-md" size="sm">
 					sign in
 				</Button>
 			</div>
