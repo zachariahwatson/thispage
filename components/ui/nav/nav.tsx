@@ -109,7 +109,7 @@ export function Nav() {
 					<Link href="/" className="text-2xl font-epilogue">
 						this<span className="font-bold">page</span>
 					</Link>
-					{!loading && user && <ThemeButton />}
+					<ThemeButton />
 				</div>
 
 				{!loading ? (
