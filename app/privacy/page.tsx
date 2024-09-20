@@ -1,6 +1,12 @@
-"use client"
-
 import styles from "@/styles/docs.module.css"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+	title: "privacy policy | thispage",
+	openGraph: {
+		title: "privacy policy | thispage",
+	},
+}
 
 export default function Page() {
 	return (
