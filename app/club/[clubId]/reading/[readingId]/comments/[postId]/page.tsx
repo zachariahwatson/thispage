@@ -75,6 +75,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		openGraph: {
 			title: `${post.post_title} | ${post.book_title} | ${post.club_name} | thispage`,
 			description: "join the discussion",
+			images: [
+				{
+					url: post.book_cover_image_url || "", // Must be an absolute URL
+					width: post.book_cover_image_width || 0,
+					height: post.book_cover_image_height || 0,
+					alt: imageAlt,
+				},
+			],
 		},
 	}
 }

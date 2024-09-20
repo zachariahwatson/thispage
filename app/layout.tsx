@@ -4,7 +4,6 @@ import "@/styles/globals.css"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Metadata, Viewport } from "next"
-import { GeistSans } from "geist/font/sans"
 import Link from "next/link"
 import Providers from "./providers"
 import { version } from "@/lib/version"
@@ -18,6 +17,32 @@ export const metadata: Metadata = {
 	metadataBase: new URL(defaultUrl),
 	title: "thispage",
 	description: "a simple book club site",
+	applicationName: "thispage",
+	keywords: [
+		"thispage",
+		"book club",
+		"book club site",
+		"book club app",
+		"online book clubs",
+		"book discussions",
+		"book readings",
+		"reading goals",
+		"book comments",
+		"book posts",
+		"book club polls",
+		"reading progress tracking",
+		"page tracking",
+		"section tracking",
+		"incremental reading goals",
+		"goal completion",
+		"book club community",
+		"collaborative reading",
+		"discussion posts",
+		"reading polls",
+		"book discussions online",
+		"group reading goals",
+	],
+	creator: "Zachariah Watson",
 	icons: {
 		icon: [
 			{ rel: "icon", sizes: "16x16", url: "/favicon-16x16.png" },
@@ -32,6 +57,10 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: "thispage",
 		description: "a simple book club site",
+		url: "https://thispa.ge",
+		siteName: "thispage",
+		locale: "en_US",
+		type: "website",
 	},
 }
 
