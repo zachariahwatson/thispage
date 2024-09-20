@@ -37,7 +37,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 			userSpreadIndex={userSpreadIndex}
 			id={`club-${readingData?.club_id}-reading-${readingData?.id}-page-left`}
 		>
-			<CardHeader className="px-4 md:px-6 relative pt-4 md:pt-6">
+			<CardHeader className="px-4 md:px-6 relative pt-2 md:pt-6 pb-2 md:pb-6">
 				<CardTitle className="text-md md:text-xl flex flex-row items-center">
 					reading
 					<svg
@@ -57,11 +57,12 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 				</CardTitle>
 				<Separator />
 			</CardHeader>
-			<div className="flex justify-center px-12 pb-16 h-[calc(100%-4.5rem)] md:h-auto w-full object-contain">
+			{/* <div className="flex justify-center px-12 pb-16"> */}
+			<div className="h-[calc(100%-8.5rem)] flex justify-center items-start px-3 md:px-6">
 				<Sheet>
 					<SheetTrigger asChild>
 						<Image
-							className="rounded-md max-h-full md:rounded-lg hover:cursor-pointer object-contain w-auto h-auto shadow-[4px_4px_6px_-1px_hsl(var(--shadow))] shadow-shadow"
+							className="rounded-sm md:rounded-lg hover:cursor-pointer object-contain w-auto h-auto max-h-full shadow-[4px_4px_6px_-1px_hsl(var(--shadow))] shadow-shadow"
 							src={readingData?.book_cover_image_url || ""}
 							width={readingData?.book_cover_image_width || 0}
 							height={readingData?.book_cover_image_height || 0}
@@ -99,6 +100,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 					/>
 				</Sheet>
 			</div>
+			{/* </div> */}
 
 			<ReadingActionsButton />
 
