@@ -52,16 +52,6 @@ export function WhatsNewDialog() {
 								- view your archived readings and polls. reminisce on old times. let out a happy sigh.
 							</DialogDescription>
 						</div> */}
-						<DialogTitle>password reset flow</DialogTitle>
-						<div className="pl-4">
-							<DialogDescription>
-								- you can reset your password now! yeah you've totally been able to do that this whole time. TOTALLY.
-							</DialogDescription>
-						</div>
-						<DialogTitle>even more notification emails</DialogTitle>
-						<div className="pl-4">
-							<DialogDescription>- added notifications for polls ending and finishing.</DialogDescription>
-						</div>
 						<DialogTitle>themes</DialogTitle>
 						<div className="pl-4">
 							<DialogDescription>
@@ -72,6 +62,17 @@ export function WhatsNewDialog() {
 								to play around with your own! (currently there's no way to save them, but hit me up if you make a cool
 								one!)
 							</DialogDescription>
+						</div>
+						<DialogTitle>password reset flow</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- you can now reset your password through the login page! yeah you've totally been able to do that this
+								whole time. TOTALLY.
+							</DialogDescription>
+						</div>
+						<DialogTitle>even more notification emails</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>- added notifications for polls ending and finishing.</DialogDescription>
 						</div>
 					</TabsContent>
 					<TabsContent value="0.10.0" className="space-y-3">
