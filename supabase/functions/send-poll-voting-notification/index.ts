@@ -96,7 +96,7 @@ Deno.serve(async (req) => {
               the poll titled <strong>${emailData.name}</strong> in ${emailData.club_name} is open for voting. vote for your favorites!
             </p>
             <p style="margin:0px;">sincerely,</p>
-            <a style="margin:0px;" href="https://thispa.ge"><strong>this</strong>page</p>
+            <a style="margin:0px;" href="https://thispa.ge">this<strong>page</strong></p>
           </div>
         `,
 					}),

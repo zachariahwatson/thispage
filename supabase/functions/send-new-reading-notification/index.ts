@@ -96,7 +96,7 @@ Deno.serve(async (req) => {
               there's a new reading for <strong>${emailData.book_title}</strong> in ${emailData.club_name}. join and get a head start!
             </p>
             <p style="margin:0px;">sincerely,</p>
-            <a style="margin:0px;" href="https://thispa.ge"><strong>this</strong>page</p>
+            <a style="margin:0px;" href="https://thispa.ge">this<strong>page</strong></p>
           </div>
         `,
 					}),
