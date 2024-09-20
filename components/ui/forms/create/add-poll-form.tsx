@@ -1,35 +1,33 @@
 "use client"
 
-import { Checkbox, Input, Tabs, TabsContent, TabsList, TabsTrigger, Textarea } from "@/components/ui"
+import { Checkbox, Input, Textarea } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
 import { useClubMembership } from "@/contexts"
+import { useSpreadsCount } from "@/hooks/state"
 import { addPollFormSchema } from "@/lib/zod"
+import { QueryError } from "@/utils/errors"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
-import { UseMutationResult } from "react-query"
+import { useMutation, useQueryClient } from "react-query"
+import { toast } from "sonner"
 import { z } from "zod"
 
 interface Props {
-	mutation: UseMutationResult<
-		Response,
-		unknown,
-		{
-			club_id: number
-			creator_member_id: number
-			voting_length_days: number
-			is_locked: boolean
-			name: string
-			description?: string | undefined
-		},
-		unknown
-	>
 	setVisible: Dispatch<SetStateAction<boolean>>
+	setUserSpreadIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
-export function AddPollForm({ mutation, setVisible }: Props) {
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
+	: "http://localhost:3000"
+
+export function AddPollForm({ setVisible, setUserSpreadIndex }: Props) {
 	const clubMembership = useClubMembership()
+	const { data: spreadsCount } = useSpreadsCount(clubMembership?.club.id || -1, clubMembership?.role || "member")
+	const queryClient = useQueryClient()
+
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof addPollFormSchema>>({
 		resolver: zodResolver(addPollFormSchema),
@@ -53,6 +51,50 @@ export function AddPollForm({ mutation, setVisible }: Props) {
 
 		mutation.mutate(payload)
 	}
+
+	const mutation = useMutation({
+		mutationFn: async (data: {
+			club_id: number
+			creator_member_id: number
+			voting_length_days: number
+			is_locked: boolean
+			name: string
+			description?: string | undefined
+		}) => {
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/polls`)
+			const response = await fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
+		},
+		onSettled: () => {
+			setVisible(false)
+		},
+		onSuccess: (body: any) => {
+			toast.success(body.message)
+			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
+			queryClient.invalidateQueries(["polls", clubMembership?.club.id])
+			let index = 0
+			if (spreadsCount) {
+				if (spreadsCount.total_readings) index += spreadsCount.total_readings
+				if (spreadsCount.total_polls) index += spreadsCount.total_polls
+			}
+			localStorage.setItem(`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`, index.toString())
+			setUserSpreadIndex(index)
+		},
+	})
 
 	return (
 		<>

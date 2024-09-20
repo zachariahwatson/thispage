@@ -37,11 +37,32 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 			userSpreadIndex={userSpreadIndex}
 			id={`club-${readingData?.club_id}-reading-${readingData?.id}-page-left`}
 		>
-			<div className="flex justify-center px-12 pb-16 pt-4 md:pt-8 h-full w-full">
+			<CardHeader className="px-4 md:px-6 relative pt-2 md:pt-6 pb-2 md:pb-6">
+				<CardTitle className="text-md md:text-xl flex flex-row items-center">
+					reading
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="size-5 md:size-6 mx-2"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+						/>
+					</svg>
+				</CardTitle>
+				<Separator />
+			</CardHeader>
+			{/* <div className="flex justify-center px-12 pb-16"> */}
+			<div className="h-[calc(100%-8.5rem)] flex justify-center items-start px-3 md:px-6">
 				<Sheet>
 					<SheetTrigger asChild>
 						<Image
-							className="rounded-md max-h-full md:rounded-lg hover:cursor-pointer object-contain w-auto h-auto shadow-[4px_4px_6px_-1px_hsl(var(--shadow))] shadow-shadow"
+							className="rounded-sm md:rounded-lg hover:cursor-pointer object-contain w-auto h-auto max-h-full shadow-[4px_4px_6px_-1px_hsl(var(--shadow))] shadow-shadow"
 							src={readingData?.book_cover_image_url || ""}
 							width={readingData?.book_cover_image_width || 0}
 							height={readingData?.book_cover_image_height || 0}
@@ -79,6 +100,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 					/>
 				</Sheet>
 			</div>
+			{/* </div> */}
 
 			<ReadingActionsButton />
 

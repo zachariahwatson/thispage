@@ -13,7 +13,6 @@ export {
 } from "./alert-dialog"
 export { Avatar, AvatarFallback, AvatarImage } from "./avatar"
 export { Badge, badgeVariants } from "./badge"
-export { Calendar } from "./calendar"
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card"
 export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "./carousel"
 export { Checkbox } from "./checkbox"

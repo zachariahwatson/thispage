@@ -67,11 +67,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 					<main className="min-h-[calc(100svh-120px)] flex flex-col items-center pt-6 p-2 md:p-12 md:pt-12 space-y-12 pb-12">
 						{children}
 					</main>
-					<footer className="flex flex-col flex-wrap justify-end items-center md:text-sm text-xs mb-4 px-2">
+					<footer className="flex flex-col md:flex-row justify-center items-center md:text-sm text-xs mb-4 px-2">
+						<span>© 2024 ❤️ Zachariah Watson </span>
 						<div>
-							© 2024 ❤️ Zachariah Watson{" "}
-							<span>
-								|{" "}
+							<span className="ml-1">
+								<span className="hidden md:inline">|</span>{" "}
 								<Button variant="link" className="p-0 text-muted-foreground h-5">
 									<Link href="https://github.com/zachariahwatson/thispage" target="_blank" rel="noopener noreferrer">
 										github
@@ -81,13 +81,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							<span>
 								|{" "}
 								<Button variant="link" className="p-0 text-muted-foreground h-5">
-									<Link href="/privacy">privacy</Link>
+									<Link href="/terms">terms</Link>
 								</Button>{" "}
 							</span>
 							<span>
 								|{" "}
 								<Button variant="link" className="p-0 text-muted-foreground h-5">
-									<Link href="/terms">terms</Link>
+									<Link href="/privacy">privacy</Link>
 								</Button>{" "}
 							</span>
 							<span>

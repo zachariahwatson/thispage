@@ -1,7 +1,6 @@
 "use client"
 
-import { SignInForm, SignUpForm } from "@/components/ui/forms/login"
-import { usePathname, useRouter } from "next/navigation"
+import { PasswordResetRequestForm, SignInForm, SignUpForm } from "@/components/ui/forms/login"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -10,12 +9,10 @@ interface Props {
 }
 
 export default function Login({ searchParams }: Props) {
-	const [formType, setFormType] = useState("signin")
+	const [formType, setFormType] = useState<string>("signin")
 	const [email, setEmail] = useState<string>("")
 	const [password, setPassword] = useState<string>("")
 	const [message, setMessage] = useState<string>("")
-	const router = useRouter()
-	const path = usePathname()
 
 	useEffect(() => {
 		if (searchParams.message) {
@@ -28,11 +25,11 @@ export default function Login({ searchParams }: Props) {
 	}, [searchParams.message])
 
 	return (
-		<div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+		<div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2 pb-16">
 			{searchParams.redirect && (
-				<h1 className="w-full text-center font-medium text-2xl mb-4">log in to view that page ;)</h1>
+				<h1 className="w-full text-center font-medium text-2xl mb-4 font-epilogue">log in to view that page ;)</h1>
 			)}
-			<h1 className="w-full text-center font-medium text-2xl mb-4">{message}</h1>
+			<h1 className="w-full text-center font-medium text-2xl mb-4 font-epilogue">{message}</h1>
 			{formType === "signin" ? (
 				<SignInForm
 					setFormType={setFormType}
@@ -41,7 +38,7 @@ export default function Login({ searchParams }: Props) {
 					password={password}
 					setPassword={setPassword}
 				/>
-			) : (
+			) : formType === "signup" ? (
 				<SignUpForm
 					setFormType={setFormType}
 					email={email}
@@ -49,6 +46,8 @@ export default function Login({ searchParams }: Props) {
 					password={password}
 					setPassword={setPassword}
 				/>
+			) : (
+				<PasswordResetRequestForm setFormType={setFormType} email={email} setEmail={setEmail} />
 			)}
 		</div>
 	)

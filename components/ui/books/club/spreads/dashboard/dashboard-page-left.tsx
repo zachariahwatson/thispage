@@ -16,7 +16,7 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 
 	return (
 		<PageLeft userSpreadIndex={userSpreadIndex} id={`club-${clubMembership?.club.id}-dashboard-page-left`}>
-			<CardHeader className="px-4 md:px-6 h-full pt-4 md:pt-6">
+			<CardHeader className="px-4 md:px-6 h-full pt-2 md:pt-6">
 				<CardTitle className="text-md md:text-xl flex flex-row items-center">
 					dashboard
 					<svg
@@ -25,7 +25,7 @@ export function DashboardPageLeft({ userSpreadIndex }: Props) {
 						viewBox="0 0 24 24"
 						strokeWidth={1.5}
 						stroke="currentColor"
-						className="size-6 ml-2"
+						className="size-5 md:size-6 mx-2"
 					>
 						<path
 							strokeLinecap="round"

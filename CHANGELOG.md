@@ -9,22 +9,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Password recovery page
-- View archived readings and polls
 - Logging
+- View archived readings and polls
+
+### Changed
+
+- Count things with supabase js 'table(count)'
+
+### Fixed
+
+- Tabs don't update when a new reading/poll is created
+
+## [1.0.0] - 2024-09-19
+
+### Added
+
+- Password reset flow
 - Poll ending soon notification
+- Poll finished notification
 - Theme creation tool
 
 ### Changed
 
-- Themes
-- Count things with supabase js 'table(count)'
+- Themes (more soon)
 - Styling tweaks
+- Finished demo
+- Better terms and privacy policy
+
+### Removed
+
+- Bookmark "tails" (for now) - need to find better way to deal with borders and shadows
 
 ### Fixed
 
-- Reading image alignment issues
 - Reading and poll creation form re-rendering upon submit
+- Reading image alignment issues
 
 ## [0.10.4] - 2024-09-10
 
@@ -46,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Scroll resetting when voting for items in polls
-- - Padding between club books
+- Padding between club books
 
 ## [0.10.3] - 2024-09-10
 
@@ -204,6 +223,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[1.0.0]: https://github.com/zachariahwatson/thispage/compare/0.10.4...1.0.0
 [0.10.4]: https://github.com/zachariahwatson/thispage/compare/0.10.3...0.10.4
 [0.10.3]: https://github.com/zachariahwatson/thispage/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/zachariahwatson/thispage/compare/0.10.1...0.10.2

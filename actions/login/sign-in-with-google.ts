@@ -32,10 +32,12 @@ export async function signInWithGoogle() {
 			const refUrl = new URL(referer)
 			const next = refUrl.searchParams.get("redirect")
 			if (next) {
-				return redirect(`/login?message=failed to sign in with google&type=error?redirect=${next}`)
+				return redirect(
+					`/login?message=failed to sign in with google :( code: ${error.code}&type=error&redirect=${next}`
+				)
 			}
 		}
-		return redirect("/login?message=failed to sign in with google&type=error")
+		return redirect(`/login?message=failed to sign in with google :( code: ${error.code}&type=error`)
 	}
 
 	revalidatePath(data.url, "layout")

@@ -66,6 +66,13 @@ export type Database = {
             referencedRelation: "members"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "club_invite_codes_creator_member_id_fkey"
+            columns: ["creator_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
         ]
       }
       club_permissions: {
@@ -126,6 +133,13 @@ export type Database = {
             referencedRelation: "members"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "clubs_editor_member_id_fkey"
+            columns: ["editor_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
         ]
       }
       comments: {
@@ -169,6 +183,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "members"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_author_member_id_fkey"
+            columns: ["author_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
           },
           {
             foreignKeyName: "comments_post_id_fkey"
@@ -266,6 +287,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "likes_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
+          {
             foreignKeyName: "likes_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
@@ -311,6 +339,13 @@ export type Database = {
             referencedRelation: "members"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "member_interval_progresses_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
         ]
       }
       member_roles: {
@@ -344,11 +379,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "member_roles_editor_member_id_fkey"
+            columns: ["editor_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
+          {
             foreignKeyName: "member_roles_member_id_fkey"
             columns: ["member_id"]
             isOneToOne: true
             referencedRelation: "members"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "member_roles_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: true
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
           },
         ]
       }
@@ -467,6 +516,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "public_poll_items_creator_member_id_fkey"
+            columns: ["creator_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
+          {
             foreignKeyName: "public_poll_items_poll_id_fkey"
             columns: ["poll_id"]
             isOneToOne: false
@@ -501,6 +557,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "members"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_poll_votes_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
           },
           {
             foreignKeyName: "public_poll_votes_poll_item_id_fkey"
@@ -588,11 +651,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "public_polls_creator_member_id_fkey"
+            columns: ["creator_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
+          {
             foreignKeyName: "public_polls_editor_member_id_fkey"
             columns: ["editor_member_id"]
             isOneToOne: false
             referencedRelation: "members"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_polls_editor_member_id_fkey"
+            columns: ["editor_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
           },
         ]
       }
@@ -642,11 +719,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "posts_author_member_id_fkey"
+            columns: ["author_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
+          {
             foreignKeyName: "posts_editor_member_id_fkey"
             columns: ["editor_member_id"]
             isOneToOne: false
             referencedRelation: "members"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_editor_member_id_fkey"
+            columns: ["editor_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
           },
           {
             foreignKeyName: "posts_reading_id_fkey"
@@ -760,11 +851,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "readings_creator_member_id_fkey"
+            columns: ["creator_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
+          },
+          {
             foreignKeyName: "readings_editor_member_id_fkey"
             columns: ["editor_member_id"]
             isOneToOne: false
             referencedRelation: "members"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "readings_editor_member_id_fkey"
+            columns: ["editor_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
           },
         ]
       }
@@ -811,6 +916,29 @@ export type Database = {
         }
         Relationships: []
       }
+      members_without_poll_votes: {
+        Row: {
+          member_id: number | null
+          poll_id: number | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_poll_items_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       poll_items_with_votes: {
         Row: {
           book_authors: string[] | null
@@ -834,6 +962,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "members"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_poll_items_creator_member_id_fkey"
+            columns: ["creator_member_id"]
+            isOneToOne: false
+            referencedRelation: "members_without_poll_votes"
+            referencedColumns: ["member_id"]
           },
           {
             foreignKeyName: "public_poll_items_poll_id_fkey"
@@ -860,19 +995,6 @@ export type Database = {
           _user_id: string
           _id: number
           _requested_permission: string
-        }
-        Returns: boolean
-      }
-      check_poll_items_count: {
-        Args: {
-          _poll_id: number
-          _creator_member_id: number
-        }
-        Returns: boolean
-      }
-      check_reading_count: {
-        Args: {
-          _club_id: number
         }
         Returns: boolean
       }
@@ -908,6 +1030,16 @@ export type Database = {
         Args: {
           _id: number
           _member_id: number
+        }
+        Returns: boolean
+      }
+      cls_members: {
+        Args: {
+          _id: number
+          _user_id: string
+          _club_id: number
+          _created_at: string
+          _used_club_invite_code: string
         }
         Returns: boolean
       }
@@ -1048,6 +1180,7 @@ export type Database = {
         | "poll_votes.read"
         | "poll_votes.update.own"
         | "poll_items.create.many"
+        | "members.update.own"
       club_role: "member" | "moderator" | "admin"
       poll_status: "selection" | "voting" | "finished" | "archived"
       reading_increment: "pages" | "sections"
