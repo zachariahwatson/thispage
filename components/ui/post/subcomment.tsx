@@ -73,11 +73,7 @@ export function SubComment({
 								commentId={String(subCommentData.id)}
 								memberId={String(clubMembership?.id)}
 							/>
-							<Button
-								className="p-0 bg-background hover:bg-background mr-2 justify-start"
-								variant="secondary"
-								onClick={() => setReplyBoxVisible(!replyBoxVisible)}
-							>
+							<button className="mr-2" onClick={() => setReplyBoxVisible(!replyBoxVisible)}>
 								<Badge variant="outline" className="">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +91,7 @@ export function SubComment({
 									</svg>{" "}
 									reply
 								</Badge>
-							</Button>
+							</button>
 							{clubMembership &&
 								(clubMembership.role !== "member" || (!loading && user.id === subCommentData.member?.id)) && (
 									<CommentActionsButton

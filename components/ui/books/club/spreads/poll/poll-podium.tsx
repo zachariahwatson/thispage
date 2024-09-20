@@ -18,7 +18,7 @@ export function PollPodium() {
 			<div className="bg-secondary flex-1 h-1/3 rounded-l-sm md:rounded-l-md border-border border-[1px] border-r-secondary flex justify-center items-start md:pt-2 relative">
 				<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[1]} />
 				{topThree[1]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
-					<p className="text-muted-foreground">
+					<p className="text-secondary-foreground">
 						{totalVotes ? Math.trunc((topThree[1]?.poll_votes.length / totalVotes) * 100) : 0}%
 					</p>
 				)}
@@ -27,7 +27,7 @@ export function PollPodium() {
 				<div className="bg-secondary h-1/3 rounded-t-sm md:rounded-t-md border-border border-[1px] border-b-secondary flex justify-center items-start md:pt-2 relative">
 					<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[0]} winner />
 					{topThree[0]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
-						<p className="text-muted-foreground">
+						<p className="text-secondary-foreground">
 							{totalVotes ? Math.trunc((topThree[0]?.poll_votes.length / totalVotes) * 100) : 0}%
 						</p>
 					)}
@@ -43,7 +43,7 @@ export function PollPodium() {
 			<div className="bg-secondary flex-1 h-1/4 rounded-r-sm md:rounded-r-md border-border border-[1px] border-l-secondary flex justify-center items-start md:pt-2 relative">
 				<PollPodiumBook flexBoxRef={flexBoxRef} item={topThree[2]} />
 				{topThree[2]?.poll_votes.length > 0 && pollData?.user_votes && pollData?.user_votes.length > 0 && (
-					<p className="text-muted-foreground">
+					<p className="text-secondary-foreground">
 						{totalVotes ? Math.trunc((topThree[2]?.poll_votes.length / totalVotes) * 100) : 0}%
 					</p>
 				)}

@@ -116,7 +116,7 @@ export function CreateClubForm({ mutation, setVisible }: Props) {
 							</Button>
 						)}
 						<Button
-							variant="secondary"
+							variant="accent"
 							className="md:mr-2"
 							onClick={(event) => {
 								event.preventDefault()

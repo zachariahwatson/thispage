@@ -155,7 +155,7 @@ export function CreatePostForm({ setVisible }: Props) {
 							<Button type="submit">post</Button>
 						)}
 						<Button
-							variant="secondary"
+							variant="accent"
 							className="md:mr-2"
 							onClick={(event) => {
 								event.preventDefault()

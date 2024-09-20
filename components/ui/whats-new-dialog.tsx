@@ -36,14 +36,45 @@ export function WhatsNewDialog() {
 				<DialogHeader>
 					<DialogTitle className="text-3xl">what's new?</DialogTitle>
 				</DialogHeader>
-				<Tabs defaultValue="0.10.0">
+				<Tabs defaultValue="1.0.0">
 					<TabsList>
+						<TabsTrigger value="1.0.0">1.0.0</TabsTrigger>
 						<TabsTrigger value="0.10.0">0.10.0</TabsTrigger>
 						<TabsTrigger value="0.9.0">0.9.0</TabsTrigger>
-						<TabsTrigger value="0.8.0">0.8.0</TabsTrigger>
+						{/* <TabsTrigger value="0.8.0">0.8.0</TabsTrigger> */}
 						{/* <TabsTrigger value="0.7.0">0.7.0</TabsTrigger> */}
 					</TabsList>
 					<Separator className="my-4" />
+					<TabsContent value="1.0.0" className="space-y-3">
+						{/* <DialogTitle>archive section</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- view your archived readings and polls. reminisce on old times. let out a happy sigh.
+							</DialogDescription>
+						</div> */}
+						<DialogTitle>themes</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- prettier themes with more to come soon(tm)! check out the{" "}
+								<Link href="/themes" className="underline text-primary" target="_blank" rel="noopener noreferrer">
+									theme tool
+								</Link>{" "}
+								to play around with your own! (currently there's no way to save them, but hit me up if you make a cool
+								one!)
+							</DialogDescription>
+						</div>
+						<DialogTitle>password reset flow</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- you can now reset your password through the login page! yeah you've totally been able to do that this
+								whole time. TOTALLY.
+							</DialogDescription>
+						</div>
+						<DialogTitle>even more notification emails</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>- added notifications for polls ending and finishing.</DialogDescription>
+						</div>
+					</TabsContent>
 					<TabsContent value="0.10.0" className="space-y-3">
 						<DialogTitle>polls v2</DialogTitle>
 						<div className="pl-4">
@@ -101,7 +132,7 @@ export function WhatsNewDialog() {
 							</DialogDescription>
 						</div>
 					</TabsContent>
-					<TabsContent value="0.8.0" className="space-y-3">
+					{/* <TabsContent value="0.8.0" className="space-y-3">
 						<DialogTitle>email notifications</DialogTitle>
 						<div className="pl-4">
 							<DialogDescription>
@@ -109,7 +140,7 @@ export function WhatsNewDialog() {
 								more nagging at your members to read the goal!
 							</DialogDescription>
 						</div>
-					</TabsContent>
+					</TabsContent> */}
 					{/* <TabsContent value="0.7.0" className="space-y-3">
 						<DialogTitle>read books by custom sections instead of pages</DialogTitle>
 						<div className="pl-4">
@@ -127,7 +158,7 @@ export function WhatsNewDialog() {
 
 				<div className="mt-4">
 					<p>love,</p>
-					<p>
+					<p className="font-epilogue">
 						<span className="font-normal">this</span>
 						<span className="font-bold">page</span>
 					</p>

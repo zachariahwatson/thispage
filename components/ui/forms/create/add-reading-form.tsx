@@ -5,48 +5,31 @@ import { BookSearch } from "@/components/ui/books/club/spreads/dashboard"
 import { Button } from "@/components/ui/buttons"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms"
 import { useClubMembership } from "@/contexts"
+import { useSpreadsCount } from "@/hooks/state"
 import { addReadingFormSchema } from "@/lib/zod"
+import { QueryError } from "@/utils/errors"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { UseMutationResult } from "react-query"
+import { useMutation, useQueryClient } from "react-query"
+import { toast } from "sonner"
 import { z } from "zod"
 
 interface Props {
-	mutation: UseMutationResult<
-		Response,
-		unknown,
-		{
-			book: {
-				open_library_id: string
-				title?: string | undefined
-				description?: string | undefined
-				authors?: string[] | undefined
-				page_count?: number | undefined
-				cover_image_url?: string | undefined
-			}
-			club_id: number
-			creator_member_id: number
-			interval_page_length?: number
-			interval_section_length?: number
-			start_date: string
-			join_in_progress: boolean
-			increment_type: "pages" | "sections"
-			book_sections?: number | undefined
-			section_name?: string | undefined
-		},
-		unknown
-	>
 	setVisible: Dispatch<SetStateAction<boolean>>
+	setUserSpreadIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 	? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
 	: "http://localhost:3000"
 
-export function AddReadingForm({ mutation, setVisible }: Props) {
+export function AddReadingForm({ setVisible, setUserSpreadIndex }: Props) {
 	const clubMembership = useClubMembership()
 	const [tabsValue, setTabsValue] = useState<"pages" | "sections" | undefined>()
+	const { data: spreadsCount } = useSpreadsCount(clubMembership?.club.id || -1, clubMembership?.role || "member")
+	const queryClient = useQueryClient()
+
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof addReadingFormSchema>>({
 		resolver: zodResolver(addReadingFormSchema),
@@ -89,6 +72,60 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 
 		mutation.mutate(payload)
 	}
+
+	const mutation = useMutation({
+		mutationFn: async (data: {
+			book: {
+				open_library_id: string
+				title?: string | undefined
+				description?: string | undefined
+				authors?: string[] | undefined
+				page_count?: number | undefined
+				cover_image_url?: string | undefined
+			}
+			club_id: number
+			creator_member_id: number
+			interval_page_length?: number
+			interval_section_length?: number
+			start_date: string
+			join_in_progress: boolean
+			increment_type: "pages" | "sections"
+			book_sections?: number | undefined
+			section_name?: string | undefined
+		}) => {
+			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/readings`)
+			const response = await fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			})
+			if (!response.ok) {
+				const body = await response.json()
+				throw new QueryError(body.message, body.code)
+			}
+
+			return await response.json()
+		},
+		onError: (error: any) => {
+			toast.error(error.message, { description: error.code })
+		},
+		onSettled: () => {
+			setVisible(false)
+		},
+		onSuccess: (body: any) => {
+			toast.success(body.message)
+			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
+			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
+			let index = 0
+			if (spreadsCount) {
+				if (spreadsCount.total_readings) index += spreadsCount.total_readings
+			}
+			localStorage.setItem(`club-${clubMembership?.club.id}-member-${clubMembership?.id}-tab-index`, index.toString())
+			setUserSpreadIndex(index)
+		},
+	})
 
 	const selectedBook = form.watch("book") ? JSON.parse(form.watch("book")) : null
 	const hasPageCount = selectedBook?.pageCount !== 0
@@ -262,7 +299,7 @@ export function AddReadingForm({ mutation, setVisible }: Props) {
 							<Button type="submit">add</Button>
 						)}
 						<Button
-							variant="secondary"
+							variant="accent"
 							className="md:mr-2"
 							onClick={(event) => {
 								event.preventDefault()

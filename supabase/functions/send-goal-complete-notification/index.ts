@@ -115,7 +115,7 @@ Deno.serve(async (req) => {
 						}. discuss what you thought!
             </p>
             <p style="margin:0px;">sincerely,</p>
-            <a style="margin:0px;" href="https://thispa.ge"><strong>this</strong>page</p>
+            <a style="margin:0px;" href="https://thispa.ge">this<strong>page</strong></p>
           </div>
         `,
 					}),

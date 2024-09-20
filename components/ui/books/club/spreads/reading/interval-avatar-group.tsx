@@ -57,9 +57,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 							<Tooltip key={index}>
 								<TooltipTrigger className="cursor-default">
 									<Avatar
-										className={`${
-											progress?.is_complete ? "ring-ring ring-4" : "ring-background ring-4"
-										} size-8 md:size-10`}
+										className={`${progress?.is_complete ? "ring-ring ring-4" : "ring-page ring-4"} size-8 md:size-10`}
 									>
 										<AvatarImage src={progress?.member?.avatar_url || ""} loading="eager" />
 										<AvatarFallback>
@@ -83,7 +81,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 						{isVertical ? (
 							<Sheet>
 								<SheetTrigger>
-									<Avatar className="ring-background ring-4 size-8 md:size-10">
+									<Avatar className="ring-page ring-4 size-8 md:size-10">
 										<AvatarFallback>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +109,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 								<Tooltip>
 									<DialogTrigger asChild>
 										<TooltipTrigger>
-											<Avatar className="ring-background ring-4 size-8 md:size-10">
+											<Avatar className="ring-page ring-4 size-8 md:size-10">
 												<AvatarFallback>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
@@ -150,10 +148,10 @@ export function IntervalAvatarGroupSkeleton() {
 		<>
 			<CardTitle className="text-xl">readers</CardTitle>
 			<div className="flex flex-row -space-x-1">
-				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-background outline-4" />
-				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-background outline-4" />
-				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-background outline-4" />
-				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-background outline-4" />
+				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-page outline-4" />
+				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-page outline-4" />
+				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-page outline-4" />
+				<Skeleton className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full outline outline-page outline-4" />
 			</div>
 		</>
 	)

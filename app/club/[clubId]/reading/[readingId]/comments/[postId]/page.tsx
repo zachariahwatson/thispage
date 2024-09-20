@@ -1,7 +1,5 @@
 import { Post } from "@/components/ui/post"
-import { createClient } from "@/utils/supabase/server"
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 
 interface Props {
 	params: {
@@ -21,15 +19,5 @@ export const metadata: Metadata = {
 }
 
 export default async function Page({ params }: Props) {
-	const supabase = createClient()
-
-	const {
-		data: { user },
-	} = await supabase.auth.getUser()
-
-	if (!user) {
-		return redirect("/login")
-	}
-
 	return <Post clubId={params.clubId} readingId={params.readingId} postId={params.postId} />
 }

@@ -12,8 +12,10 @@ export async function signInWithGoogle() {
 	if (referer) {
 		const refUrl = new URL(referer)
 		const next = refUrl.searchParams.get("redirect")
+		// Make sure next is just the path (without origin)
 		if (next) {
-			redirectTo += `?next=${next}`
+			const nextUrl = new URL(next, referer) // This will parse the next param
+			redirectTo += `?next=${nextUrl.pathname}${nextUrl.search}` // Only use the path + query part
 		}
 	}
 	const supabase = createClient()
@@ -30,10 +32,12 @@ export async function signInWithGoogle() {
 			const refUrl = new URL(referer)
 			const next = refUrl.searchParams.get("redirect")
 			if (next) {
-				return redirect(`/login?message=failed to sign in with google&type=error?redirect=${next}`)
+				return redirect(
+					`/login?message=failed to sign in with google :( code: ${error.code}&type=error&redirect=${next}`
+				)
 			}
 		}
-		return redirect("/login?message=failed to sign in with google&type=error")
+		return redirect(`/login?message=failed to sign in with google :( code: ${error.code}&type=error`)
 	}
 
 	revalidatePath(data.url, "layout")

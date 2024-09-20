@@ -1,0 +1,66 @@
+.layout h1 {
+	font-size: 2em;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	font-weight: bold;
+	font-family: "Epilogue", sans-serif;
+}
+
+.layout h2 {
+	font-size: 1.5em;
+	margin-top: 0.83em;
+	margin-bottom: 0.83em;
+	font-weight: bold;
+	font-family: "Epilogue", sans-serif;
+}
+
+.layout h3 {
+	font-size: 1.17em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	font-weight: bold;
+	font-family: "Epilogue", sans-serif;
+}
+
+.layout h4 {
+	font-size: 1em;
+	margin-top: 1.33em;
+	margin-bottom: 1.33em;
+	font-weight: bold;
+	font-family: "Epilogue", sans-serif;
+}
+
+.layout ul {
+	list-style-type: disc;
+	padding-left: 40px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.layout ol {
+	list-style-type: decimal;
+	padding-left: 40px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.layout p {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.layout li {
+	display: list-item;
+}
+
+.layout a:link,
+.layout a:visited {
+	color: hsl(var(--primary));
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.layout a:link:active,
+.layout a:visited:active {
+	color: hsl(var(--muted-foreground));
+}

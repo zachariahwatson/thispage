@@ -3,32 +3,405 @@
 @tailwind utilities;
 
 @layer base {
+	/* :root {
+		--background: 0 0% 100%;
+		--background-dark: 0 0% 100%;
+		--foreground: 0 0% 0%;
+		--book: 0 0% 100%;
+		--book-border: 0 0% 0%;
+		--page: 0 0% 100%;
+		--page-fold: 0 0% 100%;
+		--page-foreground: 0 0% 0%;
+		--card: 0 0% 100%;
+		--card-foreground: 0 0% 0%;
+		--primary: 0 0% 0%;
+		--secondary: 0 0% 0%;
+		--secondary-foreground: 0 0% 100%;
+		--border: 0 0% 0%;
+		--ring: 0 0% 0%;
+		--radius: 0rem;
+		--popover: 0 0% 100%;
+		--popover-foreground: 0 0% 0%;
+		--primary-foreground: 0 0% 100%;
+		--accent: 0 0% 0%;
+		--accent-foreground: 0 0% 100%;
+		--destructive: 0 0% 0%;
+		--destructive-foreground: 0 0% 100%;
+		--muted: 0 0% 100%;
+		--muted-foreground: 0 0% 0%;
+		--shadow-dark: 0 0% 100%;
+		--shadow: 0 0% 100%;
+		--input: 0 0% 0%;
+	} */
+
 	:root {
 		--background: 0 0% 100%;
-		--foreground: 20 14.3% 4.1%;
-		--card: 0 0% 97.5%;
-		--card-foreground: 20 14.3% 4.1%;
+		--background-dark: 0 0% 100%;
+		--foreground: 0 0% 0%;
+		--book: 0 0% 100%;
+		--book-border: 0 0% 0%;
+		--page: 0 0% 100%;
+		--page-fold: 0 0% 100%;
+		--page-foreground: 0 0% 0%;
+		--card: 0 0% 100%;
+		--card-foreground: 0 0% 0%;
+		--primary: 0 0% 0%;
+		--secondary: 0 0% 0%;
+		--secondary-foreground: 0 0% 100%;
+		--border: 0 0% 0%;
+		--ring: 0 0% 0%;
+		--radius: 0rem;
 		--popover: 0 0% 100%;
-		--popover-foreground: 20 14.3% 4.1%;
-		--primary: 24.6 95% 53.1%;
-		--primary-foreground: 60 9.1% 97.8%;
-		--secondary: 60 4.8% 95.9%;
-		--secondary-foreground: 24 9.8% 10%;
-		--muted: 60 4.8% 95.9%;
-		--muted-foreground: 25 5.3% 44.7%;
-		--accent: 60 4.8% 95.9%;
-		--accent-foreground: 24 9.8% 10%;
-		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 60 9.1% 97.8%;
-		--border: 20 5.9% 90%;
-		--input: 20 5.9% 90%;
-		--ring: 24.6 95% 53.1%;
-		--shadow: 20 5.9% 90%;
-		--shadow-dark: 20 5.9% 83%;
-		--radius: 1rem;
+		--popover-foreground: 0 0% 0%;
+		--primary-foreground: 0 0% 100%;
+		--accent: 0 0% 0%;
+		--accent-foreground: 0 0% 100%;
+		--destructive: 0 0% 0%;
+		--destructive-foreground: 0 0% 100%;
+		--muted: 0 0% 100%;
+		--muted-foreground: 0 0% 0%;
+		--shadow-dark: 0 0% 100%;
+		--shadow: 0 0% 100%;
+		--input: 0 0% 0%;
 	}
 
-	.terminal {
+	.cyber {
+		--page: 221 84% 22%;
+		--book: 308 100% 2%;
+		--secondary: 56 98% 50%;
+		--ring: 327 100% 45%;
+		--primary: 327 100% 45%;
+		--accent-foreground: 0 0% 100%;
+		--popover: 221 84% 22%;
+		--popover-foreground: 0 0% 100%;
+		--page-fold: 221 73% 32%;
+		--foreground: 327 100% 45%;
+		--card-foreground: 0 0% 100%;
+		--muted-foreground: 219 55% 69%;
+		--muted: 227 97% 14%;
+		--border: 194 100% 50%;
+		--book-border: 56 98% 50%;
+		--background-dark: 221 84% 22%;
+		--card: 221 73% 32%;
+		--secondary-foreground: 332 29% 13%;
+		--destructive: 0 83% 45%;
+		--destructive-foreground: 0 0% 100%;
+		--input: 194 100% 50%;
+		--shadow: 227 97% 14%;
+		--shadow-dark: 308 100% 2%;
+		--page-foreground: 0 0% 100%;
+		--radius: 0rem;
+		--accent: 227 97% 14%;
+		--background: 227 97% 14%;
+	}
+
+	.cherry {
+		--radius: 1rem;
+		--background: 351 46% 8%;
+		--foreground: 24 72% 73%;
+		--background-dark: 351 45% 11%;
+		--book: 351 45% 11%;
+		--page: 350 45% 8%;
+		--page-fold: 351 45% 11%;
+		--page-foreground: 24 72% 73%;
+		--card: 351 45% 11%;
+		--card-foreground: 24 72% 73%;
+		--book-border: 352 37% 15%;
+		--border: 349 34% 15%;
+		--input: 349 34% 15%;
+		--primary: 79 54% 42%;
+		--primary-foreground: 23 80% 88%;
+		--secondary: 0 100% 63%;
+		--ring: 0 100% 63%;
+		--secondary-foreground: 351 45% 11%;
+		--popover: 350 45% 8%;
+		--popover-foreground: 24 72% 73%;
+		--accent: 352 43% 20%;
+		--accent-foreground: 0 73% 74%;
+		--muted: 352 37% 15%;
+		--muted-foreground: 5 21% 45%;
+		--destructive: 7 98% 54%;
+		--destructive-foreground: 24 72% 73%;
+		--shadow: 345 63% 6%;
+		--shadow-dark: 351 100% 6%;
+	}
+
+	.dawn {
+		--radius: 0.75rem;
+		--background: 32 60% 95%;
+		--background-dark: 18 41% 87%;
+		--book: 248 19% 40%;
+		--page: 32 60% 95%;
+		--page-foreground: 248 19% 40%;
+		--card-foreground: 248 19% 40%;
+		--popover-foreground: 248 19% 40%;
+		--primary: 36 100% 64%;
+		--primary-foreground: 35 75% 97%;
+		--secondary: 328 32% 49%;
+		--border: 18 41% 87%;
+		--shadow: 18 41% 87%;
+		--shadow-dark: 301 37% 22%;
+		--book-border: 248 19% 40%;
+		--ring: 36 100% 64%;
+		--page-fold: 35 75% 97%;
+		--card: 35 75% 97%;
+		--popover: 35 75% 97%;
+		--secondary-foreground: 35 75% 97%;
+		--accent: 328 32% 49%;
+		--accent-foreground: 35 75% 97%;
+		--muted: 18 41% 87%;
+		--muted-foreground: 334 16% 43%;
+		--foreground: 248 19% 40%;
+		--input: 18 41% 87%;
+		--destructive: 340 85% 44%;
+		--destructive-foreground: 35 75% 97%;
+	}
+
+	.terminal-green {
+		--foreground: 144 71% 48%;
+		--book-border: 144 71% 48%;
+		--page-foreground: 144 71% 48%;
+		--card-foreground: 144 71% 48%;
+		--popover-foreground: 144 71% 48%;
+		--primary: 144 71% 48%;
+		--secondary: 144 71% 48%;
+		--accent: 144 71% 48%;
+		--border: 144 71% 48%;
+		--input: 144 71% 48%;
+		--ring: 144 71% 48%;
+		--muted-foreground: 148 51% 38%;
+		--muted: 148 41% 20%;
+		--background-dark: 145 76% 10%;
+		--background: 145 76% 5%;
+		--book: 145 76% 10%;
+		--page: 145 76% 10%;
+		--page-fold: 145 76% 10%;
+		--card: 145 76% 10%;
+		--popover: 145 76% 10%;
+		--primary-foreground: 145 76% 10%;
+		--secondary-foreground: 145 76% 10%;
+		--accent-foreground: 145 76% 10%;
+		--shadow: 145 76% 10%;
+		--shadow-dark: 145 76% 10%;
+		--radius: 0rem;
+		--destructive: 0 71% 48%;
+		--destructive-foreground: 0 0% 100%;
+	}
+
+	.terminal-orange {
+		--background: 27 48% 5%;
+		--foreground: 34 76% 51%;
+		--background-dark: 30 87% 6%;
+		--book: 29 87% 6%;
+		--book-border: 34 76% 51%;
+		--shadow: 29 87% 6%;
+		--shadow-dark: 30 87% 6%;
+		--border: 34 76% 51%;
+		--page: 30 87% 6%;
+		--page-fold: 30 87% 6%;
+		--page-foreground: 34 76% 51%;
+		--input: 34 76% 51%;
+		--card: 30 87% 6%;
+		--card-foreground: 34 76% 51%;
+		--ring: 34 76% 51%;
+		--primary: 34 76% 51%;
+		--primary-foreground: 30 87% 6%;
+		--secondary-foreground: 30 87% 6%;
+		--accent: 34 76% 51%;
+		--accent-foreground: 30 87% 6%;
+		--muted-foreground: 34 60% 36%;
+		--muted: 34 58% 19%;
+		--secondary: 34 76% 51%;
+		--radius: 0rem;
+		--destructive: 0 70% 49%;
+		--destructive-foreground: 0 0% 100%;
+		--popover: 30 87% 6%;
+		--popover-foreground: 34 76% 51%;
+	}
+
+	.old-salt {
+		--background: 70 16% 93%;
+		--background-dark: 110 7% 84%;
+		--page: 70 16% 93%;
+		--book: 203 14% 71%;
+		--book-border: 203 14% 71%;
+		--radius: 0.5rem;
+		--foreground: 28 95% 8%;
+		--page-foreground: 28 95% 8%;
+		--card-foreground: 28 95% 8%;
+		--popover-foreground: 28 95% 8%;
+		--card: 72 63% 97%;
+		--page-fold: 72 63% 97%;
+		--border: 110 7% 84%;
+		--shadow: 110 7% 84%;
+		--popover: 70 16% 93%;
+		--primary: 27 14% 39%;
+		--primary-foreground: 72 63% 97%;
+		--secondary: 0 71% 40%;
+		--destructive: 0 71% 40%;
+		--secondary-foreground: 72 63% 97%;
+		--destructive-foreground: 72 63% 97%;
+		--ring: 27 14% 39%;
+		--input: 110 7% 84%;
+		--muted-foreground: 27 14% 39%;
+		--accent: 23 15% 70%;
+		--muted: 110 7% 84%;
+		--accent-foreground: 72 63% 97%;
+		--shadow-dark: 231 14% 48%;
+	}
+
+	.industrial {
+		--background: 110 7% 84%;
+		--background-dark: 70 16% 93%;
+		--foreground: 90 4% 10%;
+		--page: 70 16% 93%;
+		--book: 28 21% 29%;
+		--shadow: 65 20% 75%;
+		--shadow-dark: 90 4% 10%;
+		--border: 110 7% 84%;
+		--book-border: 28 21% 29%;
+		--card: 68 57% 97%;
+		--page-fold: 68 57% 97%;
+		--page-foreground: 90 4% 10%;
+		--card-foreground: 90 4% 10%;
+		--popover: 70 16% 93%;
+		--popover-foreground: 90 4% 10%;
+		--radius: 1rem;
+		--primary: 150 79% 25%;
+		--primary-foreground: 68 57% 97%;
+		--secondary-foreground: 68 57% 97%;
+		--accent-foreground: 68 57% 97%;
+		--destructive-foreground: 68 57% 97%;
+		--input: 110 7% 84%;
+		--ring: 41 87% 59%;
+		--secondary: 3 77% 56%;
+		--accent: 110 7% 84%;
+		--muted-foreground: 105 2% 47%;
+		--muted: 110 7% 84%;
+		--destructive: 3 77% 56%;
+	}
+
+	.sticky-note {
+		--background: 47 100% 82%;
+		--background-dark: 49 100% 50%;
+		--book: 36 100% 62%;
+		--page: 47 100% 82%;
+		--page-fold: 47 100% 87%;
+		--card: 47 100% 87%;
+		--shadow: 41 100% 70%;
+		--shadow-dark: 25 88% 54%;
+		--book-border: 36 100% 62%;
+		--popover: 47 100% 82%;
+		--foreground: 229 100% 17%;
+		--page-foreground: 229 100% 17%;
+		--card-foreground: 229 100% 17%;
+		--popover-foreground: 229 100% 17%;
+		--border: 47 92% 76%;
+		--input: 47 92% 76%;
+		--muted-foreground: 229 12% 36%;
+		--destructive: 9 97% 65%;
+		--primary: 306 40% 56%;
+		--ring: 187 41% 56%;
+		--secondary: 49 100% 50%;
+		--accent: 36 100% 62%;
+		--muted: 47 92% 76%;
+		--radius: 0rem;
+	}
+
+	.blueprint {
+		--background: 214 53% 45%;
+		--background-dark: 214 53% 45%;
+		--foreground: 0 0% 100%;
+		--book: 214 53% 45%;
+		--book-border: 0 0% 100%;
+		--page: 214 53% 45%;
+		--page-fold: 214 53% 45%;
+		--page-foreground: 0 0% 100%;
+		--card: 214 53% 45%;
+		--card-foreground: 0 0% 100%;
+		--popover: 214 53% 45%;
+		--popover-foreground: 0 0% 100%;
+		--primary: 0 0% 100%;
+		--primary-foreground: 214 53% 45%;
+		--secondary: 0 0% 100%;
+		--secondary-foreground: 214 53% 45%;
+		--accent: 0 0% 100%;
+		--accent-foreground: 214 53% 45%;
+		--destructive: 0 0% 100%;
+		--destructive-foreground: 214 53% 45%;
+		--shadow: 214 53% 45%;
+		--shadow-dark: 214 53% 45%;
+		--border: 0 0% 100%;
+		--input: 0 0% 100%;
+		--ring: 0 0% 100%;
+		--muted: 214 51% 56%;
+		--muted-foreground: 215 52% 81%;
+		--radius: 0rem;
+	}
+
+	.wireframe {
+		--background: 0 0% 100%;
+		--background-dark: 0 0% 100%;
+		--foreground: 0 0% 0%;
+		--book: 0 0% 100%;
+		--book-border: 0 0% 0%;
+		--page: 0 0% 100%;
+		--page-fold: 0 0% 100%;
+		--page-foreground: 0 0% 0%;
+		--card: 0 0% 100%;
+		--card-foreground: 0 0% 0%;
+		--primary: 0 0% 0%;
+		--secondary: 0 0% 0%;
+		--secondary-foreground: 0 0% 100%;
+		--border: 0 0% 0%;
+		--ring: 0 0% 0%;
+		--radius: 0rem;
+		--popover: 0 0% 100%;
+		--popover-foreground: 0 0% 0%;
+		--primary-foreground: 0 0% 100%;
+		--accent: 0 0% 0%;
+		--accent-foreground: 0 0% 100%;
+		--destructive-foreground: 0 0% 100%;
+		--destructive: 0 100% 50%;
+		--muted: 0 0% 75%;
+		--muted-foreground: 0 0% 50%;
+		--shadow-dark: 0 0% 100%;
+		--shadow: 0 0% 100%;
+		--input: 0 0% 0%;
+	}
+
+	.supertoy {
+		--background: 223 26% 87%;
+		--background-dark: 49 100% 70%;
+		--foreground: 264 33% 28%;
+		--book: 326 22% 42%;
+		--book-border: 264 33% 28%;
+		--page: 230 33% 96%;
+		--page-fold: 240 33% 99%;
+		--page-foreground: 264 33% 28%;
+		--card: 240 33% 99%;
+		--card-foreground: 264 33% 28%;
+		--primary: 25 100% 50%;
+		--secondary: 124 47% 52%;
+		--secondary-foreground: 240 33% 99%;
+		--border: 264 33% 28%;
+		--ring: 49 100% 70%;
+		--radius: 0rem;
+		--popover: 230 33% 96%;
+		--popover-foreground: 264 33% 28%;
+		--primary-foreground: 240 33% 99%;
+		--accent: 264 22% 47%;
+		--accent-foreground: 240 33% 99%;
+		--destructive-foreground: 240 33% 99%;
+		--destructive: 344 78% 60%;
+		--muted: 223 30% 86%;
+		--muted-foreground: 334 11% 41%;
+		--shadow-dark: 287 27% 31%;
+		--shadow: 222 25% 87%;
+		--input: 264 33% 28%;
+	}
+
+	/* .terminal {
 		--background: 180 41% 7%;
 		--foreground: 39 51% 80%;
 		--muted: 180 12% 15%;
@@ -290,7 +663,7 @@
 		--ring: 13 70% 46%;
 		--shadow: 207 48% 83%;
 		--shadow-dark: 207 48% 80%;
-	}
+	} */
 }
 
 @layer base {

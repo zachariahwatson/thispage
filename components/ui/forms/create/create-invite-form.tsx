@@ -129,7 +129,7 @@ export function CreateInviteForm({ setVisible }: Props) {
 							<Button type="submit">create</Button>
 						)}
 						<Button
-							variant="secondary"
+							variant="accent"
 							className="md:mr-2"
 							onClick={(event) => {
 								event.preventDefault()
