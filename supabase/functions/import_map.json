@@ -1,0 +1,5 @@
+{
+	"imports": {
+		"types": "./../../lib/types/supabase.ts"
+	}
+}

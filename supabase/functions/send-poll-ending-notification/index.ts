@@ -6,7 +6,7 @@
 /// <reference types="https://esm.sh/@supabase/functions-js/src/edge-runtime.d.ts" />
 
 import { createClient } from "jsr:@supabase/supabase-js@2"
-import { Database } from "./types.ts"
+import { Database } from "types"
 
 type PollRecord = Database["public"]["Tables"]["polls"]["Row"]
 

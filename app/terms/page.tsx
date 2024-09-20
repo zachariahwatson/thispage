@@ -1,6 +1,12 @@
-"use client"
-
 import styles from "@/styles/docs.module.css"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+	title: "terms and conditions | thispage",
+	openGraph: {
+		title: "terms and conditions | thispage",
+	},
+}
 
 export default function Page() {
 	return (
