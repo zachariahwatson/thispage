@@ -83,7 +83,7 @@ export function PollItem({ item, groupValues }: Props) {
 					id={`${item.id}`}
 					hidden
 					className="!bg-transparent p-0 m-0"
-					disabled={pollData?.user_votes && pollData?.user_votes.length > 0}
+					disabled={pollData?.status !== "voting" || (pollData?.user_votes && pollData?.user_votes.length > 0)}
 				>
 					{pollData?.status !== "voting" || pollData.user_votes.length > 0 ? (
 						<svg
