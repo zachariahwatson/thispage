@@ -1,6 +1,7 @@
 "use client"
 
 import { Button, SubmitButton } from "@/components/ui/buttons"
+import { Separator } from "@/components/ui"
 import { signIn, signInWithGoogle } from "@/actions/login"
 import { signInFormSchema } from "@/lib/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -37,45 +38,66 @@ export function SignInForm({ setFormType, email, setEmail, password, setPassword
 		setFormType("signup")
 	}
 
+	const handleResetFormChange = () => {
+		setEmail(form.getValues("email"))
+		setFormType("reset")
+	}
+
 	return (
 		<>
+			<h3 className="text-2xl font-semibold leading-none tracking-tight break-words font-epilogue text-center">
+				sign in
+			</h3>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex justify-center flex-col">
-					<FormField
-						control={form.control}
-						name="email"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>email</FormLabel>
-								<FormControl>
-									<Input type="email" placeholder="you@example.com" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="password"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>password</FormLabel>
-								<FormControl>
-									<Input type="password" placeholder="••••••••" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+					<div>
+						<FormField
+							control={form.control}
+							name="email"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>email</FormLabel>
+									<FormControl>
+										<Input type="email" placeholder="you@example.com" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="password"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>password</FormLabel>
+									<FormControl>
+										<Input type="password" placeholder="••••••••" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
 
-					<SubmitButton pendingText="signing in...">sign in</SubmitButton>
-
-					<div className="relative">
-						<div className="absolute inset-0 flex items-center">
-							<span className="w-full border-t" />
+					<div>
+						<div className="flex flex-col items-end">
+							<SubmitButton className="w-full" pendingText="signing in...">
+								sign in
+							</SubmitButton>
+							<Button
+								onClick={handleResetFormChange}
+								variant="link"
+								className="text-md p-0 text-muted-foreground"
+								size="sm"
+							>
+								forgot password?
+							</Button>
 						</div>
-						<div className="relative flex justify-center text-xs">
+
+						<div className="flex flex-row justify-center items-center text-xs">
+							<Separator className="bg-muted-foreground w-5/12" />
 							<span className="bg-background px-2 text-muted-foreground">or</span>
+							<Separator className="bg-muted-foreground w-5/12" />
 						</div>
 					</div>
 				</form>
@@ -105,7 +127,7 @@ export function SignInForm({ setFormType, email, setEmail, password, setPassword
 			</form>
 			<div className="flex flex-row justify-center items-center">
 				don't have an account?
-				<Button onClick={handleFormChange} variant="link" className="underline text-md" size="sm">
+				<Button onClick={handleFormChange} variant="link" className="text-md" size="sm">
 					sign up
 				</Button>
 			</div>
