@@ -46,10 +46,16 @@ export function WhatsNewDialog() {
 					</TabsList>
 					<Separator className="my-4" />
 					<TabsContent value="1.0.0" className="space-y-3">
-						<DialogTitle>archive section</DialogTitle>
+						{/* <DialogTitle>archive section</DialogTitle>
 						<div className="pl-4">
 							<DialogDescription>
 								- view your archived readings and polls. reminisce on old times. let out a happy sigh.
+							</DialogDescription>
+						</div> */}
+						<DialogTitle>password reset flow</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- you can reset your password now! yeah you've totally been able to do that this whole time. TOTALLY.
 							</DialogDescription>
 						</div>
 						<DialogTitle>even more notification emails</DialogTitle>
