@@ -64,7 +64,7 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 			const refUrl = new URL(referer)
 			const next = refUrl.searchParams.get("redirect")
 			if (next) {
-				return redirect(`/login?message=${message}&type=error?redirect=${next}`)
+				return redirect(`/login?message=${message}&type=error&redirect=${next}`)
 			}
 		}
 		return redirect(`/login?message=${message}&type=error`)

@@ -33,7 +33,7 @@ export async function signInWithGoogle() {
 			const next = refUrl.searchParams.get("redirect")
 			if (next) {
 				return redirect(
-					`/login?message=failed to sign in with google :( code: ${error.code}&type=error?redirect=${next}`
+					`/login?message=failed to sign in with google :( code: ${error.code}&type=error&redirect=${next}`
 				)
 			}
 		}
