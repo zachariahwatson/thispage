@@ -16,7 +16,7 @@ export function PollPageLeft({ userSpreadIndex }: Props) {
 	return (
 		<PageLeft userSpreadIndex={userSpreadIndex} id={`club-${pollData?.club_id}-poll-${pollData?.id}-page-left`}>
 			<PollActionsButton />
-			<CardHeader className="px-4 md:px-6 relative h-full pt-4 md:pt-6">
+			<CardHeader className="px-4 md:px-6 relative h-full pt-2 md:pt-6">
 				<CardTitle className="text-md md:text-xl flex flex-row items-center">
 					poll
 					<svg

@@ -23,7 +23,7 @@ export function ReadingPageRight({ userSpreadIndex }: Props) {
 			userSpreadIndex={userSpreadIndex}
 			id={`club-${readingData?.club_id}-reading-${readingData?.id}-page-right`}
 		>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-8.5rem)] md:h-[calc(100%-9.625rem)] pt-4 md:pt-6">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-8.5rem)] md:h-[calc(100%-9.625rem)] pt-3 md:pt-6">
 				<CardTitle className="text-md md:text-xl">discussion</CardTitle>
 				<Separator />
 

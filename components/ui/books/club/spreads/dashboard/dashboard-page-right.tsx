@@ -34,7 +34,7 @@ export function DashboardPageRight({ userSpreadIndex, setUserSpreadIndex }: Prop
 
 	return (
 		<PageRight userSpreadIndex={userSpreadIndex} id={`club-${clubMembership?.club.id}-dashboard-page-right`}>
-			<CardHeader className="px-4 md:px-6 h-full pt-4 md:pt-6">
+			<CardHeader className="px-4 md:px-6 h-full pt-3 md:pt-6">
 				<Separator className="mt-8 hidden md:block" />
 				<div className="pr-1 h-1/2">
 					<CardTitle className="text-md md:text-lg">add a reading</CardTitle>
