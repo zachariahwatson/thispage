@@ -138,7 +138,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 											</span>
 										</p>
 										<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
-											{post.reading.book_title} • {post.reading.club.name}
+											{post.reading.book_title} in {post.reading.club.name}
 										</p>
 									</div>
 									<div className="absolute right-0 top-8">
