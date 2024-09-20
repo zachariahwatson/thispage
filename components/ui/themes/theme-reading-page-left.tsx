@@ -37,7 +37,7 @@ export function ThemeReadingPageLeft({ userSpreadIndex, isComplete, setIsComplet
 
 			<Card className="absolute bottom-0 w-full border-b-0 border-l-0 border-r-0 border-page/90 -space-y-4 md:space-y-0 shadow-shadow shadow-[0_-4px_6px_-4px_hsl(var(--shadow))] backdrop-blur-md bg-page/80 rounded-none rounded-t-lg md:rounded-none md:rounded-l-lg">
 				<CardHeader className="pb-4 md:pb-6 pt-2 md:pt-4 md:py-4 md:px-6 px-4 space-y-0">
-					<CardTitle className="text-xl md:text-2xl">Theme Reading</CardTitle>
+					<CardTitle className="text-xl md:text-2xl">Demo Reading</CardTitle>
 					<CardDescription className="italic">by Homer</CardDescription>
 				</CardHeader>
 				<div className="px-4 pt-2 md:pt-0">

@@ -86,7 +86,7 @@ export function ColorPicker({ name, children }: { name: string; children?: React
 
 	return (
 		<div
-			className="flex flex-row relative justify-center items-center p-4 rounded-md m-2"
+			className="flex flex-row relative justify-center items-center p-2 md:p-4 rounded-md m-1 md:m-2"
 			style={{ backgroundColor: color }}
 		>
 			<PopoverPicker color={color} onChange={handleColorChange} name={name} />
@@ -103,9 +103,12 @@ const PopoverPicker = ({ color, onChange, name }: { color: any; onChange: any; n
 	useClickOutside(popover, close)
 
 	return (
-		<div className="relative flex justify-center items-center">
-			<div className="w-24 h-24 rounded-md" style={{ backgroundColor: color }} onClick={() => toggle(true)} />
-			<div className="absolute flex justify-center flex-col items-center">
+		<div
+			className="relative flex justify-center items-center w-full h-full cursor-pointer"
+			onClick={() => toggle(true)}
+		>
+			<div className="size-12 w-14 md:size-24 rounded-md" style={{ backgroundColor: color }} />
+			<div className="absolute flex justify-center flex-col items-center md:text-lg text-xs">
 				<p className="text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] shadow-black">{name}</p>
 				<p className="text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] shadow-black">{color}</p>
 			</div>
