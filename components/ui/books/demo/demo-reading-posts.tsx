@@ -22,8 +22,8 @@ export function DemoReadingPosts({ clicked }: Props) {
 		 * @todo - figure out why it's becoming display: table
 		 */
 		<div className="h-full">
-			<ScrollArea className="border rounded-lg min-h-[124px] h-[calc(50svh-217px)] md:h-[418px] shadow-shadow shadow-inner">
-				<div className="p-3 md:p-4">
+			<div className="border rounded-lg h-full shadow-shadow shadow-inner w-full overflow-y-scroll">
+				<div className="p-3 md:p-4 w-full h-auto">
 					<DemoReadingPost likes={3} id={1}>
 						what do you guys think so far?
 					</DemoReadingPost>
@@ -41,7 +41,7 @@ export function DemoReadingPosts({ clicked }: Props) {
 						meeting dates + times
 					</DemoReadingPost>
 				</div>
-			</ScrollArea>
+			</div>
 		</div>
 	)
 }

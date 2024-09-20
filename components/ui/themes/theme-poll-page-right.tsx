@@ -1,7 +1,7 @@
 "use client"
 
 import { CardDescription, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
-import { CreatePollItemButton } from "@/components/ui/buttons"
+import { Button, CreatePollItemButton } from "@/components/ui/buttons"
 import Countdown from "react-countdown"
 import { ThemePollItems } from "@/components/ui/themes"
 import { PageRight } from "@/components/ui/books"
@@ -132,7 +132,7 @@ export function ThemePollPageRight({ userSpreadIndex }: Props) {
 				<ThemePollItems />
 			</CardHeader>
 			<CardFooter className="absolute bottom-0 flex flex-col w-full items-center space-y-2 md:p-6 p-4 pb-4 md:pb-4">
-				<CardTitle className="flex flex-row text-md md:text-xl">back to start 👉</CardTitle>
+				<Button className="w-40 pointer-events-none">vote</Button>
 			</CardFooter>
 		</PageRight>
 	)
