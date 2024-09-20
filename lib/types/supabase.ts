@@ -195,6 +195,13 @@ export type Database = {
             foreignKeyName: "comments_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
+            referencedRelation: "post_metadata_view"
+            referencedColumns: ["post_id"]
+          },
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
@@ -292,6 +299,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "members_without_poll_votes"
             referencedColumns: ["member_id"]
+          },
+          {
+            foreignKeyName: "likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "post_metadata_view"
+            referencedColumns: ["post_id"]
           },
           {
             foreignKeyName: "likes_post_id_fkey"
@@ -978,6 +992,19 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      post_metadata_view: {
+        Row: {
+          book_authors: string[] | null
+          book_cover_image_height: number | null
+          book_cover_image_url: string | null
+          book_cover_image_width: number | null
+          book_title: string | null
+          club_name: string | null
+          post_id: number | null
+          post_title: string | null
+        }
+        Relationships: []
       }
       spreads_count_view: {
         Row: {
