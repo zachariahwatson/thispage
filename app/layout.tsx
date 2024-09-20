@@ -17,7 +17,7 @@ const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
 export const metadata: Metadata = {
 	metadataBase: new URL(defaultUrl),
 	title: "thispage",
-	description: "a simple book club app",
+	description: "a simple book club site",
 	icons: {
 		icon: [
 			{ rel: "icon", sizes: "16x16", url: "/favicon-16x16.png" },
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 	},
 	openGraph: {
 		title: "thispage",
-		description: "a simple book club app",
+		description: "a simple book club site",
 	},
 }
 
