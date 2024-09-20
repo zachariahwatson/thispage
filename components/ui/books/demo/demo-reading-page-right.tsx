@@ -1,6 +1,6 @@
 "use client"
 
-import { CardFooter, CardHeader, CardTitle } from "@/components/ui"
+import { CardDescription, CardFooter, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { DemoIntervalAvatarGroup, DemoReadingPosts } from "@/components/ui/books/demo"
 import { PageRight } from "@/components/ui/books"
 
@@ -12,9 +12,11 @@ interface Props {
 export function DemoReadingPageRight({ userSpreadIndex, isComplete }: Props) {
 	return (
 		<PageRight userSpreadIndex={userSpreadIndex} id={`demo-reading-page-right`}>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-6.25rem)] md:h-[calc(100%-118px)] pt-4 md:pt-6">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-8.5rem)] md:h-[calc(100%-9.625rem)] pt-3 md:pt-6">
+				<CardTitle className="text-md md:text-xl">discussion</CardTitle>
+				<Separator />
 				<div className="flex justify-between pr-1">
-					<CardTitle className="text-md md:text-xl">discussion</CardTitle>
+					<CardDescription className="md:text-sm text-xs">share your thoughts!</CardDescription>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

@@ -20,7 +20,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tabs don't update when a new reading/poll is created
 
-## [1.0.0] - 2024-09-19
+## [1.0.1] - 2024-09-20
+
+### Changed
+
+- Updated demo and theme reading page
+- Changed root theme to default
+
+## [1.0.0] - 2024-09-20
 
 ### Added
 
@@ -223,6 +230,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[1.0.1]: https://github.com/zachariahwatson/thispage/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/zachariahwatson/thispage/compare/0.10.4...1.0.0
 [0.10.4]: https://github.com/zachariahwatson/thispage/compare/0.10.3...0.10.4
 [0.10.3]: https://github.com/zachariahwatson/thispage/compare/0.10.2...0.10.3

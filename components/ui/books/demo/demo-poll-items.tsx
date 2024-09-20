@@ -30,7 +30,16 @@ export function DemoPollItems() {
 				creator_member_id: -1,
 				book_authors: ["Andy Weir"],
 				book_page_count: 476,
-				book_description: null,
+				book_description: `
+
+Ryland Grace is the sole survivor on a desperate, last-chance mission–and if he fails, humanity and the earth itself will perish. Except that right now, he doesn’t know that. He can’t even remember his own name, let alone the nature of his assignment or how to complete it. All he knows is that he’s been asleep for a very, very long time. And he’s just been awakened to find himself millions of miles from home, with nothing but two corpses for company.
+
+His crewmates dead, his memories fuzzily returning, he realizes that an impossible task now confronts him. Alone on this tiny ship that’s been cobbled together by every government and space agency on the planet and hurled into the depths of space, it’s up to him to conquer an extinction-level threat to our species.
+
+And thanks to an unexpected ally, he just might have a chance.
+
+Part scientific mystery, part dazzling interstellar journey, Project Hail Mary is a tale of discovery, speculation, and survival to rival The Martian–while taking us to places it never dreamed of going.
+`,
 				book_cover_image_url: "https://covers.openlibrary.org/b/id/14567764-L.jpg",
 				book_cover_image_width: 331,
 				book_cover_image_height: 500,
@@ -50,7 +59,7 @@ export function DemoPollItems() {
 				creator_member_id: -1,
 				book_authors: ["Arthur C. Clarke"],
 				book_page_count: 272,
-				book_description: null,
+				book_description: `Childhood's End is a 1953 science fiction novel by British author Arthur C. Clarke. The story follows the peaceful alien invasion of Earth by the mysterious Overlords, whose arrival ends all war, helps form a world government, and turns the planet into a near-utopia. Many questions are asked about the origins and mission of the aliens, but they avoid answering, preferring to remain in their ships, governing through indirect rule. Decades later, the Overlords eventually show themselves, and their impact on human culture leads to a Golden Age. However, the last generation of children on Earth begin to display powerful psychic abilities, heralding their evolution into a group mind, a transcendent form of life.`,
 				book_cover_image_url: "https://covers.openlibrary.org/b/id/8540395-L.jpg",
 				book_cover_image_width: 312,
 				book_cover_image_height: 500,
@@ -65,7 +74,14 @@ export function DemoPollItems() {
 				creator_member_id: -1,
 				book_authors: ["William Gibson"],
 				book_page_count: 288,
-				book_description: null,
+				book_description: `
+
+The first of William Gibson's Sprawl trilogy, Neuromancer is the classic cyberpunk novel. The winner of the Hugo, Nebula, and Philip K. Dick Awards, Neuromancer was the first fully-realized glimpse of humankind’s digital future — a shocking vision that has challenged our assumptions about our technology and ourselves, reinvented the way we speak and think, and forever altered the landscape of our imaginations.
+
+Henry Dorsett Case was the sharpest data-thief in the business, until vengeful former employees crippled his nervous system. But now a new and very mysterious employer recruits him for a last-chance run. The target: an unthinkably powerful artificial intelligence orbiting Earth in service of the sinister Tessier-Ashpool business clan. With a dead man riding shotgun and Molly, mirror-eyed street-samurai, to watch his back, Case embarks on an adventure that ups the ante on an entire genre of fiction.
+
+Hotwired to the leading edges of art and technology, Neuromancer is a cyberpunk, science fiction masterpiece — a classic that ranks with 1984 and Brave New World as one of the twentieth century’s most potent visions of the future.
+`,
 				book_cover_image_url: "https://covers.openlibrary.org/b/id/13116772-L.jpg",
 				book_cover_image_width: 300,
 				book_cover_image_height: 450,
