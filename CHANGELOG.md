@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Count things with supabase js 'table(count)'
+- Update client-side ui when poll voting countdown timer reaches zero
 
 ### Fixed
 
