@@ -16,7 +16,7 @@
 
 ### poll your members for the next book the read
 
-- the top selection will be added as a reading.
+- books are selected through an approval voting system.
 
 ## stack
 
