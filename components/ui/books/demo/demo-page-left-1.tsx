@@ -25,11 +25,10 @@ export function DemoPageLeft1({
 			<CardContent className="md:space-y-4 pt-4">
 				<div className="space-y-2">
 					<CardTitle className="text-md md:text-xl">
-						<span className="font-black text-ring">complete</span> group page goals with automatic increments.
+						<span className="font-black text-ring">complete</span> group reading goals with automatic increments.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
-						once all readers have completed the page/section goal, it will be automatically incremented by a custom
-						amount.
+						once all readers have completed the reading goal, it will be automatically incremented by a custom amount.
 					</CardDescription>
 				</div>
 				<div className="flex justify-center">

@@ -101,7 +101,7 @@ export function DemoPageRight2({ userSpreadIndex }: Props) {
 						<span className="font-black text-ring">poll</span> your members for the next book to read.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
-						the top selection will be added as a reading.
+						books are selected through an approval voting system.
 					</CardDescription>
 					<div className="h-full">
 						<ToggleGroup type="multiple" className="h-full">
