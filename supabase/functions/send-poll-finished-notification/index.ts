@@ -10,95 +10,108 @@ import { Database } from "types"
 
 type PollRecord = Database["public"]["Tables"]["polls"]["Row"]
 
+interface WebHookPayload {
+	type: "INSERT" | "UPDATE" | "DELETE"
+	table: string
+	record: PollRecord
+	schema: "public"
+	old_record: PollRecord | null
+}
+
 Deno.serve(async (req) => {
 	try {
-		const payload: PollRecord = await req.json()
+		const payload: WebHookPayload = await req.json()
 
-		const supabase = createClient(Deno.env.get("SUPABASE_URL") ?? "", Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "", {
-			global: { headers: { Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}` } },
-		})
+		if (payload.type === "UPDATE" && payload.old_record?.status === "voting" && payload.record.status === "finished") {
+			const supabase = createClient(
+				Deno.env.get("SUPABASE_URL") ?? "",
+				Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+				{
+					global: { headers: { Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}` } },
+				}
+			)
 
-		//query
-		const { data: members, error: membersError } = await supabase
-			.from("members")
-			.select(
-				`id,
+			//query
+			const { data: members, error: membersError } = await supabase
+				.from("members")
+				.select(
+					`id,
 				user_id
 				`
+				)
+				.eq("club_id", payload.record.club_id)
+
+			if (membersError) {
+				throw membersError
+			}
+
+			const userIDs = members?.map((member: { id: number; user_id: string }) => member?.user_id) || []
+
+			// Fetch user data for each user_id and store in emails array
+			const emails = await Promise.all(
+				userIDs.map(async (user_id: string) => {
+					const { data, error } = await supabase.auth.admin.getUserById(user_id)
+					if (error) {
+						throw error
+					}
+					return data?.user?.email
+				})
 			)
-			.eq("club_id", payload.club_id)
 
-		if (membersError) {
-			throw membersError
-		}
-
-		const userIDs = members?.map((member: { id: number; user_id: string }) => member?.user_id) || []
-
-		// Fetch user data for each user_id and store in emails array
-		const emails = await Promise.all(
-			userIDs.map(async (user_id: string) => {
-				const { data, error } = await supabase.auth.admin.getUserById(user_id)
-				if (error) {
-					throw error
-				}
-				return data?.user?.email
-			})
-		)
-
-		//get necessary data for email body
-		const { data: pollData, error: pollDataError } = await supabase
-			.from("polls")
-			.select(
-				`
+			//get necessary data for email body
+			const { data: pollData, error: pollDataError } = await supabase
+				.from("polls")
+				.select(
+					`
           name,
 				  ...clubs (
             club_name:name
           )
 				`
-			)
-			.eq("id", payload.id)
-			.single()
+				)
+				.eq("id", payload.record.id)
+				.single()
 
-		if (pollDataError) {
-			throw pollDataError
-		}
+			if (pollDataError) {
+				throw pollDataError
+			}
 
-		// Get necessary data for email body
-		const { data: emailData, error: emailDataError } = await supabase
-			.from("poll_items")
-			.select(
-				`poll_id,
+			// Get necessary data for email body
+			const { data: emailData, error: emailDataError } = await supabase
+				.from("poll_items")
+				.select(
+					`poll_id,
         		poll_votes(count),
         		book_title
         		`
-			)
-			.eq("poll_id", payload.id)
+				)
+				.eq("poll_id", payload.record.id)
 
-		emailData?.sort((a, b) => b.poll_votes[0].count - a.poll_votes[0].count)
+			emailData?.sort((a, b) => b.poll_votes[0].count - a.poll_votes[0].count)
 
-		if (emailDataError) {
-			throw emailDataError
-		}
+			if (emailDataError) {
+				throw emailDataError
+			}
 
-		//if there are emails in the array
-		if (emails.length > 0) {
-			const res = await fetch("https://api.resend.com/emails", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-				},
-				body: JSON.stringify({
-					from: "thispage <notifications@thispa.ge>",
-					to: emails,
-					subject: "poll finished!",
-					html: `
+			//if there are emails in the array
+			if (emails.length > 0) {
+				const res = await fetch("https://api.resend.com/emails", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
+					},
+					body: JSON.stringify({
+						from: "thispage <notifications@thispa.ge>",
+						to: emails,
+						subject: "poll finished!",
+						html: `
 			  <div>
 			    <p>hey!</p>
 			    <p>
 			      the poll titled <strong>${pollData.name}</strong> in ${
-						pollData.club_name
-					} is finished! these items received the most votes:
+							pollData.club_name
+						} is finished! these items received the most votes:
 			    </p>
 				<ol>
 				${emailData
@@ -115,15 +128,16 @@ Deno.serve(async (req) => {
 			    <a style="margin:0px;" href="https://thispa.ge">this<strong>page</strong></p>
 			  </div>
 			`,
-				}),
-			})
-			const data = await res.json()
-			return new Response(JSON.stringify(data), {
-				status: 200,
-				headers: {
-					"Content-Type": "application/json",
-				},
-			})
+					}),
+				})
+				const data = await res.json()
+				return new Response(JSON.stringify(data), {
+					status: 200,
+					headers: {
+						"Content-Type": "application/json",
+					},
+				})
+			}
 		}
 
 		return new Response(null, {
