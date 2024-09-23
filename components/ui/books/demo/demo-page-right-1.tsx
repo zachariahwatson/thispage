@@ -18,7 +18,7 @@ export function DemoPageRight1({ userSpreadIndex, demoIsComplete }: Props) {
 						<span className="font-black text-ring">discuss</span> readings.
 					</CardTitle>
 					<CardDescription className="text-xs md:text-sm">
-						create posts with spoiler tags that reveal once the reader has completed the interval.
+						create posts with spoiler tags that reveal once the reader has completed the reading goal.
 					</CardDescription>
 
 					<DemoReadingPosts clicked={demoIsComplete} />

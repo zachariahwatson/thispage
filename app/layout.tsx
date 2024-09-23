@@ -74,17 +74,29 @@ export const viewport: Viewport = {
 const Epilogue = localFont({
 	variable: "--font-epilogue",
 	src: [
-		{ path: "./../public/fonts/Epilogue-Variable.ttf", style: "normal" },
-		{ path: "./../public/fonts/Epilogue-VariableItalic.ttf", style: "italic" },
+		{ path: "./../public/fonts/epilogue/Epilogue-Variable.ttf", style: "normal" },
+		{ path: "./../public/fonts/epilogue/Epilogue-Variable.woff", style: "normal" },
+		{ path: "./../public/fonts/epilogue/Epilogue-Variable.woff2", style: "normal" },
+		{ path: "./../public/fonts/epilogue/Epilogue-VariableItalic.ttf", style: "italic" },
+		{ path: "./../public/fonts/epilogue/Epilogue-VariableItalic.woff", style: "italic" },
+		{ path: "./../public/fonts/epilogue/Epilogue-VariableItalic.woff2", style: "italic" },
 	],
+	weight: "100 900",
+	display: "swap",
 })
 
 const PlusJakartaSans = localFont({
 	variable: "--font-plus-jakarta-sans",
 	src: [
-		{ path: "./../public/fonts/PlusJakartaSans-Variable.ttf", style: "normal" },
-		{ path: "./../public/fonts/PlusJakartaSans-VariableItalic.ttf", style: "italic" },
+		{ path: "./../public/fonts/plus-jakarta-sans/PlusJakartaSans-Variable.ttf", style: "normal" },
+		{ path: "./../public/fonts/plus-jakarta-sans/PlusJakartaSans-Variable.woff", style: "normal" },
+		{ path: "./../public/fonts/plus-jakarta-sans/PlusJakartaSans-Variable.woff2", style: "normal" },
+		{ path: "./../public/fonts/plus-jakarta-sans/PlusJakartaSans-VariableItalic.ttf", style: "italic" },
+		{ path: "./../public/fonts/plus-jakarta-sans/PlusJakartaSans-VariableItalic.woff", style: "italic" },
+		{ path: "./../public/fonts/plus-jakarta-sans/PlusJakartaSans-VariableItalic.woff2", style: "italic" },
 	],
+	weight: "200 800",
+	display: "swap",
 })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

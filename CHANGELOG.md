@@ -16,10 +16,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Count things with supabase js 'table(count)'
+- Update client-side ui when poll voting countdown timer reaches zero
 
 ### Fixed
 
 - Tabs don't update when a new reading/poll is created
+
+## [1.0.3] - 2024-09-23
+
+### Changed
+
+- Reworded demo
+- Updated README
+- Reverted poll finish detection function back to original - will use webhooks
 
 ## [1.0.2] - 2024-09-20
 
