@@ -3,6 +3,7 @@
 import { CardDescription, CardHeader, CardTitle, Separator } from "@/components/ui"
 import { ThemePollPodium } from "@/components/ui/themes"
 import { PageLeft } from "@/components/ui/books"
+import { Vote } from "lucide-react"
 
 interface Props {
 	userSpreadIndex: number
@@ -99,14 +100,15 @@ export function ThemePollPageLeft({ userSpreadIndex }: Props) {
 				<CardHeader className="px-4 md:px-6 relative h-full pt-4 md:pt-6">
 					<CardTitle className="text-md md:text-xl flex flex-row items-center">
 						demo poll
-						<svg
+						{/* <svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							fill="currentColor"
 							className="size-4 md:size-6 mx-2"
 						>
 							<path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75ZM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 0 1-1.875-1.875V8.625ZM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 0 1 3 19.875v-6.75Z" />
-						</svg>
+						</svg> */}
+						<Vote className="size-5 md:size-6 mx-2" strokeWidth={1.5} />
 					</CardTitle>
 					<Separator />
 					<CardTitle className="text-sm md:text-lg text-wrap break-words">{pollData?.name}</CardTitle>
