@@ -17,9 +17,21 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export function ThemeButton() {
-	const { setTheme } = useTheme()
 	const router = useRouter()
 	const { tempTheme, setTempTheme } = useTempTheme()
+	const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null>(null)
+
+	const handleMouseEnter = () => {
+		if (delayHandler) clearTimeout(delayHandler)
+	}
+
+	const handleMouseLeave = () => {
+		setDelayHandler(
+			setTimeout(() => {
+				setTempTheme("")
+			}, 250)
+		)
+	}
 
 	return (
 		<DropdownMenu>
@@ -30,7 +42,13 @@ export function ThemeButton() {
 					<span className="sr-only">toggle theme</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" sideOffset={16} className={tempTheme}>
+			<DropdownMenuContent
+				align="end"
+				sideOffset={16}
+				className={tempTheme}
+				onMouseEnter={handleMouseEnter}
+				onMouseLeave={handleMouseLeave}
+			>
 				<DropdownMenuLabel className="flex justify-center">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -48,63 +66,14 @@ export function ThemeButton() {
 					</svg>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem
-					onClick={() => setTheme("azul")}
-					onMouseEnter={() => setTempTheme("azul")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					azul
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("dawn")}
-					onMouseEnter={() => setTempTheme("dawn")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					dawn
-				</DropdownMenuItem>
-				{/* <DropdownMenuItem onClick={() => setTheme("gruvbox-light")}>gruvbox light</DropdownMenuItem> */}
-				<DropdownMenuItem
-					onClick={() => setTheme("industrial")}
-					onMouseEnter={() => setTempTheme("industrial")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					industrial
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("old-salt")}
-					onMouseEnter={() => setTempTheme("old-salt")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					old salt
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("solarized-light")}
-					onMouseEnter={() => setTempTheme("solarized-light")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					solarized light
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("sticky-note")}
-					onMouseEnter={() => setTempTheme("sticky-note")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					sticky note
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("supertoy")}
-					onMouseEnter={() => setTempTheme("supertoy")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					supertoy
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("wireframe")}
-					onMouseEnter={() => setTempTheme("wireframe")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					wireframe
-				</DropdownMenuItem>
+				<ThemeItem id={"azul"}>azul</ThemeItem>
+				<ThemeItem id={"dawn"}>dawn</ThemeItem>
+				<ThemeItem id={"industrial"}>industrial</ThemeItem>
+				<ThemeItem id={"old-salt"}>old salt</ThemeItem>
+				<ThemeItem id={"solarized-light"}>solarized light</ThemeItem>
+				<ThemeItem id={"sticky-note"}>sticky note</ThemeItem>
+				<ThemeItem id={"supertoy"}>supertoy</ThemeItem>
+				<ThemeItem id={"wireframe"}>wireframe</ThemeItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuLabel className="flex justify-center">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
@@ -116,56 +85,14 @@ export function ThemeButton() {
 					</svg>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem
-					onClick={() => setTheme("cherry")}
-					onMouseEnter={() => setTempTheme("cherry")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					cherry
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("depths")}
-					onMouseEnter={() => setTempTheme("depths")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					depths
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("dualshot")}
-					onMouseEnter={() => setTempTheme("dualshot")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					dualshot
-				</DropdownMenuItem>
+				<ThemeItem id={"cherry"}>cherry</ThemeItem>
+				<ThemeItem id={"depths"}>depths</ThemeItem>
+				<ThemeItem id={"dualshot"}>dualshot</ThemeItem>
 				{/* <DropdownMenuItem onClick={() => setTheme("gruvbox-dark")}>gruvbox dark</DropdownMenuItem> */}
-				<DropdownMenuItem
-					onClick={() => setTheme("monokai")}
-					onMouseEnter={() => setTempTheme("monokai")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					monokai
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("solarized-dark")}
-					onMouseEnter={() => setTempTheme("solarized-dark")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					solarized dark
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("synthwave-84")}
-					onMouseEnter={() => setTempTheme("synthwave-84")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					synthwave '84
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					onClick={() => setTheme("tokyo")}
-					onMouseEnter={() => setTempTheme("tokyo")}
-					onMouseLeave={() => setTempTheme("")}
-				>
-					tokyo
-				</DropdownMenuItem>
+				<ThemeItem id={"monokai"}>monokai</ThemeItem>
+				<ThemeItem id={"solarized-dark"}>solarized dark</ThemeItem>
+				<ThemeItem id={"synthwave-84"}>synthwave '84</ThemeItem>
+				<ThemeItem id={"tokyo"}>tokyo</ThemeItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={() => router.push("/themes")}>
 					theme tool
@@ -173,5 +100,50 @@ export function ThemeButton() {
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
+	)
+}
+
+function ThemeItem({ id, children }: { id: string; children: React.ReactNode }) {
+	const { theme, setTheme } = useTheme()
+	const { setTempTheme } = useTempTheme()
+	const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null>(null)
+
+	const handleOnClick = () => {
+		setTheme(id)
+	}
+
+	const handleMouseEnter = () => {
+		setDelayHandler(
+			setTimeout(() => {
+				setTempTheme(id)
+			}, 250)
+		)
+	}
+
+	const handleMouseLeave = () => {
+		if (delayHandler) clearTimeout(delayHandler)
+	}
+
+	return (
+		<DropdownMenuItem
+			onClick={handleOnClick}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			className={theme === id ? "text-primary" : ""}
+		>
+			{children}
+			{theme === id && (
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					strokeWidth={1.5}
+					stroke="currentColor"
+					className="size-4 ml-2"
+				>
+					<path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+				</svg>
+			)}
+		</DropdownMenuItem>
 	)
 }
