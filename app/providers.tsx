@@ -47,7 +47,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 			<TooltipProvider delayDuration={350}>
 				<ThemeProvider
 					attribute="class"
-					// disableTransitionOnChange
+					disableTransitionOnChange
 					defaultTheme="industrial"
 					themes={[
 						"industrial",
@@ -93,6 +93,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 				visibleToasts={1}
 				toastOptions={{
 					className: "bg-page text-page-foreground border-border",
+					descriptionClassName: "text-muted-foreground",
 				}}
 				icons={{
 					success: (
