@@ -27,17 +27,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - More themes
+- Priority loading for reading and poll podium book images ✓
 
 ### Changed
 
-- Error message handling in /login and /reset
-- Icon .png locations
+- Error message handling in /login and /reset ✓
+- Icon .png locations ✓
 
 ### Fixed
 
 - Password reset not working
-- Nav not updating upon email sign in
-- html hydration error
+- Nav not updating upon email sign in ✓
+- html hydration error ✓
 
 ## [1.0.5] - 2024-09-24
 
