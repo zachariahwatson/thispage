@@ -12,15 +12,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Logging
 - View archived readings and polls
 - Handle PGRST116 0 rows error
+- Unsubscribe from emails
 
 ### Changed
 
 - Count things with supabase js 'table(count)'
-- Update client-side ui when poll voting countdown timer reaches zero
 
 ### Fixed
 
 - Tabs don't update when a new reading/poll is created
+
+## [1.0.4] - 2024-09-23
+
+### Added
+
+- More themes
+
+### Changed
+
+- Update client-side ui when poll voting countdown timer reaches zero
+- Metadata tweaks
+- Icon for polls, theme, and theme tool
 
 ## [1.0.3] - 2024-09-23
 
