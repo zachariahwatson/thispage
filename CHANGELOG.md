@@ -22,6 +22,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tabs don't update when a new reading/poll is created
 
+## [1.0.6] - 2024-09-24
+
+### Added
+
+- More themes
+
+### Changed
+
+- Error message handling in /login and /reset
+- Icon .png locations
+
+### Fixed
+
+- Password reset not working
+- Nav not updating upon email sign in
+- html hydration error
+
 ## [1.0.5] - 2024-09-24
 
 ### Added
