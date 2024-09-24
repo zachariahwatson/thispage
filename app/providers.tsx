@@ -47,7 +47,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 			<TooltipProvider delayDuration={350}>
 				<ThemeProvider
 					attribute="class"
-					disableTransitionOnChange
+					// disableTransitionOnChange
 					defaultTheme="industrial"
 					themes={[
 						"industrial",
