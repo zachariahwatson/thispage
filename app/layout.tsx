@@ -61,6 +61,29 @@ export const metadata: Metadata = {
 		siteName: "thispage",
 		locale: "en_US",
 		type: "website",
+		images: [
+			{
+				url: "https://thispa.ge/images/twitter-img.png",
+				width: 512,
+				height: 512,
+				alt: "a gray book with a red bookmark in it",
+			},
+		],
+	},
+	twitter: {
+		card: "summary",
+		title: "thispage",
+		description: "a simple book club site",
+		creator: "@zchwtsn",
+		creatorId: "1365452328501927936",
+		images: [
+			{
+				url: "https://thispa.ge/images/twitter-img.png",
+				width: 512,
+				height: 512,
+				alt: "a gray book with a red bookmark in it",
+			},
+		],
 	},
 }
 
