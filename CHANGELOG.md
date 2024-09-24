@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - View archived readings and polls
 - Handle PGRST116 0 rows error
 - Unsubscribe from emails
+- Swipe gesture to close sheets
 
 ### Changed
 
