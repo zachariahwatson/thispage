@@ -41,6 +41,7 @@ export function LoginPage() {
 		if (error) {
 			toast.error(error.errorDescription, { description: `${error.error}: ${error.errorCode}` })
 			console.error(error)
+			setError(undefined)
 		}
 	}, [error])
 

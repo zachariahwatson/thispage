@@ -42,7 +42,8 @@ export function ResetPage() {
 	useEffect(() => {
 		if (error) {
 			toast.error(error.errorDescription, { description: `${error.error}: ${error.errorCode}` })
-			console.error(error)
+			console.error(error.errorDescription, `\n${error.error}: ${error.errorCode}`)
+			setError(undefined)
 		}
 	}, [error])
 
