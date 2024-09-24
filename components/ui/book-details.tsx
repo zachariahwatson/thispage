@@ -1,6 +1,7 @@
 import { Separator, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui"
 import { useMediaQuery } from "@/hooks"
 import Image from "next/image"
+import { useSwipeable } from "react-swipeable"
 
 interface Props {
 	bookTitle?: string
@@ -17,7 +18,7 @@ export function BookDetails({ bookTitle, coverUrl, coverWidth, coverHeight, auth
 	return (
 		<SheetContent className={`max-w-xl md:max-w-xl space-y-4 ${isVertical && "w-full"} overflow-scroll`}>
 			<SheetHeader className="text-left">
-				<SheetTitle className="text-3xl">{bookTitle}</SheetTitle>
+				<SheetTitle className="text-3xl pr-4">{bookTitle}</SheetTitle>
 				<SheetDescription className="italic">
 					{authors
 						? " by " +
