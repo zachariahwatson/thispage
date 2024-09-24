@@ -40,6 +40,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 	const endDate = new Date(pollData?.end_date || "")
 	const clubMembership = useClubMembership()
 	const [continueVisible, setContinueVisible] = useState<boolean>(false)
+	const [timerComplete, setTimerComplete] = useState<boolean>(false)
 	const queryClient = useQueryClient()
 	const toggleGroupRef = useRef<React.ElementRef<typeof ToggleGroupPrimitive.Root> | null>(null)
 
@@ -135,12 +136,14 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 			<CardHeader className="px-4 md:px-6 h-[calc(100%-114px)] md:h-[calc(100%-118px)] pt-3 md:pt-6">
 				<div className="flex flex-row justify-between">
 					<CardTitle className="text-md md:text-xl">
-						{["selection", "voting"].includes(pollData?.status || "") ? `${pollData?.status} phase` : "poll finished!"}
+						{["selection", "voting"].includes(pollData?.status || "") && !timerComplete
+							? `${pollData?.status} phase`
+							: "poll finished!"}
 					</CardTitle>
 					{pollData?.end_date && (
 						<CardDescription className="flex flex-row items-center justify-center space-x-2">
 							<span>
-								<Countdown date={endDate} />
+								<Countdown date={endDate} onComplete={() => setTimerComplete(true)} />
 							</span>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +171,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 					</CardDescription>
 					<CreatePollItemButton />
 				</div>
-				<PollItems toggleGroupRef={toggleGroupRef} />
+				<PollItems toggleGroupRef={toggleGroupRef} timerComplete={timerComplete} />
 			</CardHeader>
 			<CardFooter className="absolute bottom-0 flex flex-col w-full items-center space-y-2 md:p-6 p-4 pb-4 md:pb-4">
 				{pollData?.status === "selection" && clubMembership?.role === "admin" && (
@@ -236,6 +239,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 					</AlertDialog>
 				)}
 				{pollData?.status === "voting" &&
+					!timerComplete &&
 					(pollData.user_votes.length === 0 ? (
 						insertPollVotesMutation.isLoading ? (
 							<Button className="w-40" disabled>

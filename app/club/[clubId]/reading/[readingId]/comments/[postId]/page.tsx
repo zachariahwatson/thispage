@@ -2,9 +2,7 @@
 
 import { Post } from "@/components/ui/post"
 import { Database } from "@/lib/types"
-import { QueryError } from "@/utils/errors"
-import { Metadata, ResolvingMetadata } from "next"
-import { useQuery } from "react-query"
+import { Metadata } from "next"
 
 interface Props {
 	params: {
@@ -73,7 +71,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		title: `${post.post_title} | ${post.book_title} in ${post.club_name} | thispage`,
 		description: "join the discussion",
 		openGraph: {
-			title: `${post.post_title} | ${post.book_title} | ${post.club_name} | thispage`,
+			title: `${post.post_title} | ${post.book_title} in ${post.club_name} | thispage`,
 			description: "join the discussion",
 			images: [
 				{

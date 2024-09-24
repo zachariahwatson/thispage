@@ -65,6 +65,22 @@ export function ThemeToolPage() {
 
 		// Generate the CSS variables when the component mounts
 		generateCssVars()
+
+		// Set up a MutationObserver to listen for changes to CSS variables
+		const observer = new MutationObserver((mutationsList) => {
+			// Call generateCssVars if any mutations occur (indicating a CSS variable change)
+			for (const mutation of mutationsList) {
+				if (mutation.type === "attributes" && mutation.attributeName?.startsWith("style")) {
+					generateCssVars()
+				}
+			}
+		})
+
+		// Observe changes on the document's root element
+		observer.observe(document.documentElement, { attributes: true, attributeFilter: ["style"] })
+
+		// Cleanup observer on component unmount
+		return () => observer.disconnect()
 	}, [])
 	return (
 		<FirstLoadAnimationProvider key="themes">
@@ -140,7 +156,7 @@ export function ThemeToolPage() {
 					</div>
 				</div>
 				<div className="p-2 md:p-4 bg-white rounded-md shadow-lg min-w-[344px]">
-					<pre className="p-2 rounded text-sm whitespace-pre-wrap">{cssVars}</pre>
+					<pre className="p-2 rounded text-sm whitespace-pre-wrap text-black">{cssVars}</pre>
 					<Button
 						variant="outline"
 						onClick={() => {
