@@ -10,37 +10,27 @@ import {
 	Separator,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
+import { useTempTheme } from "@/contexts"
+import { Paintbrush, Palette } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
-import * as React from "react"
+import { useState } from "react"
 
 export function ThemeButton() {
 	const { setTheme } = useTheme()
 	const router = useRouter()
+	const { tempTheme, setTempTheme } = useTempTheme()
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="ghost" size="icon">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						strokeWidth={1.5}
-						stroke="currentColor"
-						className="size-6"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z"
-						/>
-					</svg>
+					<Palette />
 
 					<span className="sr-only">toggle theme</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" sideOffset={16}>
+			<DropdownMenuContent align="end" sideOffset={16} className={tempTheme}>
 				<DropdownMenuLabel className="flex justify-center">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -58,16 +48,63 @@ export function ThemeButton() {
 					</svg>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem onClick={() => setTheme("industrial")}>industrial</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("supertoy")}>supertoy</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("old-salt")}>old salt</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("dawn")}>dawn</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("sticky-note")}>sticky note</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("wireframe")}>wireframe</DropdownMenuItem>
-				{/*
-				<DropdownMenuItem onClick={() => setTheme("kiss")}>kiss</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("lilac")}>lilac</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("sky")}>sky</DropdownMenuItem> */}
+				<DropdownMenuItem
+					onClick={() => setTheme("azul")}
+					onMouseEnter={() => setTempTheme("azul")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					azul
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("dawn")}
+					onMouseEnter={() => setTempTheme("dawn")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					dawn
+				</DropdownMenuItem>
+				{/* <DropdownMenuItem onClick={() => setTheme("gruvbox-light")}>gruvbox light</DropdownMenuItem> */}
+				<DropdownMenuItem
+					onClick={() => setTheme("industrial")}
+					onMouseEnter={() => setTempTheme("industrial")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					industrial
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("old-salt")}
+					onMouseEnter={() => setTempTheme("old-salt")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					old salt
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("solarized-light")}
+					onMouseEnter={() => setTempTheme("solarized-light")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					solarized light
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("sticky-note")}
+					onMouseEnter={() => setTempTheme("sticky-note")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					sticky note
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("supertoy")}
+					onMouseEnter={() => setTempTheme("supertoy")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					supertoy
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("wireframe")}
+					onMouseEnter={() => setTempTheme("wireframe")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					wireframe
+				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuLabel className="flex justify-center">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
@@ -79,32 +116,60 @@ export function ThemeButton() {
 					</svg>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem onClick={() => setTheme("cherry")}>cherry</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("cyber")}>cyber</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("terminal-green")}>terminal - green</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("terminal-orange")}>terminal - orange</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("blueprint")}>blueprint</DropdownMenuItem>
-				{/*
-				<DropdownMenuItem onClick={() => setTheme("tokyo")}>tokyo</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("cyber")}>cyber</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme("depths")}>depths</DropdownMenuItem> */}
+				<DropdownMenuItem
+					onClick={() => setTheme("cherry")}
+					onMouseEnter={() => setTempTheme("cherry")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					cherry
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("depths")}
+					onMouseEnter={() => setTempTheme("depths")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					depths
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("dualshot")}
+					onMouseEnter={() => setTempTheme("dualshot")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					dualshot
+				</DropdownMenuItem>
+				{/* <DropdownMenuItem onClick={() => setTheme("gruvbox-dark")}>gruvbox dark</DropdownMenuItem> */}
+				<DropdownMenuItem
+					onClick={() => setTheme("monokai")}
+					onMouseEnter={() => setTempTheme("monokai")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					monokai
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("solarized-dark")}
+					onMouseEnter={() => setTempTheme("solarized-dark")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					solarized dark
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("synthwave-84")}
+					onMouseEnter={() => setTempTheme("synthwave-84")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					synthwave '84
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => setTheme("tokyo")}
+					onMouseEnter={() => setTempTheme("tokyo")}
+					onMouseLeave={() => setTempTheme("")}
+				>
+					tokyo
+				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={() => router.push("/themes")}>
 					theme tool
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						strokeWidth={1.5}
-						stroke="currentColor"
-						className="size-5 ml-2"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42"
-						/>
-					</svg>
+					<Paintbrush className="size-5 ml-2" />
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

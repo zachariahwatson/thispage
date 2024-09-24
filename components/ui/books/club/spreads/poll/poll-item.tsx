@@ -40,9 +40,10 @@ interface Props {
 		}[]
 	}
 	groupValues: string[] | undefined
+	timerComplete: boolean
 }
 
-export function PollItem({ item, groupValues }: Props) {
+export function PollItem({ item, groupValues, timerComplete }: Props) {
 	const pollData = usePoll()
 	const totalVotes = pollData?.items.reduce((total, item) => total + item.poll_votes.length, 0)
 	const clubMembership = useClubMembership()
@@ -83,9 +84,11 @@ export function PollItem({ item, groupValues }: Props) {
 					id={`${item.id}`}
 					hidden
 					className="!bg-transparent p-0 m-0"
-					disabled={pollData?.status !== "voting" || (pollData?.user_votes && pollData?.user_votes.length > 0)}
+					disabled={
+						pollData?.status !== "voting" || (pollData?.user_votes && pollData?.user_votes.length > 0) || timerComplete
+					}
 				>
-					{pollData?.status !== "voting" || pollData.user_votes.length > 0 ? (
+					{pollData?.status !== "voting" || pollData.user_votes.length > 0 || timerComplete ? (
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 16 16"

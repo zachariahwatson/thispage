@@ -4,6 +4,7 @@
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
 import { ThemeProvider, TooltipProvider } from "@/components/ui"
 import { Toaster } from "@/components/ui/sonner"
+import { TempThemeProvider } from "@/contexts"
 import { QueryClient, QueryClientProvider } from "react-query"
 
 function makeQueryClient() {
@@ -52,28 +53,35 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 						"industrial",
 						"supertoy",
 						"wireframe",
-						"blueprint",
+						//"blueprint",
 						"sticky-note",
 						"old-salt",
-						"terminal-orange",
-						"terminal-green",
+						//"terminal",
+						//"terminal-green",
 						"dawn",
 						"cherry",
-						"cyber",
+						//"cyber",
 						// "terminal",
 						// "kiss",
 						// "cherry",
-						// "depths",
+						"depths",
+						"dualshot",
+						"gruvbox-light",
+						"gruvbox-dark",
 						// "lilac",
-						// "tokyo",
-						// "cyber",
+						"tokyo",
+						"monokai",
 						// "mainframe",
 						// "dawn",
 						// "note",
 						// "sky",
+						"solarized-light",
+						"solarized-dark",
+						"synthwave-84",
+						"azul",
 					]}
 				>
-					{children}
+					<TempThemeProvider>{children}</TempThemeProvider>
 				</ThemeProvider>
 			</TooltipProvider>
 			<Toaster
