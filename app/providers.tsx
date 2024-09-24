@@ -79,6 +79,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 						"solarized-dark",
 						"synthwave-84",
 						"azul",
+						"botanical",
+						"laser",
 					]}
 				>
 					<TempThemeProvider>{children}</TempThemeProvider>

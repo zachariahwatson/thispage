@@ -67,6 +67,7 @@ export function ThemeButton() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<ThemeItem id={"azul"}>azul</ThemeItem>
+				<ThemeItem id={"botanical"}>botanical</ThemeItem>
 				<ThemeItem id={"dawn"}>dawn</ThemeItem>
 				<ThemeItem id={"industrial"}>industrial</ThemeItem>
 				<ThemeItem id={"old-salt"}>old salt</ThemeItem>
@@ -88,7 +89,8 @@ export function ThemeButton() {
 				<ThemeItem id={"cherry"}>cherry</ThemeItem>
 				<ThemeItem id={"depths"}>depths</ThemeItem>
 				<ThemeItem id={"dualshot"}>dualshot</ThemeItem>
-				{/* <DropdownMenuItem onClick={() => setTheme("gruvbox-dark")}>gruvbox dark</DropdownMenuItem> */}
+				<ThemeItem id={"gruvbox-dark"}>gruvbox dark</ThemeItem>
+				<ThemeItem id={"laser"}>laser</ThemeItem>
 				<ThemeItem id={"monokai"}>monokai</ThemeItem>
 				<ThemeItem id={"solarized-dark"}>solarized dark</ThemeItem>
 				<ThemeItem id={"synthwave-84"}>synthwave '84</ThemeItem>
