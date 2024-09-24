@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - More themes
+- Temporarily change theme when hovering over theme option
 
 ### Changed
 
@@ -266,6 +267,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[1.0.4]: https://github.com/zachariahwatson/thispage/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/zachariahwatson/thispage/compare/1.0.2...1.0.3
 [1.0.2]: https://github.com/zachariahwatson/thispage/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/zachariahwatson/thispage/compare/1.0.0...1.0.1
