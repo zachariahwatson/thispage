@@ -11,7 +11,7 @@ export async function signOut() {
 	const { error } = await supabase.auth.signOut()
 
 	if (error) {
-		toast.error("an error occurred while signing out")
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while signing out:\n", error)
 	}
 
 	return redirect("/")

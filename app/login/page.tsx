@@ -8,10 +8,6 @@ export const metadata: Metadata = {
 	},
 }
 
-interface Props {
-	searchParams: { message?: string; type?: string; redirect: string }
-}
-
-export default function Login({ searchParams }: Props) {
-	return <LoginPage searchParams={searchParams} />
+export default function Login() {
+	return <LoginPage />
 }

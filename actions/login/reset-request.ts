@@ -19,20 +19,20 @@ export async function resetRequest(values: z.infer<typeof passwordResetRequestFo
 	})
 
 	if (error) {
-		let message = `could not send recovery email :( code: ${error.code}`
+		let errorDescription = `could not send recovery email :(`
 
 		if (error.name === "AuthApiError") {
 			switch (error.code) {
 				case "over_email_send_rate_limit":
-					message = `you've had too many emails sent to you. please wait before trying again.`
+					errorDescription = `you've had too many emails sent to you. please wait before trying again.`
 					break
 				case "over_request_rate_limit":
-					message = "too many requests have been sent from your client. please wait before trying again."
+					errorDescription = "too many requests have been sent from your client. please wait before trying again."
 					break
 			}
 		}
 
-		return redirect(`/login?message=${message}&type=error`)
+		return redirect(`/login?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}`)
 	}
 
 	revalidatePath("/login", "layout")

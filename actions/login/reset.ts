@@ -17,21 +17,23 @@ export async function reset(values: z.infer<typeof passwordResetFormSchema>) {
 	})
 
 	if (error) {
-		let message = `could not reset password :( code: ${error.code}`
+		let errorDescription = `could not reset password :(`
 
 		if (error.name === "AuthApiError") {
 			switch (error.code) {
 				case "over_request_rate_limit":
-					message = "too many requests have been sent from your client. please wait before trying again."
+					errorDescription = "too many requests have been sent from your client. please wait before trying again."
 					break
 			}
 		}
 
 		if (referer) {
 			const refUrl = new URL(referer)
-			return redirect(`/reset?message=${message}&type=error&${refUrl.search}`)
+			return redirect(
+				`/reset?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}&${refUrl.search}`
+			)
 		}
-		return redirect(`/reset?message=${message}&type=error`)
+		return redirect(`/reset?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}`)
 	}
 
 	revalidatePath("/login", "layout")

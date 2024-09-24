@@ -41,21 +41,21 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	})
 
 	if (error) {
-		let message = `could not create user :( code: ${error.code}`
+		let errorDescription = `could not create user :(`
 
 		if (error.name === "AuthApiError") {
 			switch (error.code) {
 				case "user_already_exists":
-					message = "user already exists"
+					errorDescription = "user already exists"
 					break
 				case "email_exists":
-					message = "email already exists in the system"
+					errorDescription = "email already exists in the system"
 					break
 				case "over_email_send_rate_limit":
-					message = `you've had too many emails sent to you. please wait before trying again.`
+					errorDescription = `you've had too many emails sent to you. please wait before trying again.`
 					break
 				case "over_request_rate_limit":
-					message = "too many requests have been sent from your client. please wait before trying again."
+					errorDescription = "too many requests have been sent from your client. please wait before trying again."
 					break
 			}
 		}
@@ -64,10 +64,12 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 			const refUrl = new URL(referer)
 			const next = refUrl.searchParams.get("redirect")
 			if (next) {
-				return redirect(`/login?message=${message}&type=error&redirect=${next}`)
+				return redirect(
+					`/login?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}&redirect=${next}`
+				)
 			}
 		}
-		return redirect(`/login?message=${message}&type=error`)
+		return redirect(`/login?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}`)
 	}
 
 	revalidatePath("/login", "layout")
