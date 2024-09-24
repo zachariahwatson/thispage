@@ -46,13 +46,13 @@ export const metadata: Metadata = {
 	creator: "Zachariah Watson",
 	icons: {
 		icon: [
-			{ rel: "icon", sizes: "16x16", url: "/favicon-16x16.png" },
-			{ rel: "icon", sizes: "32x32", url: "/favicon-32x32.png" },
+			{ rel: "icon", sizes: "16x16", url: "/images/favicon-16x16.png" },
+			{ rel: "icon", sizes: "32x32", url: "/images/favicon-32x32.png" },
 		],
 		other: [
-			{ rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
-			{ rel: "icon", sizes: "192x192", url: "/android-chrome-192x192.png" },
-			{ rel: "icon", sizes: "512x512", url: "/android-chrome-512x512.png" },
+			{ rel: "apple-touch-icon", sizes: "180x180", url: "/images/apple-touch-icon.png" },
+			{ rel: "icon", sizes: "192x192", url: "/images/android-chrome-192x192.png" },
+			{ rel: "icon", sizes: "512x512", url: "/images/android-chrome-512x512.png" },
 		],
 	},
 	openGraph: {
@@ -62,14 +62,14 @@ export const metadata: Metadata = {
 		siteName: "thispage",
 		locale: "en_US",
 		type: "website",
-		images: [
-			{
-				url: "https://thispa.ge/images/twitter-img.png",
-				width: 512,
-				height: 512,
-				alt: "a gray book with a red bookmark in it",
-			},
-		],
+		// images: [
+		// 	{
+		// 		url: "https://thispa.ge/images/twitter-img.png",
+		// 		width: 512,
+		// 		height: 512,
+		// 		alt: "a gray book with a red bookmark in it",
+		// 	},
+		// ],
 	},
 	twitter: {
 		card: "summary",
@@ -77,14 +77,14 @@ export const metadata: Metadata = {
 		description: "a simple book club site",
 		creator: "@zchwtsn",
 		creatorId: "1365452328501927936",
-		images: [
-			{
-				url: "https://thispa.ge/images/twitter-img.png",
-				width: 512,
-				height: 512,
-				alt: "a gray book with a red bookmark in it",
-			},
-		],
+		// images: [
+		// 	{
+		// 		url: "https://thispa.ge/images/twitter-img.png",
+		// 		width: 512,
+		// 		height: 512,
+		// 		alt: "a gray book with a red bookmark in it",
+		// 	},
+		// ],
 	},
 }
 
@@ -125,7 +125,7 @@ const PlusJakartaSans = localFont({
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className={`${PlusJakartaSans.variable} ${Epilogue.variable} h-full`}>
+		<html lang="en" className={`${PlusJakartaSans.variable} ${Epilogue.variable} h-full`} suppressHydrationWarning>
 			<body className="font-plus-jakarta-sans h-full">
 				<Providers>
 					<TempThemeWrapper>

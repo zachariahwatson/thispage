@@ -14,7 +14,7 @@ import { useTempTheme } from "@/contexts"
 import { Paintbrush, Palette } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export function ThemeButton() {
 	const router = useRouter()
@@ -109,6 +109,7 @@ function ThemeItem({ id, children }: { id: string; children: React.ReactNode }) 
 	const { theme, setTheme } = useTheme()
 	const { setTempTheme } = useTempTheme()
 	const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null>(null)
+	const [mounted, setMounted] = useState(false)
 
 	const handleOnClick = () => {
 		setTheme(id)
@@ -124,6 +125,15 @@ function ThemeItem({ id, children }: { id: string; children: React.ReactNode }) 
 
 	const handleMouseLeave = () => {
 		if (delayHandler) clearTimeout(delayHandler)
+	}
+
+	// useEffect only runs on the client, so now we can safely show the UI
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
+	if (!mounted) {
+		return null
 	}
 
 	return (
