@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function LoginPageLeft({ userSpreadIndex }: Props) {
-	const MotionCard = motion(Card)
+	const MotionCard = motion.create(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(false)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 
