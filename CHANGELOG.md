@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Count things with supabase js 'table(count)'
+- Count poll vote percentage by ballots
 
 ### Fixed
 
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Error message handling in /login and /reset ✓
 - Icon .png locations ✓
+- Better input and textarea character count styling ✓
 
 ### Fixed
 
