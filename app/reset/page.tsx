@@ -1,5 +1,6 @@
 import { ResetPage } from "@/components/ui/reset"
 import { Metadata } from "next"
+import { Suspense } from "react"
 
 export const metadata: Metadata = {
 	title: "reset password | thispage",
@@ -9,5 +10,9 @@ export const metadata: Metadata = {
 }
 
 export default function Reset() {
-	return <ResetPage />
+	return (
+		<Suspense>
+			<ResetPage />
+		</Suspense>
+	)
 }
