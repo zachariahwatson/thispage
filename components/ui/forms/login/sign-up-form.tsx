@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 interface Props {
-	setFormType: Dispatch<SetStateAction<string>>
+	setFormType: Dispatch<SetStateAction<string | undefined>>
 	email: string
 	setEmail: Dispatch<SetStateAction<string>>
 	password: string
