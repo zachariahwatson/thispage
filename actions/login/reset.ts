@@ -12,7 +12,7 @@ export async function reset(values: z.infer<typeof passwordResetFormSchema>) {
 	const password = values.password as string
 	const supabase = createClient()
 
-	const { error } = await supabase.auth.updateUser({
+	const { data, error } = await supabase.auth.updateUser({
 		password: password,
 	})
 
@@ -36,6 +36,8 @@ export async function reset(values: z.infer<typeof passwordResetFormSchema>) {
 		return redirect(`/reset?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}`)
 	}
 
-	revalidatePath("/login", "layout")
-	return redirect("/login?message=password reset completed! :)")
+	if (data) {
+		revalidatePath("/login", "layout")
+		return redirect("/login?message=password reset completed! :)")
+	}
 }
