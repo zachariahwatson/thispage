@@ -9,10 +9,15 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function Reset() {
-	return (
-		<Suspense>
-			<ResetPage />
-		</Suspense>
-	)
+interface Props {
+	searchParams: {
+		error?: string
+		error_code?: string
+		error_description?: string
+		message?: string
+	}
+}
+
+export default function Reset({ searchParams }: Props) {
+	return <ResetPage searchParams={searchParams} />
 }

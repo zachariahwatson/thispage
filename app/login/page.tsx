@@ -9,10 +9,16 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function Login() {
-	return (
-		<Suspense>
-			<LoginPage />
-		</Suspense>
-	)
+interface Props {
+	searchParams: {
+		error?: string
+		error_code?: string
+		error_description?: string
+		message?: string
+		redirect?: string
+	}
+}
+
+export default function Login({ searchParams }: Props) {
+	return <LoginPage searchParams={searchParams} />
 }
