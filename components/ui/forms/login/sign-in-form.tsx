@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/forms/form"
 import { Input } from "@/components/ui/input"
 import { Dispatch, SetStateAction } from "react"
+import { useQueryClient } from "react-query"
 
 interface Props {
 	setFormType: Dispatch<SetStateAction<string | undefined>>
@@ -20,6 +21,8 @@ interface Props {
 }
 
 export function SignInForm({ setFormType, email, setEmail, password, setPassword }: Props) {
+	const queryClient = useQueryClient()
+
 	const form = useForm<z.infer<typeof signInFormSchema>>({
 		resolver: zodResolver(signInFormSchema),
 		defaultValues: {
@@ -30,6 +33,7 @@ export function SignInForm({ setFormType, email, setEmail, password, setPassword
 
 	const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
 		await signIn(values)
+		queryClient.invalidateQueries(["user"])
 	}
 
 	const handleFormChange = () => {
