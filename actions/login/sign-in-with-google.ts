@@ -28,6 +28,8 @@ export async function signInWithGoogle() {
 	})
 
 	if (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while signing in with google:\n", error)
+
 		if (referer) {
 			const refUrl = new URL(referer)
 			const next = refUrl.searchParams.get("redirect")

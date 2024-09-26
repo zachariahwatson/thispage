@@ -19,6 +19,8 @@ export async function resetRequest(values: z.infer<typeof passwordResetRequestFo
 	})
 
 	if (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while sending a reset request:\n", error)
+
 		let errorDescription = `could not send recovery email :(`
 
 		if (error.name === "AuthApiError") {

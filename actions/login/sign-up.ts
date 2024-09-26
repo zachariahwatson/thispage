@@ -41,6 +41,8 @@ export async function signUp(values: z.infer<typeof signUpFormSchema>) {
 	})
 
 	if (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while signing up:\n", error)
+
 		let errorDescription = `could not create user :(`
 
 		if (error.name === "AuthApiError") {

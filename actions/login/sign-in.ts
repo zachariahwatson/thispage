@@ -25,9 +25,17 @@ export async function signIn(values: z.infer<typeof signInFormSchema>) {
 	})
 
 	if (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while signing in:\n", error)
+
 		let errorDescription = `could not sign in :(`
 
 		if (error.name === "AuthApiError") {
+			switch (error.status) {
+				case 400:
+					errorDescription = "email or password incorrect"
+					break
+			}
+
 			switch (error.code) {
 				case "email_not_confirmed":
 					errorDescription = "your email is not confirmed. please confirm and try again."

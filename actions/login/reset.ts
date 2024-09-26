@@ -17,12 +17,22 @@ export async function reset(values: z.infer<typeof passwordResetFormSchema>) {
 	})
 
 	if (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while resetting password:\n", error)
+
 		let errorDescription = `could not reset password :(`
 
 		if (error.name === "AuthApiError") {
 			switch (error.code) {
 				case "over_request_rate_limit":
 					errorDescription = "too many requests have been sent from your client. please wait before trying again."
+					break
+			}
+		}
+
+		if (error.name === "AuthSessionMissingError") {
+			switch (error.status) {
+				case 400:
+					errorDescription = "the session is missing, please use a valid reset link."
 					break
 			}
 		}
