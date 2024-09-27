@@ -71,7 +71,7 @@ export function PollActionsButton() {
 	})
 
 	const archivePollMutation = useMutation({
-		mutationFn: async (data: { status: "archived" }) => {
+		mutationFn: async (data: { editor_member_id: number; status: "archived" }) => {
 			const url = new URL(`${defaultUrl}/api/clubs/${clubMembership?.club.id}/polls/${pollData?.id}`)
 			const response = await fetch(url, {
 				method: "PATCH",
@@ -268,7 +268,7 @@ export function PollActionsButton() {
 									<AlertDialogAction
 										className={buttonVariants({ variant: "destructive" })}
 										onClick={(e) => {
-											archivePollMutation.mutate({ status: "archived" })
+											archivePollMutation.mutate({ editor_member_id: clubMembership?.id, status: "archived" })
 											e.preventDefault()
 										}}
 									>
