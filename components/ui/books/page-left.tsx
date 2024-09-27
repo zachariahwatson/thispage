@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function PageLeft({ userSpreadIndex = 0, id, children, disableAnimation = false }: Props) {
-	const MotionCard = motion(Card)
+	const MotionCard = motion.create(Card)
 	const [flipOnce, setFlipOnce] = useState<boolean>(disableAnimation)
 	const isVertical = useMediaQuery("(max-width: 768px)")
 	const firstLoad = useFirstLoadAnimation()

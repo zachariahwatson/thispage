@@ -22,7 +22,6 @@ export function PasswordResetForm() {
 
 	const onSubmit = async (values: z.infer<typeof passwordResetFormSchema>) => {
 		await reset(values)
-		router.push("/login")
 	}
 
 	return (
@@ -38,7 +37,7 @@ export function PasswordResetForm() {
 							name="password"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>password</FormLabel>
+									<FormLabel>new password</FormLabel>
 									<FormControl>
 										<Input type="password" placeholder="••••••••" {...field} />
 									</FormControl>
@@ -51,7 +50,7 @@ export function PasswordResetForm() {
 							name="confirmPassword"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>confirm password</FormLabel>
+									<FormLabel>confirm new password</FormLabel>
 									<FormControl>
 										<Input type="password" {...field} />
 									</FormControl>

@@ -25,18 +25,26 @@ export async function signIn(values: z.infer<typeof signInFormSchema>) {
 	})
 
 	if (error) {
-		let message = `could not sign in :( code: ${error.code}`
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while signing in:\n", error)
+
+		let errorDescription = `could not sign in :(`
 
 		if (error.name === "AuthApiError") {
+			switch (error.status) {
+				case 400:
+					errorDescription = "email or password incorrect"
+					break
+			}
+
 			switch (error.code) {
 				case "email_not_confirmed":
-					message = "your email is not confirmed. please confirm and try again."
+					errorDescription = "your email is not confirmed. please confirm and try again."
 					break
 				case "invalid_credentials":
-					message = "email or password incorrect"
+					errorDescription = "email or password incorrect"
 					break
 				case "over_request_rate_limit":
-					message = "too many requests have been sent from your client. please wait before trying again."
+					errorDescription = "too many requests have been sent from your client. please wait before trying again."
 					break
 			}
 		}
@@ -45,10 +53,12 @@ export async function signIn(values: z.infer<typeof signInFormSchema>) {
 			const refUrl = new URL(referer)
 			const next = refUrl.searchParams.get("redirect")
 			if (next) {
-				return redirect(`/login?message=${message}&type=error&redirect=${next}`)
+				return redirect(
+					`/login?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}&redirect=${next}`
+				)
 			}
 		}
-		return redirect(`/login?message=${message}&type=error`)
+		return redirect(`/login?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}`)
 	}
 
 	revalidatePath(`${redirectTo}`, "layout")

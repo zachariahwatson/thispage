@@ -7,14 +7,13 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-	Separator,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { useTempTheme } from "@/contexts"
 import { Paintbrush, Palette } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export function ThemeButton() {
 	const router = useRouter()
@@ -67,12 +66,11 @@ export function ThemeButton() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<ThemeItem id={"azul"}>azul</ThemeItem>
-				<ThemeItem id={"botanical"}>botanical</ThemeItem>
+				<ThemeItem id={"cotton-candy"}>cotton candy</ThemeItem>
 				<ThemeItem id={"dawn"}>dawn</ThemeItem>
+				<ThemeItem id={"fleur"}>fleur</ThemeItem>
 				<ThemeItem id={"industrial"}>industrial</ThemeItem>
 				<ThemeItem id={"old-salt"}>old salt</ThemeItem>
-				<ThemeItem id={"solarized-light"}>solarized light</ThemeItem>
-				<ThemeItem id={"sticky-note"}>sticky note</ThemeItem>
 				<ThemeItem id={"supertoy"}>supertoy</ThemeItem>
 				<ThemeItem id={"wireframe"}>wireframe</ThemeItem>
 				<DropdownMenuSeparator />
@@ -87,10 +85,6 @@ export function ThemeButton() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<ThemeItem id={"cherry"}>cherry</ThemeItem>
-				<ThemeItem id={"depths"}>depths</ThemeItem>
-				<ThemeItem id={"dualshot"}>dualshot</ThemeItem>
-				<ThemeItem id={"gruvbox-dark"}>gruvbox dark</ThemeItem>
-				<ThemeItem id={"laser"}>laser</ThemeItem>
 				<ThemeItem id={"monokai"}>monokai</ThemeItem>
 				<ThemeItem id={"solarized-dark"}>solarized dark</ThemeItem>
 				<ThemeItem id={"synthwave-84"}>synthwave '84</ThemeItem>
@@ -109,6 +103,7 @@ function ThemeItem({ id, children }: { id: string; children: React.ReactNode }) 
 	const { theme, setTheme } = useTheme()
 	const { setTempTheme } = useTempTheme()
 	const [delayHandler, setDelayHandler] = useState<NodeJS.Timeout | null>(null)
+	const [mounted, setMounted] = useState(false)
 
 	const handleOnClick = () => {
 		setTheme(id)
@@ -124,6 +119,15 @@ function ThemeItem({ id, children }: { id: string; children: React.ReactNode }) 
 
 	const handleMouseLeave = () => {
 		if (delayHandler) clearTimeout(delayHandler)
+	}
+
+	// useEffect only runs on the client, so now we can safely show the UI
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
+	if (!mounted) {
+		return null
 	}
 
 	return (

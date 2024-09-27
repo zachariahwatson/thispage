@@ -50,7 +50,7 @@ export function IntervalAvatarGroup({ progresses }: Props) {
 				</Dialog>
 			)}
 
-			<div className="flex flex-row -space-x-1">
+			<div className="flex flex-row -space-x-1 h-8 md:h-10">
 				{previewProgresses?.map(
 					(progress, index) =>
 						progress && (

@@ -112,22 +112,18 @@ export function Nav() {
 					<ThemeButton />
 				</div>
 
-				{!loading ? (
-					user ? (
+				{!loading &&
+					(user ? (
 						<DropdownMenu onOpenChange={setDropdownVisible}>
 							<DropdownMenuTrigger>
-								{!loading ? (
-									<Avatar className="self-end hover:ring-4 hover:ring-ring transition-all">
-										<AvatarImage src={user.avatar_url} />
-										<AvatarFallback>
-											{user.first_name && user.last_name
-												? user.first_name[0] + user.last_name[0]
-												: user.name && user.name.split(" ")[0][0] + user.name.split(" ")[1][0]}
-										</AvatarFallback>
-									</Avatar>
-								) : (
-									<Skeleton className="w-10 h-10 rounded-full" />
-								)}
+								<Avatar className="self-end hover:ring-4 hover:ring-ring transition-all">
+									<AvatarImage src={user.avatar_url} />
+									<AvatarFallback>
+										{user.first_name && user.last_name
+											? user.first_name[0] + user.last_name[0]
+											: user.name && user.name.split(" ")[0][0] + user.name.split(" ")[1][0]}
+									</AvatarFallback>
+								</Avatar>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end" sideOffset={16}>
 								<DropdownMenuItem className="cursor-pointer" onClick={() => setCreateClubVisible(true)}>
@@ -201,10 +197,7 @@ export function Nav() {
 								/>
 							</svg>
 						</Link>
-					)
-				) : (
-					<Skeleton className="w-10 h-10 rounded-full" />
-				)}
+					))}
 			</div>
 			{isVertical ? (
 				<>

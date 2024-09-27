@@ -88,6 +88,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 										: null)
 							}
 							loading="eager"
+							priority
 						/>
 					</SheetTrigger>
 					<BookDetails

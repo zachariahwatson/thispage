@@ -19,7 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 			}
 		}
 		return (
-			<>
+			<div className="relative">
 				<input
 					type={type}
 					className={cn(
@@ -30,10 +30,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 					{...props}
 					onInput={handleChange}
 				/>
-				{(!type || type === "password" || type === "text") && showCharacterCount && (
-					<div className="text-right text-xs text-muted-foreground mt-1">{characterCount}</div>
+				{(!type || type === "password" || type === "text") && showCharacterCount && characterCount > 0 && (
+					<div className="text-xs text-muted-foreground absolute right-0 bottom-full mb-2">{characterCount}</div>
 				)}
-			</>
+			</div>
 		)
 	}
 )

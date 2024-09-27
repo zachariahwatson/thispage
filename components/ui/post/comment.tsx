@@ -148,12 +148,8 @@ export function CommentSkeleton() {
 						<Skeleton className="h-6 w-48" />
 						<Skeleton className="h-12 md:h-6 w-64 md:w-96" />
 						<div className="flex flex-row">
-							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
-								<Skeleton className="rounded-lg h-5 w-12" />
-							</Button>
-							<Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
-								<Skeleton className="rounded-lg h-5 w-[72px]" />
-							</Button>
+							<Skeleton className="rounded-lg h-5 w-12 mr-2" />
+							<Skeleton className="rounded-lg h-5 w-[72px]" />
 						</div>
 					</div>
 				</div>

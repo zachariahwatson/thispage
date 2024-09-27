@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Dispatch, SetStateAction } from "react"
 
 interface Props {
-	setFormType: Dispatch<SetStateAction<string>>
+	setFormType: Dispatch<SetStateAction<string | undefined>>
 	email: string
 	setEmail: Dispatch<SetStateAction<string>>
 }

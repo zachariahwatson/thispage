@@ -47,40 +47,22 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 			<TooltipProvider delayDuration={350}>
 				<ThemeProvider
 					attribute="class"
-					// disableTransitionOnChange
+					disableTransitionOnChange
 					defaultTheme="industrial"
 					themes={[
 						"industrial",
 						"supertoy",
 						"wireframe",
-						//"blueprint",
-						"sticky-note",
 						"old-salt",
-						//"terminal",
-						//"terminal-green",
 						"dawn",
 						"cherry",
-						//"cyber",
-						// "terminal",
-						// "kiss",
-						// "cherry",
-						"depths",
-						"dualshot",
-						"gruvbox-light",
-						"gruvbox-dark",
-						// "lilac",
 						"tokyo",
 						"monokai",
-						// "mainframe",
-						// "dawn",
-						// "note",
-						// "sky",
-						"solarized-light",
 						"solarized-dark",
 						"synthwave-84",
 						"azul",
-						"botanical",
-						"laser",
+						"fleur",
+						"cotton-candy",
 					]}
 				>
 					<TempThemeProvider>{children}</TempThemeProvider>
@@ -93,6 +75,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 				visibleToasts={1}
 				toastOptions={{
 					className: "bg-page text-page-foreground border-border",
+					descriptionClassName: "text-muted-foreground",
 				}}
 				icons={{
 					success: (
