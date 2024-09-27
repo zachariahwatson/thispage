@@ -133,7 +133,7 @@ export function PollPageRight({ userSpreadIndex }: Props) {
 
 	return (
 		<PageRight userSpreadIndex={userSpreadIndex}>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-114px)] md:h-[calc(100%-118px)] pt-3 md:pt-6">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-2.5rem)] md:h-[calc(100%-3rem)] pt-3 md:pt-6">
 				<div className="flex flex-row justify-between">
 					<CardTitle className="text-md md:text-xl">
 						{["selection", "voting"].includes(pollData?.status || "") && !timerComplete

@@ -22,15 +22,8 @@ export function PollItems({ toggleGroupRef, timerComplete }: Props) {
 	)
 
 	return (
-		<ToggleGroup
-			type="multiple"
-			value={values}
-			defaultValue={values}
-			onValueChange={setValues}
-			className="h-full"
-			ref={toggleGroupRef}
-		>
-			<div className="border rounded-lg h-full shadow-shadow shadow-inner relative overflow-y-scroll w-full">
+		<div className="border rounded-lg h-full shadow-shadow shadow-inner relative overflow-y-scroll w-full">
+			<ToggleGroup type="multiple" value={values} defaultValue={values} onValueChange={setValues} ref={toggleGroupRef}>
 				<div className="p-3 md:p-4 w-auto h-auto space-y-2">
 					{pollData?.items &&
 						(pollData.items.length > 0 ? (
@@ -43,7 +36,7 @@ export function PollItems({ toggleGroupRef, timerComplete }: Props) {
 							</div>
 						))}
 				</div>
-			</div>
-		</ToggleGroup>
+			</ToggleGroup>
+		</div>
 	)
 }

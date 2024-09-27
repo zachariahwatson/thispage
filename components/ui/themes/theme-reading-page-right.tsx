@@ -12,7 +12,7 @@ interface Props {
 export function ThemeReadingPageRight({ userSpreadIndex, isComplete }: Props) {
 	return (
 		<PageRight userSpreadIndex={userSpreadIndex} id={`demo-reading-page-right`}>
-			<CardHeader className="px-4 md:px-6 h-[calc(100%-8.5rem)] md:h-[calc(100%-9.625rem)] pt-3 md:pt-6">
+			<CardHeader className="px-4 md:px-6 h-[calc(100%-4.5rem)] md:h-[calc(100%-5.5rem)] pt-3 md:pt-6">
 				<CardTitle className="text-md md:text-xl">discussion</CardTitle>
 				<Separator />
 				<div className="flex justify-between pr-1">
