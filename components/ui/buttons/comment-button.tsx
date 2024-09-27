@@ -90,7 +90,7 @@ export function CommentButton({
 	return (
 		<div className="w-full relative">
 			<Textarea
-				className="h-48 md:h-full"
+				className="h-48 md:h-full mb-2"
 				placeholder="type your reply here"
 				onChange={(e) => setContent(e.target.value)}
 				value={content}
