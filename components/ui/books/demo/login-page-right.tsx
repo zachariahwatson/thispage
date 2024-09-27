@@ -8,7 +8,7 @@ import Link from "next/link"
 
 export function LoginPageRight() {
 	const isVertical = useMediaQuery("(max-width: 768px)")
-	const MotionCard = motion(Card)
+	const MotionCard = motion.create(Card)
 
 	//fix initial and animate
 	const rightVariants = isVertical

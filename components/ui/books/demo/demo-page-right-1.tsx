@@ -12,8 +12,8 @@ interface Props {
 export function DemoPageRight1({ userSpreadIndex, demoIsComplete }: Props) {
 	return (
 		<PageRight userSpreadIndex={userSpreadIndex} id={`demo-page-right-1`}>
-			<CardContent className="md:space-y-4 pt-4">
-				<div className="space-y-2">
+			<CardContent className="md:space-y-4 pt-4 h-[calc(100%-7rem)] md:h-[calc(100%-8.5rem)]">
+				<div className="space-y-2 h-full">
 					<CardTitle className="text-md md:text-xl">
 						<span className="font-black text-ring">discuss</span> readings.
 					</CardTitle>

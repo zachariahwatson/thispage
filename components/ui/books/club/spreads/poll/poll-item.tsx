@@ -109,7 +109,7 @@ export function PollItem({ item, groupValues, timerComplete }: Props) {
 					)}
 				</ToggleGroupItem>
 
-				<p className="absolute bottom-1 text-xs text-muted-foreground left-2">
+				<p className="absolute bottom-1 text-xs text-muted-foreground left-0 text-right w-10">
 					{pollData?.user_votes.length === 0
 						? "?%"
 						: `${totalVotes ? Math.trunc((item?.poll_votes.length / totalVotes) * 100) : 0}%`}
@@ -166,7 +166,7 @@ export function PollItem({ item, groupValues, timerComplete }: Props) {
 						</CardHeader>
 						<Progress
 							value={pollData?.user_votes.length === 0 ? 0 : totalVotes && (item?.poll_votes.length / totalVotes) * 100}
-							className="h-2 mb-2 ml-4 w-[calc(100%-1.5rem)]"
+							className="h-2 mb-2 ml-3 w-[calc(100%-1.5rem)]"
 						/>
 					</Label>
 				</Card>

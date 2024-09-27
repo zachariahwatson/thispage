@@ -28,16 +28,20 @@ export async function signInWithGoogle() {
 	})
 
 	if (error) {
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while signing in with google:\n", error)
+
 		if (referer) {
 			const refUrl = new URL(referer)
 			const next = refUrl.searchParams.get("redirect")
 			if (next) {
 				return redirect(
-					`/login?message=failed to sign in with google :( code: ${error.code}&type=error&redirect=${next}`
+					`/login?error=${error.status}&error_code=${error.code}&error_description=failed to sign in with google :(&redirect=${next}`
 				)
 			}
 		}
-		return redirect(`/login?message=failed to sign in with google :( code: ${error.code}&type=error`)
+		return redirect(
+			`/login?error=${error.status}&error_code=${error.code}&error_description=failed to sign in with google :(`
+		)
 	}
 
 	revalidatePath(data.url, "layout")

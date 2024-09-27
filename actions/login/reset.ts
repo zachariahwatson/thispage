@@ -12,28 +12,42 @@ export async function reset(values: z.infer<typeof passwordResetFormSchema>) {
 	const password = values.password as string
 	const supabase = createClient()
 
-	const { error } = await supabase.auth.updateUser({
+	const { data, error } = await supabase.auth.updateUser({
 		password: password,
 	})
 
 	if (error) {
-		let message = `could not reset password :( code: ${error.code}`
+		console.error("\x1b[31m%s\x1b[0m", "\nan error occurred while resetting password:\n", error)
+
+		let errorDescription = `could not reset password :(`
 
 		if (error.name === "AuthApiError") {
 			switch (error.code) {
 				case "over_request_rate_limit":
-					message = "too many requests have been sent from your client. please wait before trying again."
+					errorDescription = "too many requests have been sent from your client. please wait before trying again."
+					break
+			}
+		}
+
+		if (error.name === "AuthSessionMissingError") {
+			switch (error.status) {
+				case 400:
+					errorDescription = "the session is missing, please use a valid reset link."
 					break
 			}
 		}
 
 		if (referer) {
 			const refUrl = new URL(referer)
-			return redirect(`/reset?message=${message}&type=error&${refUrl.search}`)
+			return redirect(
+				`/reset?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}&${refUrl.search}`
+			)
 		}
-		return redirect(`/reset?message=${message}&type=error`)
+		return redirect(`/reset?error=${error.status}&error_code=${error.code}&error_description=${errorDescription}`)
 	}
 
-	revalidatePath("/login", "layout")
-	return redirect("/login?message=password reset completed! :)")
+	if (data) {
+		revalidatePath("/login", "layout")
+		return redirect("/login?message=password reset completed! :)")
+	}
 }

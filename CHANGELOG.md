@@ -17,10 +17,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Count things with supabase js 'table(count)'
+- Count poll vote percentage by ballots
 
 ### Fixed
 
 - Tabs don't update when a new reading/poll is created
+
+## [1.0.6] - 2024-09-27
+
+### Added
+
+- More themes
+- Priority loading for reading and poll podium book images
+
+### Changed
+
+- Error message handling in /login and /reset
+- Icon .png locations
+- Better input and textarea character count styling
+- Discussion and poll item list min height
+
+### Fixed
+
+- Password reset not working
+- Nav not updating upon email sign in
+- HTML hydration error
+- Polls can't be archived (cron job + rls issue)
 
 ## [1.0.5] - 2024-09-24
 
@@ -277,6 +299,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
+[1.0.6]: https://github.com/zachariahwatson/thispage/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/zachariahwatson/thispage/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/zachariahwatson/thispage/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/zachariahwatson/thispage/compare/1.0.2...1.0.3

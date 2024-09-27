@@ -18,29 +18,24 @@ export function DemoReadingPosts({ clicked }: Props) {
 	const [innerHeight, setInnerHeight] = useState<string | number>("auto")
 
 	return (
-		/**
-		 * @todo - figure out why it's becoming display: table
-		 */
-		<div className="h-full">
-			<div className="border rounded-lg h-full shadow-shadow shadow-inner w-full overflow-y-scroll">
-				<div className="p-3 md:p-4 w-full h-auto">
-					<DemoReadingPost likes={3} id={1}>
-						what do you guys think so far?
+		<div className="border rounded-lg h-full shadow-shadow shadow-inner w-full overflow-y-scroll">
+			<div className="p-3 md:p-4 w-full h-auto">
+				<DemoReadingPost likes={3} id={1}>
+					what do you guys think so far?
+				</DemoReadingPost>
+				{clicked ? (
+					<DemoReadingPost likes={1} id={2}>
+						peekaboo!
 					</DemoReadingPost>
-					{clicked ? (
-						<DemoReadingPost likes={1} id={2}>
-							peekaboo!
-						</DemoReadingPost>
-					) : (
-						<DemoReadingPost disabled likes={1} id={2}>
-							⚠️spoiler⚠️complete the reading!
-						</DemoReadingPost>
-					)}
+				) : (
+					<DemoReadingPost disabled likes={1} id={2}>
+						⚠️spoiler⚠️complete the reading!
+					</DemoReadingPost>
+				)}
 
-					<DemoReadingPost likes={5} id={3}>
-						meeting dates + times
-					</DemoReadingPost>
-				</div>
+				<DemoReadingPost likes={5} id={3}>
+					meeting dates + times
+				</DemoReadingPost>
 			</div>
 		</div>
 	)

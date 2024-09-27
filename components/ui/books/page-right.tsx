@@ -15,7 +15,7 @@ interface Props {
 
 export function PageRight({ userSpreadIndex = 0, id, children, className }: Props) {
 	const isVertical = useMediaQuery("(max-width: 768px)")
-	const MotionCard = motion(Card)
+	const MotionCard = motion.create(Card)
 
 	const rightVariants = isVertical
 		? {
