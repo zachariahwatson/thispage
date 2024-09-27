@@ -7,7 +7,6 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-	Separator,
 } from "@/components/ui"
 import { Button } from "@/components/ui/buttons"
 import { useTempTheme } from "@/contexts"
@@ -67,12 +66,11 @@ export function ThemeButton() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<ThemeItem id={"azul"}>azul</ThemeItem>
-				<ThemeItem id={"botanical"}>botanical</ThemeItem>
+				<ThemeItem id={"cotton-candy"}>cotton candy</ThemeItem>
 				<ThemeItem id={"dawn"}>dawn</ThemeItem>
+				<ThemeItem id={"fleur"}>fleur</ThemeItem>
 				<ThemeItem id={"industrial"}>industrial</ThemeItem>
 				<ThemeItem id={"old-salt"}>old salt</ThemeItem>
-				<ThemeItem id={"solarized-light"}>solarized light</ThemeItem>
-				<ThemeItem id={"sticky-note"}>sticky note</ThemeItem>
 				<ThemeItem id={"supertoy"}>supertoy</ThemeItem>
 				<ThemeItem id={"wireframe"}>wireframe</ThemeItem>
 				<DropdownMenuSeparator />
@@ -87,10 +85,6 @@ export function ThemeButton() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<ThemeItem id={"cherry"}>cherry</ThemeItem>
-				<ThemeItem id={"depths"}>depths</ThemeItem>
-				<ThemeItem id={"dualshot"}>dualshot</ThemeItem>
-				<ThemeItem id={"gruvbox-dark"}>gruvbox dark</ThemeItem>
-				<ThemeItem id={"laser"}>laser</ThemeItem>
 				<ThemeItem id={"monokai"}>monokai</ThemeItem>
 				<ThemeItem id={"solarized-dark"}>solarized dark</ThemeItem>
 				<ThemeItem id={"synthwave-84"}>synthwave '84</ThemeItem>
