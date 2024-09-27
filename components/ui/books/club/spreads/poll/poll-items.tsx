@@ -24,7 +24,7 @@ export function PollItems({ toggleGroupRef, timerComplete }: Props) {
 	return (
 		<div className="border rounded-lg h-full shadow-shadow shadow-inner relative overflow-y-scroll w-full">
 			<ToggleGroup type="multiple" value={values} defaultValue={values} onValueChange={setValues} ref={toggleGroupRef}>
-				<div className="p-3 md:p-4 w-auto h-auto space-y-2">
+				<div className="p-3 md:p-4 w-full h-auto space-y-2">
 					{pollData?.items &&
 						(pollData.items.length > 0 ? (
 							pollData?.items.map((item) => (
