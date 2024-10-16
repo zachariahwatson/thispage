@@ -43,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nav not updating upon email sign in
 - HTML hydration error
 - Polls can't be archived (cron job + rls issue)
+- Added line break support for posts and comments
 
 ## [1.0.5] - 2024-09-24
 

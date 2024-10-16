@@ -63,7 +63,9 @@ export function SubComment({
 								</span>
 							)}
 						</p>
-						<p className="md:text-md text-sm w-full break-words">{subCommentData.content}</p>
+						<p className="md:text-md text-sm w-full break-words">
+							<pre>{subCommentData.content}</pre>
+						</p>
 						<div className="flex flex-row items-center">
 							<LikeButton
 								likesCount={subCommentData.likes_count}
