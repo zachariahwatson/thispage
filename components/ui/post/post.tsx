@@ -189,7 +189,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 							</div>
 							<h1 className="text-lg md:text-2xl font-bold break-words pr-16 font-epilogue">{post.title}</h1>
 							<p className="md:text-md text-sm break-words">
-								<pre>{post.content}</pre>
+								<pre className="whitespace-pre-wrap">{post.content}</pre>
 							</p>
 							<LikeButton
 								likesCount={post.likes_count}

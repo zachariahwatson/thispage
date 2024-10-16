@@ -64,7 +64,7 @@ export function SubComment({
 							)}
 						</p>
 						<p className="md:text-md text-sm w-full break-words">
-							<pre>{subCommentData.content}</pre>
+							<pre className="whitespace-pre-wrap">{subCommentData.content}</pre>
 						</p>
 						<div className="flex flex-row items-center">
 							<LikeButton
