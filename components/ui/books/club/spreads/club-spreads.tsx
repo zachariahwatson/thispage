@@ -56,9 +56,11 @@ export function ClubSpreads() {
 			className="h-[calc(100svh-56px)] min-h-[624px] md:h-[624px] p-3 md:p-4 rounded-3xl relative shadow-shadow shadow-md bg-book border-book-border"
 		>
 			<div className="absolute w-full h-full top-0 left-0 flex justify-center items-center font-epilogue pt-[calc(50svh-1.75rem)] md:pl-[calc(50%)] md:pt-0">
-				<p className="text-2xl text-shadow-dark font-epilogue">
-					this<span className="font-bold">page</span>
-				</p>
+				{!spreadsCountError && !pollsError && !readingsError && (
+					<p className="text-2xl text-shadow-dark font-epilogue">
+						this<span className="font-bold">page</span>
+					</p>
+				)}
 			</div>
 			{!spreadsCountError && !pollsError && !readingsError ? (
 				<div className="relative w-full h-full border border-border shadow-md shadow-shadow-dark rounded-lg">
