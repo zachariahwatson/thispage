@@ -129,8 +129,8 @@ export function LikeButton({ likesCount, clubId, readingId, postId, commentId, m
 							<h1 className="font-bold">likes</h1>
 							<Separator className="mb-2 mt-1" />
 							<div className="w-full h-auto space-y-2">
-								{likes.map((like) => (
-									<div className="flex flex-row items-center space-x-1 text-sm w-full">
+								{likes.map((like, i) => (
+									<div key={i} className="flex flex-row items-center space-x-1 text-sm w-full">
 										<Avatar className="size-5 mr-1">
 											<AvatarImage src={like.avatar_url || ""} />
 											<AvatarFallback>
