@@ -50,13 +50,15 @@ export function WhatsNewDialog() {
 						<DialogTitle>likes list</DialogTitle>
 						<div className="pl-4">
 							<DialogDescription>
-								- you can now see who has liked your posts and comments! go ahead. check your likes every 10 minutes.
+								- you can now see who has liked your posts and comments! just click on the number next to the like
+								button. go ahead. check your likes every 10 minutes.
 							</DialogDescription>
 						</div>
 						<DialogTitle>custom avatar urls</DialogTitle>
 						<div className="pl-4">
 							<DialogDescription>
-								- personalize your vibezzz! (only urls because I don't want to mess with storing images deal with it)
+								- personalize your vibezzz! head to the user settings to try it out. (only urls because I don't want to
+								mess with storing images so deal with it)
 							</DialogDescription>
 						</div>
 						<DialogTitle>so many tweaks and quality of life changes</DialogTitle>
