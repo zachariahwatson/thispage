@@ -49,7 +49,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 							</span>
 						</p>
 						<p className="md:text-md text-sm w-full break-words">
-							<pre>{commentData.content}</pre>
+							<pre className="whitespace-pre-wrap">{commentData.content}</pre>
 						</p>
 						<div className="flex flex-row items-center w-full">
 							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
