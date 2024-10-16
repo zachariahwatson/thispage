@@ -21,6 +21,7 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 				comments(count)`
 			)
 			.eq("reading_id", params.readingId)
+			.order("created_at", { ascending: false }) //sort posts by newest first
 
 		if (error) {
 			throw error

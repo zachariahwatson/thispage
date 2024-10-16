@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tabs don't update when a new reading/poll is created
 
+## [1.0.7] - 2024-10-15
+
+### Changed
+
+- Order posts by newest first
+- Sort post comments by likes
+
 ## [1.0.6] - 2024-09-27
 
 ### Added
@@ -300,7 +307,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
-[1.0.6]: https://github.com/zachariahwatson/thispage/compare/1.0.5...HEAD
+[1.0.7]: https://github.com/zachariahwatson/thispage/compare/1.0.6...HEAD
+[1.0.6]: https://github.com/zachariahwatson/thispage/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/zachariahwatson/thispage/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/zachariahwatson/thispage/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/zachariahwatson/thispage/compare/1.0.2...1.0.3
