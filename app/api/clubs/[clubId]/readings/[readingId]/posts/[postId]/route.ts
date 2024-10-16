@@ -49,7 +49,17 @@ export async function GET(request: NextRequest, { params }: Props) {
                         id,
                         name
                     )
-                )`
+                ),
+				likes (
+					...members (
+						...users (
+							first_name,
+							last_name,
+							name,
+							avatar_url
+						)
+					)
+				)`
 			)
 			.eq("reading_id", params.readingId)
 			.eq("id", params.postId)

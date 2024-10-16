@@ -62,8 +62,28 @@ export async function GET(request: NextRequest, { params }: Props) {
 								avatar_url
 							)
 						)
+					),
+					likes (
+						...members (
+							...users (
+								first_name,
+								last_name,
+								name,
+								avatar_url
+							)
+						)
 					)
-                )`
+                ),
+				likes (
+					...members (
+						...users (
+							first_name,
+							last_name,
+							name,
+							avatar_url
+						)
+					)
+				)`
 			)
 			.eq("post_id", params.postId)
 			.is("root_comment_id", null)
