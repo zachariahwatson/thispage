@@ -110,6 +110,7 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 											id={-1}
 											post={post}
 											last={i === posts.length - 1}
+											blur
 										>
 											⚠️spoiler⚠️complete the reading!
 										</ReadingPost>
@@ -123,6 +124,7 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 										id={-1}
 										post={post}
 										last={i === posts.length - 1}
+										blur
 									>
 										join the reading to view!
 									</ReadingPost>

@@ -17,16 +17,16 @@ interface Props {
 	id: number
 	post: ReadingPostType
 	last?: boolean
+	blur?: boolean
 }
 
-export function ReadingPost({ disabled, children, likes, comments, id, post, last = false }: Props) {
+export function ReadingPost({ disabled, children, likes, comments, id, post, last = false, blur = false }: Props) {
 	const clubMembership = useClubMembership()
 	const readingData = useReading()
 	const { data: userLikes } = useLikes({ memberId: String(clubMembership?.id) })
 	// check if user has already liked the post or comment
 	const hasLiked = userLikes?.find((like: Like) => like.post_id === Number(id) && id !== undefined)
 
-	TimeAgo.addDefaultLocale(en)
 	const timeAgo = new TimeAgo("en-US")
 
 	return (
@@ -38,7 +38,11 @@ export function ReadingPost({ disabled, children, likes, comments, id, post, las
 				tabIndex={disabled ? -1 : undefined}
 			>
 				<div className={`${!disabled ? "hover:bg-gradient-to-r from-page via-card to-page" : ""} py-2 rounded-md`}>
-					<div className="flex flex-row items-center text-xs text-muted-foreground space-x-1 w-full">
+					<div
+						className={`flex flex-row items-center text-xs text-muted-foreground space-x-1 w-full ${
+							blur ? "blur-[3px]" : ""
+						}`}
+					>
 						<Avatar className="size-4 mr-1">
 							<AvatarImage src={post.author?.avatar_url || ""} />
 							<AvatarFallback>
