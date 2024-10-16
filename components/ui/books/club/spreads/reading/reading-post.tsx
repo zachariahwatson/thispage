@@ -47,13 +47,22 @@ export function ReadingPost({ disabled, children, likes, comments, id, post, las
 									: post.author?.name && post.author?.name?.split(" ")[0][0] + post.author?.name?.split(" ")[1][0]}
 							</AvatarFallback>
 						</Avatar>
-						<p className="truncate ... text-nowrap">
+						<p
+							className="truncate ... text-nowrap"
+							title={
+								(post.author?.first_name && post.author?.last_name
+									? post.author.first_name + " " + post.author.last_name
+									: post.author?.name) ?? ""
+							}
+						>
 							{post.author?.first_name && post.author?.last_name
 								? post.author.first_name + " " + post.author.last_name
 								: post.author?.name}
 						</p>
 						<p>•</p>
-						<p className="text-muted-foreground text-xs text-nowrap">{timeAgo.format(new Date(post.created_at))}</p>
+						<p className="text-muted-foreground text-xs text-nowrap" title={new Date(post.created_at).toUTCString()}>
+							{timeAgo.format(new Date(post.created_at))}
+						</p>
 					</div>
 
 					<div className="flex flex-row relative items-center justify-between">
