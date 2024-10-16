@@ -27,4 +27,12 @@ export type Post = {
 			name: string
 		}
 	}
+	likes:
+		| {
+				first_name: string | null
+				last_name: string | null
+				name: string | null
+				avatar_url: string | null
+		  }[]
+		| null
 }
