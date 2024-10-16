@@ -18,6 +18,7 @@ interface Props {
 		{
 			first_name: string
 			last_name: string
+			avatar_url?: string
 		},
 		unknown
 	>
@@ -33,19 +34,25 @@ export function SettingsForm({ mutation, setVisible }: Props) {
 
 	const firstName = user?.first_name ? user?.first_name : user?.name.split(" ")[0]
 	const lastName = user?.last_name ? user?.last_name : user?.name.split(" ")[1]
+	const avatarURL = user?.avatar_url
 
 	// 1. Define your form.
 	const form = useForm<z.infer<typeof settingsFormSchema>>({
 		resolver: zodResolver(settingsFormSchema),
 		defaultValues: {
-			firstName: firstName,
-			lastName: lastName,
+			firstName: "",
+			lastName: "",
+			avatarURL: "",
 		},
 	})
 
 	// 2. Define a submit handler.
 	function onSubmit(values: z.infer<typeof settingsFormSchema>) {
-		mutation.mutate({ first_name: values.firstName || firstName, last_name: values.lastName || lastName })
+		mutation.mutate({
+			first_name: values.firstName === "" ? firstName : values.firstName,
+			last_name: values.lastName === "" ? lastName : values.lastName,
+			avatar_url: values.avatarURL === "" ? avatarURL : values.avatarURL,
+		})
 	}
 
 	return (
@@ -73,6 +80,19 @@ export function SettingsForm({ mutation, setVisible }: Props) {
 								<FormLabel>last name</FormLabel>
 								<FormControl>
 									<Input placeholder={lastName} {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="avatarURL"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>avatar image url</FormLabel>
+								<FormControl>
+									<Input placeholder={avatarURL} {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
