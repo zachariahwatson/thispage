@@ -146,25 +146,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 													src={post.reading.book_cover_image_url || ""}
 													width={post.reading.book_cover_image_width || 0}
 													height={post.reading.book_cover_image_height || 0}
-													alt={
-														"Cover photo of " +
-														post.reading.book_title +
-														" by " +
-														(post.reading.book_authors?.length === 2
-															? post.reading.book_authors.join(" and ")
-															: post.reading.book_authors
-																	?.map((author: string, i: number) => {
-																		if (
-																			i === (post.reading.book_authors ? post.reading.book_authors.length - 1 : 0) &&
-																			post.reading.book_authors?.length !== 1
-																		) {
-																			return "and " + author
-																		} else {
-																			return author
-																		}
-																	})
-																	.join(", "))
-													}
+													alt=""
 												/>
 											</SheetTrigger>
 											<BookDetails

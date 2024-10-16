@@ -196,27 +196,7 @@ export function PollItem({ item, groupValues, timerComplete }: Props) {
 										src={item.book_cover_image_url || ""}
 										width={item.book_cover_image_width || 0}
 										height={item.book_cover_image_height || 0}
-										alt={
-											"Cover photo of " + item.book_title ||
-											"Unknown" +
-												(item.book_authors
-													? " by " +
-													  (item.book_authors.length === 2
-															? item.book_authors.join(" and ")
-															: item.book_authors
-																	.map((author: string, i: number) => {
-																		if (
-																			i === (item.book_authors ? item.book_authors?.length - 1 : 0) &&
-																			item.book_authors?.length !== 1
-																		) {
-																			return "and " + author
-																		} else {
-																			return author
-																		}
-																	})
-																	.join(", "))
-													: null)
-										}
+										alt=""
 										className="max-h-full w-auto h-auto float-right rounded-[4px] shadow-sm shadow-shadow object-contain hover:ring-4 hover:ring-ring transition-all hover:cursor-pointer"
 									/>
 								)}

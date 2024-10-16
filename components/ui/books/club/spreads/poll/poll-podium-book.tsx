@@ -109,27 +109,7 @@ export function PollPodiumBook({ flexBoxRef, item, winner }: Props) {
 						src={item?.book_cover_image_url || ""}
 						width={item?.book_cover_image_width || 0}
 						height={item?.book_cover_image_height || 0}
-						alt={
-							"Cover photo of " + item?.book_title ||
-							"Unknown" +
-								(item?.book_authors
-									? " by " +
-									  (item?.book_authors.length === 2
-											? item?.book_authors.join(" and ")
-											: item?.book_authors
-													.map((author: string, i: number) => {
-														if (
-															i === (item?.book_authors ? item?.book_authors?.length - 1 : 0) &&
-															item?.book_authors?.length !== 1
-														) {
-															return "and " + author
-														} else {
-															return author
-														}
-													})
-													.join(", "))
-									: null)
-						}
+						alt=""
 						className={`absolute max-w-[calc(100%-1rem)] w-auto h-auto bottom-[calc(100%+.5rem)] md:bottom-[calc(100%+1rem)] rounded-[4px] md:rounded-sm object-contain  ${
 							winner ? "shadow-xl shadow-primary" : "shadow-lg shadow-shadow"
 						} hover:cursor-pointer`}
