@@ -69,27 +69,7 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 							src={readingData?.book_cover_image_url || ""}
 							width={readingData?.book_cover_image_width || 0}
 							height={readingData?.book_cover_image_height || 0}
-							alt={
-								"Cover photo of " + readingData?.book_title ||
-								"Unknown" +
-									(readingData?.book_authors
-										? " by " +
-										  (readingData?.book_authors.length === 2
-												? readingData?.book_authors.join(" and ")
-												: readingData?.book_authors
-														.map((author: string, i: number) => {
-															if (
-																i === (readingData?.book_authors ? readingData.book_authors?.length - 1 : 0) &&
-																readingData.book_authors?.length !== 1
-															) {
-																return "and " + author
-															} else {
-																return author
-															}
-														})
-														.join(", "))
-										: null)
-							}
+							alt=""
 							loading="eager"
 							priority
 						/>
