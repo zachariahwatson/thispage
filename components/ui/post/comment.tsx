@@ -64,6 +64,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 								postId={postId}
 								commentId={String(commentData.id)}
 								memberId={String(clubMembership?.id)}
+								likes={commentData.likes}
 							/>
 							<button className="mr-2" onClick={() => setReplyBoxVisible(!replyBoxVisible)}>
 								<Badge variant="outline">

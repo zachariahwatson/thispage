@@ -74,6 +74,7 @@ export function SubComment({
 								postId={postId}
 								commentId={String(subCommentData.id)}
 								memberId={String(clubMembership?.id)}
+								likes={subCommentData.likes}
 							/>
 							<button className="mr-2" onClick={() => setReplyBoxVisible(!replyBoxVisible)}>
 								<Badge variant="outline" className="">

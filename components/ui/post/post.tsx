@@ -197,6 +197,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 								readingId={readingId}
 								postId={postId}
 								memberId={String(clubMembership?.id)}
+								likes={post.likes}
 							/>
 						</div>
 						<div className="pr-2">
