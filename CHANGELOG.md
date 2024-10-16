@@ -23,6 +23,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tabs don't update when a new reading/poll is created
 
+## [1.1.1] - 2024-10-16
+
+### Added
+
+- Alert notifying if openlibrary.org is unreachable
+
+### Changed
+
+- Shortened alt tags for book cover images
+
 ## [1.1.0] - 2024-10-16
 
 ### Added
@@ -321,7 +331,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
-[1.1.0]: https://github.com/zachariahwatson/thispage/compare/1.0.7...HEAD
+[1.1.0]: https://github.com/zachariahwatson/thispage/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/zachariahwatson/thispage/compare/1.0.7...1.1.0
 [1.0.7]: https://github.com/zachariahwatson/thispage/compare/1.0.6...1.0.7
 [1.0.6]: https://github.com/zachariahwatson/thispage/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/zachariahwatson/thispage/compare/1.0.4...1.0.5
