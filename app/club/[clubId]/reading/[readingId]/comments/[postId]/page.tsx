@@ -68,10 +68,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 					.join(", "))
 
 	return {
-		title: `${post.post_title} | ${post.book_title} in ${post.club_name} | thispage`,
+		title: `${post.post_title} | ${post.book_title} • ${post.club_name} | thispage`,
 		description: "join the discussion",
 		openGraph: {
-			title: `${post.post_title} | ${post.book_title} in ${post.club_name} | thispage`,
+			title: `${post.post_title} | ${post.book_title} • ${post.club_name} | thispage`,
 			description: "join the discussion",
 			images: [
 				{

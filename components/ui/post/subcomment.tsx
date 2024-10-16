@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage, Badge } from "@/components/ui"
 import { Button, CommentActionsButton, LikeButton, SubCommentButton } from "@/components/ui/buttons"
 import { useUser } from "@/hooks/state"
 import type { ClubMembership, Comment as CommentType } from "@/lib/types"
+import TimeAgo from "javascript-time-ago"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -28,6 +29,7 @@ export function SubComment({
 }: Props) {
 	const [replyBoxVisible, setReplyBoxVisible] = useState<boolean>(false)
 	const { data: user, isLoading: loading } = useUser()
+	const timeAgo = new TimeAgo("en-US")
 	return (
 		<div id={`subcomment-${subCommentData.id}`} className="space-y-2">
 			<div className="flex flex-row items-start">
@@ -46,14 +48,8 @@ export function SubComment({
 					<div className="flex flex-col space-y-2 w-full">
 						<p className="text-md">
 							{subCommentData.member?.name || "[deleted]"} •{" "}
-							<span className="text-sm">
-								{new Date(subCommentData.created_at)
-									.toLocaleDateString(undefined, {
-										year: "numeric",
-										month: "long",
-										day: "numeric",
-									})
-									.toLowerCase()}
+							<span className="text-sm" title={new Date(subCommentData.created_at).toUTCString()}>
+								{timeAgo.format(new Date(subCommentData.created_at))}
 							</span>{" "}
 							{subCommentData.replying_to && (
 								<span className="text-muted-foreground text-sm">
@@ -63,9 +59,9 @@ export function SubComment({
 								</span>
 							)}
 						</p>
-						<p className="md:text-md text-sm w-full break-words">
-							<pre className="whitespace-pre-wrap">{subCommentData.content}</pre>
-						</p>
+						<pre className="md:text-md text-sm w-full break-words whitespace-pre-wrap font-plus-jakarta-sans">
+							{subCommentData.content}
+						</pre>
 						<div className="flex flex-row items-center">
 							<LikeButton
 								likesCount={subCommentData.likes_count}
@@ -74,6 +70,7 @@ export function SubComment({
 								postId={postId}
 								commentId={String(subCommentData.id)}
 								memberId={String(clubMembership?.id)}
+								likes={subCommentData.likes}
 							/>
 							<button className="mr-2" onClick={() => setReplyBoxVisible(!replyBoxVisible)}>
 								<Badge variant="outline" className="">

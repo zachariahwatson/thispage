@@ -16,6 +16,7 @@ import { useClubs, useUser } from "@/hooks/state"
 import type { Post } from "@/lib/types"
 import { QueryError } from "@/utils/errors"
 import { createClient } from "@/utils/supabase/client"
+import TimeAgo from "javascript-time-ago"
 import Image from "next/image"
 import Link from "next/link"
 import { redirect, useRouter } from "next/navigation"
@@ -91,6 +92,8 @@ export function Post({ clubId, readingId, postId }: Props) {
 
 	const createdAt = post && new Date(post.created_at)
 
+	const timeAgo = new TimeAgo("en-US")
+
 	return (
 		<div className="flex flex-col items-center max-w-5xl w-full space-y-4 px-2 md:px-12 pb-12 bg-page rounded-b-3xl shadow-md shadow-shadow -mt-6 border border-border">
 			<div className="absolute top-[73px] bg-page max-w-5xl w-[calc(100%-1rem)] h-12 border-x border-border" />
@@ -127,18 +130,12 @@ export function Post({ clubId, readingId, postId }: Props) {
 									<div className="flex flex-col pr-10">
 										<p className="text-md">
 											{post.member?.name} •{" "}
-											<span className="text-sm">
-												{createdAt
-													?.toLocaleDateString(undefined, {
-														year: "numeric",
-														month: "long",
-														day: "numeric",
-													})
-													.toLowerCase()}
+											<span className="text-sm" title={createdAt?.toUTCString()}>
+												{timeAgo.format(createdAt ?? new Date())}
 											</span>
 										</p>
 										<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
-											{post.reading.book_title} in {post.reading.club.name}
+											{post.reading.book_title} • {post.reading.club.name}
 										</p>
 									</div>
 									<div className="absolute right-0 top-8">
@@ -188,24 +185,26 @@ export function Post({ clubId, readingId, postId }: Props) {
 								</div>
 							</div>
 							<h1 className="text-lg md:text-2xl font-bold break-words pr-16 font-epilogue">{post.title}</h1>
-							<p className="md:text-md text-sm break-words">
-								<pre className="whitespace-pre-wrap">{post.content}</pre>
-							</p>
+							<pre className="md:text-md text-sm break-words whitespace-pre-wrap font-plus-jakarta-sans">
+								{post.content}
+							</pre>
+
 							<LikeButton
 								likesCount={post.likes_count}
 								clubId={clubId}
 								readingId={readingId}
 								postId={postId}
 								memberId={String(clubMembership?.id)}
+								likes={post.likes}
 							/>
 						</div>
 						<div className="pr-2">
 							<Separator />
 						</div>
 						<RootCommentButton clubId={clubId} readingId={readingId} postId={postId} memberId={memberId} />
-						<div className="pr-2">
+						{/* <div className="pr-2">
 							<Separator />
-						</div>
+						</div> */}
 						{clubMembership && (
 							<PostComments
 								clubId={clubId}
