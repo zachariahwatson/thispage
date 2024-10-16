@@ -23,6 +23,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tabs don't update when a new reading/poll is created
 
+## [1.1.0] - 2024-10-16
+
+### Added
+
+- Ability to edit your avatar URL
+- Likes list popover for posts and comments
+- Reading post list author and "date posted" information
+
+### Changed
+
+- Hide logo on the back of the book when an error occurs
+- Blur author information when user isn't allowed to access a post
+
 ## [1.0.7] - 2024-10-15
 
 ### Changed
@@ -307,7 +320,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
-[1.0.7]: https://github.com/zachariahwatson/thispage/compare/1.0.6...HEAD
+[1.1.0]: https://github.com/zachariahwatson/thispage/compare/1.0.7...HEAD
+[1.0.7]: https://github.com/zachariahwatson/thispage/compare/1.0.6...1.0.7
 [1.0.6]: https://github.com/zachariahwatson/thispage/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/zachariahwatson/thispage/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/zachariahwatson/thispage/compare/1.0.3...1.0.4
