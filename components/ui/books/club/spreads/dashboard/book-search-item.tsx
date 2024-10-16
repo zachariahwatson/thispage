@@ -213,24 +213,7 @@ export function BookSearchItem({ work, item, authors, groupValue }: Props) {
 										src={`https://covers.openlibrary.org/b/id/${cover.id}-M.jpg`}
 										width={cover.width}
 										height={cover.height}
-										alt={
-											"Cover photo of " + item.title ||
-											"Unknown" +
-												(authors
-													? " by " +
-													  (authors.length === 2
-															? authors.join(" and ")
-															: authors
-																	.map((author: string, i: number) => {
-																		if (i === authors.length - 1 && authors.length !== 1) {
-																			return "and " + author
-																		} else {
-																			return author
-																		}
-																	})
-																	.join(", "))
-													: null)
-										}
+										alt=""
 										onLoad={() => setCoverLoading(false)}
 										className="max-h-full w-auto h-auto float-right rounded-[4px] shadow-sm shadow-shadow object-contain hover:ring-4 hover:ring-ring transition-all hover:cursor-pointer"
 									/>

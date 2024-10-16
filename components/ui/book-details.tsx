@@ -44,24 +44,7 @@ export function BookDetails({ bookTitle, coverUrl, coverWidth, coverHeight, auth
 					src={coverUrl}
 					width={coverWidth}
 					height={coverHeight}
-					alt={
-						"Cover photo of " + bookTitle ||
-						"Unknown" +
-							(authors
-								? " by " +
-								  (authors.length === 2
-										? authors.join(" and ")
-										: authors
-												.map((author: string, i: number) => {
-													if (i === authors.length - 1 && authors.length !== 1) {
-														return "and " + author
-													} else {
-														return author
-													}
-												})
-												.join(", "))
-								: null)
-					}
+					alt=""
 					className="rounded-lg w-full max-h-full shadow-shadow shadow-md object-contain md:mr-4 md:mb-4"
 				/>
 			)}
