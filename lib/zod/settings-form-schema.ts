@@ -15,4 +15,5 @@ export const settingsFormSchema = z.object({
 		.refine((val) => !val || /^[A-Za-z'-]+$/.test(val), {
 			message: "Invalid last name format",
 		}),
+	avatarURL: z.string().url({ message: "invalid url" }).optional().or(z.literal("")),
 })

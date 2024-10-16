@@ -36,15 +36,36 @@ export function WhatsNewDialog() {
 				<DialogHeader>
 					<DialogTitle className="text-3xl">what's new?</DialogTitle>
 				</DialogHeader>
-				<Tabs defaultValue="1.0.0">
+				<Tabs defaultValue="1.1.0">
 					<TabsList>
+						<TabsTrigger value="1.1.0">1.1.0</TabsTrigger>
 						<TabsTrigger value="1.0.0">1.0.0</TabsTrigger>
 						<TabsTrigger value="0.10.0">0.10.0</TabsTrigger>
-						<TabsTrigger value="0.9.0">0.9.0</TabsTrigger>
+						{/* <TabsTrigger value="0.9.0">0.9.0</TabsTrigger> */}
 						{/* <TabsTrigger value="0.8.0">0.8.0</TabsTrigger> */}
 						{/* <TabsTrigger value="0.7.0">0.7.0</TabsTrigger> */}
 					</TabsList>
 					<Separator className="my-4" />
+					<TabsContent value="1.1.0" className="space-y-3">
+						<DialogTitle>likes list</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- you can now see who has liked your posts and comments! just click on the number next to the like
+								button. go ahead. check your likes every 10 minutes.
+							</DialogDescription>
+						</div>
+						<DialogTitle>custom avatar urls</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>
+								- personalize your vibezzz! head to the user settings to try it out. (only urls because I don't want to
+								mess with storing images so deal with it)
+							</DialogDescription>
+						</div>
+						<DialogTitle>so many tweaks and quality of life changes</DialogTitle>
+						<div className="pl-4">
+							<DialogDescription>- i'd need a few hours to list them all, trust me.</DialogDescription>
+						</div>
+					</TabsContent>
 					<TabsContent value="1.0.0" className="space-y-3">
 						{/* <DialogTitle>archive section</DialogTitle>
 						<div className="pl-4">
@@ -111,7 +132,7 @@ export function WhatsNewDialog() {
 							<DialogDescription>- put the clubs that you frequent most at the top of your list!</DialogDescription>
 						</div>
 					</TabsContent>
-					<TabsContent value="0.9.0" className="space-y-3">
+					{/* <TabsContent value="0.9.0" className="space-y-3">
 						<DialogTitle>polls</DialogTitle>
 						<div className="pl-4">
 							<DialogDescription>
@@ -131,7 +152,7 @@ export function WhatsNewDialog() {
 								- there are now tabs at the bottom of every book club for easy pagination.
 							</DialogDescription>
 						</div>
-					</TabsContent>
+					</TabsContent> */}
 					{/* <TabsContent value="0.8.0" className="space-y-3">
 						<DialogTitle>email notifications</DialogTitle>
 						<div className="pl-4">

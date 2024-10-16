@@ -5,6 +5,7 @@ import { Button, CommentActionsButton, CommentButton, LikeButton } from "@/compo
 import { SubComment } from "@/components/ui/post"
 import { useUser } from "@/hooks/state"
 import type { ClubMembership, Comment as CommentType } from "@/lib/types"
+import TimeAgo from "javascript-time-ago"
 import { useState } from "react"
 
 interface Props {
@@ -20,6 +21,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 	const [repliesVisible, setRepliesVisible] = useState<boolean>(false)
 	const [replyBoxVisible, setReplyBoxVisible] = useState<boolean>(false)
 	const { data: user, isLoading: loading } = useUser()
+	const timeAgo = new TimeAgo("en-US")
 	return (
 		<div className="space-y-2">
 			<div className="flex flex-row items-start">
@@ -38,19 +40,15 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 					<div className="flex flex-col space-y-2 w-full">
 						<p className="text-md">
 							{commentData.member?.name || "[deleted]"} •{" "}
-							<span className="text-sm">
-								{new Date(commentData.created_at)
-									.toLocaleDateString(undefined, {
-										year: "numeric",
-										month: "long",
-										day: "numeric",
-									})
-									.toLowerCase()}
+							<span className="text-sm" title={new Date(commentData.created_at).toUTCString()}>
+								{timeAgo.format(new Date(commentData.created_at))}
 							</span>
 						</p>
-						<p className="md:text-md text-sm w-full break-words">
-							<pre className="whitespace-pre-wrap">{commentData.content}</pre>
-						</p>
+
+						<pre className="md:text-md text-sm w-full break-words whitespace-pre-wrap font-plus-jakarta-sans">
+							{commentData.content}
+						</pre>
+
 						<div className="flex flex-row items-center w-full">
 							{/* <Button className="p-0 bg-background hover:bg-background mr-2 justify-start" variant="accent">
 								<Badge variant="outline" className="">
@@ -64,6 +62,7 @@ export function Comment({ commentData, clubId, readingId, postId, memberId, club
 								postId={postId}
 								commentId={String(commentData.id)}
 								memberId={String(clubMembership?.id)}
+								likes={commentData.likes}
 							/>
 							<button className="mr-2" onClick={() => setReplyBoxVisible(!replyBoxVisible)}>
 								<Badge variant="outline">

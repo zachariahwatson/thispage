@@ -71,7 +71,7 @@ export function Nav() {
 	})
 
 	const settingsMutation = useMutation({
-		mutationFn: async (data: { first_name: string; last_name: string }) => {
+		mutationFn: async (data: { first_name: string; last_name: string; avatar_url?: string }) => {
 			const url = new URL(`${defaultUrl}/api/users`)
 			const response = await fetch(url, {
 				method: "PATCH",

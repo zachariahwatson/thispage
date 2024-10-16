@@ -34,5 +34,21 @@ export type Comment = {
 				avatar_url: string | null
 			} | null
 		} | null
+		likes:
+			| {
+					first_name: string | null
+					last_name: string | null
+					name: string | null
+					avatar_url: string | null
+			  }[]
+			| null
 	}[]
+	likes:
+		| {
+				first_name: string | null
+				last_name: string | null
+				name: string | null
+				avatar_url: string | null
+		  }[]
+		| null
 }

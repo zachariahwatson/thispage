@@ -6,6 +6,8 @@ import { ThemeProvider, TooltipProvider } from "@/components/ui"
 import { Toaster } from "@/components/ui/sonner"
 import { TempThemeProvider } from "@/contexts"
 import { QueryClient, QueryClientProvider } from "react-query"
+import TimeAgo from "javascript-time-ago"
+import en from "javascript-time-ago/locale/en"
 
 function makeQueryClient() {
 	return new QueryClient({
@@ -13,7 +15,8 @@ function makeQueryClient() {
 			queries: {
 				// With SSR, we usually want to set some default staleTime
 				// above 0 to avoid refetching immediately on the client
-				staleTime: 10 * 60 * 1000, //10 mins
+				staleTime: 30 * 60 * 1000, //30 mins
+				refetchOnWindowFocus: false,
 			},
 		},
 	})
@@ -41,6 +44,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 	//       suspend because React will throw away the client on the initial
 	//       render if it suspends and there is no boundary
 	const queryClient = getQueryClient()
+
+	TimeAgo.addDefaultLocale(en)
 
 	return (
 		<QueryClientProvider client={queryClient}>
