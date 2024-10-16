@@ -138,7 +138,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 											</span>
 										</p>
 										<p className="text-muted-foreground italic truncate ... md:text-sm text-xs">
-											{post.reading.book_title} in {post.reading.club.name}
+											{post.reading.book_title} • {post.reading.club.name}
 										</p>
 									</div>
 									<div className="absolute right-0 top-8">
@@ -189,7 +189,7 @@ export function Post({ clubId, readingId, postId }: Props) {
 							</div>
 							<h1 className="text-lg md:text-2xl font-bold break-words pr-16 font-epilogue">{post.title}</h1>
 							<p className="md:text-md text-sm break-words">
-								<pre className="whitespace-pre-wrap">{post.content}</pre>
+								<pre className="whitespace-pre-wrap font-plus-jakarta-sans">{post.content}</pre>
 							</p>
 							<LikeButton
 								likesCount={post.likes_count}
@@ -203,9 +203,9 @@ export function Post({ clubId, readingId, postId }: Props) {
 							<Separator />
 						</div>
 						<RootCommentButton clubId={clubId} readingId={readingId} postId={postId} memberId={memberId} />
-						<div className="pr-2">
+						{/* <div className="pr-2">
 							<Separator />
-						</div>
+						</div> */}
 						{clubMembership && (
 							<PostComments
 								clubId={clubId}
