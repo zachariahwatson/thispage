@@ -17,6 +17,7 @@ import { ArchiveButton, CompleteIntervalButton, JoinReadingButton, ReadingAction
 import { useClubMembership, useReading } from "@/contexts"
 import Image from "next/image"
 import { PageLeft } from "@/components/ui/books"
+import TimeAgo from "javascript-time-ago"
 
 interface Props {
 	userSpreadIndex: number
@@ -31,6 +32,8 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 	const memberProgresses = [readingData?.interval?.user_progress].concat(
 		readingData?.interval?.member_interval_progresses
 	)
+
+	const timeAgo = new TimeAgo("en-US")
 
 	return (
 		<PageLeft
@@ -161,16 +164,8 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 						(!readingData?.is_finished ? (
 							startDate.getTime() > Date.now() ? (
 								<div className="w-full h-full flex justify-center items-center pt-8">
-									<p className="text-muted-foreground">
-										🚧this reading will start on{" "}
-										{startDate
-											.toLocaleDateString(undefined, {
-												year: "numeric",
-												month: "long",
-												day: "numeric",
-											})
-											.toLowerCase()}
-										🚧
+									<p className="text-muted-foreground" title={startDate.toUTCString()}>
+										🚧this reading will start {timeAgo.format(startDate)}🚧
 									</p>
 								</div>
 							) : (
