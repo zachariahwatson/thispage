@@ -67,6 +67,7 @@ export async function GET(request: NextRequest, { params }: Props) {
 			)
 			.eq("post_id", params.postId)
 			.is("root_comment_id", null)
+			.order("likes_count", { ascending: false }) //sort comments by highest likes first
 
 		if (error) {
 			throw error
