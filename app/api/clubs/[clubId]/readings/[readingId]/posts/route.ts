@@ -18,7 +18,16 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
                 likes_count,
                 is_spoiler,
                 created_at,
-				comments(count)`
+				comments(count),
+				author:members!posts_author_member_id_fkey (
+					...users (
+						first_name,
+						last_name,
+						name,
+						avatar_url
+					)
+				)
+				`
 			)
 			.eq("reading_id", params.readingId)
 			.order("created_at", { ascending: false }) //sort posts by newest first
@@ -34,6 +43,12 @@ export async function GET(request: NextRequest, { params }: { params: { clubId: 
 			is_spoiler: post.is_spoiler,
 			created_at: post.created_at,
 			comments_count: post.comments[0].count,
+			author: {
+				first_name: post.author?.first_name ?? null,
+				last_name: post.author?.last_name ?? null,
+				name: post.author?.name ?? null,
+				avatar_url: post.author?.avatar_url ?? null,
+			},
 		}))
 
 		return Response.json(transformedData, { status: 200 })
