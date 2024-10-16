@@ -84,23 +84,46 @@ export function ReadingPosts({ redactSpoilers, intervalDate }: Props) {
 				<div className="p-3 md:p-4 w-full h-auto">
 					{posts ? (
 						posts.length > 0 ? (
-							posts.map((post) =>
+							posts.map((post, i) =>
 								readingData?.interval?.user_progress ? (
 									(!redactSpoilers &&
 										post.is_spoiler &&
 										new Date(post.created_at).getTime() > new Date(intervalDate).getTime()) ||
 									!post.is_spoiler ||
 									(post.is_spoiler && new Date(post.created_at).getTime() < new Date(intervalDate).getTime()) ? (
-										<ReadingPost key={post.id} likes={post.likes_count} comments={post.comments_count} id={post.id}>
+										<ReadingPost
+											key={post.id}
+											likes={post.likes_count}
+											comments={post.comments_count}
+											id={post.id}
+											post={post}
+											last={i === posts.length - 1}
+										>
 											{post.title}
 										</ReadingPost>
 									) : (
-										<ReadingPost disabled key={post.id} likes={post.likes_count} comments={post.comments_count} id={-1}>
+										<ReadingPost
+											disabled
+											key={post.id}
+											likes={post.likes_count}
+											comments={post.comments_count}
+											id={-1}
+											post={post}
+											last={i === posts.length - 1}
+										>
 											⚠️spoiler⚠️complete the reading!
 										</ReadingPost>
 									)
 								) : (
-									<ReadingPost disabled key={post.id} likes={post.likes_count} comments={post.comments_count} id={-1}>
+									<ReadingPost
+										disabled
+										key={post.id}
+										likes={post.likes_count}
+										comments={post.comments_count}
+										id={-1}
+										post={post}
+										last={i === posts.length - 1}
+									>
 										join the reading to view!
 									</ReadingPost>
 								)
