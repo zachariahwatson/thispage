@@ -68,11 +68,25 @@ export async function PATCH(request: NextRequest) {
 					first_name: body.first_name,
 					last_name: body.last_name,
 					name: body.first_name + " " + body.last_name,
+					avatar_url: body.avatar_url,
 				})
 				.eq("id", user?.id)
 			if (error) {
 				throw error
 			}
+
+			const { error: authUserError } = await supabase.auth.updateUser({
+				data: {
+					first_name: body.first_name,
+					last_name: body.last_name,
+					name: body.first_name + " " + body.last_name,
+					avatar_url: body.avatar_url,
+				},
+			})
+			if (authUserError) {
+				throw authUserError
+			}
+
 			revalidatePath("/", "layout")
 			return Response.json({ message: "user updated!" }, { status: 200 })
 		}
