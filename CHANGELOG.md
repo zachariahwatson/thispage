@@ -337,7 +337,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
-[1.1.0]: https://github.com/zachariahwatson/thispage/compare/1.1.0...HEAD
+[1.1.2]: https://github.com/zachariahwatson/thispage/compare/1.1.1...HEAD
+[1.1.1]: https://github.com/zachariahwatson/thispage/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/zachariahwatson/thispage/compare/1.0.7...1.1.0
 [1.0.7]: https://github.com/zachariahwatson/thispage/compare/1.0.6...1.0.7
 [1.0.6]: https://github.com/zachariahwatson/thispage/compare/1.0.5...1.0.6
