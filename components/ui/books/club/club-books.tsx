@@ -33,8 +33,6 @@ export function ClubBooks() {
 				const body = await response.json()
 				throw new QueryError(body.error, body.status)
 			}
-
-			return await response.json()
 		},
 		retry: false,
 	})
