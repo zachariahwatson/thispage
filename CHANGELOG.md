@@ -23,6 +23,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Tabs don't update when a new reading/poll is created
 
+## [1.1.3] - 2024-11-23
+
+### Added
+
+- Tooltip for the reading progress bar
+
+### Changed
+
+- Trying out new complete reading button
+- Also trying out infinite stale time to prevent textboxes from resetting due to refetching
+- Slightly darkened azul theme's primary color
+- Moved completed/uncompleted reader count to avoid confusion with the reading's progress bar
+
+### Fixed
+
+- Archiving a reading correctly updates the spread count
+- Emails are no longer sent with other members' emails visible
+
 ## [1.1.2] - 2024-11-23
 
 ### Fixed
@@ -337,7 +355,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Like button functionality
 - Changelog file
 
-[1.1.2]: https://github.com/zachariahwatson/thispage/compare/1.1.1...HEAD
+[1.1.3]: https://github.com/zachariahwatson/thispage/compare/1.1.2...HEAD
+[1.1.2]: https://github.com/zachariahwatson/thispage/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/zachariahwatson/thispage/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/zachariahwatson/thispage/compare/1.0.7...1.1.0
 [1.0.7]: https://github.com/zachariahwatson/thispage/compare/1.0.6...1.0.7

@@ -94,31 +94,33 @@ Deno.serve(async (req) => {
 
 			//if there are emails in the array
 			if (emails.length > 0) {
-				const res = await fetch("https://api.resend.com/emails", {
+				const res = await fetch("https://api.resend.com/emails/batch", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
 					},
-					body: JSON.stringify({
-						from: "thispage <notifications@thispa.ge>",
-						to: emails,
-						subject: "reading goal completed!",
-						html: `
+					body: JSON.stringify(
+						emails.map((recipient) => ({
+							from: "thispage <notifications@thispa.ge>",
+							to: [recipient],
+							subject: "reading goal completed!",
+							html: `
           <div>
             <p>hey!</p>
             <p>
               all readers have read <strong>${emailData.book_title}</strong> to ${
-							emailData.increment_type === "pages" ? "page" : emailData.section_name
-						} ${emailData.increment_type === "pages" ? emailData.goal_page : emailData.goal_section} in ${
-							emailData.club_name
-						}. discuss what you thought!
+								emailData.increment_type === "pages" ? "page" : emailData.section_name
+							} ${emailData.increment_type === "pages" ? emailData.goal_page : emailData.goal_section} in ${
+								emailData.club_name
+							}. discuss what you thought!
             </p>
             <p style="margin:0px;">sincerely,</p>
             <a style="margin:0px;" href="https://thispa.ge">this<strong>page</strong></p>
           </div>
         `,
-					}),
+						}))
+					),
 				})
 
 				const data = await res.json()

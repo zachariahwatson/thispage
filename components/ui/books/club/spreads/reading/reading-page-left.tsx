@@ -197,7 +197,11 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 											 */}
 											<CompleteIntervalButton />
 											<div
-												className="flex flex-col items-center justify-center text-muted-foreground"
+												className={`flex flex-col items-center justify-center ${
+													readingData?.interval?.user_progress && readingData?.interval?.user_progress?.is_complete
+														? "text-primary"
+														: "text-muted-foreground"
+												}`}
 												title={`${memberProgresses.filter((progress) => progress?.is_complete).length}/${
 													memberProgresses.length
 												} readers have completed the current reading goal`}
