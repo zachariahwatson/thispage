@@ -18,6 +18,7 @@ import { useClubMembership, useReading } from "@/contexts"
 import Image from "next/image"
 import { PageLeft } from "@/components/ui/books"
 import TimeAgo from "javascript-time-ago"
+import { UserCheck } from "lucide-react"
 
 interface Props {
 	userSpreadIndex: number
@@ -151,16 +152,30 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 							) : (
 								<>
 									<CardDescription>read to...</CardDescription>
-									<div className="flex flex-row">
+									<div className="flex flex-row items-center">
 										{readingData?.increment_type === "pages" ? (
 											<p className="font-bold italic md:text-xl">
 												p.
-												<span className="ml-1 text-6xl md:text-8xl not-italic">{readingData?.interval?.goal_page}</span>
+												<span
+													className={`ml-1 text-6xl ${
+														readingData?.interval?.goal_page && readingData?.interval?.goal_page < 1000
+															? "md:text-8xl"
+															: "md:text-7xl"
+													} not-italic`}
+												>
+													{readingData?.interval?.goal_page}
+												</span>
 											</p>
 										) : (
 											<p className="font-bold italic md:text-xl">
 												{readingData?.section_name}.
-												<span className="ml-1 text-6xl md:text-8xl not-italic">
+												<span
+													className={`ml-1 text-6xl ${
+														readingData?.interval?.goal_section && readingData?.interval?.goal_section < 1000
+															? "md:text-8xl"
+															: "md:text-7xl"
+													} not-italic`}
+												>
 													{readingData?.interval?.goal_section}
 												</span>
 											</p>
@@ -176,17 +191,29 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 										>
 											<path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
 										</svg>
-										<div className="self-center">
+										<div className="flex flex-row items-center">
 											{/**
 											 * @todo add dialog box confirming if the user wants to complete the reading if they're the last member to do so
 											 */}
 											<CompleteIntervalButton />
+											<div
+												className={`flex flex-col items-center justify-center ${
+													readingData?.interval?.user_progress && readingData?.interval?.user_progress?.is_complete
+														? "text-primary"
+														: "text-muted-foreground"
+												}`}
+												title={`${memberProgresses.filter((progress) => progress?.is_complete).length}/${
+													memberProgresses.length
+												} readers have completed the current reading goal`}
+											>
+												<UserCheck strokeWidth={1.5} />
+												<CardDescription className="italic">
+													{memberProgresses.filter((progress) => progress?.is_complete).length}/
+													{memberProgresses.length}
+												</CardDescription>
+											</div>
 										</div>
 									</div>
-									<CardDescription className="italic">
-										{memberProgresses.filter((progress) => progress?.is_complete).length}/{memberProgresses.length}{" "}
-										readers have completed
-									</CardDescription>
 								</>
 							)
 						) : (
@@ -218,6 +245,15 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 										: 100
 								}
 								className="h-2 md:h-4"
+								title={`${
+									!readingData.is_finished
+										? Math.floor(
+												((readingData?.interval?.goal_page - readingData.interval_page_length) /
+													readingData?.book_page_count) *
+													100
+										  )
+										: 100
+								}%`}
 							/>
 						) : (
 							<></>
@@ -236,6 +272,15 @@ export function ReadingPageLeft({ userSpreadIndex }: Props) {
 										: 100
 								}
 								className="h-2 md:h-4"
+								title={`${
+									!readingData.is_finished
+										? Math.floor(
+												((readingData?.interval?.goal_section - readingData.interval_section_length) /
+													readingData?.book_sections) *
+													100
+										  )
+										: 100
+								}%`}
 							/>
 						)
 					)}

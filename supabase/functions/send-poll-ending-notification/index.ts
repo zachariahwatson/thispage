@@ -66,17 +66,18 @@ Deno.serve(async (req) => {
 
 		//if there are emails in the array
 		if (emails.length > 0) {
-			const res = await fetch("https://api.resend.com/emails", {
+			const res = await fetch("https://api.resend.com/emails/batch", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
 				},
-				body: JSON.stringify({
-					from: "thispage <notifications@thispa.ge>",
-					to: emails,
-					subject: "poll ending soon!",
-					html: `
+				body: JSON.stringify(
+					emails.map((recipient) => ({
+						from: "thispage <notifications@thispa.ge>",
+						to: [recipient],
+						subject: "poll ending soon!",
+						html: `
 			  <div>
 			    <p>hey!</p>
 			    <p>
@@ -86,7 +87,8 @@ Deno.serve(async (req) => {
 			    <a style="margin:0px;" href="https://thispa.ge">this<strong>page</strong></p>
 			  </div>
 			`,
-				}),
+					}))
+				),
 			})
 			const data = await res.json()
 			return new Response(JSON.stringify(data), {

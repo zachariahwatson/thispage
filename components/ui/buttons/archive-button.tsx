@@ -58,6 +58,7 @@ export function ArchiveButton() {
 		onSuccess: (body: any) => {
 			toast.success(body.message)
 			queryClient.invalidateQueries(["readings", clubMembership?.club.id])
+			queryClient.invalidateQueries(["spreads count", clubMembership?.club.id, clubMembership?.role])
 		},
 	})
 
