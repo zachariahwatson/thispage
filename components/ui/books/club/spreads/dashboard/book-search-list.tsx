@@ -34,7 +34,7 @@ export function BookSearchList({ search, groupValue, language }: Props) {
 		hasNextPage,
 	} = useInfiniteQuery<BookSearch>({
 		queryKey: ["books", search],
-		queryFn: async ({ pageParam }) => {
+		queryFn: async ({ pageParam = 1 }) => {
 			if (search !== "") {
 				const url = new URL(`${defaultUrl}/api/books/${search.replaceAll(" ", "+")}`)
 				url.searchParams.append("page", pageParam)
